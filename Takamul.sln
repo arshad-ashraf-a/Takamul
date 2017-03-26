@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{D8DD5893-18B4-42AE-B362-278E13266484}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalLib", "LocalLib", "{2FAEEAA9-0D11-4D18-B369-64A103A03E25}"
+	ProjectSection(SolutionItems) = preProject
+		LocalLib\Common.DBAccess.dll = LocalLib\Common.DBAccess.dll
+		LocalLib\Data.Core.dll = LocalLib\Data.Core.dll
+		LocalLib\DynamicQuery.dll = LocalLib\DynamicQuery.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Portal", "Takamul.Portal\Takamul.Portal.csproj", "{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Portal.Resources", "Takamul.Portal.Resources\Takamul.Portal.Resources.csproj", "{01644100-D72A-488C-B928-3F043B9517D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{58A0F174-DC64-46A6-AEFA-245AD37BA866}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Core", "Libraries\Core\Infrastructure.Core\Infrastructure.Core.csproj", "{41979552-6E9D-48C7-AC90-BAF34CAA0786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Utilities", "Libraries\Core\Infrastructure.Utilities\Infrastructure.Utilities.csproj", "{38036158-36E0-4C7B-83FC-1EB35D371994}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Takamul.Libraries", "Takamul.Libraries", "{D7F95291-1023-435A-A121-222ABA3A262E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Models", "Libraries\Takamul.Libraries\Takamul.Models\Takamul.Models.csproj", "{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Services", "Libraries\Takamul.Libraries\Takamul.Services\Takamul.Services.csproj", "{F2CBE370-A0D1-4C68-A875-D26117C2E756}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.API", "Takamul.API\Takamul.API.csproj", "{9B8036FB-4E09-4E74-989B-CC9194329463}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01644100-D72A-488C-B928-3F043B9517D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01644100-D72A-488C-B928-3F043B9517D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01644100-D72A-488C-B928-3F043B9517D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01644100-D72A-488C-B928-3F043B9517D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41979552-6E9D-48C7-AC90-BAF34CAA0786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41979552-6E9D-48C7-AC90-BAF34CAA0786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41979552-6E9D-48C7-AC90-BAF34CAA0786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41979552-6E9D-48C7-AC90-BAF34CAA0786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38036158-36E0-4C7B-83FC-1EB35D371994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38036158-36E0-4C7B-83FC-1EB35D371994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38036158-36E0-4C7B-83FC-1EB35D371994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38036158-36E0-4C7B-83FC-1EB35D371994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8036FB-4E09-4E74-989B-CC9194329463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8036FB-4E09-4E74-989B-CC9194329463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8036FB-4E09-4E74-989B-CC9194329463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8036FB-4E09-4E74-989B-CC9194329463}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{58A0F174-DC64-46A6-AEFA-245AD37BA866} = {D8DD5893-18B4-42AE-B362-278E13266484}
+		{41979552-6E9D-48C7-AC90-BAF34CAA0786} = {58A0F174-DC64-46A6-AEFA-245AD37BA866}
+		{38036158-36E0-4C7B-83FC-1EB35D371994} = {58A0F174-DC64-46A6-AEFA-245AD37BA866}
+		{D7F95291-1023-435A-A121-222ABA3A262E} = {D8DD5893-18B4-42AE-B362-278E13266484}
+		{255FBAAC-4774-4ED2-A6C2-0FD4D9232722} = {D7F95291-1023-435A-A121-222ABA3A262E}
+		{F2CBE370-A0D1-4C68-A875-D26117C2E756} = {D7F95291-1023-435A-A121-222ABA3A262E}
+	EndGlobalSection
+EndGlobal
