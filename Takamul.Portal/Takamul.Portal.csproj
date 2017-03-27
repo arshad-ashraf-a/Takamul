@@ -240,6 +240,7 @@
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="DBScript\TAKAMUL.sql" />
+    <Content Include="DBScript\Tscript_26-03-2017.sql" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

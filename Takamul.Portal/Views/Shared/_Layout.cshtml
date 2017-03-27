@@ -30,7 +30,7 @@
     <!-- Main navbar -->
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">LDC eServices</a>
+            <a class="navbar-brand" href="#">Takamul Services</a>
             <ul class="nav navbar-nav visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
                 <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
@@ -93,97 +93,23 @@
                                 <!-- Main -->
                                 <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
                                 <li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                                <li class="@(
-                                   (
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "Declaration" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "Incident" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "Preliminary" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "TRM" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "Final" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" ||
-                                   ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster"
-
-                                   ) ? "active" : "")">
-                                    <a href="#">
-                                        <i class="icon-list-unordered"></i>
-                                        <span>Incident Management</span>
-                                    </a>
-                                    <ul>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ManageDeclaration" ? "active" : "")"><a href="@Url.Action("ManageDeclaration", "Declaration", new { area = "IncidentManagement" })">Add New Incident</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Incident" ? "active" : "")"><a href="@Url.Action("Index", "Incident", new { area = "IncidentManagement" })">All Incidents</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Preliminary" ? "active" : "")"><a href="@Url.Action("PreliminaryLists", "Preliminary", new { area = "IncidentManagement" })">All Preliminaries</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Final" ? "active" : "")"><a href="@Url.Action("FinalLists", "Final", new { area = "IncidentManagement" })">All Finals</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "TRM" ? "active" : "")"><a href="@Url.Action("TRMLists", "TRM", new { area = "IncidentManagement" })">All IFR Inspections</a></li>
-                                        <li class="no-padding-bottom">
-                                            <a href="#" class="has-ul"><i class="icon-cog3"></i> Settings</a>
-                                            @*<ul class="hidden-ul" style="display: none;">*@
-                                            <ul class="hidden-ul" style="@(
-                                                                            (
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" ||
-                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster"
-                                                                            ) ? "display: block;" : "display: none;")">
-                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ? "active":"")"><a href="@Url.Action("LDCCustomersList", "LDCCustomer", new { area = "IncidentManagement" })">LDC Customers</a></li>
-                                                <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" || ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember") ? "active":"")"><a href="@Url.Action("IncidentGroupList", "IncidentGroup", new { area = "IncidentManagement" })">Incident CC Groups</a></li>
-                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ? "active":"")"><a href="#">Preliminary Reasons</a></li>
-                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ? "active":"")"><a href="#">IFR Causes</a></li>
-                                                <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" || ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" || ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster") ? "active" : "")"><a href="@Url.Action("AreaMasterLists", "AreaMaster", new { area = "IncidentManagement" })#">Areas/Plants/Assets</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
+                             
                                 <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Project Progress</span></a>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
                                     <ul>
-                                        <li><a href="#" id="layout1">All Projects</a></li>
+                                        <li><a href="#" id="layout1">All Applications</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Financial Progress</span></a>
-                                    <ul>
-                                        <li><a href="#">All Lists</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Ticket System</span></a>
-                                    <ul>
-                                        <li><a href="#">All Lists</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Inventory System</span></a>
-                                    <ul>
-                                        <li><a href="#">All Lists</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Key Management</span></a>
-                                    <ul>
-                                        <li><a href="#">All Lists</a></li>
-                                    </ul>
-                                </li>
+                               
 
                                 <!-- Appearance -->
                                 <li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
-                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")">
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Incident Management</span></a>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
                                     <ul>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "FinalReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("FinalReport", "IncidentReport", new { area = "IncidentManagement" })">Final Reports</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TRMReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("TRMReport", "IncidentReport", new { area = "IncidentManagement" })">IFR Reports</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PreliminaryReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("PreliminaryReport", "IncidentReport", new { area = "IncidentManagement" })">Prelminary Reports</a></li>
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DeclarationReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("DeclarationReport", "IncidentReport", new { area = "IncidentManagement" })">Declaration Reports</a></li>
-
+                                        <li><a href="#">Reports 1</a></li>
+                                        <li><a href="#">Reports 2</a></li>
+                                        <li><a href="#">Reports 3</a></li>
                                     </ul>
                                 </li>
                                 <!-- /appearance -->
