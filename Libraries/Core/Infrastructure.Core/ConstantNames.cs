@@ -8,80 +8,15 @@ namespace Infrastructure.Core
 {
     public class ConstantNames
     {
-        #region LDCConnectionName
+        #region TakamulConnectionString
         /// <summary>
-        /// LDC Connection Name
+        /// Takamul Connection Name
         /// </summary>
-        public static string LDCConnectionName
+        public static string TakamulConnectionString
         {
             get
             {
-                return "LDCConnection";
-            }
-        }
-        #endregion
-
-        #region TRMStatusSubmitted
-        /// <summary>
-        /// TRM Submitted Status 
-        /// </summary>
-        public static string TRMStatusSubmitted
-        {
-            get
-            {
-                return "TRMStatusSubmitted";
-            }
-        }
-        #endregion
-
-        #region PreliminaryUploadFolder
-        /// <summary>
-        /// Preliminary Upload Folder 
-        /// </summary>
-        public static string PreliminaryUploadFolder
-        {
-            get
-            {
-                return "PreliminaryUploadFolder";
-            }
-        }
-        #endregion
-
-        #region TRMUploadFolder
-        /// <summary>
-        /// TRM Upload Folder 
-        /// </summary>
-        public static string TRMUploadFolder
-        {
-            get
-            {
-                return "TRMUploadFolder";
-            }
-        }
-        #endregion
-
-        #region FinalUploadFolder
-        /// <summary>
-        /// Final Upload Folder 
-        /// </summary>
-        public static string FinalUploadFolder
-        {
-            get
-            {
-                return "FinalUploadFolder";
-            }
-        }
-        #endregion
-
-        #region DeclarationDueDate
-        /// <summary>
-        /// TRM Upload Folder 
-        /// </summary>
-        public static string DeclarationDueDate
-        {
-            get
-            {
-                return "DeclarationDueDate";
+                return "TakamulServiceConnection";
             }
         }
         #endregion

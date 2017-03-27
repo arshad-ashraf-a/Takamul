@@ -1,0 +1,51 @@
+﻿@using Takamul.Portal.Resources.Common;
+@using Takamul.Portal.Resources.Controls.GridView;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section SpecificPluginStyles{
+
+    <link rel="stylesheet" href='@Url.Content("~/assets/css/jqGrid/ui.jqgrid.css")' />
+    <link href='@Url.Content("~/assets/css/jqGrid/GridContextMenu.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/assets/css/jqGrid/jqgrid.style.css")' rel="stylesheet" />
+
+
+    @RenderSection("SpecificPluginStyles", false)
+}
+@RenderBody()
+@section SpecificPluginScripts
+{
+    <script>
+        var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
+        var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
+
+        var UlDir = '@CommonResx.LayoutDirectionOpposite'; 
+
+    </script>
+    <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/jquery.jqGrid.src.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/RenderGridView.js")'></script>
+
+    @RenderSection("SpecificPluginScripts", false)
+}
+<!-- inline scripts related to this page -->
+@section InlineScriptsRelated
+{
+    @RenderSection("InlineScriptsRelated", false)
+
+    <script>
+        var GridViewId = "grid-table";
+        var GridViewPagerId = "grid-pager";
+
+        var GridViewResources = {
+            Direction: '@GridView.Direction',
+            FloatingLeft: '@GridView.FloatingLeft',
+            FloatingRight: '@GridView.FloatingRight',
+            TextAlign: '@GridView.TextAlign',
+            SinglePagerArrowLeft: '@GridView.SinglePagerArrowLeft',
+            SinglePagerArrowRight: '@GridView.SinglePagerArrowRight'
+        }
+    </script>
+}
+

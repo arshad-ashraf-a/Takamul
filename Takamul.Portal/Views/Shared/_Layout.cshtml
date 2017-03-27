@@ -1,0 +1,297 @@
+﻿@using Infrastructure.Utilities;
+@using System.Web.Optimization;
+@{
+    BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="meta desciption" />
+    <meta name="keywords" content="meta keywords" />
+    <title>@oBaseController.PageTitle</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    @Styles.Render("~/bundles/CoreStyles")
+    <!-- /global stylesheets -->
+    <!-- Core CSS Utilities -->
+    @Styles.Render("~/bundles/CoreStyleUtilities")
+    <!-- core CSS Utilities -->
+
+    @RenderSection("SpecificPluginStyles", false)
+</head>
+<body>
+    <script type="text/javascript">
+        var LoaderImagePath = '@Url.Content("~/Images/login_logo.png")';
+    </script>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">LDC eServices</a>
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                @*<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>*@
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="~/assets/images/profile.jpg" alt="">
+                        <span>@BaseController.CurrentUser.sUserName</span>
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a href="@Url.Action("LogOut", "Account", new { area = "" })"><i class="icon-switch2"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="category-content">
+                            <div class="media">
+                                <a href="#" class="media-left"><img src="~/assets/images/Profile.jpg" class="img-circle img-sm" alt=""></a>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">@BaseController.CurrentUser.sUserName</span>
+                                    <div class="text-size-mini text-muted">
+                                        <a href="#"><i class="icon-cog3 text-white"></i></a> &nbsp;@BaseController.CurrentUser.sUserTypeName
+                                    </div>
+                                </div>
+                                @*<div class="media-right media-middle">
+                                        <ul class="icons-list">
+                                            <li>
+                                                <a href="#"><i class="icon-cog3"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /user menu -->
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <!-- Main -->
+                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
+                                <li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                                <li class="@(
+                                   (
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "Declaration" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "Incident" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "Preliminary" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "TRM" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "Final" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" ||
+                                   ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster"
+
+                                   ) ? "active" : "")">
+                                    <a href="#">
+                                        <i class="icon-list-unordered"></i>
+                                        <span>Incident Management</span>
+                                    </a>
+                                    <ul>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ManageDeclaration" ? "active" : "")"><a href="@Url.Action("ManageDeclaration", "Declaration", new { area = "IncidentManagement" })">Add New Incident</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Incident" ? "active" : "")"><a href="@Url.Action("Index", "Incident", new { area = "IncidentManagement" })">All Incidents</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Preliminary" ? "active" : "")"><a href="@Url.Action("PreliminaryLists", "Preliminary", new { area = "IncidentManagement" })">All Preliminaries</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Final" ? "active" : "")"><a href="@Url.Action("FinalLists", "Final", new { area = "IncidentManagement" })">All Finals</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "TRM" ? "active" : "")"><a href="@Url.Action("TRMLists", "TRM", new { area = "IncidentManagement" })">All IFR Inspections</a></li>
+                                        <li class="no-padding-bottom">
+                                            <a href="#" class="has-ul"><i class="icon-cog3"></i> Settings</a>
+                                            @*<ul class="hidden-ul" style="display: none;">*@
+                                            <ul class="hidden-ul" style="@(
+                                                                            (
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" ||
+                                                                            ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster"
+                                                                            ) ? "display: block;" : "display: none;")">
+                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LDCCustomer" ? "active":"")"><a href="@Url.Action("LDCCustomersList", "LDCCustomer", new { area = "IncidentManagement" })">LDC Customers</a></li>
+                                                <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "IncidentGroup" || ViewContext.RouteData.Values["Controller"].ToString() == "IncidentMember") ? "active":"")"><a href="@Url.Action("IncidentGroupList", "IncidentGroup", new { area = "IncidentManagement" })">Incident CC Groups</a></li>
+                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "PreliminaryReasons" ? "active":"")"><a href="#">Preliminary Reasons</a></li>
+                                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "TRMCauses" ? "active":"")"><a href="#">IFR Causes</a></li>
+                                                <li class="@((ViewContext.RouteData.Values["Controller"].ToString() == "AreaMaster" || ViewContext.RouteData.Values["Controller"].ToString() == "PlantMaster" || ViewContext.RouteData.Values["Controller"].ToString() == "AssetMaster") ? "active" : "")"><a href="@Url.Action("AreaMasterLists", "AreaMaster", new { area = "IncidentManagement" })#">Areas/Plants/Assets</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Project Progress</span></a>
+                                    <ul>
+                                        <li><a href="#" id="layout1">All Projects</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Financial Progress</span></a>
+                                    <ul>
+                                        <li><a href="#">All Lists</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Ticket System</span></a>
+                                    <ul>
+                                        <li><a href="#">All Lists</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Inventory System</span></a>
+                                    <ul>
+                                        <li><a href="#">All Lists</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Key Management</span></a>
+                                    <ul>
+                                        <li><a href="#">All Lists</a></li>
+                                    </ul>
+                                </li>
+
+                                <!-- Appearance -->
+                                <li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
+                                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")">
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Incident Management</span></a>
+                                    <ul>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "FinalReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("FinalReport", "IncidentReport", new { area = "IncidentManagement" })">Final Reports</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TRMReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("TRMReport", "IncidentReport", new { area = "IncidentManagement" })">IFR Reports</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PreliminaryReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("PreliminaryReport", "IncidentReport", new { area = "IncidentManagement" })">Prelminary Reports</a></li>
+                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DeclarationReport" && ViewContext.RouteData.Values["Controller"].ToString() == "IncidentReport" ? "active" : "")"><a href="@Url.Action("DeclarationReport", "IncidentReport", new { area = "IncidentManagement" })">Declaration Reports</a></li>
+
+                                    </ul>
+                                </li>
+                                <!-- /appearance -->
+                                <!-- Appearance -->
+                                <li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
+                                    <ul>
+                                        <li><a href="#">Users</a></li>
+                                        <li><a href="#">Roles</a></li>
+                                        <li><a href="#">Role Privillages</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
+                                    <ul></ul>
+                                </li>
+                                <!-- /appearance -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+                </div>
+            </div>
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="content-wrapper">
+                <div class="page-header page-header-default">
+                    <div class="page-header-content">
+                        <div class="page-title">
+                            @if (!String.IsNullOrEmpty(oBaseController.TitleHead))
+                            {
+                                <h4>
+                                    <i class="icon-stack2 position-left"></i>
+                                    <span class="text-semibold">
+                                        @oBaseController.TitleHead
+                                    </span>
+                                </h4>
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="breadcrumb-line">
+                        <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="@Url.Action("Index", "home", new { area = "" })">
+                                    <i class="icon-home2 position-left"></i>Home
+                                </a>
+                            </li>
+                            @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
+                            {
+                                <li>
+                                    <a href="#">
+                                        @oBaseController.ParentNode
+                                    </a>
+                                </li>
+                            }
+                            @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
+                            {
+                                <li class="active">@oBaseController.CurrentPage</li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="content">
+                    <div id="dvPopUpWindow" style="display:none">
+                        <div id="dvPopUpWindowContainer"></div>
+                    </div>
+                    @RenderBody()
+
+                </div>
+
+            </div>
+            <!-- /main content -->
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+    @*System Loader*@
+    <div id="fakeloader" style="display:none;opacity: 0.5">
+    </div>
+
+    <!-- Core JS files -->
+    @Scripts.Render("~/bundles/CoreScripts")
+    <!-- core JS files -->
+    <!-- Core Js Utilities -->
+    @Scripts.Render("~/bundles/CoreScriptUtilities")
+    <!-- core JS Utilities -->
+
+    @RenderSection("SpecificPluginScripts", false)
+    @RenderSection("InlineScriptsRelated", false)
+    <script type="text/javascript">
+
+        $(document).ajaxStart(function () {
+            ShowLoader();
+        });
+
+        $(document).ajaxStop(function () {
+            HideLoader();
+        });
+
+        $(document).ajaxSuccess(function () {
+            ShowLoader();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿ .ui-jqgrid tr.jqgrow td {
+        word-wrap: break-word; /* IE 5.5+ and CSS3 */
+        white-space: pre-wrap; /* CSS3 */
+        white-space: normal !important; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        overflow: hidden;
+        height: auto;
+        vertical-align: middle;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .ui-jqdialog-content .FormData > td {
+        padding-left: 16px;
+    }
+
+    .ui-jqdialog-content .CaptionTD {
+        vertical-align: middle;
+    }
+
+    td.bootstrap_dropdown {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+     .ui-jqgrid .ui-jqgrid-bdiv {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        overflow: visible!important;/*ayham allan*/
+        height:100% !important;/*ayham allan*/
+        text-align: left;
+    }
+
+    

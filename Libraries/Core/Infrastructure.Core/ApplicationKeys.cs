@@ -9,15 +9,15 @@ namespace Infrastructure.Core
 {
     public class ApplicationKeys
     {
-        #region LDCConnectionString
+        #region TakamulConnectionString
         /// <summary>
-        /// LDC Connection Sting 
+        /// Takamul Connection Sting 
         /// </summary>
-        public static string LDCConnectionString
+        public static string TakamulConnectionString
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings[ConstantNames.LDCConnectionName].ToString();
+                return ConfigurationManager.ConnectionStrings[ConstantNames.TakamulConnectionString].ToString();
             }
         }
         #endregion

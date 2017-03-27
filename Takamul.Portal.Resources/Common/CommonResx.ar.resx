@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accessibility" xml:space="preserve">
+    <value>سهولة الوصول</value>
+  </data>
+  <data name="AccessisDenied" xml:space="preserve">
+    <value>عذراً! ليس لديك صلاحية للقيام بهذا الإجراء .</value>
+  </data>
+  <data name="AddCompanyUser" xml:space="preserve">
+    <value>إضافة مستخدم للمنشأة</value>
+  </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>بحث متقدم</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="AllDepartments" xml:space="preserve">
+    <value>كل الدوائر</value>
+  </data>
+  <data name="AllDirectorates" xml:space="preserve">
+    <value>كل المديريات</value>
+  </data>
+  <data name="AllSections" xml:space="preserve">
+    <value>كل الأقسام</value>
+  </data>
+  <data name="AllSectors" xml:space="preserve">
+    <value>كل القطاعات</value>
+  </data>
+  <data name="AlmostExpired" xml:space="preserve">
+    <value>مشارف على الانتهاء</value>
+  </data>
+  <data name="AlreadyExistRecordFaild" xml:space="preserve">
+    <value>القسم الذي تحاول إضافته موجود حالياً، يرجى إضافة قسم أخر</value>
+  </data>
+  <data name="AnErrorHasBeenOccured" xml:space="preserve">
+    <value>حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="Birthdate" xml:space="preserve">
+    <value>تاريخ الميلاد</value>
+  </data>
+  <data name="BodyClass" xml:space="preserve">
+    <value>no-skin rtl</value>
+  </data>
+  <data name="Branch" xml:space="preserve">
+    <value>الفرع</value>
+  </data>
+  <data name="CallCenter" xml:space="preserve">
+    <value>قسم الإتصال</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="CanNotInsertInThisDate" xml:space="preserve">
+    <value>لا يمكنك إضافة سجل بتاريخ قبل تاريخ تقديم الشكوى</value>
+  </data>
+  <data name="CantDeleteThisEventType" xml:space="preserve">
+    <value>لا يمكنك حذف سجل لم تقم بإضافته أو/و هذا السجل من نوع لا يمكن حذفه</value>
+  </data>
+  <data name="CaptchaText" xml:space="preserve">
+    <value>الرجاء ادخال الرموز المبينة اعلاه:</value>
+  </data>
+  <data name="CharactersLeft" xml:space="preserve">
+    <value>حرفاً متبقياً</value>
+  </data>
+  <data name="CitizensEServicesPortal" xml:space="preserve">
+    <value>المقيمين</value>
+  </data>
+  <data name="CivilNumber" xml:space="preserve">
+    <value>الرقم المدني</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>مسح</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>المنشأة</value>
+  </data>
+  <data name="CompanyChangedSuccessfully" xml:space="preserve">
+    <value>تم تغيير المنشأة بنجاح</value>
+  </data>
+  <data name="CompanyNotChanged" xml:space="preserve">
+    <value>حدث خطأ اثناء تغيير المنشأة، يرجى المحاولة لاحقاً</value>
+  </data>
+  <data name="ComplaintDetailsMapsStyle" xml:space="preserve">
+    <value>padding-left:3em;</value>
+  </data>
+  <data name="ComplaintRefNo" xml:space="preserve">
+    <value>تم استلام الشكوى بنجاح يمكنك متابعة حالة الشكوى من خلال الرقم المرجعي للشكوى</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>اتصل بنا</value>
+  </data>
+  <data name="ContentViewer" xml:space="preserve">
+    <value>عرض المحتوى</value>
+  </data>
+  <data name="CopyRight" xml:space="preserve">
+    <value>جميع الحقوق محفوظة, وزارة القوى العاملة© {0}</value>
+  </data>
+  <data name="Court" xml:space="preserve">
+    <value>محكوم عليه</value>
+  </data>
+  <data name="CrNumber" xml:space="preserve">
+    <value>رقم السجل التجاري</value>
+  </data>
+  <data name="CurrentSelectedComany" xml:space="preserve">
+    <value>المنشأة الحالية : {0}</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>الدائرة</value>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>مغادر</value>
+  </data>
+  <data name="Described" xml:space="preserve">
+    <value>/ وصفته</value>
+  </data>
+  <data name="dir" xml:space="preserve">
+    <value>rtl</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>rtl</value>
+  </data>
+  <data name="DirectionOpposite" xml:space="preserve">
+    <value>ltr</value>
+  </data>
+  <data name="Directorate" xml:space="preserve">
+    <value>المديرية</value>
+  </data>
+  <data name="DoubleArrowIcon" xml:space="preserve">
+    <value>ace-icon fa fa-angle-double-left</value>
+  </data>
+  <data name="DoubleArrowIconMenu" xml:space="preserve">
+    <value>ace-icon fa fa-angle-double-right</value>
+  </data>
+  <data name="EmployeeEServicesPortal" xml:space="preserve">
+    <value>موظفي الوزارة</value>
+  </data>
+  <data name="EmployerEServicesPortal" xml:space="preserve">
+    <value>أصحاب العمل</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>حدث خطأ</value>
+  </data>
+  <data name="EServices" xml:space="preserve">
+    <value>بوابة الخدمات الالكترونية</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>منتهي</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>الأسئلة الشائعة</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>من تـــاريخ</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>حدث خطأ عام</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>مساعدة</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>هنا</value>
+  </data>
+  <data name="HideInLineDelete" xml:space="preserve">
+    <value>$(".ui-inline-del").hide();</value>
+  </data>
+  <data name="HideInLineEdit" xml:space="preserve">
+    <value>$(".ui-inline-edit").hide();</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>جاري التحقق من البيانات...</value>
+  </data>
+  <data name="JobSeekerEServicesPortal" xml:space="preserve">
+    <value>الباحثين عن عمل </value>
+  </data>
+  <data name="LayoutDirection" xml:space="preserve">
+    <value>right</value>
+  </data>
+  <data name="LayoutDirectionOpposite" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>~/Content/assets/images/logo_ar.png</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>بوابة الخدمات الالكترونية</value>
+  </data>
+  <data name="ManpowerEServicesPortal" xml:space="preserve">
+    <value>خدمات اصحاب العمل </value>
+  </data>
+  <data name="MessageAddFailed" xml:space="preserve">
+    <value>خطأ بالإضافة</value>
+  </data>
+  <data name="MessageAddSuccess" xml:space="preserve">
+    <value>تم الإضافة بنجاح</value>
+  </data>
+  <data name="MessageAssignFaild" xml:space="preserve">
+    <value>Error Assigning the Question</value>
+  </data>
+  <data name="MessageAssignSuccess" xml:space="preserve">
+    <value>تم تعيين السؤال بنجاح</value>
+  </data>
+  <data name="MessageDeleteFailed" xml:space="preserve">
+    <value>خطأ بالحذف</value>
+  </data>
+  <data name="MessageDeleteSuccess" xml:space="preserve">
+    <value>تم الحذف بنجاح</value>
+  </data>
+  <data name="MessageEditFailed" xml:space="preserve">
+    <value>خطأ في التعديل</value>
+  </data>
+  <data name="MessageEditSuccess" xml:space="preserve">
+    <value>تم التعديل بنجاح</value>
+  </data>
+  <data name="MinisterialDecrees" xml:space="preserve">
+    <value>القرارات الوزارية</value>
+  </data>
+  <data name="MinistryOfManpower" xml:space="preserve">
+    <value>وزارة القوى العاملة</value>
+  </data>
+  <data name="MobileApplication" xml:space="preserve">
+    <value>تطبيقات الهاتف النقال</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>جديد</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>لا يوجد بيانات تابعة لهذا الخيار </value>
+  </data>
+  <data name="NoDataFound" xml:space="preserve">
+    <value>لا يوجد بيانات لعرضها</value>
+  </data>
+  <data name="NoSelectedRecords" xml:space="preserve">
+    <value>لا يوجد عناصر مختارة</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>غير متوفر</value>
+  </data>
+  <data name="NotExist" xml:space="preserve">
+    <value>لا يوجد</value>
+  </data>
+  <data name="PaymentError" xml:space="preserve">
+    <value>حدث خطا اثناء متابعة الدفع يرجى المحاولة مرة اخرى لاحقا</value>
+  </data>
+  <data name="PaymentHasBeenFaild" xml:space="preserve">
+    <value>حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى </value>
+  </data>
+  <data name="PaymentHasBeenSuccess" xml:space="preserve">
+    <value>تمت عملية الدفع بنجاح</value>
+  </data>
+  <data name="PaymentValidationError" xml:space="preserve">
+    <value>حدث خطا</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>قيد الانتظار</value>
+  </data>
+  <data name="PhoneCall" xml:space="preserve">
+    <value>/تم الاتصال هاتفيا بالفاضل </value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="PleaseEnterAge" xml:space="preserve">
+    <value>يرجى ادخال العمر</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>يرجى الاختيار</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>لوائح الخصوصية</value>
+  </data>
+  <data name="ProclamationAttachmentsStyle" xml:space="preserve">
+    <value>padding-left:2em;    padding-right: 0em;</value>
+  </data>
+  <data name="ProclamationDetailsMapsStyle" xml:space="preserve">
+    <value>padding-left:2em;    padding-right: 0em;</value>
+  </data>
+  <data name="REFCode" xml:space="preserve">
+    <value>الرقم المرجعي</value>
+  </data>
+  <data name="Regulations" xml:space="preserve">
+    <value>اللوائح التنظيمية</value>
+  </data>
+  <data name="RelatedRecordFaild" xml:space="preserve">
+    <value>لا يمكن إتمام عملية الحذف، يوجد سجلات مرتبطة بهذا السجل</value>
+  </data>
+  <data name="RequiredInputNote" xml:space="preserve">
+    <value>تعبير عن حقول اجبارية</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>رجوع</value>
+  </data>
+  <data name="Runaway" xml:space="preserve">
+    <value>هارب</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="Section" xml:space="preserve">
+    <value>القسم</value>
+  </data>
+  <data name="Sector" xml:space="preserve">
+    <value>القطاع</value>
+  </data>
+  <data name="SelectCompany" xml:space="preserve">
+    <value>اختر المنشأة</value>
+  </data>
+  <data name="SelectDepartment" xml:space="preserve">
+    <value>اختر الدائرة</value>
+  </data>
+  <data name="SelectDirectorate" xml:space="preserve">
+    <value>اختر المديرية</value>
+  </data>
+  <data name="SelectSection" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="SelectSector" xml:space="preserve">
+    <value>إختر القطاع</value>
+  </data>
+  <data name="ServiceNotAvailable" xml:space="preserve">
+    <value>الخدمة غير متوفرة حاليا</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>الخدمات</value>
+  </data>
+  <data name="ShowAllServices" xml:space="preserve">
+    <value>عرض جميع الخدمات</value>
+  </data>
+  <data name="ShowReport" xml:space="preserve">
+    <value>إظهار التقرير</value>
+  </data>
+  <data name="SiteMap" xml:space="preserve">
+    <value>خريطة الموقع</value>
+  </data>
+  <data name="SiteTitle" xml:space="preserve">
+    <value>بوابة الخدمات الالكترونية - وزارة القوى العاملة</value>
+  </data>
+  <data name="StaffMail" xml:space="preserve">
+    <value>بريد الموظفين</value>
+  </data>
+  <data name="Star" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>الشروط والأحكام</value>
+  </data>
+  <data name="TextAlign" xml:space="preserve">
+    <value>right</value>
+  </data>
+  <data name="ToChangeCompany" xml:space="preserve">
+    <value>اضغط للتغيير</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>إلى تـــاريخ</value>
+  </data>
+  <data name="TrainingInstitutePortal" xml:space="preserve">
+    <value>المعاهد التدريبية</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>غير محدد</value>
+  </data>
+  <data name="UserCompanyAssignSuccess" xml:space="preserve">
+    <value>تم اضافة المستخدم المنشأة بنجاح</value>
+  </data>
+  <data name="UseSystemAsCompany" xml:space="preserve">
+    <value>استخدام النظام كمنشأة</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>مرحبا</value>
+  </data>
+  <data name="WillExpireSoon" xml:space="preserve">
+    <value>مشارف عالانتهاء</value>
+  </data>
+  <data name="Working" xml:space="preserve">
+    <value>على رأس العمل</value>
+  </data>
+  <data name="WorkLaw" xml:space="preserve">
+    <value>قانون العمل </value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+</root>

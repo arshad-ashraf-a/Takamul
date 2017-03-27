@@ -1,0 +1,15 @@
+﻿/* horizontal menu style */
+.content-wrapper .navbar {
+    margin: 0px;
+    padding: 0px;
+}
+
+    .content-wrapper .navbar > ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+/* page header title */
+.page-title {
+    padding: 3px;
+}
