@@ -26,7 +26,7 @@ namespace LDC.eServices.Portal.Controllers
         {
             /*
             if (!ValidateLogOn(login.username, login.password))
-                return View("Login");
+                return View("Login");K
 
             if (LoginServices.ValidateUser(login, Response))
             {
