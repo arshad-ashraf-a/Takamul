@@ -239,7 +239,11 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
-    <Content Include="DBScript\TAKAMUL.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Functions.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Procedures.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Tables.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Tbls_Procs_Func_Views.sql" />
+    <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

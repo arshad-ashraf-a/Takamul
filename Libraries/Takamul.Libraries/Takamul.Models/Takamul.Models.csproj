@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiViewModel\TakamulNews.cs" />
     <Compile Include="APPLICATION_SETTINGS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
@@ -77,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TakamulModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\NewsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -110,6 +112,7 @@
       <Name>Infrastructure.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
