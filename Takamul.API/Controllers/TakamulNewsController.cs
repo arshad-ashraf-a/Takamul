@@ -19,6 +19,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Takamul.Models.ApiViewModel;
+using Takamul.Models.ViewModel;
 using Takamul.Services;
 
 namespace Takamul.API.Controllers
@@ -41,6 +42,7 @@ namespace Takamul.API.Controllers
         #endregion
 
         #region :: Methods::
+
         #region Method :: HttpResponseMessage :: GetAllNews
         // GET: api/TakamulNews/GetAllNews
         [HttpGet]
@@ -66,6 +68,28 @@ namespace Takamul.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, lstTakamulNews);
         }
         #endregion 
+
+        #region Method :: HttpResponseMessage :: GetNewDetails
+        // GET: api/TakamulNews/GetNewDetails
+        [HttpGet]
+        public HttpResponseMessage GetNewDetails(int nNewsID)
+        {
+            TakamulNews oTakamulNews = null;
+            NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);
+            if (oNewsViewModel != null)
+            {
+                 oTakamulNews = new TakamulNews()
+                {
+                    NewsID = oNewsViewModel.ID,
+                    ApplicationID = oNewsViewModel.APPLICATION_ID,
+                    NewsContent = oNewsViewModel.NEWS_CONTENT,
+                    NewsTitle = oNewsViewModel.NEWS_TITLE
+                };
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oTakamulNews);
+        }
+        #endregion 
+
         #endregion
     }
 }

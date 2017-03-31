@@ -24,5 +24,14 @@ namespace Takamul.Services
         /// <returns>List of News</returns>
         List<NewsViewModel> IlGetAllActiveNews(int nApplicationID);
         #endregion
+
+        #region Method :: NewsViewModel :: oGetNewsDetails
+        /// <summary>
+        /// Get news details by news id
+        /// </summary>
+        /// <param name="nNewsID"></param>
+        /// <returns>List of News</returns>
+        NewsViewModel oGetNewsDetails(int nNewsID);
+        #endregion
     }
 }
