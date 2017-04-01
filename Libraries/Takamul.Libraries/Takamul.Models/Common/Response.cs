@@ -18,12 +18,12 @@ namespace Takamul.Models
 
         public string ResponseChildID { get; set; }
 
-        public string ResponseText { get; set; }
+        public string ResponseCode { get; set; }
 
         public Response()
         {
             this.OperationResultMessage = string.Empty;
-            this.ResponseText = string.Empty;
+            this.ResponseCode = string.Empty;
             this.ResponseID = "-99";
             this.ResponseChildID = "-99";
         }

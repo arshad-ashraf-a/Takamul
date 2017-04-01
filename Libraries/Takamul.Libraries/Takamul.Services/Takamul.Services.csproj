@@ -60,12 +60,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ApplicationService.cs" />
+    <Compile Include="Application\IApplicationService.cs" />
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="Common\CommonServices\ICommonServices.cs" />
+    <Compile Include="Common\CommonServices\CommonServices.cs" />
     <Compile Include="Common\LoginService\LoginServices.cs" />
     <Compile Include="Common\LookupServices\ILookupServices.cs" />
     <Compile Include="Common\LookupServices\LookupServices.cs" />
     <Compile Include="News\INewsServices.cs" />
     <Compile Include="News\NewsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tickets\ITicketServices.cs" />
+    <Compile Include="Tickets\TicketServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Infrastructure.Core\Infrastructure.Core.csproj">
@@ -83,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiService\" />
-    <Folder Include="Applications\" />
     <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
