@@ -63,6 +63,8 @@
     <Compile Include="Common\LoginService\LoginServices.cs" />
     <Compile Include="Common\LookupServices\ILookupServices.cs" />
     <Compile Include="Common\LookupServices\LookupServices.cs" />
+    <Compile Include="Events\EventsService.cs" />
+    <Compile Include="Events\IEventsService.cs" />
     <Compile Include="News\INewsServices.cs" />
     <Compile Include="News\NewsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,7 +86,6 @@
   <ItemGroup>
     <Folder Include="ApiService\" />
     <Folder Include="Applications\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
