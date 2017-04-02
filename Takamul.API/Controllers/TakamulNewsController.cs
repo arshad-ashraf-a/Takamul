@@ -69,10 +69,10 @@ namespace Takamul.API.Controllers
         }
         #endregion 
 
-        #region Method :: HttpResponseMessage :: GetNewDetails
-        // GET: api/TakamulNews/GetNewDetails
+        #region Method :: HttpResponseMessage :: GetNewsDetails
+        // GET: api/TakamulNews/GetNewsDetails
         [HttpGet]
-        public HttpResponseMessage GetNewDetails(int nNewsID)
+        public HttpResponseMessage GetNewsDetails(int nNewsID)
         {
             TakamulNews oTakamulNews = null;
             NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);

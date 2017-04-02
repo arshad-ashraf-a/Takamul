@@ -41,7 +41,6 @@ namespace Takamul.Portal.App_Start
 
             #region Custom Service Registration
             builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
-            builder.RegisterType<EventsService>().As<IEventsService>().InstancePerLifetimeScope();
             #endregion
 
             #region Register Service Controllers
