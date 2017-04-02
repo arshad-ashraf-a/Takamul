@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Models", "Libraries
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Services", "Libraries\Takamul.Libraries\Takamul.Services\Takamul.Services.csproj", "{F2CBE370-A0D1-4C68-A875-D26117C2E756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.API", "Takamul.API\Takamul.API.csproj", "{9B8036FB-4E09-4E74-989B-CC9194329463}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.API", "Takamul.API\Takamul.API.csproj", "{0DB76CA3-7376-49EA-BB14-EE12927C33C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +60,10 @@ Global
 		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2CBE370-A0D1-4C68-A875-D26117C2E756}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B8036FB-4E09-4E74-989B-CC9194329463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B8036FB-4E09-4E74-989B-CC9194329463}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B8036FB-4E09-4E74-989B-CC9194329463}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B8036FB-4E09-4E74-989B-CC9194329463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

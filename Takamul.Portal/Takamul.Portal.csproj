@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -239,8 +239,13 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
-    <Content Include="DBScript\TAKAMUL.sql" />
-    <Content Include="DBScript\Tscript_26-03-2017.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Functions.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Procedures.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Tables.sql" />
+    <Content Include="DBScript\DBScript.Drop_All_Tbls_Procs_Func_Views.sql" />
+    <Content Include="DBScript\Takamul_script_01-04-2017.sql" />
+    <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
+    <Content Include="DBScript\Takamul_script_31-03-2017_07-21.sql" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -950,11 +955,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19612</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://10.153.15.112/Takamul.Portal</IISUrl>
+          <IISUrl>http://localhost:19612/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

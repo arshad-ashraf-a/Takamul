@@ -24,8 +24,9 @@ namespace LDC.eServices.Portal.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult LogOn(Login login, string returnUrl)
         {
+            /*
             if (!ValidateLogOn(login.username, login.password))
-                return View("Login");
+                return View("Login");K
 
             if (LoginServices.ValidateUser(login, Response))
             {
@@ -39,6 +40,8 @@ namespace LDC.eServices.Portal.Controllers
                 ModelState.AddModelError("", "Invalid username or password.");
                 return View("Login");
             }
+            */
+            return RedirectToAction("Index", "Home");
         }
 
         private bool ValidateLogOn(string userName, string password)
