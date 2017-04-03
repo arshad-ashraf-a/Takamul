@@ -45,37 +45,53 @@ namespace Takamul.API.Controllers
         [HttpPost]
         public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser)
         {
-            int sOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
             ApiResponse oApiResponse = new ApiResponse();
-            UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel()
+            if (ModelState.IsValid)
             {
-                APPLICATION_ID = oTakamulUser.ApplicationID,
-                USER_TYPE_ID = 4, //Mobile user type
-                FULL_NAME = oTakamulUser.FullName,
-                PHONE_NUMBER = oTakamulUser.PhoneNumber,
-                EMAIL = oTakamulUser.Email,
-                ADDRESS = oTakamulUser.Addresss,
-                AREA_ID = oTakamulUser.AreaID,
-                WILAYAT_ID = oTakamulUser.WilayatID,
-                VILLAGE_ID = oTakamulUser.VillageID,
-                OTP_NUMBER = sOTPNumber
-            };
+                try
+                {
+                    int sOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+                  
+                    UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel()
+                    {
+                        APPLICATION_ID = oTakamulUser.ApplicationID,
+                        USER_TYPE_ID = 4, //Mobile user type
+                        FULL_NAME = oTakamulUser.FullName,
+                        PHONE_NUMBER = oTakamulUser.PhoneNumber,
+                        EMAIL = oTakamulUser.Email,
+                        ADDRESS = oTakamulUser.Addresss,
+                        AREA_ID = oTakamulUser.AreaID,
+                        WILAYAT_ID = oTakamulUser.WilayatID,
+                        VILLAGE_ID = oTakamulUser.VillageID,
+                        OTP_NUMBER = sOTPNumber
+                    };
 
-            Response oResponse = this.oIAuthenticationService.oInsertMobileUser(oUserInfoViewModel);
-            if (oResponse.OperationResult == enumOperationResult.Success)
-            {
-                oApiResponse.OperationResult = 1;
-                oApiResponse.OperationResultMessage = "User registered successfully.";
+                    Response oResponse = this.oIAuthenticationService.oInsertMobileUser(oUserInfoViewModel);
+                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    {
+                        oApiResponse.OperationResult = 1;
+                        oApiResponse.OperationResultMessage = "User registered successfully.";
 
-                oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
-                //TODO::integrate with sms service and update status to database
+                        oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
+                        //TODO::integrate with sms service and update status to database
+                    }
+                    else
+                    {
+                        oApiResponse.OperationResult = 0;
+                        oApiResponse.OperationResultMessage = "Please contact app administrator.";
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+                }
+                catch (Exception)
+                {
+                    oApiResponse.OperationResult = 0;
+                    oApiResponse.OperationResultMessage = "Internal sever error";
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+                }
             }
-            else
-            {
-                oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "Please contact app administrator.";
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+            oApiResponse.OperationResult = 0;
+            oApiResponse.OperationResultMessage = "Model validation failed";
+            return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
         #endregion 
 

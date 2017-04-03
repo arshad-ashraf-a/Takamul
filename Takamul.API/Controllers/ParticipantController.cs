@@ -18,7 +18,6 @@ namespace MommyAndMe.API.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 try
                 {
                     MommyAndMe.DAL.Participants oParticipants = new DAL.Participants();
