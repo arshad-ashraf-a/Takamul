@@ -8,6 +8,7 @@
 /* Description          : Manage news operations                                                 */
 /*************************************************************************************************/
 
+using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -48,10 +49,12 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllNews(int nApplicationID)
         {
+            //Test Code
             FileServiceManager.FileManager oFileManager = new FileServiceManager.FileManager();
             byte[] oFileByte = oFileManager.ReadFile("face1.jpg");
 
-            oFileManager.WirteFileByte("newface.jpg", oFileByte);
+            oFileManager.WirteFileByte(CommonHelper.AppendTimeStamp("123.jpg"), oFileByte);
+
 
             List<TakamulNews> lstTakamulNews = null;
             var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID);
@@ -64,7 +67,8 @@ namespace Takamul.API.Controllers
                     {
                         NewsID = news.ID,
                         ApplicationID = news.APPLICATION_ID,
-                        NewsContent = news.NEWS_CONTENT,
+                        //NewsContent = news.NEWS_CONTENT,
+                        NewsContent = Convert.ToBase64String(oFileByte),
                         NewsTitle = news.NEWS_TITLE
                     };
                     lstTakamulNews.Add(oTakamulNews);
