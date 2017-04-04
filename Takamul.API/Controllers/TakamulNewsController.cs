@@ -48,6 +48,11 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllNews(int nApplicationID)
         {
+            FileServiceManager.FileManager oFileManager = new FileServiceManager.FileManager();
+            byte[] oFileByte = oFileManager.ReadFile("face1.jpg");
+
+            oFileManager.WirteFileByte("newface.jpg", oFileByte);
+
             List<TakamulNews> lstTakamulNews = null;
             var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID);
             if (lstNews.Count() > 0)

@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalLib", "LocalLib", "{2F
 		LocalLib\Common.DBAccess.dll = LocalLib\Common.DBAccess.dll
 		LocalLib\Data.Core.dll = LocalLib\Data.Core.dll
 		LocalLib\DynamicQuery.dll = LocalLib\DynamicQuery.dll
+		..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.dll = ..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.dll
+		..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.pdb = ..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.pdb
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Portal", "Takamul.Portal\Takamul.Portal.csproj", "{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}"
@@ -29,6 +31,29 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Services", "Libraries\Takamul.Libraries\Takamul.Services\Takamul.Services.csproj", "{F2CBE370-A0D1-4C68-A875-D26117C2E756}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.API", "Takamul.API\Takamul.API.csproj", "{0DB76CA3-7376-49EA-BB14-EE12927C33C5}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Takamul.FileService", "Takamul.FileService\", "{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{41979552-6e9d-48c7-ac90-baf34caa0786}|Infrastructure.Core.dll;{38036158-36e0-4c7b-83fc-1eb35d371994}|Infrastructure.Utilities.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_60322"
+		Debug.AspNetCompiler.PhysicalPath = "Takamul.FileService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60322\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_60322"
+		Release.AspNetCompiler.PhysicalPath = "Takamul.FileService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60322\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60322"
+		SlnRelativePath = "Takamul.FileService\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +89,10 @@ Global
 		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DB76CA3-7376-49EA-BB14-EE12927C33C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
