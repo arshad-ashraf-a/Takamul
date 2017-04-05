@@ -82,11 +82,22 @@ namespace Takamul.API.Controllers
             TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
             if (oTicketViewModel != null)
             {
+                string sBase64DefaultImage = string.Empty;
+                if (oTicketViewModel.DEFAULT_IMAGE != null)
+                {
+                    FileAccessService oFileAccessService = new FileAccessService();
+                    byte[] oByteFile = oFileAccessService.ReadFile(oTicketViewModel.DEFAULT_IMAGE);
+                    if (oByteFile.Length > 0)
+                    {
+                        sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                    }
+                }
+
                 oTakamulTicket = new TakamulTicket()
                 {
                     TicketID = oTicketViewModel.ID,
                     ApplicationID = oTicketViewModel.APPLICATION_ID,
-                    Base64DefaultImage = oTicketViewModel.DEFAULT_IMAGE,
+                    Base64DefaultImage = sBase64DefaultImage,
                     TicketName = oTicketViewModel.TICKET_NAME,
                     TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
                     TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
@@ -110,6 +121,17 @@ namespace Takamul.API.Controllers
                 lstTakamulTicket = new List<TakamulTicketChat>();
                 foreach (var oTicketChatItem in lstTicketViewModel)
                 {
+                    string sReplyMessage = string.Empty;
+                    string sBase64ReplyImage = string.Empty;
+                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService();
+                       byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64ReplyImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
                     TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
                     {
                         TicketID = oTicketChatItem.ID,
@@ -120,7 +142,7 @@ namespace Takamul.API.Controllers
                         TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
                         UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
                         UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
-                        Base64ReplyImage = oTicketChatItem.REPLY_FILE_PATH
+                        Base64ReplyImage = sBase64ReplyImage
                     };
 
                     lstTakamulTicket.Add(oTakamulTicketChat);

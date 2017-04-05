@@ -49,13 +49,6 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllNews(int nApplicationID)
         {
-            //Test Code
-            FileServiceManager.FileManager oFileManager = new FileServiceManager.FileManager();
-            byte[] oFileByte = oFileManager.ReadFile("face1.jpg");
-
-            oFileManager.WirteFileByte(CommonHelper.AppendTimeStamp("123.jpg"), oFileByte);
-
-
             List<TakamulNews> lstTakamulNews = null;
             var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID);
             if (lstNews.Count() > 0)
@@ -67,8 +60,7 @@ namespace Takamul.API.Controllers
                     {
                         NewsID = news.ID,
                         ApplicationID = news.APPLICATION_ID,
-                        //NewsContent = news.NEWS_CONTENT,
-                        NewsContent = Convert.ToBase64String(oFileByte),
+                        NewsContent = news.NEWS_CONTENT,
                         NewsTitle = news.NEWS_TITLE
                     };
                     lstTakamulNews.Add(oTakamulNews);
@@ -87,7 +79,7 @@ namespace Takamul.API.Controllers
             NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);
             if (oNewsViewModel != null)
             {
-                 oTakamulNews = new TakamulNews()
+                oTakamulNews = new TakamulNews()
                 {
                     NewsID = oNewsViewModel.ID,
                     ApplicationID = oNewsViewModel.APPLICATION_ID,
