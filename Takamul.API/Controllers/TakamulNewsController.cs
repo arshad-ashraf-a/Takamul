@@ -46,6 +46,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetAllNews
         // GET: api/TakamulNews/GetAllNews
+        /// <summary>
+        /// Get all news 
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetAllNews(int nApplicationID)
         {
@@ -72,6 +77,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetNewsDetails
         // GET: api/TakamulNews/GetNewsDetails
+        /// <summary>
+        /// Get news details by news id 
+        /// </summary>
+        /// <param name="nNewsID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetNewsDetails(int nNewsID)
         {

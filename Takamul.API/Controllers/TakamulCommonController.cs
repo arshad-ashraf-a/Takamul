@@ -9,6 +9,7 @@
 /*************************************************************************************************/
 
 using Infrastructure.Core;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -43,6 +44,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetApplicationDetails
         // GET: api/TakamulCommon/GetApplicationDetails
+        /// <summary>
+        /// Application detailed information
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetApplicationDetails(int nApplicationID)
         {
@@ -50,11 +56,22 @@ namespace Takamul.API.Controllers
             ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationDetails(nApplicationID);
             if (oApplicationViewModel != null)
             {
-                 oTakamulApplication = new TakamulApplication()
+                string sBase64AppLogo = string.Empty;
+                if (oApplicationViewModel.APPLICATION_LOGO_PATH != null)
+                {
+                    FileAccessService oFileAccessService = new FileAccessService();
+                    byte[] oByteFile = oFileAccessService.ReadFile(oApplicationViewModel.APPLICATION_LOGO_PATH);
+                    if (oByteFile.Length > 0)
+                    {
+                        sBase64AppLogo = Convert.ToBase64String(oByteFile);
+                    }
+                }
+
+                oTakamulApplication = new TakamulApplication()
                 {
                     ApplicationID = oApplicationViewModel.ID,
                     ApplicationName = oApplicationViewModel.APPLICATION_NAME,
-                    Base64ApplicationLogo = oApplicationViewModel.APPLICATION_LOGO_PATH,
+                    Base64ApplicationLogo = sBase64AppLogo,
                     ApplicationToken = oApplicationViewModel.APPLICATION_TOKEN,
                     DefaultThemeColor = oApplicationViewModel.DEFAULT_THEME_COLOR,
                     IsActive = oApplicationViewModel.IS_ACTIVE
@@ -66,6 +83,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetMemberInfo
         // GET: api/TakamulCommon/GetMemberInfo
+        /// <summary>
+        /// Member information
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetMemberInfo(int nApplicationID)
         {

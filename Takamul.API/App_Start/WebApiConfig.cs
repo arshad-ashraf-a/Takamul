@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Mvc;
 using Takamul.Portal.App_Start;
 
 namespace Takamul.API
@@ -13,6 +14,8 @@ namespace Takamul.API
     {
         public static void Register(HttpConfiguration config)
         {
+            AreaRegistration.RegisterAllAreas();
+
             AutofacConfig.RegisterComponents();
             config.EnableCors();
             // Web API routes

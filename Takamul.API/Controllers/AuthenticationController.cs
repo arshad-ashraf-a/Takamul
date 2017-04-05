@@ -42,6 +42,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: RegisterUser
         // POST: api/Authentication/RegisterUser
+        /// <summary>
+        /// Register a mobile user
+        /// </summary>
+        /// <param name="oTakamulUser"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser)
         {
@@ -50,7 +55,7 @@ namespace Takamul.API.Controllers
             {
                 try
                 {
-                    int sOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+                    int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
                   
                     UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel()
                     {
@@ -63,7 +68,7 @@ namespace Takamul.API.Controllers
                         AREA_ID = oTakamulUser.AreaID,
                         WILAYAT_ID = oTakamulUser.WilayatID,
                         VILLAGE_ID = oTakamulUser.VillageID,
-                        OTP_NUMBER = sOTPNumber
+                        OTP_NUMBER = nOTPNumber
                     };
 
                     Response oResponse = this.oIAuthenticationService.oInsertMobileUser(oUserInfoViewModel);
@@ -73,6 +78,7 @@ namespace Takamul.API.Controllers
                         oApiResponse.OperationResultMessage = "User registered successfully.";
 
                         oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
+                        oApiResponse.ResponseCode = nOTPNumber.ToString();
                         //TODO::integrate with sms service and update status to database
                     }
                     else
@@ -97,6 +103,12 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: ValidateOTPNumber
         // GET: api/Authentication/ValidateOTPNumber
+        /// <summary>
+        /// Validate user OTP Number
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="nOTPNumber"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage ValidateOTPNumber(int nUserID,int nOTPNumber)
         {
@@ -119,6 +131,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetUserDetails
         // GET: api/Authentication/GetUserDetails
+        /// <summary>
+        /// Get user detailed infomations
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetUserDetails(int nUserID)
         {

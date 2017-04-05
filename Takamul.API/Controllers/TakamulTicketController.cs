@@ -45,6 +45,12 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetAllTickets
         // GET: api/TakamulTicket/GetAllTickets
+        /// <summary>
+        /// Get all tickets
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetAllTickets(int nApplicationID, int nUserID)
         {
@@ -75,6 +81,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetTicketDetails
         // GET: api/TakamulTicket/GetTicketDetails
+        /// <summary>
+        /// Get ticket details by ticket id
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetTicketDetails(int nTicketID)
         {
@@ -111,6 +122,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetTicketChats
         // GET: api/TakamulTicket/GetTicketChats
+        /// <summary>
+        /// Get ticket chats by ticket id
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetTicketChats(int nTicketID)
         {
