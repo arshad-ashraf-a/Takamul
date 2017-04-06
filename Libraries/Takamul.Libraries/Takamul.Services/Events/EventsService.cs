@@ -56,7 +56,7 @@ namespace Takamul.Services.Events
             #endregion
 
             #region ":Get Sp Result:"
-            List<EventsViewModel> lstEvents = this.ExecuteStoredProcedureList<EventsViewModel>("GetAllActiveEvents", arrParameters.ToArray());
+            List<EventsViewModel> lstEvents = this.ExecuteStoredProcedureList<EventsViewModel>("Inc_GetAllActiveEvents", arrParameters.ToArray());
             return lstEvents;
             #endregion
         }
