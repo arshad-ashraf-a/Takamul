@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -247,6 +247,7 @@
     <Content Include="DBScript\Takamul_script_01-04-2017.sql" />
     <Content Include="DBScript\Takamul_script_02-04-2017_23-00.sql" />
     <Content Include="DBScript\Takamul_script_05-04-2016_20-35.sql" />
+    <Content Include="DBScript\Takamul_script_06-04-2017_21-11.sql" />
     <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
     <Content Include="DBScript\Takamul_script_31-03-2017_07-21.sql" />
     <Content Include="Global.asax" />
