@@ -105,7 +105,7 @@ namespace Takamul.Services
             #endregion
 
             #region ":Get Sp Result:"
-            List<TicketChatViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketChatViewModel>("GetAllActiveTickets", arrParameters.ToArray());
+            List<TicketChatViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketChatViewModel>("GetTicketChats", arrParameters.ToArray());
             return lstTickets;
             #endregion
         }

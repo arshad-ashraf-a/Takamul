@@ -1,5 +1,5 @@
 ﻿/****************************************************************************************************/
-/* Class Name           : TakamulTicketChats.cs                                                            */
+/* Class Name           : TakamulTicketChat.cs                                                            */
 /* Designed BY          : Arshad Ashraf                                                             */
 /* Created BY           : Arshad Ashraf                                                             */
 /* Creation Date        : 31.03.2017                                                                */
@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace Takamul.Models.ApiViewModel
 {
-    public class TakamulTicketChats
+    public class TakamulTicketChat
     {
         public int TicketID { get; set; }
         public int TicketChatID { get; set; }
         public string ReplyMessage { get; set; }
-        public string ReplyDate{ get; set; }
+        public DateTime ReplyDate{ get; set; }
         public string Base64ReplyImage { get; set; }
         public int UserID { get; set; }
         public int TicketChatTypeID { get; set; }
@@ -28,14 +28,14 @@ namespace Takamul.Models.ApiViewModel
         public string UserFullName { get; set; }
 
         #region :: Constructor ::
-        public TakamulTicketChats()
+        public TakamulTicketChat()
         {
             this.TicketID = -99;
             this.TicketChatID = -99;
             this.TicketChatTypeID = -99;
             this.UserID = -99;
             this.ReplyMessage = string.Empty;
-            this.ReplyDate = string.Empty;
+            this.ReplyDate = DateTime.MinValue;
             this.Base64ReplyImage = string.Empty;
             this.TicketChatTypeName = string.Empty;
             this.UserFullName = string.Empty;

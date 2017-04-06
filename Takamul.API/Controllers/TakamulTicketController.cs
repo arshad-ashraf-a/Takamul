@@ -45,8 +45,14 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetAllTickets
         // GET: api/TakamulTicket/GetAllTickets
+        /// <summary>
+        /// Get all tickets
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetAllTickets(int nApplicationID,int nUserID)
+        public HttpResponseMessage GetAllTickets(int nApplicationID, int nUserID)
         {
             List<TakamulTicket> lstTakamulTicket = null;
             var lstTickets = this.oITicketServices.IlGetAllActiveTickets(nApplicationID, -99, nUserID);
@@ -75,6 +81,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetTicketDetails
         // GET: api/TakamulTicket/GetTicketDetails
+        /// <summary>
+        /// Get ticket details by ticket id
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetTicketDetails(int nTicketID)
         {
@@ -82,19 +93,79 @@ namespace Takamul.API.Controllers
             TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
             if (oTicketViewModel != null)
             {
-                 oTakamulTicket = new TakamulTicket()
+                string sBase64DefaultImage = string.Empty;
+                if (oTicketViewModel.DEFAULT_IMAGE != null)
                 {
-                     TicketID = oTicketViewModel.ID,
-                     ApplicationID = oTicketViewModel.APPLICATION_ID,
-                     Base64DefaultImage = oTicketViewModel.DEFAULT_IMAGE,
-                     TicketName = oTicketViewModel.TICKET_NAME,
-                     TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
-                     TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
-                     TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
-                     TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
+                    FileAccessService oFileAccessService = new FileAccessService();
+                    byte[] oByteFile = oFileAccessService.ReadFile(oTicketViewModel.DEFAULT_IMAGE);
+                    if (oByteFile.Length > 0)
+                    {
+                        sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                    }
+                }
+
+                oTakamulTicket = new TakamulTicket()
+                {
+                    TicketID = oTicketViewModel.ID,
+                    ApplicationID = oTicketViewModel.APPLICATION_ID,
+                    Base64DefaultImage = sBase64DefaultImage,
+                    TicketName = oTicketViewModel.TICKET_NAME,
+                    TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
+                    TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
+                    TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
+                    TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulTicket);
+        }
+        #endregion 
+
+        #region Method :: HttpResponseMessage :: GetTicketChats
+        // GET: api/TakamulTicket/GetTicketChats
+        /// <summary>
+        /// Get ticket chats by ticket id
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetTicketChats(int nTicketID)
+        {
+            List<TakamulTicketChat> lstTakamulTicket = null;
+            List<TicketChatViewModel> lstTicketViewModel = this.oITicketServices.IlGetTicketChats(nTicketID);
+            if (lstTicketViewModel.Count > 0)
+            {
+                lstTakamulTicket = new List<TakamulTicketChat>();
+                foreach (var oTicketChatItem in lstTicketViewModel)
+                {
+                    string sReplyMessage = string.Empty;
+                    string sBase64ReplyImage = string.Empty;
+                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService();
+                       byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64ReplyImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+                    TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
+                    {
+                        TicketID = oTicketChatItem.ID,
+                        ReplyMessage = oTicketChatItem.REPLY_MESSAGE,
+                        ReplyDate = oTicketChatItem.REPLIED_DATE,
+                        TicketChatID = oTicketChatItem.ID,
+                        TicketChatTypeID = oTicketChatItem.TICKET_CHAT_TYPE_ID,
+                        TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
+                        UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
+                        UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
+                        Base64ReplyImage = sBase64ReplyImage
+                    };
+
+                    lstTakamulTicket.Add(oTakamulTicketChat);
+                }
+                
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulTicket);
         }
         #endregion 
 

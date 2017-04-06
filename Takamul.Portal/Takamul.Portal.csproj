@@ -245,6 +245,8 @@
     <Content Include="DBScript\DBScript.Drop_All_Tbls_Procs_Func_Views.sql" />
     <Content Include="DBScript\script 02Apr2017 - 05-34.sql" />
     <Content Include="DBScript\Takamul_script_01-04-2017.sql" />
+    <Content Include="DBScript\Takamul_script_02-04-2017_23-00.sql" />
+    <Content Include="DBScript\Takamul_script_05-04-2016_20-35.sql" />
     <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
     <Content Include="DBScript\Takamul_script_31-03-2017_07-21.sql" />
     <Content Include="Global.asax" />

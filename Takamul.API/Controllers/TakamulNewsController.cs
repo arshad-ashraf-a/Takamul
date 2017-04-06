@@ -8,6 +8,7 @@
 /* Description          : Manage news operations                                                 */
 /*************************************************************************************************/
 
+using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetAllNews
         // GET: api/TakamulNews/GetAllNews
+        /// <summary>
+        /// Get all news 
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetAllNews(int nApplicationID)
         {
@@ -71,6 +77,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetNewsDetails
         // GET: api/TakamulNews/GetNewsDetails
+        /// <summary>
+        /// Get news details by news id 
+        /// </summary>
+        /// <param name="nNewsID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetNewsDetails(int nNewsID)
         {
@@ -78,7 +89,7 @@ namespace Takamul.API.Controllers
             NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);
             if (oNewsViewModel != null)
             {
-                 oTakamulNews = new TakamulNews()
+                oTakamulNews = new TakamulNews()
                 {
                     NewsID = oNewsViewModel.ID,
                     ApplicationID = oNewsViewModel.APPLICATION_ID,

@@ -20,5 +20,19 @@ namespace Infrastructure.Core
             }
         }
         #endregion
+
+        #region FileServiceUploadFolder
+        /// <summary>
+        /// Takamul Connection Name
+        /// </summary>
+        public static string FileServiceUploadFolder
+        {
+            get
+            {
+                return "FileServiceUploadFolder";
+            }
+        }
+        #endregion
+
     }
 }
