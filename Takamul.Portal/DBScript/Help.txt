@@ -1,0 +1,5 @@
+ResendOTP(userid) -- 3 times -- Validate times and return message
+GetUserTicketLastSubmissionDate(nUserID);
+
+CreateTicket()
+PostTicketChat(nTicketID)
