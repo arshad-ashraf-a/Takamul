@@ -251,6 +251,7 @@
     <Content Include="DBScript\Takamul_script_06-04-2017_21-11.sql" />
     <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
     <Content Include="DBScript\Takamul_script_31-03-2017_07-21.sql" />
+    <Content Include="DBScript\Takamul_Tbl_script_07-04-2017_09-40.sql" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
