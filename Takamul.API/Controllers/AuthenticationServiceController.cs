@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************************/
-/* Class Name           : AuthenticationController.cs                                            */
+/* Class Name           : AuthenticationService.cs                                            */
 /* Designed BY          : Arshad Ashraf                                                          */
 /* Created BY           : Arshad Ashraf                                                          */
 /* Creation Date        : 31.03.2017 03:01 PM                                                    */
@@ -24,7 +24,7 @@ namespace Takamul.API.Controllers
     /// <summary>
     /// Authentication Service
     /// </summary>
-    public class AuthenticationController : ApiController
+    public class AuthenticationServiceController : ApiController
     {
         #region ::   State   ::
         #region Private Members
@@ -33,7 +33,7 @@ namespace Takamul.API.Controllers
         #endregion
 
         #region :: Constructor ::
-        public AuthenticationController(
+        public AuthenticationServiceController(
                                         IAuthenticationService IAuthenticationServiceInitializer
                                     )
         {

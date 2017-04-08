@@ -487,26 +487,26 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="T:Takamul.API.Controllers.AuthenticationController">
+        <member name="T:Takamul.API.Controllers.AuthenticationServiceController">
             <summary>
             Authentication Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationController.RegisterUser(Takamul.Models.ApiViewModel.TakamulUser)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.RegisterUser(Takamul.Models.ApiViewModel.TakamulUser)">
             <summary>
             Register a mobile user
             </summary>
             <param name="oTakamulUser"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationController.ResendOTPNumber(System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.Int32)">
             <summary>
             Resend user OTP Number
             </summary>
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationController.ValidateOTPNumber(System.Int32,System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.Int32,System.Int32)">
             <summary>
             Validate user OTP Number
             </summary>
@@ -514,57 +514,57 @@
             <param name="nOTPNumber"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationController.GetUserDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetails(System.Int32)">
             <summary>
             Get user detailed infomations
             </summary>
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="T:Takamul.API.Controllers.TakamulCommonController">
+        <member name="T:Takamul.API.Controllers.CommonServiceController">
             <summary>
-            Takamul Common Service
+            Common Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulCommonController.GetApplicationDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetApplicationDetails(System.Int32)">
             <summary>
             Application detailed information
             </summary>
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulCommonController.GetMemberInfo(System.Int32)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetMemberInfo(System.Int32)">
             <summary>
             Member information
             </summary>
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="T:Takamul.API.Controllers.TakamulEventsController">
+        <member name="T:Takamul.API.Controllers.EventServiceController">
             <summary>
             Event Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulEventsController.GetAllEvents(System.Int32)">
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetAllEvents(System.Int32)">
             <summary>
             Get all events
             </summary>
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulEventsController.GetEventDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventDetails(System.Int32)">
             <summary>
             Get event by event id
             </summary>
             <param name="nEventsID"></param>
             <returns></returns>
         </member>
-        <member name="T:Takamul.API.Controllers.TakamulTicketController">
+        <member name="T:Takamul.API.Controllers.TicketServiceController">
             <summary>
             Ticket Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulTicketController.GetAllTickets(System.Int32,System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.GetAllTickets(System.Int32,System.Int32)">
             <summary>
             Get all tickets
             </summary>
@@ -572,21 +572,21 @@
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulTicketController.GetTicketDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.GetTicketDetails(System.Int32)">
             <summary>
             Get ticket details by ticket id
             </summary>
             <param name="nTicketID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulTicketController.GetTicketChats(System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.GetTicketChats(System.Int32)">
             <summary>
             Get ticket chats by ticket id
             </summary>
             <param name="nTicketID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulTicketController.CreateTicket(Takamul.Models.ApiViewModel.TakamulTicket,System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.CreateTicket(Takamul.Models.ApiViewModel.TakamulTicket,System.Int32)">
             <summary>
             Create a ticket
             </summary>
@@ -594,26 +594,26 @@
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulTicketController.PostTicketChat(Takamul.Models.ApiViewModel.TakamulTicketChat)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.PostTicketChat(Takamul.Models.ApiViewModel.TakamulTicketChat)">
             <summary>
             Post a ticket chat
             </summary>
             <param name="oTakamulTicketChat"></param>
             <returns></returns>
         </member>
-        <member name="T:Takamul.API.Controllers.TakamulNewsController">
+        <member name="T:Takamul.API.Controllers.NewsServiceController">
             <summary>
             News Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulNewsController.GetAllNews(System.Int32)">
+        <member name="M:Takamul.API.Controllers.NewsServiceController.GetAllNews(System.Int32)">
             <summary>
             Get all news 
             </summary>
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TakamulNewsController.GetNewsDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.NewsServiceController.GetNewsDetails(System.Int32)">
             <summary>
             Get news details by news id 
             </summary>

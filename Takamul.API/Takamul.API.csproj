@@ -170,11 +170,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AuthenticationController.cs" />
-    <Compile Include="Controllers\TakamulCommonController.cs" />
-    <Compile Include="Controllers\TakamulEventsController.cs" />
-    <Compile Include="Controllers\TakamulTicketController.cs" />
-    <Compile Include="Controllers\TakamulNewsController.cs" />
+    <Compile Include="Controllers\AuthenticationServiceController.cs" />
+    <Compile Include="Controllers\CommonServiceController.cs" />
+    <Compile Include="Controllers\EventServiceController.cs" />
+    <Compile Include="Controllers\TicketServiceController.cs" />
+    <Compile Include="Controllers\NewsServiceController.cs" />
     <Compile Include="CorsHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

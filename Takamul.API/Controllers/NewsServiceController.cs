@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************************/
-/* Class Name           : TakamulNewsController.cs                                               */
+/* Class Name           : NewsServiceController.cs                                               */
 /* Designed BY          : Arshad Ashraf                                                          */
 /* Created BY           : Arshad Ashraf                                                          */
 /* Creation Date        : 31.03.2017 03:01 PM                                                    */
@@ -28,7 +28,7 @@ namespace Takamul.API.Controllers
     /// <summary>
     /// News Service
     /// </summary>
-    public class TakamulNewsController : ApiController
+    public class NewsServiceController : ApiController
     {
         #region ::   State   ::
         #region Private Members
@@ -37,7 +37,7 @@ namespace Takamul.API.Controllers
         #endregion
 
         #region :: Constructor ::
-        public TakamulNewsController(
+        public NewsServiceController(
                                         INewsServices INewsServicesInitializer
                                     )
         {

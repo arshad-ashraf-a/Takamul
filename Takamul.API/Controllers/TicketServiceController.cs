@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************************/
-/* Class Name           : TakamulTicketController.cs                                               */
+/* Class Name           : TicketServiceController.cs                                               */
 /* Designed BY          : Arshad Ashraf                                                          */
 /* Created BY           : Arshad Ashraf                                                          */
 /* Creation Date        : 31.03.2017 03:01 PM                                                    */
@@ -31,7 +31,7 @@ namespace Takamul.API.Controllers
     /// <summary>
     /// Ticket Service
     /// </summary>
-    public class TakamulTicketController : ApiController
+    public class TicketServiceController : ApiController
     {
         #region ::   State   ::
         #region Private Members
@@ -40,7 +40,7 @@ namespace Takamul.API.Controllers
         #endregion
 
         #region :: Constructor ::
-        public TakamulTicketController(
+        public TicketServiceController(
                                         ITicketServices ITicketServicesInitializer
                                     )
         {

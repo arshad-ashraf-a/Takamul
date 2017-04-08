@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************************/
-/* Class Name           : TakamulEventsController.cs                                               */
+/* Class Name           : EventServiceController.cs                                               */
 /* Designed BY          : Samh                                                         */
 /* Created BY           : Samh                                                         */
 /* Creation Date        : 31.03.2017 03:01 PM                                                    */
@@ -28,7 +28,7 @@ namespace Takamul.API.Controllers
     /// <summary>
     /// Event Service
     /// </summary>
-    public class TakamulEventsController : ApiController
+    public class EventServiceController : ApiController
     {
         #region ::   State   ::
         #region Private Members
@@ -37,7 +37,7 @@ namespace Takamul.API.Controllers
         #endregion
 
         #region :: Constructor ::
-        public TakamulEventsController(IEventsService IEventsServicesInitializer)
+        public EventServiceController(IEventsService IEventsServicesInitializer)
         {
             oIEventsServices = IEventsServicesInitializer;
         }
