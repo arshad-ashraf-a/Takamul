@@ -40,8 +40,6 @@ namespace LDC.eServices.Portal.Controllers
                 ModelState.AddModelError("", "Invalid username or password.");
                 return View("Login");
             }
-             
-            return RedirectToAction("Index", "Home");
         }
 
         private bool ValidateLogOn(string userName, string password)

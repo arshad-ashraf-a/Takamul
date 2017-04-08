@@ -44,5 +44,15 @@ namespace Takamul.Services
         Response oValidateOTPNumber(int nUserID, int nOTPNumber);
         #endregion
 
+        #region Method :: Response :: oResendOTPNumber
+        /// <summary>
+        ///  Resend user otp number
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="nOTPNumber"></param>
+        /// <returns></returns>
+        Response oResendOTPNumber(int nUserID,int nOTPNumber);
+        #endregion
+
     }
 }

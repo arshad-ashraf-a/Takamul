@@ -9,6 +9,7 @@
 /****************************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,13 @@ namespace Takamul.Models.ApiViewModel
     public class TakamulTicket
     {
         public int TicketID { get; set; }
+        [Required]
         public int ApplicationID { get; set; }
+        [Required]
         public string TicketName { get; set; }
-        public string TicketDescription{ get; set; }
+        public string TicketDescription { get; set; }
         public string Base64DefaultImage { get; set; }
+        public int DefaultImageType { get; set; }
         public int TicketStatusID { get; set; }
         public string TicketStatusName { get; set; }
         public string TicketStatusRemark { get; set; }
@@ -37,7 +41,7 @@ namespace Takamul.Models.ApiViewModel
             this.Base64DefaultImage = string.Empty;
             this.TicketStatusName = string.Empty;
             this.TicketStatusRemark = string.Empty;
-        } 
+        }
         #endregion
     }
 }

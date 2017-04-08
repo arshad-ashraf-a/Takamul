@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalLib", "LocalLib", "{2F
 		LocalLib\Common.DBAccess.dll = LocalLib\Common.DBAccess.dll
 		LocalLib\Data.Core.dll = LocalLib\Data.Core.dll
 		LocalLib\DynamicQuery.dll = LocalLib\DynamicQuery.dll
-		..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.dll = ..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.dll
-		..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.pdb = ..\..\Projects\Common_Libraries_Projects\Core.Libraries\Core.Libraries\Takamul.FileServiceManager\bin\Debug\Takamul.FileServiceManager.pdb
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takamul.Portal", "Takamul.Portal\Takamul.Portal.csproj", "{2A3D878B-DE4C-48C9-B107-D5B10EC9FD3B}"

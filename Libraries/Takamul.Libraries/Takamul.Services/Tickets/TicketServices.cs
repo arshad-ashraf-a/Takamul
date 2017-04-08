@@ -15,6 +15,8 @@ using Takamul.Models;
 using Takamul.Models.ViewModel;
 using System.Data.Common;
 using System.Data;
+using Infrastructure.Core;
+using System;
 
 namespace Takamul.Services
 {
@@ -107,6 +109,89 @@ namespace Takamul.Services
             #region ":Get Sp Result:"
             List<TicketChatViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketChatViewModel>("GetTicketChats", arrParameters.ToArray());
             return lstTickets;
+            #endregion
+        }
+        #endregion
+
+        #region Method :: Response :: oInsertTicket
+        /// <summary>
+        /// Insert Ticket
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <param name="nParticipantUserID"></param>
+        /// <returns></returns>
+        public Response oInsertTicket(TicketViewModel oTicketViewModel,int nParticipantUserID)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oTicketViewModel.APPLICATION_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nParticipantUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.VarChar, oTicketViewModel.TICKET_NAME, 300, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketDesciption", SqlDbType.VarChar, oTicketViewModel.TICKET_DESCRIPTION, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DefaultImagePath", SqlDbType.VarChar, oTicketViewModel.DEFAULT_IMAGE, 500, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketID", SqlDbType.Int, ParameterDirection.Output));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("InsertTicket", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[6].Value.ToString());
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+                    //Inserted Ticket ID
+                    oResponse.ResponseID = arrParameters[5].Value.ToString();
+                }
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
+        #region Method :: Response :: oInsertTicketChat
+        /// <summary>
+        /// Insert Ticket Chat
+        /// </summary>
+        /// <param name="oTicketChatViewModel"></param>
+        /// <returns></returns>
+        public Response oInsertTicketChat(TicketChatViewModel oTicketChatViewModel)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, oTicketChatViewModel.TICKET_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Ticket_Participant_Id", SqlDbType.Int,oTicketChatViewModel.TICKET_PARTICIPANT_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.VarChar, oTicketChatViewModel.REPLY_MESSAGE, int.MaxValue, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyFilePath", SqlDbType.VarChar, oTicketChatViewModel.REPLY_FILE_PATH, 500, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketChatTypeId", SqlDbType.Int, oTicketChatViewModel.TICKET_CHAT_TYPE_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("InsertTicketChat", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
             #endregion
         }
         #endregion

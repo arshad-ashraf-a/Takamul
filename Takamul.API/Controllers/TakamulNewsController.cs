@@ -25,6 +25,9 @@ using Takamul.Services;
 
 namespace Takamul.API.Controllers
 {
+    /// <summary>
+    /// News Service
+    /// </summary>
     public class TakamulNewsController : ApiController
     {
         #region ::   State   ::

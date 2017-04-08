@@ -8,22 +8,29 @@
 /* Description          : Manage ticket operations                                                 */
 /*************************************************************************************************/
 
+using Infrastructure.Core;
+using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Takamul.Models;
 using Takamul.Models.ApiViewModel;
 using Takamul.Models.ViewModel;
 using Takamul.Services;
 
 namespace Takamul.API.Controllers
 {
+    /// <summary>
+    /// Ticket Service
+    /// </summary>
     public class TakamulTicketController : ApiController
     {
         #region ::   State   ::
@@ -96,7 +103,7 @@ namespace Takamul.API.Controllers
                 string sBase64DefaultImage = string.Empty;
                 if (oTicketViewModel.DEFAULT_IMAGE != null)
                 {
-                    FileAccessService oFileAccessService = new FileAccessService();
+                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
                     byte[] oByteFile = oFileAccessService.ReadFile(oTicketViewModel.DEFAULT_IMAGE);
                     if (oByteFile.Length > 0)
                     {
@@ -141,8 +148,8 @@ namespace Takamul.API.Controllers
                     string sBase64ReplyImage = string.Empty;
                     if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
                     {
-                        FileAccessService oFileAccessService = new FileAccessService();
-                       byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
                         if (oByteFile.Length > 0)
                         {
                             sBase64ReplyImage = Convert.ToBase64String(oByteFile);
@@ -163,9 +170,176 @@ namespace Takamul.API.Controllers
 
                     lstTakamulTicket.Add(oTakamulTicketChat);
                 }
-                
+
             }
             return Request.CreateResponse(HttpStatusCode.OK, lstTakamulTicket);
+        }
+        #endregion 
+
+        #region Method :: HttpResponseMessage :: CreateTicket
+        // POST: api/TakamulTicket/CreateTicket
+        /// <summary>
+        /// Create a ticket
+        /// </summary>
+        /// <param name="oTakamulTicket"></param>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage CreateTicket(TakamulTicket oTakamulTicket, int nUserID)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string sDefaultImagePath = string.Empty;
+                    if (!string.IsNullOrEmpty(oTakamulTicket.Base64DefaultImage))
+                    {
+                        enumFileTypes oEnumFileTypes = (enumFileTypes)Enum.Parse(typeof(enumFileTypes), oTakamulTicket.DefaultImageType.ToString());
+                        switch (oEnumFileTypes)
+                        {
+                            case enumFileTypes.png:
+                                sDefaultImagePath = CommonHelper.AppendTimeStamp("fake.png");
+                                break;
+                            case enumFileTypes.jpg:
+                                sDefaultImagePath = CommonHelper.AppendTimeStamp("fake.jpg");
+                                break;
+                            case enumFileTypes.jpeg:
+                                sDefaultImagePath = CommonHelper.AppendTimeStamp("fake.jpeg");
+                                break;
+                        }
+                    }
+
+                    TicketViewModel oTicketViewModel = new TicketViewModel()
+                    {
+                        APPLICATION_ID = oTakamulTicket.ApplicationID,
+                        TICKET_NAME = oTakamulTicket.TicketName,
+                        TICKET_DESCRIPTION = oTakamulTicket.TicketDescription,
+                        DEFAULT_IMAGE = sDefaultImagePath
+                    };
+
+                    Response oResponse = this.oITicketServices.oInsertTicket(oTicketViewModel, nUserID);
+                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    {
+                        if (!string.IsNullOrEmpty(sDefaultImagePath) && !string.IsNullOrEmpty(oTakamulTicket.Base64DefaultImage))
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                            if (!oResponse.ResponseID.Equals("-99"))
+                            {
+                                Byte[] oArrImage = Convert.FromBase64String(oTakamulTicket.Base64DefaultImage);
+                                string sDirectoyPath = Path.Combine(oTakamulTicket.ApplicationID.ToString(), oResponse.ResponseID);
+                                oFileAccessService.CreateDirectory(sDirectoyPath);
+                                oFileAccessService.WirteFileByte(Path.Combine(sDirectoyPath, sDefaultImagePath), oArrImage);
+                            }
+                        }
+                        oApiResponse.OperationResult = 1;
+                        oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
+                        oApiResponse.OperationResultMessage = "Ticket has been successfully created.";
+                    }
+                    else
+                    {
+                        oApiResponse.OperationResult = 0;
+                        oApiResponse.OperationResultMessage = "Ticket insert failed.";
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+                }
+                catch (Exception)
+                {
+                    oApiResponse.OperationResult = 0;
+                    oApiResponse.OperationResultMessage = "Internal sever error";
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+                }
+            }
+            oApiResponse.OperationResult = 0;
+            oApiResponse.OperationResultMessage = "Model validation failed";
+            return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
+        }
+        #endregion 
+
+        #region Method :: HttpResponseMessage :: PostTicketChat
+        // POST: api/TakamulTicket/PostTicketChat
+        /// <summary>
+        /// Post a ticket chat
+        /// </summary>
+        /// <param name="oTakamulTicketChat"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage PostTicketChat(TakamulTicketChat oTakamulTicketChat)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string sReplyImagePath = string.Empty;
+                    string sReplyImageDirectory = string.Empty;
+                    string sFullFilePath = string.Empty;
+                    if (!string.IsNullOrEmpty(oTakamulTicketChat.Base64ReplyImage))
+                    {
+                        sReplyImageDirectory = Path.Combine(oTakamulTicketChat.TicketID.ToString(), oTakamulTicketChat.ApplicationID.ToString());
+                        enumFileTypes oEnumFileTypes = (enumFileTypes)Enum.Parse(typeof(enumFileTypes), oTakamulTicketChat.TicketChatTypeID.ToString());
+                        switch (oEnumFileTypes)
+                        {
+                            case enumFileTypes.png:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.png");
+                                break;
+                            case enumFileTypes.jpg:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.jpg");
+                                break;
+                            case enumFileTypes.jpeg:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.jpeg");
+                                break;
+                            case enumFileTypes.doc:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.doc");
+                                break;
+                            case enumFileTypes.docx:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.docx");
+                                break;
+                            case enumFileTypes.pdf:
+                                sReplyImagePath = CommonHelper.AppendTimeStamp("fake.pdf");
+                                break;
+                        }
+                        sFullFilePath = Path.Combine(sReplyImageDirectory, sReplyImagePath);
+                    }
+
+                    TicketChatViewModel oTicketChatViewModel = new TicketChatViewModel()
+                    {
+                        TICKET_ID = oTakamulTicketChat.TicketID,
+                        REPLY_MESSAGE = oTakamulTicketChat.ReplyMessage,
+                        REPLY_FILE_PATH = sFullFilePath.Replace('\\', '/'),
+                        TICKET_CHAT_TYPE_ID = oTakamulTicketChat.TicketChatTypeID,
+                        TICKET_PARTICIPANT_ID = oTakamulTicketChat.UserID
+                    };
+
+                    Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    {
+                        if (!string.IsNullOrEmpty(sFullFilePath) && !string.IsNullOrEmpty(oTakamulTicketChat.Base64ReplyImage))
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                            Byte[] oArrImage = Convert.FromBase64String(oTakamulTicketChat.Base64ReplyImage);
+                            oFileAccessService.CreateDirectory(sReplyImageDirectory);
+                            oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
+                        }
+                        oApiResponse.OperationResult = 1;
+                    }
+                    else
+                    {
+                        oApiResponse.OperationResult = 0;
+                        oApiResponse.OperationResultMessage = "Chat post failed.";
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+                }
+                catch (Exception Ex)
+                {
+                    oApiResponse.OperationResult = 0;
+                    oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+                }
+            }
+            oApiResponse.OperationResult = 0;
+            oApiResponse.OperationResultMessage = "Model validation failed";
+            return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
         #endregion 
 

@@ -37,6 +37,7 @@ namespace Takamul.Models.ViewModel
         public string BLOCKED_REMARKS { get; set; }
         public bool IS_TICKET_SUBMISSION_RESTRICTED { get; set; }
         public int TICKET_SUBMISSION_INTERVAL_DAYS { get; set; }
+        public DateTime LAST_TICKET_SUBMISSION_DATE { get; set; }
 
         #region :: Constructor ::
         public UserInfoViewModel()
@@ -61,6 +62,7 @@ namespace Takamul.Models.ViewModel
             this.BLOCKED_REMARKS = string.Empty;
             this.IS_TICKET_SUBMISSION_RESTRICTED = false;
             this.TICKET_SUBMISSION_INTERVAL_DAYS = 0;
+            this.LAST_TICKET_SUBMISSION_DATE = DateTime.MinValue;
         } 
         #endregion
     }

@@ -27,6 +27,8 @@ namespace Takamul.API
                  defaults: new { id = RouteParameter.Optional }
              );
 
+
+
             var formatter = new JsonMediaTypeFormatter();
             var json = formatter.SerializerSettings;
 

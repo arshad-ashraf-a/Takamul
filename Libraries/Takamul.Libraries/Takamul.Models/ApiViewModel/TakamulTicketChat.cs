@@ -17,6 +17,7 @@ namespace Takamul.Models.ApiViewModel
 {
     public class TakamulTicketChat
     {
+        public int ApplicationID { get; set; }
         public int TicketID { get; set; }
         public int TicketChatID { get; set; }
         public string ReplyMessage { get; set; }
@@ -30,6 +31,7 @@ namespace Takamul.Models.ApiViewModel
         #region :: Constructor ::
         public TakamulTicketChat()
         {
+            this.ApplicationID = -99;
             this.TicketID = -99;
             this.TicketChatID = -99;
             this.TicketChatTypeID = -99;

@@ -23,15 +23,52 @@ namespace Infrastructure.Core
         /// <summary>
         /// The related record faild
         /// </summary>
-        RelatedRecordFaild = 2,
+        RelatedRecordFaild = -2,
         /// <summary>
         /// Already exist record faild
         /// </summary>
-        AlreadyExistRecordFaild = 3,
+        AlreadyExistRecordFaild = -3,
         /// <summary>
         /// Can Not Insert In This Date
         /// </summary>
-        CanNotInsertInThisDate = 4
+        CanNotInsertInThisDate = -4
+    }
+    #endregion
+
+    #region Enum :: FileTypes
+    /// <summary>
+    /// Enum Operation Result
+    /// </summary>
+    public enum enumFileTypes
+    {
+        /// <summary>
+        /// Default Text Type 
+        /// </summary>
+        Text = 1,
+        /// <summary>
+        /// PNG Type
+        /// </summary>
+        png = 2,
+        /// <summary>
+        /// JPG Type
+        /// </summary>
+        jpg = 3,
+        /// <summary>
+        /// JPEG Type
+        /// </summary>
+        jpeg = 4,
+        /// <summary>
+        /// DOC Type
+        /// </summary>
+        doc = 5,
+        /// <summary>
+        /// DOCX Type
+        /// </summary>
+        docx = 6,
+        /// <summary>
+        /// PDF Type
+        /// </summary>
+        pdf = 7,
     }
     #endregion
 

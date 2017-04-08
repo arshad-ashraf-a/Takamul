@@ -9,6 +9,7 @@
 /*************************************************************************************************/
 
 using Infrastructure.Core;
+using Infrastructure.Utilities;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -20,6 +21,9 @@ using Takamul.Services;
 
 namespace Takamul.API.Controllers
 {
+    /// <summary>
+    /// Takamul Common Service
+    /// </summary>
     public class TakamulCommonController : ApiController
     {
         #region ::   State   ::
@@ -59,7 +63,7 @@ namespace Takamul.API.Controllers
                 string sBase64AppLogo = string.Empty;
                 if (oApplicationViewModel.APPLICATION_LOGO_PATH != null)
                 {
-                    FileAccessService oFileAccessService = new FileAccessService();
+                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
                     byte[] oByteFile = oFileAccessService.ReadFile(oApplicationViewModel.APPLICATION_LOGO_PATH);
                     if (oByteFile.Length > 0)
                     {

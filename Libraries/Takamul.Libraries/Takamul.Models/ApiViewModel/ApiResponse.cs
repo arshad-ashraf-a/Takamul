@@ -18,7 +18,7 @@ namespace Takamul.Models.ApiViewModel
         public ApiResponse()
         {
             this.OperationResultMessage = string.Empty;
-            this.ResponseID = 99;
+            this.ResponseID = -99;
             this.OperationResult = -99;
             this.ResponseCode = "-99";
         }

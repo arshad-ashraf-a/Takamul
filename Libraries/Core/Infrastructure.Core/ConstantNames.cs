@@ -21,6 +21,19 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region FileAccessURL
+        /// <summary>
+        /// Takamul Connection Name
+        /// </summary>
+        public static string FileAccessURL
+        {
+            get
+            {
+                return "FileAccessURL";
+            }
+        }
+        #endregion
+
         #region FileServiceUploadFolder
         /// <summary>
         /// Takamul Connection Name

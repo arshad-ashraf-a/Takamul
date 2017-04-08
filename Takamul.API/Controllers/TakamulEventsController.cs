@@ -25,6 +25,9 @@ using Takamul.Services.Events;
 
 namespace Takamul.API.Controllers
 {
+    /// <summary>
+    /// Event Service
+    /// </summary>
     public class TakamulEventsController : ApiController
     {
         #region ::   State   ::
@@ -44,6 +47,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetAllEvents
         // GET: api/TakamulEvents/GetAllEvents
+        /// <summary>
+        /// Get all events
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetAllEvents(int nApplicationID)
         {
@@ -70,6 +78,11 @@ namespace Takamul.API.Controllers
 
         #region Method :: HttpResponseMessage :: GetEventDetails
         // GET: api/TakamulEvents/GetEventDetails
+        /// <summary>
+        /// Get event by event id
+        /// </summary>
+        /// <param name="nEventsID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetEventDetails(int nEventsID)
         {

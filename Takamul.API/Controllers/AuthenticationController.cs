@@ -21,6 +21,9 @@ using Takamul.Services;
 
 namespace Takamul.API.Controllers
 {
+    /// <summary>
+    /// Authentication Service
+    /// </summary>
     public class AuthenticationController : ApiController
     {
         #region ::   State   ::
@@ -56,7 +59,7 @@ namespace Takamul.API.Controllers
                 try
                 {
                     int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
-                  
+
                     UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel()
                     {
                         APPLICATION_ID = oTakamulUser.ApplicationID,
@@ -101,6 +104,45 @@ namespace Takamul.API.Controllers
         }
         #endregion 
 
+        #region Method :: HttpResponseMessage :: ResendOTPNumber
+        //GET: api/Authentication/ResendOTPNumber? nUserID = &nOTPNumber =
+        /// <summary>
+        /// Resend user OTP Number
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage ResendOTPNumber(int nUserID)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(nUserID, nOTPNumber);
+
+            if (oResponse.OperationResult == enumOperationResult.Success)
+            {
+                oApiResponse.OperationResult = 1;
+                oApiResponse.OperationResultMessage = "OTP has been successfully sent.";
+
+                //TODO::integrate with sms service and update status to database
+                oApiResponse.ResponseCode = nOTPNumber.ToString();
+            }
+            else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
+            {
+                oApiResponse.OperationResult = -2;
+                oApiResponse.OperationResultMessage = "You have exceeded the maximum number of attempt.Please contact app administrator.";
+
+                //TODO::integrate with sms service and update status to database
+                oApiResponse.ResponseCode = nOTPNumber.ToString();
+            }
+            else
+            {
+                oApiResponse.OperationResult = 0;
+                oApiResponse.OperationResultMessage = "An error occured.Please try again later.";
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+        }
+        #endregion 
+
         #region Method :: HttpResponseMessage :: ValidateOTPNumber
         // GET: api/Authentication/ValidateOTPNumber
         /// <summary>
@@ -110,10 +152,10 @@ namespace Takamul.API.Controllers
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(int nUserID,int nOTPNumber)
+        public HttpResponseMessage ValidateOTPNumber(int nUserID, int nOTPNumber)
         {
             ApiResponse oApiResponse = new ApiResponse();
-            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(nUserID,nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(nUserID, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
@@ -140,7 +182,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetUserDetails(int nUserID)
         {
             TakamulUser oTakamulUser = null;
-            UserInfoViewModel oUserInfoViewModel  = this.oIAuthenticationService.oGetUserDetails(nUserID);
+            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nUserID);
 
             if (oUserInfoViewModel != null)
             {
@@ -157,10 +199,11 @@ namespace Takamul.API.Controllers
                     IsOTPVerified = oUserInfoViewModel.IS_OTP_VALIDATED,
                     IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS,
                     IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED,
-                    TicketSubmissionIntervalDays = oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS
+                    TicketSubmissionIntervalDays = oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
+                    LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE.ToString("DD/mm/YYYY")
                 };
             }
-           
+
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulUser);
         }
         #endregion 

@@ -42,6 +42,7 @@ namespace Takamul.Models.ApiViewModel
         public bool IsSmsSent { get; set; }
         public bool IsTicketSubmissionRestricted { get; set; }
         public int TicketSubmissionIntervalDays { get; set; }
+        public string LastTicketSubmissionDate { get; set; }
 
         #region :: Constructor ::
         public TakamulUser()
@@ -66,6 +67,7 @@ namespace Takamul.Models.ApiViewModel
             this.IsSmsSent = false;
             this.IsTicketSubmissionRestricted = false;
             this.TicketSubmissionIntervalDays = 0;
+            this.LastTicketSubmissionDate = string.Empty;
         }
         #endregion
     }
