@@ -239,6 +239,8 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
+    <Content Include="DBScript\Area_Wilayat_Village_Proc.sql" />
+    <Content Include="DBScript\Area_Wilayat_Village_script.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Functions.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Procedures.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Tables.sql" />
