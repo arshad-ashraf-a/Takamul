@@ -7,15 +7,14 @@ using System.Web.Mvc;
 
 namespace LDC.eServices.Portal.Controllers
 {
-    public class HomeController : BaseController
+    public class ApplicationsController : BaseController
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult ApplicationsList()
         {
-            this.PageTitle = "Home";
-            this.TitleHead = "Home";
+            this.PageTitle = "Applications List";
+            this.TitleHead = "Applications List";
 
-            var userId = CurrentUser.nUserID;
             return View();
         }
     }

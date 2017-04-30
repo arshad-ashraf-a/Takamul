@@ -17,35 +17,35 @@ namespace Takamul.Models.ViewModel
 {
     public class EventsViewModel
     {
-        public int EVENTID { get; set; }
-        public int APPLID { get; set; }
-        public string EVENTNAME { get; set; }
-        public string EVENTDESCRIPTION { get; set; }
-        public DateTime EVENTDATE { get; set; }
-        public string LOCATIONNAME { get; set; }
-        public string LATITUDE { get; set; }
-        public string LONGITUDE { get; set; }
-        public int CREATEDBY { get; set; }
-        public DateTime CRETEDDATE { get; set; }
-        public int MODIFIEDBY { get; set; }
-        public DateTime MODIFIEDDATE { get; set; }
+        public int ID { get; set; }
+        public int APPLICATION_ID { get; set; }
+        public string EVENT_NAME { get; set; }
+        public string EVENT_DESCRIPTION { get; set; }
+        public DateTime EVENT_DATE { get; set; }
+        public string EVENT_LOCATION_NAME { get; set; }
+        public string EVENT_LATITUDE { get; set; }
+        public string EVENT_LONGITUDE { get; set; }
+        public int CREATED_BY { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public int MODIFIED_BY { get; set; }
+        public DateTime MODIFIED_DATE { get; set; }
 
 
         #region :: Constructor ::
         public EventsViewModel()
         {
-            this.EVENTID = -99;
-            this.APPLID = -99;
-            this.EVENTNAME = string.Empty;
-            this.EVENTDESCRIPTION = string.Empty;
-            this.EVENTDATE = Convert.ToDateTime("1/1/1900");
-            this.LOCATIONNAME = string.Empty;
-            this.LATITUDE = string.Empty;
-            this.LONGITUDE = string.Empty;
-            this.CREATEDBY = -99;
-            this.CRETEDDATE = Convert.ToDateTime("1/1/1900");
-            this.MODIFIEDBY = -99;
-            this.MODIFIEDDATE = Convert.ToDateTime("1/1/1900"); ;
+            this.ID = -99;
+            this.APPLICATION_ID = -99;
+            this.EVENT_NAME = string.Empty;
+            this.EVENT_DESCRIPTION = string.Empty;
+            this.EVENT_DATE = Convert.ToDateTime("1/1/1900");
+            this.EVENT_LOCATION_NAME = string.Empty;
+            this.EVENT_LATITUDE = string.Empty;
+            this.EVENT_LONGITUDE = string.Empty;
+            this.CREATED_BY = -99;
+            this.CREATED_DATE = Convert.ToDateTime("1/1/1900");
+            this.MODIFIED_BY = -99;
+            this.MODIFIED_DATE = Convert.ToDateTime("1/1/1900"); ;
         }
         #endregion
     }

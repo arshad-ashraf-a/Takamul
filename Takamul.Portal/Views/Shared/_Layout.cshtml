@@ -94,13 +94,9 @@
                                 <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
                                 <li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
                              
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
-                                    <ul>
-                                        <li><a href="#" id="layout1">All Applications</a></li>
-                                    </ul>
-                                </li>
-                               
+                                <li><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+
+                                <li><a href="#"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
 
                                 <!-- Appearance -->
                                 <li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
@@ -114,7 +110,7 @@
                                 </li>
                                 <!-- /appearance -->
                                 <!-- Appearance -->
-                                <li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
+                                @*<li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
                                 <li>
                                     <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
                                     <ul>
@@ -126,7 +122,7 @@
                                 <li>
                                     <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
                                     <ul></ul>
-                                </li>
+                                </li>*@
                                 <!-- /appearance -->
                             </ul>
                         </div>
@@ -153,27 +149,52 @@
 
                         </div>
                     </div>
-                    <div class="breadcrumb-line">
+                    <div class="breadcrumb-line no-padding">
                         <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="@Url.Action("Index", "home", new { area = "" })">
-                                    <i class="icon-home2 position-left"></i>Home
-                                </a>
-                            </li>
-                            @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
-                            {
-                                <li>
-                                    <a href="#">
-                                        @oBaseController.ParentNode
-                                    </a>
-                                </li>
-                            }
-                            @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
-                            {
-                                <li class="active">@oBaseController.CurrentPage</li>
-                            }
-                        </ul>
+                        <!-- Navigation with mega menu -->
+                        <div class="navbar navbar-inverse bg-brown-300 navbar-component" style="position: relative; z-index: 30;">
+                            <div class="navbar-header visible-xs-block">
+                                <a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+
+                                <ul class="nav navbar-nav pull-right">
+                                    <li><a data-toggle="collapse" data-target="#demo1"><i class="icon-tree5"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="navbar-collapse collapse" id="demo1">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="#" ><i class="icon-list-unordered"></i>&nbsp;DashBoard </a>
+
+                                        
+                                    </li>
+
+                                    <li class="dropdown mega-menu mega-menu-wide">
+                                        <a href="#" ><i class="icon-list-unordered"></i>&nbsp;Tickets</a>
+
+                                        
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" aria-expanded="false"><i class="icon-list-unordered"></i>&nbsp;News </a>
+                                        
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#"><i class="icon-list-unordered"></i>&nbsp;Events </a>
+                                        
+                                    </li>
+
+                                    <li class="dropdown mega-menu mega-menu-wide">
+                                        <a href="#"><i class="icon-list-unordered"></i>&nbsp;Users </a>
+                                        
+                                    </li>
+                                </ul>
+
+                                
+                            </div>
+                        </div>
+                        <!-- /navigation with mega menu -->
                     </div>
 
                 </div>

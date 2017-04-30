@@ -22,7 +22,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Buttons {
+    public class Buttons {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Takamul.Portal.Resources.Controls.Buttons.Buttons", typeof(Buttons).Assembly);
@@ -51,7 +51,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
-        internal static string Add {
+        public static string Add {
             get {
                 return ResourceManager.GetString("Add", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Approve.
         /// </summary>
-        internal static string Approve {
+        public static string Approve {
             get {
                 return ResourceManager.GetString("Approve", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
-        internal static string Back {
+        public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to right.
         /// </summary>
-        internal static string BtnOverGridDir {
+        public static string BtnOverGridDir {
             get {
                 return ResourceManager.GetString("BtnOverGridDir", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
-        internal static string Clear {
+        public static string Clear {
             get {
                 return ResourceManager.GetString("Clear", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        internal static string Close {
+        public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        internal static string Continue {
+        public static string Continue {
             get {
                 return ResourceManager.GetString("Continue", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
-        internal static string Delete {
+        public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
-        internal static string Details {
+        public static string Details {
             get {
                 return ResourceManager.GetString("Details", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        internal static string Edit {
+        public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Edit Your Info.
         /// </summary>
-        internal static string EditProfileInfo {
+        public static string EditProfileInfo {
             get {
                 return ResourceManager.GetString("EditProfileInfo", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
-        internal static string Finish {
+        public static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
-        internal static string Logout {
+        public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
-        internal static string Next {
+        public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
-        internal static string Ok {
+        public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
-        internal static string Options {
+        public static string Options {
             get {
                 return ResourceManager.GetString("Options", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Pay.
         /// </summary>
-        internal static string Pay {
+        public static string Pay {
             get {
                 return ResourceManager.GetString("Pay", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
-        internal static string Previous {
+        public static string Previous {
             get {
                 return ResourceManager.GetString("Previous", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Print Card Registration First Time  Report.
         /// </summary>
-        internal static string PrintCardRegistrationReport {
+        public static string PrintCardRegistrationReport {
             get {
                 return ResourceManager.GetString("PrintCardRegistrationReport", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Print Card Renewal Report.
         /// </summary>
-        internal static string PrintCardRenewalReport {
+        public static string PrintCardRenewalReport {
             get {
                 return ResourceManager.GetString("PrintCardRenewalReport", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
-        internal static string Refresh {
+        public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
-        internal static string Register {
+        public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Register New Card.
         /// </summary>
-        internal static string RegisterNewCard {
+        public static string RegisterNewCard {
             get {
                 return ResourceManager.GetString("RegisterNewCard", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Reject.
         /// </summary>
-        internal static string Reject {
+        public static string Reject {
             get {
                 return ResourceManager.GetString("Reject", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Renew.
         /// </summary>
-        internal static string Renew {
+        public static string Renew {
             get {
                 return ResourceManager.GetString("Renew", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Renew Card.
         /// </summary>
-        internal static string RenewCard {
+        public static string RenewCard {
             get {
                 return ResourceManager.GetString("RenewCard", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Return.
         /// </summary>
-        internal static string Return {
+        public static string Return {
             get {
                 return ResourceManager.GetString("Return", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string Save {
+        public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        internal static string Search {
+        public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Sections.
         /// </summary>
-        internal static string Sections {
+        public static string Sections {
             get {
                 return ResourceManager.GetString("Sections", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
-        internal static string Select {
+        public static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Send Request.
         /// </summary>
-        internal static string SendRequest {
+        public static string SendRequest {
             get {
                 return ResourceManager.GetString("SendRequest", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
-        internal static string Show {
+        public static string Show {
             get {
                 return ResourceManager.GetString("Show", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to String1.
         /// </summary>
-        internal static string String1 {
+        public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string Submit {
+        public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string SubmitClearance {
+        public static string SubmitClearance {
             get {
                 return ResourceManager.GetString("SubmitClearance", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
-        internal static string Update {
+        public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Update Another Labour Data.
         /// </summary>
-        internal static string UpdateAnotherLabourData {
+        public static string UpdateAnotherLabourData {
             get {
                 return ResourceManager.GetString("UpdateAnotherLabourData", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to Verify.
         /// </summary>
-        internal static string Verify {
+        public static string Verify {
             get {
                 return ResourceManager.GetString("Verify", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
-        internal static string View {
+        public static string View {
             get {
                 return ResourceManager.GetString("View", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to View Arrived Workers.
         /// </summary>
-        internal static string ViewArrivedWorkers {
+        public static string ViewArrivedWorkers {
             get {
                 return ResourceManager.GetString("ViewArrivedWorkers", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace Takamul.Portal.Resources.Controls.Buttons {
         /// <summary>
         ///   Looks up a localized string similar to View Details.
         /// </summary>
-        internal static string ViewDetails {
+        public static string ViewDetails {
             get {
                 return ResourceManager.GetString("ViewDetails", resourceCulture);
             }

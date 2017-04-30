@@ -20,15 +20,30 @@ using System;
 
 namespace Takamul.Services
 {
-    public class ApplicationService : EntityService<UserInfoViewModel>, IApplicationService
+    public class ApplicationService : EntityService<APPLICATIONS>, IApplicationService
     {
         #region Members
         private readonly TakamulConnection oTakamulConnection;
-
+        private IDbSet<APPLICATIONS> oApplicationsDBSet;// Represent DB Set Table For AREA_MASTER
         #endregion
 
         #region Properties
-
+        #region Property :: ApplicationsDBSet
+        /// <summary>
+        ///  Get APPLICATIONS DBSet Object
+        /// </summary>
+        private IDbSet<APPLICATIONS> ApplicationsDBSet
+        {
+            get
+            {
+                if (oApplicationsDBSet == null)
+                {
+                    oApplicationsDBSet = oTakamulConnection.Set<APPLICATIONS>();
+                }
+                return oApplicationsDBSet;
+            }
+        }
+        #endregion
         #endregion
 
         #region :: Constructor ::
@@ -41,6 +56,53 @@ namespace Takamul.Services
         #endregion
 
         #region :: Methods ::
+
+        //#region Method :: IPagedList<AREA_MASTER> :: IlGetAllAreaMasters
+        ///// <summary>
+        ///// Get all area masters
+        ///// </summary>
+        ///// <param name="sSearchByAreaName"></param>
+        ///// <param name="nPageIndex"></param>
+        ///// <param name="nPageSize"></param>
+        ///// <param name="sColumnName"></param>
+        ///// <param name="sColumnOrder"></param>
+        ///// <returns></returns>
+        //public IPagedList<ApplicationViewModel> IlGetAllAreaMasters(string sSearchByAreaName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+        //{
+        //    #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
+        //    var lstAreaMasters = (from c in this.ApplicationsDBSet
+        //                          where sSearchByAreaName == null || c.AREA_NAME.Contains(sSearchByAreaName)
+        //                          orderby c.AREA_ID descending
+        //                          select new
+        //                          {
+        //                              AREA_ID = c.AREA_ID,
+        //                              AREA_NAME = c.AREA_NAME,
+        //                              AREA_DESCRIPTION = c.AREA_DESCRIPTION
+
+        //                          });
+        //    #endregion
+
+        //    #region Execute The Query And Return Page Result
+        //    var oTempAreaMastersPagedResult = new PagedList<dynamic>(lstAreaMasters, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
+        //    int nTotal = oTempAreaMastersPagedResult.TotalCount;
+        //    PagedList<APPLICATIONS> plstAreaMaster = new PagedList<APPLICATIONS>(oTempAreaMastersPagedResult.Select(oAreaMasterPagedResult => new AREA_MASTER
+        //    {
+        //        AREA_ID = oAreaMasterPagedResult.AREA_ID,
+        //        AREA_NAME = oAreaMasterPagedResult.AREA_NAME,
+        //        AREA_DESCRIPTION = oAreaMasterPagedResult.AREA_DESCRIPTION
+
+
+        //    }), oTempAreaMastersPagedResult.PageIndex, oTempAreaMastersPagedResult.PageSize, oTempAreaMastersPagedResult.TotalCount);
+
+        //    if (plstAreaMaster.Count > 0)
+        //    {
+        //        plstAreaMaster[0].TotalCount = nTotal;
+        //    }
+
+        //    return plstAreaMaster;
+        //    #endregion
+        //}
+        //#endregion
 
         #region Method :: ApplicationViewModel :: oGetApplicationDetails
         /// <summary>
@@ -67,6 +129,7 @@ namespace Takamul.Services
 
         }
         #endregion
+
 
         #endregion
     }

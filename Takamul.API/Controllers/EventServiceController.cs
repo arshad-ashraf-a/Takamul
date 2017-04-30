@@ -64,10 +64,10 @@ namespace Takamul.API.Controllers
                 {
                     TakamulEvents oTakamulEvents = new TakamulEvents()
                     {
-                        EventID = Events.EVENTID,
-                        APPLICATIONID = Events.APPLID,
-                        EVENTDESCRIPTION = Events.EVENTDESCRIPTION,
-                        EVENTNAME = Events.EVENTNAME
+                        EventID = Events.ID,
+                        APPLICATIONID = Events.APPLICATION_ID,
+                        EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
+                        EVENTNAME = Events.EVENT_NAME
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
@@ -92,10 +92,10 @@ namespace Takamul.API.Controllers
             {
                  oTakamulEvents = new TakamulEvents()
                 {
-                    EventID = oEventsViewModel.EVENTID,
-                    APPLICATIONID = oEventsViewModel.APPLID,
-                    EVENTDESCRIPTION = oEventsViewModel.EVENTDESCRIPTION,
-                    EVENTNAME = oEventsViewModel.EVENTNAME
+                    EventID = oEventsViewModel.ID,
+                    APPLICATIONID = oEventsViewModel.APPLICATION_ID,
+                    EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
+                    EVENTNAME = oEventsViewModel.EVENT_NAME
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
