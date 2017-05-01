@@ -920,6 +920,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\Applications\ApplicationsList.cshtml" />
+    <Content Include="Views\Shared\_AppDetailsLayout.cshtml" />
+    <Content Include="Views\Applications\ApplicationsDetais.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

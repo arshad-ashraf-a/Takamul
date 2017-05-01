@@ -1,5 +1,7 @@
 ﻿@using Infrastructure.Utilities;
 @using System.Web.Optimization;
+@using Takamul.Portal.Resources.Common;
+@using Takamul.Portal.Resources.Controls.GridView;
 @{
     BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
 
@@ -20,7 +22,9 @@
     <!-- Core CSS Utilities -->
     @Styles.Render("~/bundles/CoreStyleUtilities")
     <!-- core CSS Utilities -->
-
+    <link rel="stylesheet" href='@Url.Content("~/assets/css/jqGrid/ui.jqgrid.css")' />
+    <link href='@Url.Content("~/assets/css/jqGrid/GridContextMenu.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/assets/css/jqGrid/jqgrid.style.css")' rel="stylesheet" />
     @RenderSection("SpecificPluginStyles", false)
 </head>
 <body>
@@ -149,27 +153,52 @@
 
                         </div>
                     </div>
-                    <div class="breadcrumb-line">
+                    <div class="breadcrumb-line no-padding">
                         <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="@Url.Action("Index", "home", new { area = "" })">
-                                    <i class="icon-home2 position-left"></i>Home
-                                </a>
-                            </li>
-                            @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
-                            {
-                                <li>
-                                    <a href="#">
-                                        @oBaseController.ParentNode
-                                    </a>
-                                </li>
-                            }
-                            @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
-                            {
-                                <li class="active">@oBaseController.CurrentPage</li>
-                            }
-                        </ul>
+                        <!-- Navigation with mega menu -->
+                        <div class="navbar navbar-inverse bg-brown-300 navbar-component" style="position: relative; z-index: 30;">
+                            <div class="navbar-header visible-xs-block">
+                                <a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+
+                                <ul class="nav navbar-nav pull-right">
+                                    <li><a data-toggle="collapse" data-target="#demo1"><i class="icon-tree5"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="navbar-collapse collapse" id="demo1">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="#" ><i class="icon-list-unordered"></i>&nbsp;DashBoard </a>
+
+                                        
+                                    </li>
+
+                                    <li class="dropdown mega-menu mega-menu-wide">
+                                        <a href="#" ><i class="icon-list-unordered"></i>&nbsp;Tickets</a>
+
+                                        
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" aria-expanded="false"><i class="icon-list-unordered"></i>&nbsp;News </a>
+                                        
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#"><i class="icon-list-unordered"></i>&nbsp;Events </a>
+                                        
+                                    </li>
+
+                                    <li class="dropdown mega-menu mega-menu-wide">
+                                        <a href="#"><i class="icon-list-unordered"></i>&nbsp;Users </a>
+                                        
+                                    </li>
+                                </ul>
+
+                                
+                            </div>
+                        </div>
+                        <!-- /navigation with mega menu -->
                     </div>
 
                 </div>
@@ -190,13 +219,37 @@
     @*System Loader*@
     <div id="fakeloader" style="display:none;opacity: 0.5">
     </div>
+    <script>
+        var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
+        var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
+
+        var UlDir = '@CommonResx.LayoutDirectionOpposite';
+
+        var GridViewId = "grid-table";
+        var GridViewPagerId = "grid-pager";
+
+        var GridViewResources = {
+            Direction: '@GridView.Direction',
+            FloatingLeft: '@GridView.FloatingLeft',
+            FloatingRight: '@GridView.FloatingRight',
+            TextAlign: '@GridView.TextAlign',
+            SinglePagerArrowLeft: '@GridView.SinglePagerArrowLeft',
+            SinglePagerArrowRight: '@GridView.SinglePagerArrowRight'
+        }
+    </script>
 
     <!-- Core JS files -->
     @Scripts.Render("~/bundles/CoreScripts")
     <!-- core JS files -->
+
+
     <!-- Core Js Utilities -->
     @Scripts.Render("~/bundles/CoreScriptUtilities")
     <!-- core JS Utilities -->
+
+    <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/jquery.jqGrid.src.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/RenderGridView.js")'></script>
 
     @RenderSection("SpecificPluginScripts", false)
     @RenderSection("InlineScriptsRelated", false)
