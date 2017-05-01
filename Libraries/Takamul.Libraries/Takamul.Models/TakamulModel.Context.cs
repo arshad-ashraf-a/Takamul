@@ -25,6 +25,9 @@ namespace Takamul.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<APPLICATION_SETTINGS> APPLICATION_SETTINGS { get; set; }
+        public virtual DbSet<APPLICATIONS> APPLICATIONS { get; set; }
+        public virtual DbSet<EVENTS> EVENTS { get; set; }
+        public virtual DbSet<NEWS> NEWS { get; set; }
+        public virtual DbSet<TICKETS> TICKETS { get; set; }
     }
 }

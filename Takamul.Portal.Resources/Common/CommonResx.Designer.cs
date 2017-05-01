@@ -22,7 +22,7 @@ namespace Takamul.Portal.Resources.Common {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommonResx {
+    public class CommonResx {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Takamul.Portal.Resources.Common {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Takamul.Portal.Resources.Common.CommonResx", typeof(CommonResx).Assembly);
@@ -51,7 +51,7 @@ namespace Takamul.Portal.Resources.Common {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Accessibility.
         /// </summary>
-        internal static string Accessibility {
+        public static string Accessibility {
             get {
                 return ResourceManager.GetString("Accessibility", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Sorry! Access Denied, you do not have sufficient privileges..
         /// </summary>
-        internal static string AccessisDenied {
+        public static string AccessisDenied {
             get {
                 return ResourceManager.GetString("AccessisDenied", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Add Company User.
         /// </summary>
-        internal static string AddCompanyUser {
+        public static string AddCompanyUser {
             get {
                 return ResourceManager.GetString("AddCompanyUser", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Advanced Search.
         /// </summary>
-        internal static string AdvancedSearch {
+        public static string AdvancedSearch {
             get {
                 return ResourceManager.GetString("AdvancedSearch", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
-        internal static string All {
+        public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to All Departments.
         /// </summary>
-        internal static string AllDepartments {
+        public static string AllDepartments {
             get {
                 return ResourceManager.GetString("AllDepartments", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to All Directorates.
         /// </summary>
-        internal static string AllDirectorates {
+        public static string AllDirectorates {
             get {
                 return ResourceManager.GetString("AllDirectorates", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to All Sections.
         /// </summary>
-        internal static string AllSections {
+        public static string AllSections {
             get {
                 return ResourceManager.GetString("AllSections", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to All Sectors.
         /// </summary>
-        internal static string AllSectors {
+        public static string AllSectors {
             get {
                 return ResourceManager.GetString("AllSectors", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Almost Expired.
         /// </summary>
-        internal static string AlmostExpired {
+        public static string AlmostExpired {
             get {
                 return ResourceManager.GetString("AlmostExpired", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to The section you are trying to add is already exist, please try with a different one..
         /// </summary>
-        internal static string AlreadyExistRecordFaild {
+        public static string AlreadyExistRecordFaild {
             get {
                 return ResourceManager.GetString("AlreadyExistRecordFaild", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to An error has been occurred please try again later.
         /// </summary>
-        internal static string AnErrorHasBeenOccured {
+        public static string AnErrorHasBeenOccured {
             get {
                 return ResourceManager.GetString("AnErrorHasBeenOccured", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Approved.
         /// </summary>
-        internal static string Approved {
+        public static string Approved {
             get {
                 return ResourceManager.GetString("Approved", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Birth date.
         /// </summary>
-        internal static string Birthdate {
+        public static string Birthdate {
             get {
                 return ResourceManager.GetString("Birthdate", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to no-skin.
         /// </summary>
-        internal static string BodyClass {
+        public static string BodyClass {
             get {
                 return ResourceManager.GetString("BodyClass", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Branch.
         /// </summary>
-        internal static string Branch {
+        public static string Branch {
             get {
                 return ResourceManager.GetString("Branch", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Call Center.
         /// </summary>
-        internal static string CallCenter {
+        public static string CallCenter {
             get {
                 return ResourceManager.GetString("CallCenter", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Cancelled.
         /// </summary>
-        internal static string Cancelled {
+        public static string Cancelled {
             get {
                 return ResourceManager.GetString("Cancelled", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Can&apos;t insert in this date because its before the submission date..
         /// </summary>
-        internal static string CanNotInsertInThisDate {
+        public static string CanNotInsertInThisDate {
             get {
                 return ResourceManager.GetString("CanNotInsertInThisDate", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to You can&apos;t delete this event log, becuase this is not done by you and/or this is not a custom event..
         /// </summary>
-        internal static string CantDeleteThisEventType {
+        public static string CantDeleteThisEventType {
             get {
                 return ResourceManager.GetString("CantDeleteThisEventType", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Please enter the string as shown above:.
         /// </summary>
-        internal static string CaptchaText {
+        public static string CaptchaText {
             get {
                 return ResourceManager.GetString("CaptchaText", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to  Characters left.
         /// </summary>
-        internal static string CharactersLeft {
+        public static string CharactersLeft {
             get {
                 return ResourceManager.GetString("CharactersLeft", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Citizens.
         /// </summary>
-        internal static string CitizensEServicesPortal {
+        public static string CitizensEServicesPortal {
             get {
                 return ResourceManager.GetString("CitizensEServicesPortal", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Civil Number.
         /// </summary>
-        internal static string CivilNumber {
+        public static string CivilNumber {
             get {
                 return ResourceManager.GetString("CivilNumber", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
-        internal static string Clear {
+        public static string Clear {
             get {
                 return ResourceManager.GetString("Clear", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Company.
         /// </summary>
-        internal static string Company {
+        public static string Company {
             get {
                 return ResourceManager.GetString("Company", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Company changed successfully.
         /// </summary>
-        internal static string CompanyChangedSuccessfully {
+        public static string CompanyChangedSuccessfully {
             get {
                 return ResourceManager.GetString("CompanyChangedSuccessfully", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Company changing error, please try again later.
         /// </summary>
-        internal static string CompanyNotChanged {
+        public static string CompanyNotChanged {
             get {
                 return ResourceManager.GetString("CompanyNotChanged", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to padding-right:3em;.
         /// </summary>
-        internal static string ComplaintDetailsMapsStyle {
+        public static string ComplaintDetailsMapsStyle {
             get {
                 return ResourceManager.GetString("ComplaintDetailsMapsStyle", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Your complaints has been submitted successfully , You can follow up by using the reference number.
         /// </summary>
-        internal static string ComplaintRefNo {
+        public static string ComplaintRefNo {
             get {
                 return ResourceManager.GetString("ComplaintRefNo", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Contact US.
         /// </summary>
-        internal static string ContactUs {
+        public static string ContactUs {
             get {
                 return ResourceManager.GetString("ContactUs", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Show content.
         /// </summary>
-        internal static string ContentViewer {
+        public static string ContentViewer {
             get {
                 return ResourceManager.GetString("ContentViewer", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to © {0} Ministry of Manpower – Sultanate of Oman. All Rights Reserved..
         /// </summary>
-        internal static string CopyRight {
+        public static string CopyRight {
             get {
                 return ResourceManager.GetString("CopyRight", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Court.
         /// </summary>
-        internal static string Court {
+        public static string Court {
             get {
                 return ResourceManager.GetString("Court", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Comercial Record Number.
         /// </summary>
-        internal static string CrNumber {
+        public static string CrNumber {
             get {
                 return ResourceManager.GetString("CrNumber", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Current Company : {0}.
         /// </summary>
-        internal static string CurrentSelectedComany {
+        public static string CurrentSelectedComany {
             get {
                 return ResourceManager.GetString("CurrentSelectedComany", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Department.
         /// </summary>
-        internal static string Department {
+        public static string Department {
             get {
                 return ResourceManager.GetString("Department", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Departure.
         /// </summary>
-        internal static string Departure {
+        public static string Departure {
             get {
                 return ResourceManager.GetString("Departure", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Described as.
         /// </summary>
-        internal static string Described {
+        public static string Described {
             get {
                 return ResourceManager.GetString("Described", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to ltr.
         /// </summary>
-        internal static string dir {
+        public static string dir {
             get {
                 return ResourceManager.GetString("dir", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to ltr.
         /// </summary>
-        internal static string Direction {
+        public static string Direction {
             get {
                 return ResourceManager.GetString("Direction", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to rtl.
         /// </summary>
-        internal static string DirectionOpposite {
+        public static string DirectionOpposite {
             get {
                 return ResourceManager.GetString("DirectionOpposite", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Directorate.
         /// </summary>
-        internal static string Directorate {
+        public static string Directorate {
             get {
                 return ResourceManager.GetString("Directorate", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to ace-icon fa fa-angle-double-right.
         /// </summary>
-        internal static string DoubleArrowIcon {
+        public static string DoubleArrowIcon {
             get {
                 return ResourceManager.GetString("DoubleArrowIcon", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to ace-icon fa fa-angle-double-left.
         /// </summary>
-        internal static string DoubleArrowIconMenu {
+        public static string DoubleArrowIconMenu {
             get {
                 return ResourceManager.GetString("DoubleArrowIconMenu", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Ministry Employee.
         /// </summary>
-        internal static string EmployeeEServicesPortal {
+        public static string EmployeeEServicesPortal {
             get {
                 return ResourceManager.GetString("EmployeeEServicesPortal", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Employers.
         /// </summary>
-        internal static string EmployerEServicesPortal {
+        public static string EmployerEServicesPortal {
             get {
                 return ResourceManager.GetString("EmployerEServicesPortal", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to An Error Occurred.
         /// </summary>
-        internal static string Error {
+        public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to eServices.
         /// </summary>
-        internal static string EServices {
+        public static string EServices {
             get {
                 return ResourceManager.GetString("EServices", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Expired.
         /// </summary>
-        internal static string Expired {
+        public static string Expired {
             get {
                 return ResourceManager.GetString("Expired", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to FAQ.
         /// </summary>
-        internal static string FAQ {
+        public static string FAQ {
             get {
                 return ResourceManager.GetString("FAQ", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to From Date.
         /// </summary>
-        internal static string FromDate {
+        public static string FromDate {
             get {
                 return ResourceManager.GetString("FromDate", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to General Error.
         /// </summary>
-        internal static string GeneralError {
+        public static string GeneralError {
             get {
                 return ResourceManager.GetString("GeneralError", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
-        internal static string Help {
+        public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Here.
         /// </summary>
-        internal static string Here {
+        public static string Here {
             get {
                 return ResourceManager.GetString("Here", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to $(&quot;.ui-inline-del&quot;).hide();.
         /// </summary>
-        internal static string HideInLineDelete {
+        public static string HideInLineDelete {
             get {
                 return ResourceManager.GetString("HideInLineDelete", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to $(&quot;.ui-inline-edit&quot;).hide();.
         /// </summary>
-        internal static string HideInLineEdit {
+        public static string HideInLineEdit {
             get {
                 return ResourceManager.GetString("HideInLineEdit", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to In Progress ....
         /// </summary>
-        internal static string InProgress {
+        public static string InProgress {
             get {
                 return ResourceManager.GetString("InProgress", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Job Seeker.
         /// </summary>
-        internal static string JobSeekerEServicesPortal {
+        public static string JobSeekerEServicesPortal {
             get {
                 return ResourceManager.GetString("JobSeekerEServicesPortal", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to left.
         /// </summary>
-        internal static string LayoutDirection {
+        public static string LayoutDirection {
             get {
                 return ResourceManager.GetString("LayoutDirection", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to right.
         /// </summary>
-        internal static string LayoutDirectionOpposite {
+        public static string LayoutDirectionOpposite {
             get {
                 return ResourceManager.GetString("LayoutDirectionOpposite", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to ~/Content/assets/images/logo_en.png.
         /// </summary>
-        internal static string Logo {
+        public static string Logo {
             get {
                 return ResourceManager.GetString("Logo", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to eServices .
         /// </summary>
-        internal static string MainTitle {
+        public static string MainTitle {
             get {
                 return ResourceManager.GetString("MainTitle", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Manpower.
         /// </summary>
-        internal static string ManpowerEServicesPortal {
+        public static string ManpowerEServicesPortal {
             get {
                 return ResourceManager.GetString("ManpowerEServicesPortal", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Add failed.
         /// </summary>
-        internal static string MessageAddFailed {
+        public static string MessageAddFailed {
             get {
                 return ResourceManager.GetString("MessageAddFailed", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to The record(s) has been added successfully.
         /// </summary>
-        internal static string MessageAddSuccess {
+        public static string MessageAddSuccess {
             get {
                 return ResourceManager.GetString("MessageAddSuccess", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Error Assigning the Question.
         /// </summary>
-        internal static string MessageAssignFaild {
+        public static string MessageAssignFaild {
             get {
                 return ResourceManager.GetString("MessageAssignFaild", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to The Question has been Assigned Successfully.
         /// </summary>
-        internal static string MessageAssignSuccess {
+        public static string MessageAssignSuccess {
             get {
                 return ResourceManager.GetString("MessageAssignSuccess", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Delete failed.
         /// </summary>
-        internal static string MessageDeleteFailed {
+        public static string MessageDeleteFailed {
             get {
                 return ResourceManager.GetString("MessageDeleteFailed", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to The record(s) has been deleted successfully.
         /// </summary>
-        internal static string MessageDeleteSuccess {
+        public static string MessageDeleteSuccess {
             get {
                 return ResourceManager.GetString("MessageDeleteSuccess", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Edit failed.
         /// </summary>
-        internal static string MessageEditFailed {
+        public static string MessageEditFailed {
             get {
                 return ResourceManager.GetString("MessageEditFailed", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to The record(s) has been edited successfully.
         /// </summary>
-        internal static string MessageEditSuccess {
+        public static string MessageEditSuccess {
             get {
                 return ResourceManager.GetString("MessageEditSuccess", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Ministerial Decrees.
         /// </summary>
-        internal static string MinisterialDecrees {
+        public static string MinisterialDecrees {
             get {
                 return ResourceManager.GetString("MinisterialDecrees", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Ministry of Manpower.
         /// </summary>
-        internal static string MinistryOfManpower {
+        public static string MinistryOfManpower {
             get {
                 return ResourceManager.GetString("MinistryOfManpower", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Mobile Applications.
         /// </summary>
-        internal static string MobileApplication {
+        public static string MobileApplication {
             get {
                 return ResourceManager.GetString("MobileApplication", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        internal static string New {
+        public static string New {
             get {
                 return ResourceManager.GetString("New", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
-        internal static string No {
+        public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to No data releated to this selection  ..
         /// </summary>
-        internal static string NoData {
+        public static string NoData {
             get {
                 return ResourceManager.GetString("NoData", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to No Data Found.
         /// </summary>
-        internal static string NoDataFound {
+        public static string NoDataFound {
             get {
                 return ResourceManager.GetString("NoDataFound", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to No selected records.
         /// </summary>
-        internal static string NoSelectedRecords {
+        public static string NoSelectedRecords {
             get {
                 return ResourceManager.GetString("NoSelectedRecords", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Not Available.
         /// </summary>
-        internal static string NotAvailable {
+        public static string NotAvailable {
             get {
                 return ResourceManager.GetString("NotAvailable", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Not Exist.
         /// </summary>
-        internal static string NotExist {
+        public static string NotExist {
             get {
                 return ResourceManager.GetString("NotExist", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to An error has been occured through payment proccess please try again later.
         /// </summary>
-        internal static string PaymentError {
+        public static string PaymentError {
             get {
                 return ResourceManager.GetString("PaymentError", resourceCulture);
             }
@@ -819,7 +819,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Payment Validation Error.
         /// </summary>
-        internal static string PaymentValidationError {
+        public static string PaymentValidationError {
             get {
                 return ResourceManager.GetString("PaymentValidationError", resourceCulture);
             }
@@ -828,7 +828,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Pending.
         /// </summary>
-        internal static string Pending {
+        public static string Pending {
             get {
                 return ResourceManager.GetString("Pending", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Called Mr..
         /// </summary>
-        internal static string PhoneCall {
+        public static string PhoneCall {
             get {
                 return ResourceManager.GetString("PhoneCall", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Phone Number.
         /// </summary>
-        internal static string PhoneNumber {
+        public static string PhoneNumber {
             get {
                 return ResourceManager.GetString("PhoneNumber", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Please Enter Age.
         /// </summary>
-        internal static string PleaseEnterAge {
+        public static string PleaseEnterAge {
             get {
                 return ResourceManager.GetString("PleaseEnterAge", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Please Select.
         /// </summary>
-        internal static string PleaseSelect {
+        public static string PleaseSelect {
             get {
                 return ResourceManager.GetString("PleaseSelect", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Privacy.
         /// </summary>
-        internal static string Privacy {
+        public static string Privacy {
             get {
                 return ResourceManager.GetString("Privacy", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to padding-right:2em; padding-left: 0em;.
         /// </summary>
-        internal static string ProclamationAttachmentsStyle {
+        public static string ProclamationAttachmentsStyle {
             get {
                 return ResourceManager.GetString("ProclamationAttachmentsStyle", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to padding-right:2em;padding-left: 0em;.
         /// </summary>
-        internal static string ProclamationDetailsMapsStyle {
+        public static string ProclamationDetailsMapsStyle {
             get {
                 return ResourceManager.GetString("ProclamationDetailsMapsStyle", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Reference Code.
         /// </summary>
-        internal static string REFCode {
+        public static string REFCode {
             get {
                 return ResourceManager.GetString("REFCode", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Regulations.
         /// </summary>
-        internal static string Regulations {
+        public static string Regulations {
             get {
                 return ResourceManager.GetString("Regulations", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Cant delete this record(s), please delete childe record(s) before this action..
         /// </summary>
-        internal static string RelatedRecordFaild {
+        public static string RelatedRecordFaild {
             get {
                 return ResourceManager.GetString("RelatedRecordFaild", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to 900.
         /// </summary>
-        internal static string ReportViewerHeight {
+        public static string ReportViewerHeight {
             get {
                 return ResourceManager.GetString("ReportViewerHeight", resourceCulture);
             }
@@ -936,7 +936,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to 600.
         /// </summary>
-        internal static string ReportViewerHeightWide {
+        public static string ReportViewerHeightWide {
             get {
                 return ResourceManager.GetString("ReportViewerHeightWide", resourceCulture);
             }
@@ -945,7 +945,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to 770.
         /// </summary>
-        internal static string ReportViewerWidth {
+        public static string ReportViewerWidth {
             get {
                 return ResourceManager.GetString("ReportViewerWidth", resourceCulture);
             }
@@ -954,7 +954,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to 1130.
         /// </summary>
-        internal static string ReportViewerWidthWide {
+        public static string ReportViewerWidthWide {
             get {
                 return ResourceManager.GetString("ReportViewerWidthWide", resourceCulture);
             }
@@ -963,7 +963,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Required Field.
         /// </summary>
-        internal static string RequiredInputNote {
+        public static string RequiredInputNote {
             get {
                 return ResourceManager.GetString("RequiredInputNote", resourceCulture);
             }
@@ -972,7 +972,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Return.
         /// </summary>
-        internal static string Return {
+        public static string Return {
             get {
                 return ResourceManager.GetString("Return", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Runaway.
         /// </summary>
-        internal static string Runaway {
+        public static string Runaway {
             get {
                 return ResourceManager.GetString("Runaway", resourceCulture);
             }
@@ -990,7 +990,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        internal static string Search {
+        public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
             }
@@ -999,7 +999,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Section.
         /// </summary>
-        internal static string Section {
+        public static string Section {
             get {
                 return ResourceManager.GetString("Section", resourceCulture);
             }
@@ -1008,7 +1008,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Sector.
         /// </summary>
-        internal static string Sector {
+        public static string Sector {
             get {
                 return ResourceManager.GetString("Sector", resourceCulture);
             }
@@ -1017,7 +1017,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Select Company.
         /// </summary>
-        internal static string SelectCompany {
+        public static string SelectCompany {
             get {
                 return ResourceManager.GetString("SelectCompany", resourceCulture);
             }
@@ -1026,7 +1026,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Select Department.
         /// </summary>
-        internal static string SelectDepartment {
+        public static string SelectDepartment {
             get {
                 return ResourceManager.GetString("SelectDepartment", resourceCulture);
             }
@@ -1035,7 +1035,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Select Directorate.
         /// </summary>
-        internal static string SelectDirectorate {
+        public static string SelectDirectorate {
             get {
                 return ResourceManager.GetString("SelectDirectorate", resourceCulture);
             }
@@ -1044,7 +1044,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Select Section.
         /// </summary>
-        internal static string SelectSection {
+        public static string SelectSection {
             get {
                 return ResourceManager.GetString("SelectSection", resourceCulture);
             }
@@ -1053,7 +1053,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Select Sector.
         /// </summary>
-        internal static string SelectSector {
+        public static string SelectSector {
             get {
                 return ResourceManager.GetString("SelectSector", resourceCulture);
             }
@@ -1062,7 +1062,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Service Not Available.
         /// </summary>
-        internal static string ServiceNotAvailable {
+        public static string ServiceNotAvailable {
             get {
                 return ResourceManager.GetString("ServiceNotAvailable", resourceCulture);
             }
@@ -1071,7 +1071,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Services.
         /// </summary>
-        internal static string Services {
+        public static string Services {
             get {
                 return ResourceManager.GetString("Services", resourceCulture);
             }
@@ -1080,7 +1080,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Show All Services.
         /// </summary>
-        internal static string ShowAllServices {
+        public static string ShowAllServices {
             get {
                 return ResourceManager.GetString("ShowAllServices", resourceCulture);
             }
@@ -1089,7 +1089,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Show Report.
         /// </summary>
-        internal static string ShowReport {
+        public static string ShowReport {
             get {
                 return ResourceManager.GetString("ShowReport", resourceCulture);
             }
@@ -1098,7 +1098,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Site Map.
         /// </summary>
-        internal static string SiteMap {
+        public static string SiteMap {
             get {
                 return ResourceManager.GetString("SiteMap", resourceCulture);
             }
@@ -1107,7 +1107,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Portal Eservices - Ministry of Manpower Sultanate of Oman.
         /// </summary>
-        internal static string SiteTitle {
+        public static string SiteTitle {
             get {
                 return ResourceManager.GetString("SiteTitle", resourceCulture);
             }
@@ -1116,7 +1116,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Staff Mail.
         /// </summary>
-        internal static string StaffMail {
+        public static string StaffMail {
             get {
                 return ResourceManager.GetString("StaffMail", resourceCulture);
             }
@@ -1125,7 +1125,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to *.
         /// </summary>
-        internal static string Star {
+        public static string Star {
             get {
                 return ResourceManager.GetString("Star", resourceCulture);
             }
@@ -1134,7 +1134,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string Submit {
+        public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
             }
@@ -1143,7 +1143,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Terms &amp; Conditions.
         /// </summary>
-        internal static string TermsAndConditions {
+        public static string TermsAndConditions {
             get {
                 return ResourceManager.GetString("TermsAndConditions", resourceCulture);
             }
@@ -1152,7 +1152,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to left.
         /// </summary>
-        internal static string TextAlign {
+        public static string TextAlign {
             get {
                 return ResourceManager.GetString("TextAlign", resourceCulture);
             }
@@ -1161,7 +1161,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Click Here to Change.
         /// </summary>
-        internal static string ToChangeCompany {
+        public static string ToChangeCompany {
             get {
                 return ResourceManager.GetString("ToChangeCompany", resourceCulture);
             }
@@ -1170,7 +1170,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
-        internal static string ToDate {
+        public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
             }
@@ -1179,7 +1179,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Training Institute.
         /// </summary>
-        internal static string TrainingInstitutePortal {
+        public static string TrainingInstitutePortal {
             get {
                 return ResourceManager.GetString("TrainingInstitutePortal", resourceCulture);
             }
@@ -1188,7 +1188,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Undefined.
         /// </summary>
-        internal static string Undefined {
+        public static string Undefined {
             get {
                 return ResourceManager.GetString("Undefined", resourceCulture);
             }
@@ -1197,7 +1197,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to User assigned to company successfully.
         /// </summary>
-        internal static string UserCompanyAssignSuccess {
+        public static string UserCompanyAssignSuccess {
             get {
                 return ResourceManager.GetString("UserCompanyAssignSuccess", resourceCulture);
             }
@@ -1206,7 +1206,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Use System as .
         /// </summary>
-        internal static string UseSystemAsCompany {
+        public static string UseSystemAsCompany {
             get {
                 return ResourceManager.GetString("UseSystemAsCompany", resourceCulture);
             }
@@ -1215,7 +1215,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Welcome.
         /// </summary>
-        internal static string Welcome {
+        public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
             }
@@ -1224,7 +1224,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Will Expire Soon.
         /// </summary>
-        internal static string WillExpireSoon {
+        public static string WillExpireSoon {
             get {
                 return ResourceManager.GetString("WillExpireSoon", resourceCulture);
             }
@@ -1233,7 +1233,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Working.
         /// </summary>
-        internal static string Working {
+        public static string Working {
             get {
                 return ResourceManager.GetString("Working", resourceCulture);
             }
@@ -1242,7 +1242,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Work Law.
         /// </summary>
-        internal static string WorkLaw {
+        public static string WorkLaw {
             get {
                 return ResourceManager.GetString("WorkLaw", resourceCulture);
             }
@@ -1251,7 +1251,7 @@ namespace Takamul.Portal.Resources.Common {
         /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
-        internal static string Yes {
+        public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }

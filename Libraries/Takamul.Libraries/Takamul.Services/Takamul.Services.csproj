@@ -93,8 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiService\" />
-    <Folder Include="Applications\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

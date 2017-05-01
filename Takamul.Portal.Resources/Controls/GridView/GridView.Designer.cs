@@ -22,7 +22,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class GridView {
+    public class GridView {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Takamul.Portal.Resources.Controls.GridView.GridView", typeof(GridView).Assembly);
@@ -51,7 +51,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to ltr.
         /// </summary>
-        internal static string Direction {
+        public static string Direction {
             get {
                 return ResourceManager.GetString("Direction", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string FloatingLeft {
+        public static string FloatingLeft {
             get {
                 return ResourceManager.GetString("FloatingLeft", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to 0px.
         /// </summary>
-        internal static string FloatingRight {
+        public static string FloatingRight {
             get {
                 return ResourceManager.GetString("FloatingRight", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to ui-icon ace-icon fa fa-angle-double-left bigger-140.
         /// </summary>
-        internal static string MultiPagerArrowLeft {
+        public static string MultiPagerArrowLeft {
             get {
                 return ResourceManager.GetString("MultiPagerArrowLeft", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to ui-icon ace-icon fa fa-angle-double-right bigger-140.
         /// </summary>
-        internal static string MultiPagerArrowRight {
+        public static string MultiPagerArrowRight {
             get {
                 return ResourceManager.GetString("MultiPagerArrowRight", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to ui-icon ace-icon fa fa-angle-left bigger-140.
         /// </summary>
-        internal static string SinglePagerArrowLeft {
+        public static string SinglePagerArrowLeft {
             get {
                 return ResourceManager.GetString("SinglePagerArrowLeft", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to ui-icon ace-icon fa fa-angle-right bigger-140.
         /// </summary>
-        internal static string SinglePagerArrowRight {
+        public static string SinglePagerArrowRight {
             get {
                 return ResourceManager.GetString("SinglePagerArrowRight", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to right.
         /// </summary>
-        internal static string TextAlign {
+        public static string TextAlign {
             get {
                 return ResourceManager.GetString("TextAlign", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Takamul.Portal.Resources.Controls.GridView {
         /// <summary>
         ///   Looks up a localized string similar to left.
         /// </summary>
-        internal static string TextDirection {
+        public static string TextDirection {
             get {
                 return ResourceManager.GetString("TextDirection", resourceCulture);
             }

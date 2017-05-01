@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiViewModel\ApiResponse.cs" />
-    <Compile Include="ApiViewModel\AreaInfo.cs" />
     <Compile Include="ApiViewModel\TakamulApplication.cs" />
     <Compile Include="ApiViewModel\TakamulEvents.cs" />
     <Compile Include="ApiViewModel\TakamulMembeInfo.cs" />
@@ -62,9 +61,7 @@
     <Compile Include="ApiViewModel\TakamulTicket.cs" />
     <Compile Include="ApiViewModel\TakamulUser.cs" />
     <Compile Include="ApiViewModel\TakamulNews.cs" />
-    <Compile Include="ApiViewModel\VillageInfo.cs" />
-    <Compile Include="ApiViewModel\WilayatInfo.cs" />
-    <Compile Include="APPLICATION_SETTINGS.cs">
+    <Compile Include="APPLICATIONS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\BaseModel.cs" />
@@ -72,6 +69,12 @@
     <Compile Include="Common\Login.cs" />
     <Compile Include="Common\LookUp.cs" />
     <Compile Include="Common\Response.cs" />
+    <Compile Include="EVENTS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NEWS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TakamulModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -88,16 +91,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TakamulModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="TICKETS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
-    <Compile Include="ViewModel\AreaInfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />
     <Compile Include="ViewModel\TicketChatViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
     <Compile Include="ViewModel\UserInfoViewModel.cs" />
     <Compile Include="ViewModel\MemberInfoViewModel.cs" />
     <Compile Include="ViewModel\NewsViewModel.cs" />
-    <Compile Include="ViewModel\VillageInfoViewModel.cs" />
-    <Compile Include="ViewModel\WilayatInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
