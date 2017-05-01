@@ -521,6 +521,29 @@
             <param name="nUserID"></param>
             <returns></returns>
         </member>
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetAreaLists">
+            <summary>
+            Get list of areas
+            </summary>
+            <returns></returns>
+            
+        </member>
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.OGetWilayatList(System.String)">
+            <summary>
+            Get list of Wilayats
+            </summary>
+            <param name="sAreaCode"></param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.OGetVillageList(System.String)">
+            <summary>
+            Get village detailed infomations
+            </summary>
+            <param name="sWilaaytCode"></param>
+            <returns></returns>
+            
+        </member>
         <member name="T:Takamul.API.Controllers.CommonServiceController">
             <summary>
             Common Service

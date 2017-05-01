@@ -190,6 +190,67 @@ namespace Takamul.Services
         }
         #endregion
 
+
+        #region Method :: AreaInfo :: OGetAreaList
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
+        public List<AreaInfoViewModel> OGetAreaList()
+        {
+
+            #region ":Get Sp Result:"
+            List<AreaInfoViewModel> lstAreaDetails = this.ExecuteStoredProcedureList<AreaInfoViewModel>("GetAllAreas");
+            return lstAreaDetails;         
+            
+            #endregion
+
+        }
+        #endregion
+        #region Method :: AreaInfo :: OGetWilayatList
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <returns></returns>
+        public List<WilayatInfoViewModel> OGetWilayatList(string sAreaCode)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.NVarChar, sAreaCode, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<WilayatInfoViewModel> lstWilayatDetails = this.ExecuteStoredProcedureList<WilayatInfoViewModel>("GetAllWilayats", arrParameters.ToArray());
+            return lstWilayatDetails;
+
+            #endregion
+
+        }
+        #endregion
+        #region Method :: AreaInfo :: OGetVillageList
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
+        public List<VillageInfoViewModel> OGetVillageList(string sWilayatCode)
+        {
+
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("WilayatCode", SqlDbType.NVarChar, sWilayatCode, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<VillageInfoViewModel> lstVillage = this.ExecuteStoredProcedureList<VillageInfoViewModel>("GetAllVillages", arrParameters.ToArray());
+            return lstVillage;
+
+            #endregion
+
+        }
+        #endregion
+
         #endregion
     }
 }

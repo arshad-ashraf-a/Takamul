@@ -11,6 +11,7 @@
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -206,7 +207,101 @@ namespace Takamul.API.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulUser);
         }
-        #endregion 
+        #endregion
+
+
+        #region Method :: HttpResponseMessage :: GetAreaLists
+        // GET: Authentication/GetAreaLists
+        /// <summary>
+        /// Get list of areas
+        /// </summary>
+        /// <returns></returns>
+        /// 
+
+        [Route("Authentication/GetAreaLists")]
+        [HttpGet]
+        public HttpResponseMessage GetAreaLists()
+        {
+            List<AreaInfo> oAreaInfolsts = null;
+                       
+            List<AreaInfoViewModel> oAreaListViewModellsts = this.oIAuthenticationService.OGetAreaList();
+
+            foreach (AreaInfoViewModel item in oAreaListViewModellsts)
+            {
+              var  oAreaInfo = new AreaInfo()
+                {
+                    AREACODE = item.AREACODE,
+                    AREA_NAME = item.AREA_NAME
+                };
+                oAreaInfolsts.Add(oAreaInfo);
+
+            }
+
+             
+
+            return Request.CreateResponse(HttpStatusCode.OK, oAreaInfolsts);
+        }
+        #endregion
+
+
+        #region Method :: HttpResponseMessage :: OGetWilayatList
+        // GET: Authentication/OGetWilayatList
+        /// <summary>
+        /// Get list of Wilayats
+        /// </summary>
+        /// <param name="sAreaCode"></param>
+        /// <returns></returns>
+        /// 
+        [Route("Authentication/OGetWilayatList")]
+        [HttpGet]
+        public HttpResponseMessage OGetWilayatList(string sAreaCode)
+        {
+            List<WilayatInfo> oWilayatList = null;
+           List< WilayatInfoViewModel> oWilayatViewModellsts = this.oIAuthenticationService.OGetWilayatList(sAreaCode);
+
+            foreach (WilayatInfoViewModel item in oWilayatViewModellsts)
+            {
+                var WilayatInfo = new WilayatInfo
+                {
+                    WILAYATCODE = item.WILAYATCODE,
+                    WILLAYATNAME = item.WILLAYATNAME
+                };
+                oWilayatList.Add(WilayatInfo); 
+            } 
+
+            return Request.CreateResponse(HttpStatusCode.OK, oWilayatList);
+        }
+        #endregion
+
+
+        #region Method :: HttpResponseMessage :: OGetVillageList
+        // GET: Authentication/OGetVillageList
+        /// <summary>
+        /// Get village detailed infomations
+        /// </summary>
+        /// <param name="sWilaaytCode"></param>
+        /// <returns></returns>
+        /// 
+        [Route("Authentication/OGetVillageList")]
+        [HttpGet]
+        public HttpResponseMessage OGetVillageList(string sWilaaytCode)
+        {
+            List<VillageInfo> oVillageList = null;
+           List<VillageInfoViewModel> oVillageViewModellsts = this.oIAuthenticationService.OGetVillageList(sWilaaytCode);
+
+            foreach (VillageInfoViewModel item in oVillageViewModellsts)
+            {
+                var oVillage = new VillageInfo()
+                {
+                    VILLAGECODE = item.VILLAGECODE,
+                    VILLAGENAME = item.VILLAGENAME
+
+                };
+                oVillageList.Add(oVillage);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oVillageList);
+        }
+        #endregion
 
         #endregion
     }
