@@ -204,26 +204,40 @@ namespace Infrastructure.Utilities
         }
         #endregion
 
+        #region Property :: CurrentApplicationID
+        public int CurrentApplicationID
+        {
+            get
+            {
+                int nCurrentAppID;
+                if (base.Session["ApplicationID"] != null)
+                {
+                    nCurrentAppID = Convert.ToInt32(base.Session["ApplicationID"].ToString());
+                }
+                else
+                {
+                    nCurrentAppID = -99;
+                }
+                return nCurrentAppID;
+            }
+            set
+            {
+                base.Session["ApplicationID"] = value;
+            }
+        }
+        #endregion
 
         #endregion
 
-        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if (filterContext.HttpContext.Session["CurrentUser"] == null)
-        //    {
-        //        if (filterContext.HttpContext.Request.IsAjaxRequest())
-        //        {
-        //            filterContext.HttpContext.Response.StatusCode = 403;
-        //            filterContext.Result = new JsonResult { Data = "LogOut", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        //        }
-        //        else
-        //            filterContext.Result = RedirectToAction("Login", "Account", new { area = "" });
-        //    }
-        //    else
-        //    {
-        //        base.Execute(filterContext.RequestContext);
-        //    }
-        //}
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (CurrentUser == null)
+            {
+                filterContext.Result = RedirectToAction("Login", "Account", new { area = "" });
+
+            }
+
+        }
 
 
         protected override void OnException(ExceptionContext filterContext)

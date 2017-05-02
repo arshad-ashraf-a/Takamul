@@ -1,0 +1,253 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"></div>
+            <form id="frmDeclaration" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title"> Events</h6>
+                        <div class="heading-elements">
+                            <div class="col-md-12">
+                                <div class="pull-right content-group-sm">
+
+                                    <div class="col-md-8">
+                                        <div class="input-group content-group">
+                                            <div class="has-feedback has-feedback-left">
+                                                <input type="text" id="txtSearchEventByName" class="form-control input-xs" placeholder="search event">
+                                                <div class="form-control-feedback">
+                                                    <i class="icon-search4 text-muted text-size-base"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" onclick="fnBindAllEvents(); return false;" class="btn btn-primary btn-xs">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a title="Add new event" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Event</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="fakeWidth col-md-12"></div>
+                            <div id="dvEvents">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+
+        var sGridViewSelector = "grid-table";
+        var sGridViewPagerSelector = "grid-pager";
+        function fnBindAllEvents() {
+            ShowLoader();
+            $("#dvEvents").hide();
+            $("#dvEvents").empty();
+            var table = document.createElement('table');
+            table.id = sGridViewSelector;
+            var pager = document.createElement('div');
+            pager.id = sGridViewPagerSelector;
+
+            $('#dvEvents').append(table);
+            $('#dvEvents').append(pager);
+
+            var ConstantsNames =
+                {
+                    ID: 'ID',
+                    EventName: 'EVENT_NAME',
+                    EventDescription: 'EVENT_DESCRIPTION',
+                    EventDate: 'EVENT_DATE',
+                    EventLocationName: 'EVENT_LOCATION_NAME',
+                    EventLatitude: 'EVENT_LATITUDE',
+                    EventLongitude: 'EVENT_LONGITUDE',
+                    IsActive: 'IS_ACTIVE',
+                    CreatedDate: 'CREATED_DATE'
+                };
+            var sCaption = 'All Events';
+            var oArrColumnNames = [
+                '',//Hidden Columns Represent ID Int Value
+                'Event Name',
+                'Event Date',
+                'Event Location',
+                'Latitude',
+                'Longitude',
+                'Is Active',
+                'Created Date',
+                'Options' // Options
+            ];
+
+            //string sIncidentNo,string sIncidentName,string sFromDate,string sToDate,
+            //                           string sIncidentStatus,string sIncidentType
+
+            var vSearchEventByName = $("#txtSearchEventByName").val();
+            var params = {
+                'sSearchByEventName': vSearchEventByName
+
+            };
+            var sBindDataUrl = '@Url.Action("JBindAllEvents", "Events")' + '?' + jQuery.param(params);
+
+            var sAddUrl = "#";
+            var sEditUrl = "#";
+            var sDeleteUrl = "#";
+            var oArrGridContextMenu = [
+                                        { MenuTitle: "Options" },
+                                        { Caption: "Update", EventName: "fnEditEvent();", RowId: true },
+                                        { Caption: "Delete", EventName: "fnDeleteEvent();", RowId: true },
+            ];
+            var oArrColsModel = [
+                    {
+                        name: ConstantsNames.ID, editable: false,
+                        key: true, hidden: true
+                    },
+                    {
+                        name: ConstantsNames.EventName,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.EventDate,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    },
+                    {
+                        name: ConstantsNames.EventLocationName,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.EventLatitude,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                      {
+                          name: ConstantsNames.EventLongitude,
+                          width: 150, editable: false,
+                          align: EnumColumnsAlignment.Center
+                      },
+                    {
+                        name: ConstantsNames.IsActive,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    }
+            ];
+
+            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
+            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+
+                $(window).bind('resize', function () {
+                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
+                }).trigger('resize');
+
+
+                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
+
+                $("#dvEvents").show();
+                HideLoader();
+            });
+        }
+
+        function fnEditEvent() {
+            var gdEvent = $('#' + sGridViewSelector);
+            var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
+
+            var link = '@Url.Action("EditEvent", "Events", new { nEventID = "replace" })';
+            link = link.replace("replace", vEventID);
+
+            window.location.href = link;
+        }
+
+        function fnDeleteEvent() {
+            var gdEvent = $('#' + sGridViewSelector);
+            var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Delete Event',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '30%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    var htmlToShow = "<label>Are you sure you wanted to delete this record ?</label>"
+                    $("#dvPopUpWindowContainer").html(htmlToShow);
+
+                },
+                buttons: [
+                     {
+                         text: "Delete",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             $.ajax({
+                                 url: '@Url.Action("JDeleteEvent", "Events")',
+                                 type: 'POST',
+                                 data: { ID: vEventID },
+                                 async: true,
+                                 success: function (result, response) {
+                                     if (result.nResult == 1) {
+                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                                         $("#dvPopUpWindow").dialog("close");
+                                         fnBindAllEvents();
+                                     }
+                                     else {
+                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                     }
+                                 },
+                                 error: function (result, response) {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                 }
+                             });
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnBindAllEvents();
+        });
+    </script>
+}

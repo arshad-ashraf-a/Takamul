@@ -82,7 +82,7 @@ namespace LDC.eServices.Portal.Controllers
             this.OperationResultMessages = CommonResx.GeneralError;
             if (CurrentUser != null)
             {
-                CurrentUser.CurrentApplicationID = nApplicationID;
+                this.CurrentApplicationID = nApplicationID;
                 this.OperationResult = enumOperationResult.Success;
                 this.OperationResultMessages = CommonResx.MessageAddSuccess;
             }

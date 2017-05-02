@@ -47,13 +47,10 @@ namespace Takamul.Portal.App_Start
 
             #region Custom Service Registration
 
-            #region :: Application Service ::  
             builder.RegisterType<ApplicationService>().As<IApplicationService>().InstancePerLifetimeScope();
-            #endregion
-
-            #region :: Custom Services ::  
-            //builder.RegisterType<IncidentService>().As<IIncidentService>().InstancePerLifetimeScope();
-            #endregion
+            builder.RegisterType<EventService>().As<IEventService>().InstancePerLifetimeScope();
+            builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
+            builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
 
             #endregion
 

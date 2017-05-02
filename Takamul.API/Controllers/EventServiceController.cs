@@ -21,7 +21,6 @@ using System.Web.Http.Cors;
 using Takamul.Models.ApiViewModel;
 using Takamul.Models.ViewModel;
 using Takamul.Services;
-using Takamul.Services.Events;
 
 namespace Takamul.API.Controllers
 {
@@ -32,12 +31,12 @@ namespace Takamul.API.Controllers
     {
         #region ::   State   ::
         #region Private Members
-        private readonly IEventsService oIEventsServices;
+        private readonly IEventService oIEventsServices;
         #endregion
         #endregion
 
         #region :: Constructor ::
-        public EventServiceController(IEventsService IEventsServicesInitializer)
+        public EventServiceController(IEventService IEventsServicesInitializer)
         {
             oIEventsServices = IEventsServicesInitializer;
         }
@@ -87,7 +86,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetEventDetails(int nEventsID)
         {
             TakamulEvents oTakamulEvents = null;
-            EventsViewModel oEventsViewModel = this.oIEventsServices.oGetEventDetails(nEventsID);
+            EventViewModel oEventsViewModel = this.oIEventsServices.oGetEventDetails(nEventsID);
             if (oEventsViewModel != null)
             {
                  oTakamulEvents = new TakamulEvents()

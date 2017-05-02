@@ -254,6 +254,7 @@
     <Content Include="DBScript\script 02Apr2017 - 05-34.sql" />
     <Content Include="DBScript\Takamul_script_01-04-2017.sql" />
     <Content Include="DBScript\Takamul_script_02-04-2017_23-00.sql" />
+    <Content Include="DBScript\Takamul_script_02-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_05-04-2016_20-35.sql" />
     <Content Include="DBScript\Takamul_script_06-04-2017_21-11.sql" />
     <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
@@ -855,6 +856,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\ExceptionsController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -927,6 +929,9 @@
     <Content Include="Views\Applications\ApplicationsList.cshtml" />
     <Content Include="Views\Shared\_AppLayout.cshtml" />
     <Content Include="Views\Applications\ApplicationsDetails.cshtml" />
+    <Content Include="Views\Events\EventsList.cshtml" />
+    <Content Include="Views\Events\AddNewEvent.cshtml" />
+    <Content Include="Views\Events\EditEvent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -962,7 +967,6 @@
     <Folder Include="assets\js\charts\" />
     <Folder Include="assets\js\pages\" />
     <Folder Include="UploadFolder\" />
-    <Folder Include="Views\Events\" />
     <Folder Include="Views\News\" />
     <Folder Include="Views\Tickets\" />
     <Folder Include="Views\Users\" />
