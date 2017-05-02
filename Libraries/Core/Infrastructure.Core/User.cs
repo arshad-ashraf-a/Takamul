@@ -163,7 +163,23 @@ namespace Infrastructure.Core
             {
                 this.nCurrentLanguageID = value;
             }
-        } 
+        }
+        #endregion
+
+        #region CurrentApplicationID
+        private int nCurrentApplicationID;
+
+        public int CurrentApplicationID
+        {
+            get
+            {
+                return this.nCurrentApplicationID;
+            }
+            set
+            {
+                this.nCurrentApplicationID = value;
+            }
+        }
         #endregion
     }
 }
