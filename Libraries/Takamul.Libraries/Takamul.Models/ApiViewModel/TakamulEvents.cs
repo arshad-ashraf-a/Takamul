@@ -22,6 +22,7 @@ namespace Takamul.Models.ApiViewModel
         public string EVENTNAME { get; set; }
         public string EVENTDESCRIPTION { get; set; }
         public string BASE64EVENTIMG { get; set; }
+        public DateTime EVENTDATE { get; set; }
 
         #region :: Constructor ::
         public TakamulEvents()
@@ -30,7 +31,7 @@ namespace Takamul.Models.ApiViewModel
             this.APPLICATIONID = -99;
             this.EVENTNAME = string.Empty;
             this.EVENTDESCRIPTION = string.Empty;
-            this.BASE64EVENTIMG = string.Empty;
+
         } 
         #endregion
     }

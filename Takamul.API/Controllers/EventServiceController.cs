@@ -67,7 +67,9 @@ namespace Takamul.API.Controllers
                         EventID = Events.ID,
                         APPLICATIONID = Events.APPLICATION_ID,
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
-                        EVENTNAME = Events.EVENT_NAME
+                        EVENTNAME = Events.EVENT_NAME,
+                        EVENTDATE = Events.EVENT_DATE,
+                        BASE64EVENTIMG = Events.BASE64EVENTIMG
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
@@ -95,10 +97,45 @@ namespace Takamul.API.Controllers
                     EventID = oEventsViewModel.ID,
                     APPLICATIONID = oEventsViewModel.APPLICATION_ID,
                     EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
-                    EVENTNAME = oEventsViewModel.EVENT_NAME
+                    EVENTNAME = oEventsViewModel.EVENT_NAME,
+                    EVENTDATE = oEventsViewModel.EVENT_DATE,
+                    BASE64EVENTIMG = oEventsViewModel.BASE64EVENTIMG
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
+        }
+        #endregion 
+
+        #region Method :: HttpResponseMessage :: GetEventsByDate
+        // GET: api/TakamulEvents/GetEventsByDate
+        /// <summary>
+        /// Get all events
+        /// </summary>
+        /// <param name="dEventDate"></param><param name="nApplicationID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetEventsByDate(DateTime dEventDate,int nApplicationID)
+        {
+            List<TakamulEvents> lstTakamulEvents = null;
+            var lstEvents = this.oIEventsServices.oGetEventsbyDate(dEventDate, nApplicationID);
+            if (lstEvents.Count() > 0)
+            {
+                lstTakamulEvents = new List<TakamulEvents>();
+                foreach (var Events in lstEvents)
+                {
+                    TakamulEvents oTakamulEvents = new TakamulEvents()
+                    {
+                        EventID = Events.ID,
+                        APPLICATIONID = Events.APPLICATION_ID,
+                        EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
+                        EVENTNAME = Events.EVENT_NAME,
+                        EVENTDATE = Events.EVENT_DATE,
+                        BASE64EVENTIMG = Events.BASE64EVENTIMG
+                    };
+                    lstTakamulEvents.Add(oTakamulEvents);
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulEvents);
         }
         #endregion 
 

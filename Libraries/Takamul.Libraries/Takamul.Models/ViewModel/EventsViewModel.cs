@@ -30,6 +30,8 @@ namespace Takamul.Models.ViewModel
         public int MODIFIED_BY { get; set; }
         public DateTime MODIFIED_DATE { get; set; }
 
+        public string BASE64EVENTIMG { set; get; }
+
 
         #region :: Constructor ::
         public EventsViewModel()

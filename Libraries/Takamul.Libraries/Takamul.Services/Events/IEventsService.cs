@@ -36,5 +36,15 @@ namespace Takamul.Services.Events
         /// <returns>List of Event</returns>
         EventsViewModel oGetEventDetails(int nEventID);
         #endregion
+
+        #region Method ::EventsViewModel :: oGetEventsbyDate
+        /// <summary>
+        /// Get events details by dEventDate
+        /// </summary>
+        /// <param name="dEventDate"></param>
+        /// <returns>List of Event</returns>
+       List< EventsViewModel> oGetEventsbyDate(DateTime dEventDate,int nApplicationID);
+        #endregion
+
     }
 }

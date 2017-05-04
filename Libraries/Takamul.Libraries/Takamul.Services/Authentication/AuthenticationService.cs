@@ -200,8 +200,13 @@ namespace Takamul.Services
         public List<AreaInfoViewModel> OGetAreaList()
         {
 
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, null, ParameterDirection.Input));
+            #endregion
+
             #region ":Get Sp Result:"
-            List<AreaInfoViewModel> lstAreaDetails = this.ExecuteStoredProcedureList<AreaInfoViewModel>("GetAllAreas");
+            List<AreaInfoViewModel> lstAreaDetails = this.ExecuteStoredProcedureList<AreaInfoViewModel>("GetAllAreas",arrParameters.ToArray());
             return lstAreaDetails;         
             
             #endregion
@@ -217,7 +222,7 @@ namespace Takamul.Services
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.NVarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"

@@ -582,6 +582,13 @@
             <param name="nEventsID"></param>
             <returns></returns>
         </member>
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventsByDate(System.DateTime,System.Int32)">
+            <summary>
+            Get all events
+            </summary>
+            <param name="dEventDate"></param><param name="nApplicationID"></param>
+            <returns></returns>
+        </member>
         <member name="T:Takamul.API.Controllers.TicketServiceController">
             <summary>
             Ticket Service
