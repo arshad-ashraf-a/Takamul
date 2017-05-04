@@ -164,7 +164,7 @@ namespace Takamul.Services
             return oEventsViewModel;
             #endregion
         }
-        #endregion 
+        #endregion one
 
         #region Method :: Response :: InsertEvent
         /// <summary>
@@ -323,6 +323,30 @@ namespace Takamul.Services
             #endregion
         }
         #endregion
+
+        #region Method :: EventViewModel :: oGetEventsDetails
+        /// <summary>
+        /// Get events details by event id
+        /// </summary>
+        /// <param name="dEventDate"></param><param name="nApplicationID"></param>
+        /// <returns>List of Events</returns>
+        public List<EventViewModel> oGetEventsbyDate(DateTime dEventDate, int nApplicationID)
+        {
+            EventViewModel oEventsViewModel = null;
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Eventdate", SqlDbType.Date, dEventDate, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<EventViewModel> lstEvents = new List<EventViewModel>();
+            lstEvents = this.ExecuteStoredProcedureList<EventViewModel>("GetEventsByDate", arrParameters.ToArray());
+
+            return lstEvents;
+            #endregion
+        }
+        #endregion 
 
         #endregion
 

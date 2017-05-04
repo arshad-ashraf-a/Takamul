@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Takamul.Models.ViewModel
+namespace Takamul.Models
 {
     public class EventViewModel
     {

@@ -87,7 +87,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="dEventDate"></param>
         /// <returns>List of Event</returns>
-       List< EventsViewModel> oGetEventsbyDate(DateTime dEventDate,int nApplicationID);
+       List<EventViewModel> oGetEventsbyDate(DateTime dEventDate,int nApplicationID);
         #endregion
 
     }

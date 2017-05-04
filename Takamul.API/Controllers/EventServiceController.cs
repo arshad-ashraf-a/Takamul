@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Takamul.Models;
 using Takamul.Models.ApiViewModel;
 using Takamul.Models.ViewModel;
 using Takamul.Services;
