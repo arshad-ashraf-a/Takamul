@@ -1,127 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_GridCommon.cshtml";
 }
-
-<div class="table-responsive">
-    <div class="panel panel-flat mb-5">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Application Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Eugene</td>
-                    <td>Kopyov</td>
-                    <td>@@Kopyov</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div>
-
-<div class="has-detached-left">
-
-    <!-- Detached sidebar -->
-    <!-- /detached sidebar -->
-    <!-- Detached content -->
-    <div class="sidebar-detached">
-        <div class="sidebar sidebar-default">
-            <div class="sidebar-content">
-
-                <!-- /sidebar search -->
-                <!-- Sub navigation -->
-                <div class="sidebar-category">
-                    <div class="category-title">
-                        <span>Navigation</span>
-                        <ul class="icons-list">
-                            <li><a href="#" data-action="collapse"></a></li>
-                        </ul>
-                    </div>
-
-                    <div class="category-content no-padding">
-                        <ul class="navigation navigation-alt navigation-accordion">
-                            <li class="active"><a href="#"><i class="icon-list-unordered"></i> DashBoard</a></li>
-                            <li><a href="#"><i class="icon-list-unordered"></i> Tickets</a></li>
-                            <li><a href="#"><i class="icon-list-unordered"></i> News</a></li>
-                            <li><a href="#"><i class="icon-list-unordered"></i> Events</a></li>
-                            <li><a href="#"><i class="icon-list-unordered"></i> Users</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /sub navigation -->
-
-            </div>
-        </div>
-    </div>
-    <div class="container-detached">
-        <div class="content-detached" style="margin-left:230px">
-
-            <!-- Table -->
-            <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <h5 class="panel-title">Basic table</h5>
-                    <div class="heading-elements">
-                        <ul class="icons-list">
-                            <li><a data-action="collapse"></a></li>
-                            <li><a data-action="close"></a></li>
-                        </ul>
-                    </div>
-                    <a class="heading-elements-toggle"><i class="icon-more"></i></a>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Eugene</td>
-                                <td>Kopyov</td>
-                                <td>@@Kopyov</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Victoria</td>
-                                <td>Baker</td>
-                                <td>@@Vicky</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>James</td>
-                                <td>Alexander</td>
-                                <td>@@Alex</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Franklin</td>
-                                <td>Morrison</td>
-                                <td>@@Frank</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- /table -->
-
-        </div>
-    </div>
-    <!-- /detached content -->
-
-</div>
-@*<div class="col-lg-12">
+<div class="col-lg-12">
     <div class="row">
         <div class="col-md-12">
             <div class="form-horizontal" action="#">
@@ -146,7 +26,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-4 control-label">Application ID</label>
                                             <div class="col-lg-5">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicaitonID" name="txtSearchByApplicaitonID"
+                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
                                                        placeholder="Application ID">
                                             </div>
                                         </div>
@@ -166,8 +46,8 @@
                         </fieldset>
                         <hr class="sp-1" />
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xs" onclick="IncidentManagement.PageFunctions.BindAllPreliminaries();">Seach<i class="fa fa-search position-right"></i></button>
-                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="IncidentManagement.PageFunctions.ClearSearch();">Clear</button>
+                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllApplications;">Seach<i class="fa fa-search position-right"></i></button>
+                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>
                         </div>
                         <div class="row search-option-buttons">
                             <div class="col-sm-6">
@@ -189,10 +69,10 @@
 
     <div class="row">
         <div class="fakeWidth col-md-12"></div>
-        <div id="dvIncidents">
+        <div id="dvApplications">
         </div>
     </div>
-</div>*@
+</div>
 
 @section InlineScriptsRelated
 {
@@ -201,116 +81,56 @@
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
         function fnBindAllApplications() {
-            //ShowLoader();
-            $("#dvIncidents").hide();
-            $("#dvIncidents").empty();
-
+            ShowLoader();
+            $("#dvApplications").hide();
+            $("#dvApplications").empty();
             var table = document.createElement('table');
             table.id = sGridViewSelector;
             var pager = document.createElement('div');
             pager.id = sGridViewPagerSelector;
 
-            $('#dvIncidents').append(table);
-            $('#dvIncidents').append(pager);
+            $('#dvApplications').append(table);
+            $('#dvApplications').append(pager);
 
             var ConstantsNames =
                 {
-                    ID: 'INCIDENT_ID',
-                    IncidentNo: 'INCIDENT_NO',
-                    IncidentName: 'INCIDENT_NAME',
-                    IncidentTypeName: 'INCIDENT_TYPE_NAME',
-                    IncidentStatusName: 'INC_STATUS_NAME',
-                    IncidentStatusID: 'INC_STATUS_ID',
-                    TRMStatusID: 'INC_TRM_STATUS_ID',
-                    TRMStatusName: 'INC_TRM_STATUS_NAME',
-                    IncidentDueDate: 'INCIDENT_DUE_DATE',
-                    IncidentDate: 'INCIDENT_DATE',
-                    IsPrelminiaryCreated: 'IS_PRELIMINARY_CREATED',
-                    IsTRMRequired: 'IS_TRM_REQUIRED',
-                    IsTRMCreated: 'IS_TRM_CREATED',
-                    DeclarationDate: 'DECLARATION_DATE',
-                    DeclarationTime: 'DECLARATION_TIME'
+                    ID: 'ID',
+                    ApplicationName: 'APPLICATION_NAME',
+                    ApplicationLogoPath: 'APPLICATION_LOGO_PATH',
+                    DefaultThemeColor: 'DEFAULT_THEME_COLOR',
+                    ApplicationExpiryDate: 'APPLICATION_EXPIRY_DATE',
+                    IsActive: 'IS_ACTIVE',
+                    CreatedDate: 'CREATED_DATE'
                 };
-            var sCaption = 'Incidents';
+            var sCaption = 'All Applications';
             var oArrColumnNames = [
-                '',//Hidden Columns Represent IncidentID Int Value
-                '',//Hidden Columns Represent INCIDENT_NO String Value
-                '',//Hidden Columns Represent INCIDENT_DATE String Value
-                '',//Hidden Columns Represent IS_TRM_REQUIRED bool Value
-                '',//Hidden Columns Represent IS_PRELIMINARY_CREATED bool Value
-                '',//Hidden Columns Represent IS_TRM_CREATED bool Value
-                '',//Hidden Columns Represent INC_STATUS_ID bool Value
-                '',//Hidden Columns Represent INC_TRM_STATUS_ID bool Value
-                '',//Hidden Columns Represent INC_TRM_STATUS_NAME String Value
-                '',//Hidden Columns Represent DECLARATION_DATE String Value
-                '',//Hidden Columns Represent DECLARATION_TIME String Value
-                'Incident No',
-                'Incident Name',
-                'Incident Type',
-                'Incident Status',
-                'Incident Date',
-                'Is IFR Required',
-                'Status',//all status'
+                '',//Hidden Columns Represent ID Int Value
+                '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
+                'Application Name',
+                'Application Expiry Date',
+                'Is Active',
+                'Created Date',
                 'Options' // Options
             ];
 
             //string sIncidentNo,string sIncidentName,string sFromDate,string sToDate,
             //                           string sIncidentStatus,string sIncidentType
 
-            var sIncidentNo = $("#txtSearchByIncidentNo").val();
-            var sIncidentName = $("#txtSearchByIncidentName").val();
-            var dtFromDate = $("#txtSearchFromDate").val();
-            var dtToDate = $("#txtSearchToDate").val();
-
-            var nIncidentStatus = $("#ddlIncidentStatus").val();
-            nIncidentStatus = nIncidentStatus == "-99" ? -99 : Number(nIncidentStatus);
-
-            var nTRMStatus = $("#ddlTRMStatus").val();
-            nTRMStatus = nTRMStatus == "-99" ? -99 : Number(nTRMStatus);
-
-            var vnIncidentTypeID = -99;
-            if ($('#rbtnSearchByNormal').is(':checked')) {
-                vnIncidentTypeID = 1;
-            }
-            else if ($('#rbtnSearchBySignificant').is(':checked')) {
-                vnIncidentTypeID = 2;
-            }
-
-            var nAdvancedSearchAreaID = $("#ddlAdvancedSearchArea").val();
-            nAdvancedSearchAreaID = nAdvancedSearchAreaID == "" ? -99 : Number(nAdvancedSearchAreaID);
-
-            var nAdvancedSearchStationID = $("#ddlAdvancedSearchStation").val();
-            nAdvancedSearchStationID = nAdvancedSearchStationID == "" ? -99 : Number(nAdvancedSearchStationID);
-
-            var nAdvancedSearchReasonID = $("#ddlAdvancedSearchReason").val();
-            nAdvancedSearchReasonID = nAdvancedSearchReasonID == "" ? -99 : Number(nAdvancedSearchReasonID);
-
+            var vSearchByApplicationID = $("#txtSearchByApplicationID").val() == "" ? -99 : $("#txtSearchByApplicationID").val();
+            var vSearchByApplicationName = $("#txtSearchByApplicationName").val();
             var params = {
-                'sIncidentNo': sIncidentNo,
-                'sIncidentName': sIncidentName,
-                'sFromDate': dtFromDate,
-                'sToDate': dtToDate,
-                'nIncidentStatusID': nIncidentStatus,
-                'nTRMStatusID': nTRMStatus,
-                'nIncidentTypeID': vnIncidentTypeID,
-                'nAdvancedSearchAreaID': nAdvancedSearchAreaID,
-                'nAdvancedSearchStationID': nAdvancedSearchStationID,
-                'nAdvancedSearchReasonID': nAdvancedSearchReasonID
+                'nSearchByApplicationID': vSearchByApplicationID,
+                'sSearchByApplicationName': vSearchByApplicationName
 
             };
-            var sBindDataUrl = '@Url.Action("JGetAllPrelminiaries", "Preliminary")' + '?' + jQuery.param(params);
+            var sBindDataUrl = '@Url.Action("JBindAllApplications", "Applications")' + '?' + jQuery.param(params);
 
             var sAddUrl = "#";
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
-                                        { Caption: "Preliminary", EventName: "IncidentManagement.PageFunctions.GoToPreliminary();", RowId: true },
-                                        { Caption: "Declaration", EventName: "IncidentManagement.PageFunctions.GoToDeclaration();", RowId: true },
-                                        { Caption: "View Summary", EventName: "IncidentManagement.PageFunctions.IncidentDetails();", RowId: true },
-                                        { Caption: "Update IFR Status", EventName: "IncidentManagement.PageFunctions.ShowUpdateTRMPopUp();", RowId: true },
-                                        { Caption: "Close Incident", EventName: "IncidentManagement.PageFunctions.CloseIncident();", RowId: true },
-                                        { Caption: "Re-Open Incident", EventName: "IncidentManagement.PageFunctions.ReOpenIncident();", RowId: true },
+                                        { Caption: "Details", EventName: "fnGoToApplicationDetais();", RowId: true },
             ];
             var oArrColsModel = [
                     {
@@ -318,155 +138,47 @@
                         key: true, hidden: true
                     },
                     {
-                        name: ConstantsNames.IncidentNo, editable: false,
+                        name: ConstantsNames.ApplicationLogoPath, editable: false,
                         key: false, hidden: true
                     },
                     {
-                        name: ConstantsNames.IncidentDate, editable: false,
-                        key: false, hidden: true
+                        name: ConstantsNames.ApplicationName,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
                     },
                     {
-                        name: ConstantsNames.IsTRMRequired, editable: false,
-                        key: false, hidden: true
+                        name: ConstantsNames.ApplicationExpiryDate,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
                     },
                     {
-                        name: ConstantsNames.IsPrelminiaryCreated, editable: false,
-                        key: false, hidden: true
-                    },
-                     {
-                         name: ConstantsNames.IsTRMCreated, editable: false,
-                         key: false, hidden: true
-                     },
-                    {
-                        name: ConstantsNames.IncidentStatusID, editable: false,
-                        key: false, hidden: true
-                    },
-                      {
-                          name: ConstantsNames.TRMStatusID, editable: false,
-                          key: false, hidden: true
-                      },
-                    {
-                        name: ConstantsNames.TRMStatusName, editable: false,
-                        key: false, hidden: true
-                    },
-                  {
-                      name: ConstantsNames.DeclarationDate, editable: false,
-                      key: false, hidden: true
-                  },
-                  {
-                      name: ConstantsNames.DeclarationTime, editable: false,
-                      key: false, hidden: true
-                  },
-                    {
-                        width: 150,
-                        editable: false,
+                        name: ConstantsNames.IsActive,
+                        width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
-                            var url = '';
-                            var bIsPrelminaryCreated = rowObject.IS_PRELIMINARY_CREATED;
-                            if (bIsPrelminaryCreated) {
-                                url = '@Url.Action("ManagePreliminary", "Preliminary", new { area = "IncidentManagement" })' + '?incid=' + rowObject.INCIDENT_ID + '&mode=e';
+                            var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
                             }
                             else {
-                                url = '@Url.Action("ManagePreliminary", "Preliminary", new { area = "IncidentManagement" })' + '?incid=' + rowObject.INCIDENT_ID + '&mode=a';
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
                             }
-
-                            return "<div class='text-semibold'><a href='" + url + "'>" + rowObject.INCIDENT_NO + "</a></div>";
-                        }
-                    },
-                    {
-                        name: ConstantsNames.IncidentName,
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center
-                    },
-                    {
-                        name: ConstantsNames.IncidentTypeName,
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center
-                    },
-                    {
-                        name: ConstantsNames.IncidentStatusName,
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center,
-                        formatter: function (cellvalue, options, rowObject) {
-                            var html = '';
-
-                            if (rowObject.INC_STATUS_ID == enmIncidentStatus.Open || rowObject.INC_STATUS_ID == enmIncidentStatus.Preliminary || rowObject.INC_STATUS_ID == enmIncidentStatus.TRMRequested) {
-                                var html = '<span class="label label-default">' + cellvalue + '</span>';
-                            }
-                            else if (rowObject.INC_STATUS_ID == enmIncidentStatus.TRMRevision) {
-                                var html = '<span class="label label-danger ">' + cellvalue + '</span>';
-                            }
-                            else if (rowObject.INC_STATUS_ID == enmIncidentStatus.ClosedWOTRM) {
-                                var html = '<span class="label label-warning">' + cellvalue + '</span>';
-                            }
-                            else if (rowObject.INC_STATUS_ID == enmIncidentStatus.Closed) {
-                                var html = '<span class="label label-success">' + cellvalue + '</span>';
-                            }
-                            return html;
-                        }
-                    },
-                    {
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center,
-                        formatter: function (cellvalue, options, rowObject) {
-                            var htmlString = '';
-                            htmlString += "<div class='media-body'>";
-                            htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>" + rowObject.INCIDENT_DATE + "</a>";
-                            htmlString += "<div class='text-muted text-size-small'><span class='icon-size-small-12px icon-circles2'></span> Due - " + rowObject.INCIDENT_DUE_DATE + "</div>";
-                            htmlString += "</div>";
-
                             return htmlString;
                         }
                     },
-                     {
-                         width: 150, editable: false,
-                         align: EnumColumnsAlignment.Center,
-                         formatter: function (cellvalue, options, rowObject) {
-                             var bIsTrmRequired = rowObject.IS_TRM_REQUIRED;
-                             var htmlString = '';
-                             htmlString += "<div class='media-body'>";
-                             htmlString += fnGenerateStatus(bIsTrmRequired);
-                             if (bIsTrmRequired) {
-                                 htmlString += "<div class='text-muted text-size-mini'><span class='icon-size-small-12px icon-circles2'></span> IFR Status - " + (rowObject.INC_TRM_STATUS_NAME == "New" ? "Requested" : rowObject.INC_TRM_STATUS_NAME) + "</div>";
-                             }
-                             htmlString += "</div>";
-                             return htmlString;
-                         }
-                     },
                     {
+                        name: ConstantsNames.CreatedDate,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
-                        formatter: function (cellvalue, options, rowObject) {
-                            var bIsTrmRequired = rowObject.IS_TRM_REQUIRED;
-                            var htmlString = '';
-                            htmlString += "<div class='media-body'>";
-                            htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>Prelmnry</a>";
-                            htmlString += fnGenerateStatus(rowObject.IS_PRELIMINARY_CREATED);
-                            htmlString += "</div>";
-                            if (bIsTrmRequired) {
-                                htmlString += "<div class='media-body'>";
-                                htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>IFR</a>";
-                                var bIsTrmCreated = rowObject.IS_TRM_CREATED;
-                                if (bIsTrmCreated) {
-                                    htmlString += "<div class='text-muted text-size-mini'><i class='icon-checkmark3 text-success'></i></div>";
-                                }
-                                else {
-                                    htmlString += "<div class='text-muted text-size-mini'><i class='icon-hour-glass2 text-warning-400'></i></div>";
-                                }
-                                htmlString += "</div>";
-                            }
-
-                            return htmlString;
-                        }
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
                     }
             ];
 
             RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
             $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
-                CustomGridViewLoadComplete();
                 $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
-                $("#gview_" + table.id + " > .ui-jqgrid-titlebar").hide() //hide gridview header
 
                 $(window).bind('resize', function () {
                     $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
@@ -475,10 +187,41 @@
 
                 $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
 
-                $("#dvIncidents").show();
-
+                $("#dvApplications").show();
                 HideLoader();
             });
+        }
+
+        function fnClearSearch() {
+            $("#txtSearchByApplicationID").val("");
+            $("#txtSearchByApplicationName").val("");
+        }
+
+        function fnGoToApplicationDetais() {
+
+            var gdApplicationist = $('#' + sGridViewSelector);
+            var vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
+            $.ajax({
+                url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
+                type: 'POST',
+                data: { nApplicationID: vApplicationID },
+                async: true,
+                success: function (result, response) {
+                    if (result.nResult == 1) {
+                        url = '@Url.Action("ApplicationsDetails", "Applications")';
+                        window.location.href = url;
+
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function (result, response) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            });
+
+        
         }
 
         //Entry Point

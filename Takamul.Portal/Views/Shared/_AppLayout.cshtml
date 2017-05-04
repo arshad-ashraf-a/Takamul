@@ -1,5 +1,7 @@
 ﻿@using Infrastructure.Utilities;
 @using System.Web.Optimization;
+@using Takamul.Portal.Resources.Common;
+@using Takamul.Portal.Resources.Controls.GridView;
 @{
     BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
 
@@ -20,12 +22,14 @@
     <!-- Core CSS Utilities -->
     @Styles.Render("~/bundles/CoreStyleUtilities")
     <!-- core CSS Utilities -->
-
+    <link rel="stylesheet" href='@Url.Content("~/assets/css/jqGrid/ui.jqgrid.css")' />
+    <link href='@Url.Content("~/assets/css/jqGrid/GridContextMenu.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/assets/css/jqGrid/jqgrid.style.css")' rel="stylesheet" />
     @RenderSection("SpecificPluginStyles", false)
 </head>
 <body>
     <script type="text/javascript">
-        var LoaderImagePath = '@Url.Content("~/assets/Images/Loader.png")';
+        var LoaderImagePath = '@Url.Content("~/assets/Images/loader.png")';
     </script>
     <!-- Main navbar -->
     <div class="navbar navbar-inverse">
@@ -145,31 +149,23 @@
                                     </span>
                                 </h4>
                             }
-
-
+                        </div>
+                        <div class="heading-elements">
+                            <div class="heading-btn-group">
+                                <a title="Go Back To All Application" href="@Url.Action("ApplicationsList", "Applications")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> Back To List</a>
+                                @*<a href="#" class="btn btn-link btn-float has-text"><i class="fa fa-mail-reply-all text-primary"></i><span>Go Back</span></a>*@
+                            </div>
                         </div>
                     </div>
-                    <div class="breadcrumb-line">
-                        <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="@Url.Action("Index", "home", new { area = "" })">
-                                    <i class="icon-home2 position-left"></i>Home
-                                </a>
-                            </li>
-                            @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
-                            {
-                                <li>
-                                    <a href="#">
-                                        @oBaseController.ParentNode
-                                    </a>
-                                </li>
-                            }
-                            @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
-                            {
-                                <li class="active">@oBaseController.CurrentPage</li>
-                            }
-                        </ul>
+                    <div class="breadcrumb-line no-padding">
+                        <div class="text-center p-5">
+                            <a href="@Url.Action("ApplicationsList", "Applications")" class="btn btn-info btn-float btn-float-md ml-20"><i class="icon-home4"></i> <span>App DashBoard</span></a>
+                            <button type="button" class="btn btn-info btn-float btn-float-md"><i class="icon-user"></i> <span>App Member Info</span></button>
+                            <button type="button" class="btn btn-info btn-float btn-float-md"><i class="icon-comment-discussion"></i> <span>App Tickets</span></button>
+                            <button type="button" class="btn btn-info btn-float btn-float-md"><i class="icon-newspaper"></i> <span>App News</span></button>
+                            <a href="@Url.Action("EventsList", "Events")" class="btn btn-info btn-float btn-float-md"><i class="icon-list-numbered"></i> <span>App Events</span></a>
+                            <button type="button" class="btn btn-info btn-float btn-float-md"><i class="icon-users4"></i> <span>App Users</span></button>
+                        </div>
                     </div>
 
                 </div>
@@ -177,6 +173,31 @@
                     <div id="dvPopUpWindow" style="display:none">
                         <div id="dvPopUpWindowContainer"></div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <div class="panel panel-flat mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Application Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="success">
+                                            <td>Eugene</td>
+                                            <td>Kopyov</td>
+                                            <td>@@Kopyov</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr class="bg-slate-300 no-margin mb-5" />
+                    <div class="clearfix"></div>
                     @RenderBody()
 
                 </div>
@@ -190,13 +211,37 @@
     @*System Loader*@
     <div id="fakeloader" style="display:none;opacity: 0.5">
     </div>
+    <script>
+        var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
+        var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
+
+        var UlDir = '@CommonResx.LayoutDirectionOpposite';
+
+        var GridViewId = "grid-table";
+        var GridViewPagerId = "grid-pager";
+
+        var GridViewResources = {
+            Direction: '@GridView.Direction',
+            FloatingLeft: '@GridView.FloatingLeft',
+            FloatingRight: '@GridView.FloatingRight',
+            TextAlign: '@GridView.TextAlign',
+            SinglePagerArrowLeft: '@GridView.SinglePagerArrowLeft',
+            SinglePagerArrowRight: '@GridView.SinglePagerArrowRight'
+        }
+    </script>
 
     <!-- Core JS files -->
     @Scripts.Render("~/bundles/CoreScripts")
     <!-- core JS files -->
+
+
     <!-- Core Js Utilities -->
     @Scripts.Render("~/bundles/CoreScriptUtilities")
     <!-- core JS Utilities -->
+
+    <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/jquery.jqGrid.src.js")'></script>
+    <script src='@Url.Content("~/assets/js/jqGrid/RenderGridView.js")'></script>
 
     @RenderSection("SpecificPluginScripts", false)
     @RenderSection("InlineScriptsRelated", false)

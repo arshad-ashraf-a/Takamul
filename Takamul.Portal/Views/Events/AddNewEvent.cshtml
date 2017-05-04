@@ -1,0 +1,331 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+@model Takamul.Models.ViewModel.EventViewModel
+<style>
+    .CitiesAutocomplete {
+        list-style: none;
+        background: #fbfbfb;
+        border: 1px solid #5f5f5f !important;
+        width: 350px !important;
+        position: absolute;
+        z-index: 10000;
+        border-top: none;
+        min-height: 25px;
+        max-height: 250px;
+        overflow: auto;
+        cursor: pointer;
+        padding: 4px 0;
+    }
+
+        .CitiesAutocomplete li {
+            padding: 2px 6px;
+        }
+
+            .CitiesAutocomplete li:hover {
+                background-color: #9eeffe;
+            }
+</style>
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddEvent", @class = "form-horizontal" }))
+{
+    <div class="col-md-12">
+
+        <div class="panel panel-white">
+            <div class="panel-heading">
+                <h6 class="panel-title"> Add New Event</h6>
+
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+
+                @* Event Name*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Event Name&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.EVENT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "event name" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Event Description*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Event Description&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.EVENT_DESCRIPTION, new { htmlAttributes = new { @class = "form-control", placeholder = "event description" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Event Date*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Event Date&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                    @Html.EditorFor(model => model.EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Event Location*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Event Location&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.EVENT_LOCATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "enter a location to search..." } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Event Latitude*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Latitude&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " latitude" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Event Longitude*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Longitude&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " longitude" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveEvent()">Save</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
+            <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
+        </div>
+    </div>
+}
+
+
+
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+
+        function fnEventValidateInitialization() {
+            var validator = $('#frmAddEvent').validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    EVENT_NAME: {
+                        required: true
+                    },
+                    EVENT_DESCRIPTION: {
+                        required: true
+                    },
+                    EVENT_DATE: {
+                        required: true
+                    },
+                    EVENT_LOCATION_NAME: {
+                        required: true
+                    },
+                    EVENT_LATITUDE: {
+                        required: true
+                    },
+                    EVENT_LONGITUDE: {
+                        required: true
+                    }
+                },
+                messages: {
+                    EVENT_NAME: "This field is required.",
+                    EVENT_DESCRIPTION: "This field is required.",
+                    EVENT_DATE: "This field is required.",
+                    EVENT_LOCATION_NAME: "This field is required.",
+                    EVENT_LATITUDE: "This field is required.",
+                    EVENT_LONGITUDE: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+
+        function fnSaveEvent() {
+            if (!$("#frmAddEvent").valid()) {
+                return false;
+            }
+            var formData = $("#frmAddEvent").serialize();
+
+            $.ajax({
+                url: '@Url.Action("JSaveEvent", "Events")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        fnClearControls();
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        function fnClearControls() {
+            $("#EVENT_NAME").val("");
+            $("#EVENT_DESCRIPTION").val("");
+            $("#EVENT_DATE").val("");
+            $("#EVENT_LOCATION_NAME").val("");
+            $("#EVENT_LATITUDE").val("");
+            $("#EVENT_LONGITUDE").val("");
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnEventValidateInitialization();
+        });
+
+        $(function () {
+            $("#EVENT_LOCATION_NAME").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("JGetEventVenuesList", "Events")",
+                        data: { SearchText: request.term },
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            $('#EVENT_LATITUDE').val("");
+                            $('#EVENT_LONGITUDE').val("");
+
+                            if (data.length == 0) {
+                                return false;
+                            }
+                            else {
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.description,
+                                        value: item.description,
+                                        placeid: item.place_id
+                                    }
+                                }));
+                            }
+                        },
+                        error: function (x, y, z) {
+                            alert('error');
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $('#EVENT_LOCATION_NAME').val(ui.item.label);
+                    GetVenueDetailsByPlaceId(ui.item.placeid);
+                    return false;
+                }
+            }).autocomplete("widget").addClass("CitiesAutocomplete");
+        });
+
+        function GetVenueDetailsByPlaceId(PlaceId) {
+            $.ajax({
+                url: '@Url.Action("GetVenueDetailsByPlace", "Events")',
+                dataType: "json",
+                data: {
+                    placeId: PlaceId
+                },
+                type: "GET",
+                async: false,
+                error: function (xhr, status, error) {
+
+                },
+                success: function (data) {
+                    $('#EVENT_LATITUDE').val(data.Latitude);
+                    $('#EVENT_LONGITUDE').val(data.Longitude);
+                },
+                beforeSend: function () {
+                    ShowLoader();
+                }
+            });
+        }
+
+        $("#EVENT_LOCATION_NAME").on('change', function () {
+            $(this).closest('form').validate().element($(this));
+            $(this).closest('form').find($('#EVENT_LATITUDE')).validate();
+            $(this).closest('form').find($('#EVENT_LONGITUDE')).validate();
+        });
+    </script>
+}

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Takamul.Models;
+using Takamul.Services;
 
 namespace Takamul.Portal.App_Start
 {
@@ -46,13 +47,10 @@ namespace Takamul.Portal.App_Start
 
             #region Custom Service Registration
 
-            #region :: Lookup Services ::  
-            //builder.RegisterType<LookupServices>().As<ILookupServices>().InstancePerLifetimeScope();
-            #endregion
-
-            #region :: Custom Services ::  
-            //builder.RegisterType<IncidentService>().As<IIncidentService>().InstancePerLifetimeScope();
-            #endregion
+            builder.RegisterType<ApplicationService>().As<IApplicationService>().InstancePerLifetimeScope();
+            builder.RegisterType<EventService>().As<IEventService>().InstancePerLifetimeScope();
+            builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
+            builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
 
             #endregion
 

@@ -47,5 +47,44 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region TakamulGoogleMapApIKey
+        /// <summary>
+        /// Takamul Google Map Key
+        /// </summary>
+        public static string TakamulGoogleMapApIKey
+        {
+            get
+            {
+                return "TakamulGoogleMapApIKey";
+            }
+        }
+        #endregion
+
+        #region GooglePlaceAPIUrl
+        /// <summary>
+        /// Google Place API Url
+        /// </summary>
+        public static string GooglePlaceAPIUrl
+        {
+            get
+            {
+                return "GooglePlaceAPIUrl";
+            }
+        }
+        #endregion
+
+        #region GooglePlaceDetailsAPIUrl
+        /// <summary>
+        /// Google Place Details API Url
+        /// </summary>
+        public static string GooglePlaceDetailsAPIUrl
+        {
+            get
+            {
+                return "GooglePlaceDetailsAPIUrl";
+            }
+        }
+        #endregion
+
     }
 }

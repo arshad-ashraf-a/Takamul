@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\LocalLib\Data.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DynamicQuery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LocalLib\DynamicQuery.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -69,8 +73,8 @@
     <Compile Include="Common\LoginService\LoginServices.cs" />
     <Compile Include="Common\LookupServices\ILookupServices.cs" />
     <Compile Include="Common\LookupServices\LookupServices.cs" />
-    <Compile Include="Events\EventsService.cs" />
-    <Compile Include="Events\IEventsService.cs" />
+    <Compile Include="Events\EventService.cs" />
+    <Compile Include="Events\IEventService.cs" />
     <Compile Include="News\INewsServices.cs" />
     <Compile Include="News\NewsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,6 +15,7 @@ using Takamul.Models;
 using Takamul.Models.ViewModel;
 using System.Data.Common;
 using System.Data;
+using System.Linq;
 using Infrastructure.Core;
 using System;
 
@@ -24,7 +25,7 @@ namespace Takamul.Services
     {
         #region Members
         private readonly TakamulConnection oTakamulConnection;
-        private IDbSet<APPLICATIONS> oApplicationsDBSet;// Represent DB Set Table For AREA_MASTER
+        private IDbSet<APPLICATIONS> oApplicationsDBSet;// Represent DB Set Table For APPLICATIONS
         #endregion
 
         #region Properties
@@ -57,52 +58,61 @@ namespace Takamul.Services
 
         #region :: Methods ::
 
-        //#region Method :: IPagedList<AREA_MASTER> :: IlGetAllAreaMasters
-        ///// <summary>
-        ///// Get all area masters
-        ///// </summary>
-        ///// <param name="sSearchByAreaName"></param>
-        ///// <param name="nPageIndex"></param>
-        ///// <param name="nPageSize"></param>
-        ///// <param name="sColumnName"></param>
-        ///// <param name="sColumnOrder"></param>
-        ///// <returns></returns>
-        //public IPagedList<ApplicationViewModel> IlGetAllAreaMasters(string sSearchByAreaName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
-        //{
-        //    #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
-        //    var lstAreaMasters = (from c in this.ApplicationsDBSet
-        //                          where sSearchByAreaName == null || c.AREA_NAME.Contains(sSearchByAreaName)
-        //                          orderby c.AREA_ID descending
-        //                          select new
-        //                          {
-        //                              AREA_ID = c.AREA_ID,
-        //                              AREA_NAME = c.AREA_NAME,
-        //                              AREA_DESCRIPTION = c.AREA_DESCRIPTION
+        #region Method :: IPagedList<ApplicationViewModel> :: IlGetAllApplications
+        /// <summary>
+        ///  Get all applications
+        /// </summary>
+        /// <param name="nSearchByAppliationID"></param>
+        /// <param name="sSearchByApplicationName"></param>
+        /// <param name="nPageIndex"></param>
+        /// <param name="nPageSize"></param>
+        /// <param name="sColumnName"></param>
+        /// <param name="sColumnOrder"></param>
+        /// <returns></returns>
+        public IPagedList<ApplicationViewModel> IlGetAllApplications(int nSearchByAppliationID,string sSearchByApplicationName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+        {
+            #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
+            var lstApplications = (from c in this.ApplicationsDBSet
+                                  where sSearchByApplicationName == null || c.APPLICATION_NAME.Contains(sSearchByApplicationName)
+                                  where nSearchByAppliationID == -99 || c.ID == nSearchByAppliationID
+                                  orderby c.ID descending
+                                  select new
+                                  {
+                                      ID = c.ID,
+                                      APPLICATION_NAME = c.APPLICATION_NAME,
+                                      APPLICATION_EXPIRY_DATE = c.APPLICATION_EXPIRY_DATE,
+                                      APPLICATION_LOGO_PATH = c.APPLICATION_LOGO_PATH,
+                                      DEFAULT_THEME_COLOR = c.DEFAULT_THEME_COLOR,
+                                      IS_ACTIVE = c.IS_ACTIVE,
+                                      CREATED_DATE = c.CREATED_DATE,
 
-        //                          });
-        //    #endregion
+                                  });
+            #endregion
 
-        //    #region Execute The Query And Return Page Result
-        //    var oTempAreaMastersPagedResult = new PagedList<dynamic>(lstAreaMasters, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
-        //    int nTotal = oTempAreaMastersPagedResult.TotalCount;
-        //    PagedList<APPLICATIONS> plstAreaMaster = new PagedList<APPLICATIONS>(oTempAreaMastersPagedResult.Select(oAreaMasterPagedResult => new AREA_MASTER
-        //    {
-        //        AREA_ID = oAreaMasterPagedResult.AREA_ID,
-        //        AREA_NAME = oAreaMasterPagedResult.AREA_NAME,
-        //        AREA_DESCRIPTION = oAreaMasterPagedResult.AREA_DESCRIPTION
+            #region Execute The Query And Return Page Result
+            var oTempApplicationPagedResult = new PagedList<dynamic>(lstApplications, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
+            int nTotal = oTempApplicationPagedResult.TotalCount;
+            PagedList<ApplicationViewModel> plstApplicaiton = new PagedList<ApplicationViewModel>(oTempApplicationPagedResult.Select(oApplicationPagedResult => new ApplicationViewModel
+            {
+                ID = oApplicationPagedResult.ID,
+                APPLICATION_NAME = oApplicationPagedResult.APPLICATION_NAME,
+                APPLICATION_EXPIRY_DATE = oApplicationPagedResult.APPLICATION_EXPIRY_DATE,
+                APPLICATION_LOGO_PATH = oApplicationPagedResult.APPLICATION_LOGO_PATH,
+                DEFAULT_THEME_COLOR = oApplicationPagedResult.DEFAULT_THEME_COLOR,
+                IS_ACTIVE = oApplicationPagedResult.IS_ACTIVE,
+                CREATED_DATE = oApplicationPagedResult.CREATED_DATE,
+                
+            }), oTempApplicationPagedResult.PageIndex, oTempApplicationPagedResult.PageSize, oTempApplicationPagedResult.TotalCount);
 
+            if (plstApplicaiton.Count > 0)
+            {
+                plstApplicaiton[0].TotalCount = nTotal;
+            }
 
-        //    }), oTempAreaMastersPagedResult.PageIndex, oTempAreaMastersPagedResult.PageSize, oTempAreaMastersPagedResult.TotalCount);
-
-        //    if (plstAreaMaster.Count > 0)
-        //    {
-        //        plstAreaMaster[0].TotalCount = nTotal;
-        //    }
-
-        //    return plstAreaMaster;
-        //    #endregion
-        //}
-        //#endregion
+            return plstApplicaiton;
+            #endregion
+        }
+        #endregion
 
         #region Method :: ApplicationViewModel :: oGetApplicationDetails
         /// <summary>

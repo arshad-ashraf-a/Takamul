@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Takamul.Models;
 using Takamul.Services;
-using Takamul.Services.Events;
 
 namespace Takamul.Portal.App_Start
 {
@@ -41,7 +40,7 @@ namespace Takamul.Portal.App_Start
 
             #region Custom Service Registration
             builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
-            builder.RegisterType<EventsService>().As<IEventsService>().InstancePerLifetimeScope();
+            builder.RegisterType<EventService>().As<IEventService>().InstancePerLifetimeScope();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
             builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
             builder.RegisterType<CommonServices>().As<ICommonServices>().InstancePerLifetimeScope();

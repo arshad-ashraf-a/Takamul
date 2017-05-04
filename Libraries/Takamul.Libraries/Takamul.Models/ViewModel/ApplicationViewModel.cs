@@ -24,6 +24,8 @@ namespace Takamul.Models.ViewModel
         public DateTime APPLICATION_EXPIRY_DATE { get; set; }
         public string APPLICATION_TOKEN { get; set; }
         public bool IS_ACTIVE { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public int TotalCount { get; set; }
 
         #region :: Constructor ::
         public ApplicationViewModel()
@@ -35,6 +37,8 @@ namespace Takamul.Models.ViewModel
             this.APPLICATION_TOKEN = string.Empty;
             this.DEFAULT_THEME_COLOR = string.Empty;
             this.IS_ACTIVE = false;
+            this.CREATED_DATE = DateTime.MinValue;
+            this.TotalCount = 0;
         } 
         #endregion
     }
