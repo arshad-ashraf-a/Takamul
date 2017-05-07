@@ -21,64 +21,59 @@ namespace Takamul.Services
 {
     public interface IMemberInfoService
     {
-        #region Method :: List<EventsViewModel> :: IlGetAllMemberInfo
+        #region Method :: List<MemberInfoViewModel> :: lGetAllMemberInfo
         /// <summary>
         /// Get all member info
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns>List of Events</returns>
-        List<MemberInfoService> IlGetAllMemberInfo(int nApplicationID);
+        List<MemberInfoViewModel> lGetAllMemberInfo(int nApplicationID);
+        
         #endregion
 
-        #region Method :: IPagedList<EventViewModel> :: IlGetAllEvents
+        #region Method :: IPagedList<MemberInfoViewModel> :: IlGetAllMemberInfo
         /// <summary>
         /// Get all events
         /// </summary>
-        /// <param name="sSearchByEventName"></param>
         /// <param name="nApplicationID"></param>
+        /// <param name="sSearchByEventName"></param>
         /// <param name="nPageIndex"></param>
         /// <param name="nPageSize"></param>
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        IPagedList<EventViewModel> IlGetAllEvents(int nApplicationID, string sSearchByEventName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
-
+        IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
+        
         #endregion
 
-        #region Method ::EventsViewModel :: oGetEventsDetails
+        #region Method :: Response :: InsertMemberInfo
         /// <summary>
-        /// Get events details by eventid
+        ///  Insert member info
         /// </summary>
-        /// <param name="nEventID"></param>
-        /// <returns>List of Event</returns>
-        EventViewModel oGetEventDetails(int nEventID);
-        #endregion
-
-        #region Method :: Response :: InsertEvent
-        /// <summary>
-        ///  Insert event
-        /// </summary>
-        /// <param name="oEventViewModel"></param>
+        /// <param name="oMemberInfoViewModel"></param>
         /// <returns>Response</returns>
-        Response oInsertEvent(EventViewModel oEventViewModel);
+        Response oInsertMemberInfo(MemberInfoViewModel oMemberInfoViewModel);
+        
         #endregion
 
-        #region Method :: Response :: UpdateEvent
+        #region Method :: Response :: UpdateMemberInfo
         /// <summary>
-        ///  Update event
+        /// Update member info
         /// </summary>
-        /// <param name="oEventViewModel"></param>
+        /// <param name="oMemberInfoViewModel"></param>
         /// <returns>Response</returns>
-        Response oUpdateEvent(EventViewModel oEventViewModel);
+        Response oUpdateMemberInfo(MemberInfoViewModel oMemberInfoViewModel);
+        
         #endregion
 
-        #region Method :: Response :: DeleteEvent
+        #region Method :: Response :: DeleteMemberInfo
         /// <summary>
         /// Delete event
         /// </summary>
-        /// <param name="nEventID"></param>
+        /// <param name="nMemberInoID"></param>
         /// <returns></returns>
-        Response oDeleteEvent(int nEventID);
+        Response oDeleteMemberInfo(int nMemberInoID);
+        
         #endregion
     }
 }

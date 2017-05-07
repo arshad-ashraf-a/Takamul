@@ -16,7 +16,6 @@ namespace Takamul.Models
     {
         public int ID { get; set; }
         public Nullable<int> APPLICATION_ID { get; set; }
-        public Nullable<int> USER_ID { get; set; }
         public string MEMBER_INFO_TITLE { get; set; }
         public string MEMBER_INFO_DESCRIPTION { get; set; }
         public Nullable<int> CREATED_BY { get; set; }

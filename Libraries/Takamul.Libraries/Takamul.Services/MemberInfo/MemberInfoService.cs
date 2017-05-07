@@ -93,40 +93,29 @@ namespace Takamul.Services
         public IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
-            var lstEvents = (from c in this.MemberInfoDBSet
+            var lstMemberInfo = (from c in this.MemberInfoDBSet
                              where c.APPLICATION_ID == (int)nApplicationID
                              orderby c.ID descending
                              select new
                              {
                                  ID = c.ID,
-                                 EVENT_NAME = c.EVENT_NAME,
-                                 EVENT_DESCRIPTION = c.EVENT_DESCRIPTION,
-                                 EVENT_DATE  = c.EVENT_DATE,
-                                 EVENT_LOCATION_NAME = c.EVENT_LOCATION_NAME,
-                                 EVENT_LATITUDE = c.EVENT_LATITUDE,
-                                 EVENT_LONGITUDE = c.EVENT_LONGITUDE,
-                                 IS_ACTIVE = c.IS_ACTIVE,
-                                 CREATED_DATE = c.CREATED_DATE,
-
+                                 APPLICATION_ID = c.APPLICATION_ID,
+                                 MEMBER_INFO_TITLE = c.MEMBER_INFO_TITLE,
+                                 MEMBER_INFO_DESCRIPTION = c.MEMBER_INFO_DESCRIPTION
                              });
             #endregion
 
             #region Execute The Query And Return Page Result
-            var oTempEventPagedResult = new PagedList<dynamic>(lstEvents, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
-            int nTotal = oTempEventPagedResult.TotalCount;
-            PagedList<EventViewModel> plstApplicaiton = new PagedList<EventViewModel>(oTempEventPagedResult.Select(oEventPagedResult => new EventViewModel
+            var oTempMemberInfoPagedResult = new PagedList<dynamic>(lstMemberInfo, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
+            int nTotal = oTempMemberInfoPagedResult.TotalCount;
+            PagedList<MemberInfoViewModel> plstApplicaiton = new PagedList<MemberInfoViewModel>(oTempMemberInfoPagedResult.Select(oMemberInfoPagedResult => new MemberInfoViewModel
             {
-                ID = oEventPagedResult.ID,
-                EVENT_NAME = oEventPagedResult.EVENT_NAME,
-                EVENT_DESCRIPTION = oEventPagedResult.EVENT_DESCRIPTION,
-                EVENT_DATE = oEventPagedResult.EVENT_DATE,
-                EVENT_LOCATION_NAME = oEventPagedResult.EVENT_LOCATION_NAME,
-                EVENT_LATITUDE = oEventPagedResult.EVENT_LATITUDE,
-                EVENT_LONGITUDE = oEventPagedResult.EVENT_LONGITUDE,
-                IS_ACTIVE = oEventPagedResult.IS_ACTIVE,
-                CREATED_DATE = oEventPagedResult.CREATED_DATE,
+                ID = oMemberInfoPagedResult.ID,
+                APPLICATION_ID = oMemberInfoPagedResult.APPLICATION_ID,
+                MEMBER_INFO_TITLE = oMemberInfoPagedResult.MEMBER_INFO_TITLE,
+                MEMBER_INFO_DESCRIPTION = oMemberInfoPagedResult.MEMBER_INFO_DESCRIPTION
 
-            }), oTempEventPagedResult.PageIndex, oTempEventPagedResult.PageSize, oTempEventPagedResult.TotalCount);
+            }), oTempMemberInfoPagedResult.PageIndex, oTempMemberInfoPagedResult.PageSize, oTempMemberInfoPagedResult.TotalCount);
 
             if (plstApplicaiton.Count > 0)
             {
@@ -138,39 +127,13 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region Method :: EventViewModel :: oGetEventsDetails
+        #region Method :: Response :: InsertMemberInfo
         /// <summary>
-        /// Get events details by event id
+        ///  Insert member info
         /// </summary>
-        /// <param name="nEventID"></param>
-        /// <returns>List of Events</returns>
-        public EventViewModel oGetEventDetails(int nEventID)
-        {
-            EventViewModel oEventsViewModel = null;
-            #region ":DBParamters:"
-            List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, -99, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_EventId", SqlDbType.Int, nEventID, ParameterDirection.Input));
-            #endregion
-
-            #region ":Get Sp Result:"
-            List<EventViewModel> lstEvents = this.ExecuteStoredProcedureList<EventViewModel>("GetAllActiveEvents", arrParameters.ToArray());
-            if (lstEvents.Count > 0)
-            {
-                return lstEvents[0];
-            }
-            return oEventsViewModel;
-            #endregion
-        }
-        #endregion 
-
-        #region Method :: Response :: InsertEvent
-        /// <summary>
-        ///  Insert event
-        /// </summary>
-        /// <param name="oEventViewModel"></param>
+        /// <param name="oMemberInfoViewModel"></param>
         /// <returns>Response</returns>
-        public Response oInsertEvent(EventViewModel oEventViewModel)
+        public Response oInsertMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
             #region ": Insert :"
 
@@ -178,22 +141,33 @@ namespace Takamul.Services
 
             try
             {
-                if (oEventViewModel != null)
+                if (oMemberInfoViewModel != null)
                 {
-                    EVENTS oEvent = new EVENTS()
+                    var lstMemberInfo = (from c in this.MemberInfoDBSet
+                                         where c.APPLICATION_ID == oMemberInfoViewModel.APPLICATION_ID
+                                         orderby c.ID descending
+                                         select new
+                                         {
+                                             ID = c.ID,
+                                             APPLICATION_ID = c.APPLICATION_ID,
+                                             MEMBER_INFO_TITLE = c.MEMBER_INFO_TITLE,
+                                             MEMBER_INFO_DESCRIPTION = c.MEMBER_INFO_DESCRIPTION
+                                         });
+                    if (lstMemberInfo.Count() >= 3 )
                     {
-                        APPLICATION_ID = oEventViewModel.APPLICATION_ID,
-                        EVENT_NAME = oEventViewModel.EVENT_NAME,
-                        EVENT_DESCRIPTION = oEventViewModel.EVENT_DESCRIPTION,
-                        EVENT_DATE = oEventViewModel.EVENT_DATE,
-                        EVENT_LOCATION_NAME = oEventViewModel.EVENT_LOCATION_NAME,
-                        EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE,
-                        EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE,
-                        IS_ACTIVE = true,
-                        CREATED_BY = oEventViewModel.CREATED_BY,
+                        oResponse.OperationResult = enumOperationResult.RelatedRecordFaild;
+                        return oResponse;
+                    }
+
+                    MEMBER_INFO oMEMBER_INFO = new MEMBER_INFO()
+                    {
+                        APPLICATION_ID = oMemberInfoViewModel.APPLICATION_ID,
+                        MEMBER_INFO_TITLE = oMemberInfoViewModel.MEMBER_INFO_TITLE,
+                        MEMBER_INFO_DESCRIPTION = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION,
+                        CREATED_BY = oMemberInfoViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
                     };
-                    this.oTakamulConnection.EVENTS.Add(oEvent);
+                    this.oTakamulConnection.MEMBER_INFO.Add(oMEMBER_INFO);
                     if (this.intCommit() > 0)
                     {
                         oResponse.OperationResult = enumOperationResult.Success;
@@ -218,13 +192,13 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region Method :: Response :: UpdateEvent
+        #region Method :: Response :: UpdateMemberInfo
         /// <summary>
-        /// Update event
+        /// Update member info
         /// </summary>
-        /// <param name="oEventViewModel"></param>
+        /// <param name="oMemberInfoViewModel"></param>
         /// <returns>Response</returns>
-        public Response oUpdateEvent(EventViewModel oEventViewModel)
+        public Response oUpdateMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
             Response oResponse = new Response();
 
@@ -235,30 +209,25 @@ namespace Takamul.Services
                 // Start try
 
                 #region Check oEventViewModel Value
-                EVENTS oEvent = new EVENTS();
-                oEvent = this.oTakamulConnection.EVENTS.Find(oEventViewModel.ID);
+                MEMBER_INFO oMEMBER_INFO = new MEMBER_INFO();
+                oMEMBER_INFO = this.oTakamulConnection.MEMBER_INFO.Find(oMemberInfoViewModel.ID);
 
-                if (oEvent == null)
+                if (oMEMBER_INFO == null)
                 {
-                    throw new ArgumentNullException("oEvent Entity Is Null");
+                    throw new ArgumentNullException("oMEMBER_INFO Entity Is Null");
                 }
 
                 #endregion
 
                 #region Update Default EVENTS
 
-                oEvent.APPLICATION_ID = oEventViewModel.APPLICATION_ID;
-                oEvent.EVENT_NAME = oEventViewModel.EVENT_NAME;
-                oEvent.EVENT_DESCRIPTION = oEventViewModel.EVENT_DESCRIPTION;
-                oEvent.EVENT_DATE = oEventViewModel.EVENT_DATE;
-                oEvent.EVENT_LOCATION_NAME = oEventViewModel.EVENT_LOCATION_NAME;
-                oEvent.EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE;
-                oEvent.EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE;
-                oEvent.IS_ACTIVE = oEventViewModel.IS_ACTIVE;
-                oEvent.MODIFIED_BY = oEventViewModel.CREATED_BY;
-                oEvent.MODIFIED_DATE = DateTime.Now;
-                this.MemberInfoDBSet.Attach(oEvent);
-                this.oTakamulConnection.Entry(oEvent).State = EntityState.Modified;
+                oMEMBER_INFO.APPLICATION_ID = oMemberInfoViewModel.APPLICATION_ID;
+                oMEMBER_INFO.MEMBER_INFO_TITLE = oMemberInfoViewModel.MEMBER_INFO_TITLE;
+                oMEMBER_INFO.MEMBER_INFO_DESCRIPTION = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION;
+                oMEMBER_INFO.MODIFIED_BY = oMemberInfoViewModel.CREATED_BY;
+                oMEMBER_INFO.MODIFIED_DATE = DateTime.Now;
+                this.MemberInfoDBSet.Attach(oMEMBER_INFO);
+                this.oTakamulConnection.Entry(oMEMBER_INFO).State = EntityState.Modified;
 
                 if (this.intCommit() > 0)
                 {
@@ -286,20 +255,20 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region Method :: Response :: DeleteEvent
+        #region Method :: Response :: DeleteMemberInfo
         /// <summary>
         /// Delete event
         /// </summary>
-        /// <param name="nEventID"></param>
+        /// <param name="nMemberInoID"></param>
         /// <returns></returns>
-        public Response oDeleteEvent(int nEventID)
+        public Response oDeleteMemberInfo(int nMemberInoID)
         {
             #region ": Delete :"
 
             Response oResponse = new Response();
             try
             {
-                this.oTakamulConnection.EVENTS.RemoveRange(this.oTakamulConnection.EVENTS.Where(x => x.ID == nEventID));
+                this.oTakamulConnection.MEMBER_INFO.RemoveRange(this.oTakamulConnection.MEMBER_INFO.Where(x => x.ID == nMemberInoID));
                 if (this.intCommit() > 0)
                 {
                     oResponse.OperationResult = enumOperationResult.Success;

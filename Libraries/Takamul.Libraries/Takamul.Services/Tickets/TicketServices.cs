@@ -65,6 +65,30 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<TicketViewModel> :: IlGetAllTickets
+        /// <summary>
+        /// Get all tickets
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        public List<TicketViewModel> IlGetAllTickets(int nApplicationID,int nPageNumber,int nRowspPage)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<TicketViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketViewModel>("GetAllTickets", arrParameters.ToArray());
+            return lstTickets;
+            #endregion
+        }
+        #endregion
+
         #region Method :: TicketViewModel :: oGetTicketDetails
         /// <summary>
         /// Get ticket details by ticket id
@@ -119,7 +143,7 @@ namespace Takamul.Services
         /// <param name="oTicketViewModel"></param>
         /// <param name="nParticipantUserID"></param>
         /// <returns></returns>
-        public Response oInsertTicket(TicketViewModel oTicketViewModel,int nParticipantUserID)
+        public Response oInsertTicket(TicketViewModel oTicketViewModel, int nParticipantUserID)
         {
             #region ": Insert Sp Result:"
 
@@ -174,7 +198,7 @@ namespace Takamul.Services
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, oTicketChatViewModel.TICKET_ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Ticket_Participant_Id", SqlDbType.Int,oTicketChatViewModel.TICKET_PARTICIPANT_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Ticket_Participant_Id", SqlDbType.Int, oTicketChatViewModel.TICKET_PARTICIPANT_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.VarChar, oTicketChatViewModel.REPLY_MESSAGE, int.MaxValue, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyFilePath", SqlDbType.VarChar, oTicketChatViewModel.REPLY_FILE_PATH, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketChatTypeId", SqlDbType.Int, oTicketChatViewModel.TICKET_CHAT_TYPE_ID, ParameterDirection.Input));

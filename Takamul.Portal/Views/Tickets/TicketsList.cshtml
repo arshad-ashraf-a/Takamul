@@ -1,6 +1,7 @@
 ﻿@{
-    Layout = "~/Views/Shared/_GridCommon.cshtml";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
+
 <div class="col-lg-12">
     <div class="row">
         <div class="col-md-12">
@@ -10,7 +11,7 @@
                         <fieldset>
                             <legend class="text-semibold">
                                 <i class="fa fa-search position-left"></i>
-                                Search Application
+                                Search Tickets
                                 <div class="content-group pull-right">
 
                                     <a class="control-arrow mt-10" data-toggle="collapse" data-target="#demo1" aria-expanded="true">
@@ -24,7 +25,7 @@
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Application ID</label>
+                                            <label class="col-lg-4 control-label">Ticket ID</label>
                                             <div class="col-lg-5">
                                                 <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
                                                        placeholder="Application ID">
@@ -34,7 +35,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Application Name</label>
+                                            <label class="col-lg-4 control-label">Ticket Name</label>
                                             <div class="col-lg-8">
                                                 <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationName" name="txtSearchByApplicationName"
                                                        placeholder="Application Name">
@@ -46,7 +47,7 @@
                         </fieldset>
                         <hr class="sp-1" />
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllApplications;">Seach<i class="fa fa-search position-right"></i></button>
+                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllTickets();">Seach<i class="fa fa-search position-right"></i></button>
                             <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>
                         </div>
                         <div class="row search-option-buttons">
@@ -69,7 +70,7 @@
 
     <div class="row">
         <div class="fakeWidth col-md-12"></div>
-        <div id="dvApplications">
+        <div id="dvTickets">
         </div>
     </div>
 </div>
@@ -80,34 +81,37 @@
 
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
-        function fnBindAllApplications() {
+        function fnBindAllTickets() {
             ShowLoader();
-            $("#dvApplications").hide();
-            $("#dvApplications").empty();
+            $("#dvTickets").hide();
+            $("#dvTickets").empty();
             var table = document.createElement('table');
             table.id = sGridViewSelector;
             var pager = document.createElement('div');
             pager.id = sGridViewPagerSelector;
 
-            $('#dvApplications').append(table);
-            $('#dvApplications').append(pager);
+            $('#dvTickets').append(table);
+            $('#dvTickets').append(pager);
 
             var ConstantsNames =
                 {
                     ID: 'ID',
-                    ApplicationName: 'APPLICATION_NAME',
-                    ApplicationLogoPath: 'APPLICATION_LOGO_PATH',
-                    DefaultThemeColor: 'DEFAULT_THEME_COLOR',
-                    ApplicationExpiryDate: 'APPLICATION_EXPIRY_DATE',
+                    TicketCode: 'TICKET_CODE',
+                    TicketName: 'TICKET_NAME',
+                    TicketDescription: 'TICKET_DESCRIPTION',
+                    TicketStatusName: 'TICKET_STATUS_NAME',
+                    TicketStatusRemark: 'TICKET_STATUS_REMARK',
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE'
                 };
-            var sCaption = 'All Applications';
+            var sCaption = 'All Tickets';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
-                '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
-                'Application Name',
-                'Application Expiry Date',
+                'Ticket Code',
+                'Ticket Name',
+                'Ticket Description',
+                'Ticket Status',
+                'Ticket Status Remark',
                 'Is Active',
                 'Created Date',
                 'Options' // Options
@@ -116,44 +120,50 @@
             //string sIncidentNo,string sIncidentName,string sFromDate,string sToDate,
             //                           string sIncidentStatus,string sIncidentType
 
-            var vSearchByApplicationID = $("#txtSearchByApplicationID").val() == "" ? -99 : $("#txtSearchByApplicationID").val();
-            var vSearchByApplicationName = $("#txtSearchByApplicationName").val();
+            @*var vSearchEventByName = $("#txtSearchEventByName").val();
             var params = {
-                'nSearchByApplicationID': vSearchByApplicationID,
-                'sSearchByApplicationName': vSearchByApplicationName
+                'sSearchByEventName': vSearchEventByName
 
             };
-            var sBindDataUrl = '@Url.Action("JBindAllApplications", "Applications")' + '?' + jQuery.param(params);
+            var sBindDataUrl = '@Url.Action("JBindAllTickets", "Tickets")' + '?' + jQuery.param(params);*@
+            var sBindDataUrl = '@Url.Action("JBindAllTickets", "Tickets")';
 
             var sAddUrl = "#";
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
-                                        { Caption: "Details", EventName: "fnGoToApplicationDetais(-99);", RowId: true },
+                                        { Caption: "Details", EventName: "fnGoToTicketDetails();", RowId: true }
             ];
             var oArrColsModel = [
                     {
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                     {
+                         name: ConstantsNames.TicketCode,
+                         width: 150, editable: false,
+                         align: EnumColumnsAlignment.Center
+                     },
                     {
-                        name: ConstantsNames.ApplicationLogoPath, editable: false,
-                        key: false, hidden: true
+                        name: ConstantsNames.TicketName,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
                     },
                     {
-                        name: ConstantsNames.ApplicationName,
+                        name: ConstantsNames.TicketDescription,
                         width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center,
-                        formatter: function (cellvalue, options, rowObject) {
-                            return "<div class='text-semibold'><a onclick='fnGoToApplicationDetais(" + rowObject.ID + ")' href='#'>" + rowObject.APPLICATION_NAME + "</a></div>";
-                        }
+                        align: EnumColumnsAlignment.Center
                     },
                     {
-                        name: ConstantsNames.ApplicationExpiryDate,
+                        name: ConstantsNames.TicketStatusName,
                         width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center,
-                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.TicketStatusRemark,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
                     },
                     {
                         name: ConstantsNames.IsActive,
@@ -190,52 +200,24 @@
 
                 $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
 
-                $("#dvApplications").show();
+                $("#dvTickets").show();
                 HideLoader();
             });
         }
 
-        function fnClearSearch() {
-            $("#txtSearchByApplicationID").val("");
-            $("#txtSearchByApplicationName").val("");
-        }
+        function fnGoToTicketDetails() {
+            var gdTicket = $('#' + sGridViewSelector);
+            var vTicketID = gdTicket.jqGrid('getGridParam', 'selrow');
 
-        function fnGoToApplicationDetais(nApplicationID) {
-            var vApplicationID = -99;
-            if (nApplicationID != null || nApplicationID != undefined || nApplicationID != -99) {
-                vApplicationID = nApplicationID;
-            }
-            else {
-                var gdApplicationist = $('#' + sGridViewSelector);
-                vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
-            }
+            var link = '@Url.Action("TicketDetails", "Tickets", new { nTicketID = "replace" })';
+            link = link.replace("replace", vTicketID);
 
-            $.ajax({
-                url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
-                type: 'POST',
-                data: { nApplicationID: vApplicationID },
-                async: true,
-                success: function (result, response) {
-                    if (result.nResult == 1) {
-                        url = '@Url.Action("ApplicationsDetails", "Applications")';
-                        window.location.href = url;
-
-                    }
-                    else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                    }
-                },
-                error: function (result, response) {
-                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                }
-            });
-
-
+            window.location.href = link;
         }
 
         //Entry Point
         $(document).ready(function () {
-            fnBindAllApplications();
+            fnBindAllTickets();
         });
     </script>
 }

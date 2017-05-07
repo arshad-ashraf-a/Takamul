@@ -75,6 +75,8 @@
     <Compile Include="Common\LookupServices\LookupServices.cs" />
     <Compile Include="Events\EventService.cs" />
     <Compile Include="Events\IEventService.cs" />
+    <Compile Include="MemberInfo\IMemberInfoService.cs" />
+    <Compile Include="MemberInfo\MemberInfoService.cs" />
     <Compile Include="News\INewsServices.cs" />
     <Compile Include="News\NewsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,6 +22,12 @@ namespace Takamul.Models.ViewModel
         public int USER_ID { get; set; }
         public string MEMBER_INFO_TITLE { get; set; }
         public string MEMBER_INFO_DESCRIPTION { get; set; }
+        public int CREATED_BY { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public Nullable<int> MODIFIED_BY { get; set; }
+        public Nullable<DateTime> MODIFIED_DATE { get; set; }
+
+        public int TotalCount { get; set; }
 
         #region :: Constructor ::
         public MemberInfoViewModel()
@@ -31,6 +37,11 @@ namespace Takamul.Models.ViewModel
             this.USER_ID = -99;
             this.MEMBER_INFO_TITLE = string.Empty;
             this.MEMBER_INFO_DESCRIPTION = string.Empty;
+            this.TotalCount = 0;
+            this.CREATED_BY = -99;
+            this.CREATED_DATE = DateTime.MinValue;
+            this.MODIFIED_BY = -99;
+            this.MODIFIED_DATE = DateTime.MinValue;
         } 
         #endregion
     }

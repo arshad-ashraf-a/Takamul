@@ -45,7 +45,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
-          <Property Name="USER_ID" Type="int" />
           <Property Name="MEMBER_INFO_TITLE" Type="varchar" MaxLength="50" />
           <Property Name="MEMBER_INFO_DESCRIPTION" Type="varchar" MaxLength="2000" />
           <Property Name="CREATED_BY" Type="int" />
@@ -76,7 +75,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
           <Property Name="TICKET_NAME" Type="varchar" MaxLength="300" />
-          <Property Name="TICKET_DESCRIPTION" Type="varchar" MaxLength="5000" />
+          <Property Name="TICKET_DESCRIPTION" Type="varchar" MaxLength="1000" />
           <Property Name="DEFAULT_IMAGE" Type="varchar" MaxLength="500" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="TICKET_STATUS_ID" Type="int" />
@@ -223,7 +222,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="APPLICATION_ID" Type="Int32" />
           <Property Name="TICKET_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="TICKET_DESCRIPTION" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="TICKET_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="DEFAULT_IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IS_ACTIVE" Type="Boolean" />
           <Property Name="TICKET_STATUS_ID" Type="Int32" />
@@ -252,7 +251,6 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="USER_ID" Type="Int32" />
           <Property Name="MEMBER_INFO_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MEMBER_INFO_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="CREATED_BY" Type="Int32" />
@@ -359,7 +357,6 @@
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="MEMBER_INFO_DESCRIPTION" ColumnName="MEMBER_INFO_DESCRIPTION" />
                 <ScalarProperty Name="MEMBER_INFO_TITLE" ColumnName="MEMBER_INFO_TITLE" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

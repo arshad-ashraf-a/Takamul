@@ -27,6 +27,16 @@ namespace Takamul.Services
         List<TicketViewModel> IlGetAllActiveTickets(int nApplicationID, int nUserID);
         #endregion
 
+        #region Method :: List<TicketViewModel> :: IlGetAllTickets
+        /// <summary>
+        /// Get all tickets
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nPageNumber, int nRowsPage);
+
+        #endregion
+
         #region Method :: TicketViewModel :: oGetTicketDetails
         /// <summary>
         /// Get ticket details by ticket id

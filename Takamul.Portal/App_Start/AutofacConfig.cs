@@ -23,7 +23,6 @@ namespace Takamul.Portal.App_Start
         /// </summary>
         public static void RegisterComponents()
         {
-
             #region Services Container
 
             var builder = new ContainerBuilder();
@@ -51,6 +50,7 @@ namespace Takamul.Portal.App_Start
             builder.RegisterType<EventService>().As<IEventService>().InstancePerLifetimeScope();
             builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
             builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
+            builder.RegisterType<MemberInfoService>().As<IMemberInfoService>().InstancePerLifetimeScope();
 
             #endregion
 
