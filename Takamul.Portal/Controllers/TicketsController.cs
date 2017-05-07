@@ -3,6 +3,7 @@ using Infrastructure.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -45,13 +46,14 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region View :: TicketsList
+        #region View :: TicketDetails
         public ActionResult TicketDetails(int nTicketID)
         {
+            TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
             this.PageTitle = "Ticket Details";
             this.TitleHead = "Ticket Details";
 
-            return View();
+            return View(oTicketViewModel);
         }
         #endregion
 
@@ -68,10 +70,180 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public JsonResult JBindAllTickets(int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JBindAllTickets(string sTicketCode,string sTicketName,int nTicketStatusId,int nParticipantID, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID, nPage, nRows);
+            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID,nParticipantID,nTicketStatusId,sTicketCode,sTicketName, nPage, nRows);
             return Json(lstEvents, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetTicketChats
+        /// <summary>
+        /// Get ticket chats
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetTicketChats(int nTicketID)
+        {
+            var lstTicketChats = this.oITicketServices.IlGetTicketChats(nTicketID);
+            return Json(lstTicketChats, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: Send Chat
+        /// <summary>
+        /// Send Chat 
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JSendChat(int nTicketID, string sChatMessage)
+        {
+
+            TicketChatViewModel oTicketChatViewModel = new TicketChatViewModel()
+            {
+                TICKET_ID = nTicketID,
+                REPLY_MESSAGE = sChatMessage,
+                TICKET_CHAT_TYPE_ID = 1,
+                TICKET_PARTICIPANT_ID = CurrentUser.nUserID
+            };
+
+            Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+            this.OperationResult = oResponse.OperationResult;
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
+                    break;
+            }
+
+
+            return Json(
+                   new
+                   {
+                       nResult = this.OperationResult,
+                       sResultMessages = this.OperationResultMessages
+                   },
+                   JsonRequestBehavior.AllowGet);
+
+        }
+        #endregion
+
+        #region Method :: Save Chat File
+        /// <summary>
+        /// Save Chat File
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JSaveChatFile(int nTicketID, int nChatTypeID)
+        {
+            if (nTicketID != 99)
+            {
+                string sReplyImagePath = string.Empty;
+                string sReplyImageDirectory = string.Empty;
+                string sFullFilePath = string.Empty;
+                if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+                {
+                    var oFile = System.Web.HttpContext.Current.Request.Files["ChatFile"];
+                    HttpPostedFileBase filebase = new HttpPostedFileWrapper(oFile);
+
+                    sReplyImageDirectory = Path.Combine(CurrentApplicationID.ToString(), nTicketID.ToString());
+
+                    #region Create dynamic file name based on file type
+                    enumFileTypes oEnumFileTypes = (enumFileTypes)Enum.Parse(typeof(enumFileTypes), nChatTypeID.ToString());
+                    switch (oEnumFileTypes)
+                    {
+                        case enumFileTypes.png:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.png");
+                            break;
+                        case enumFileTypes.jpg:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.jpg");
+                            break;
+                        case enumFileTypes.jpeg:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.jpeg");
+                            break;
+                        case enumFileTypes.doc:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.doc");
+                            break;
+                        case enumFileTypes.docx:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.docx");
+                            break;
+                        case enumFileTypes.pdf:
+                            sReplyImagePath = CommonHelper.AppendTimeStamp("fake.pdf");
+                            break;
+                    }
+                    #endregion
+
+                    sFullFilePath = Path.Combine(sReplyImageDirectory, sReplyImagePath);
+
+                    TicketChatViewModel oTicketChatViewModel = new TicketChatViewModel()
+                    {
+                        TICKET_ID = nTicketID,
+                        REPLY_FILE_PATH = sFullFilePath.Replace('\\', '/'),
+                        TICKET_CHAT_TYPE_ID = nChatTypeID,
+                        TICKET_PARTICIPANT_ID = CurrentUser.nUserID
+                    };
+
+                    Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    {
+                        if (!string.IsNullOrEmpty(sFullFilePath))
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                            MemoryStream target = new MemoryStream();
+                            filebase.InputStream.CopyTo(target);
+                            byte[] oArrImage = target.ToArray();
+
+                            oFileAccessService.CreateDirectory(sReplyImageDirectory);
+                            oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
+                        }
+                        this.OperationResult = enumOperationResult.Success;
+                    }
+                    else
+                    {
+                        this.OperationResult = enumOperationResult.Faild;
+                    }
+                }
+
+                switch (this.OperationResult)
+                {
+                    case enumOperationResult.Success:
+                        this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                        break;
+                    case enumOperationResult.Faild:
+                        this.OperationResultMessages = CommonResx.MessageAddFailed;
+                        break;
+                }
+
+            }
+            return Json(
+                   new
+                   {
+                       nResult = this.OperationResult,
+                       sResultMessages = this.OperationResultMessages
+                   },
+                   JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: ActionResult :: DownloadFile
+        public virtual ActionResult DownloadFile(int nTicketID, string sFileName)
+        {
+            byte[] oFileToDownload = null;
+            FileAccessService oFileAccessService = new FileAccessService();
+
+            try
+            {
+                string sFileFullPath = Path.Combine(this.CurrentApplicationID.ToString(), nTicketID.ToString(), sFileName);
+                oFileToDownload = oFileAccessService.ReadFile(sFileFullPath);
+            }
+            catch (Exception) { }
+            return File(oFileToDownload, "application/force-download", sFileName);
         }
         #endregion
 

@@ -55,31 +55,6 @@ namespace Takamul.Services
         #endregion
 
 
-        #region Method :: Response :: OGetAreaList
-        /// <summary>
-        /// Get area list for registration purpose
-        /// </summary>
-        /// <returns></returns>
-        List<AreaInfoViewModel> OGetAreaList();
-        #endregion
-
-        #region Method :: Response :: OGetWilayatList
-        /// <summary>
-        /// Get Wilayats list for registration purpose
-        /// </summary>
-        /// <param name="oAreaCode"></param>
-        /// <returns></returns>
-       List<WilayatInfoViewModel> OGetWilayatList(string AreaCode);
-        #endregion
-
-        #region Method :: Response :: OGetVillageList
-        /// <summary>
-        /// Get Villages list for registration purpose
-        /// </summary>
-        /// <param name="oWilayatCode"></param>
-        /// <returns></returns>
-       List<VillageInfoViewModel> OGetVillageList(string WilayatCode);
-        #endregion
 
     }
 }

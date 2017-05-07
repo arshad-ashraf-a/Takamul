@@ -276,7 +276,7 @@ namespace Takamul.API.Controllers
                     string sFullFilePath = string.Empty;
                     if (!string.IsNullOrEmpty(oTakamulTicketChat.Base64ReplyImage))
                     {
-                        sReplyImageDirectory = Path.Combine(oTakamulTicketChat.TicketID.ToString(), oTakamulTicketChat.ApplicationID.ToString());
+                        sReplyImageDirectory = Path.Combine(oTakamulTicketChat.ApplicationID.ToString(), oTakamulTicketChat.TicketID.ToString());
                         enumFileTypes oEnumFileTypes = (enumFileTypes)Enum.Parse(typeof(enumFileTypes), oTakamulTicketChat.TicketChatTypeID.ToString());
                         switch (oEnumFileTypes)
                         {

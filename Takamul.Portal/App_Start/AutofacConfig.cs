@@ -51,6 +51,9 @@ namespace Takamul.Portal.App_Start
             builder.RegisterType<NewsServices>().As<INewsServices>().InstancePerLifetimeScope();
             builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
             builder.RegisterType<MemberInfoService>().As<IMemberInfoService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserServices>().As<IUserServices>().InstancePerLifetimeScope();
+            builder.RegisterType<LookupServices>().As<ILookupServices>().InstancePerLifetimeScope();
+            builder.RegisterType<CommonServices>().As<ICommonServices>().InstancePerLifetimeScope();
 
             #endregion
 

@@ -33,7 +33,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
-        List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nPageNumber, int nRowsPage);
+        List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nParticipantID, int nTicketStatusID, string sTicketCode, string sTicketName, int nPageNumber, int nRowspPage);
 
         #endregion
 

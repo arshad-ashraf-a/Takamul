@@ -71,13 +71,16 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
-        public List<TicketViewModel> IlGetAllTickets(int nApplicationID,int nPageNumber,int nRowspPage)
+        public List<TicketViewModel> IlGetAllTickets(int nApplicationID,int nParticipantID,int nTicketStatusID,string sTicketCode,string sTicketName, int nPageNumber,int nRowspPage)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, -99, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nParticipantID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusId", SqlDbType.Int,nTicketStatusID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCode", SqlDbType.VarChar,sTicketCode,10, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.VarChar, sTicketName,300, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
             #endregion
@@ -86,6 +89,7 @@ namespace Takamul.Services
             List<TicketViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketViewModel>("GetAllTickets", arrParameters.ToArray());
             return lstTickets;
             #endregion
+
         }
         #endregion
 

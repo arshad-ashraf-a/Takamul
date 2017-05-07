@@ -82,6 +82,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tickets\ITicketServices.cs" />
     <Compile Include="Tickets\TicketServices.cs" />
+    <Compile Include="User\UserServices.cs" />
+    <Compile Include="User\IUserServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Infrastructure.Core\Infrastructure.Core.csproj">

@@ -1,169 +1,284 @@
-﻿@{
+﻿@model Takamul.Models.ViewModel.TicketViewModel
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
-<div class="panel panel-flat">
-    <div class="panel-heading">
-        <h6 class="panel-title">Default stacked layout<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-        <div class="heading-elements">
-            <ul class="icons-list">
-                <li><a data-action="collapse"></a></li>
-                <li><a data-action="reload"></a></li>
-                <li><a data-action="close"></a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="panel-body">
-        <ul class="media-list chat-stacked content-group">
-            <li class="media date-step text-muted">
-                <span>Saturday, Feb 12</span>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Margo Baker</a>
-                        <span class="media-annotation pull-right">12:16 pm <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Goldfish indisputable vexed hello on held some gosh :-)
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Will Grace</a>
-                        <span class="media-annotation pull-right">4:13 pm <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Wickedly darn before or after impeccably jeepers ouch misunderstood yikes much hello talkatively ineffectively hiccupped beyond usefully the alas prior shrugged instantaneously heroically
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Margo Baker</a>
-                        <span class="media-annotation pull-right">02:53 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Less insincerely hello far ungraceful near poured warthog hurt apart ouch wow that banal far made grew collective coasted inside
-                </div>
-            </li>
-
-            <li class="media date-step text-muted">
-                <span>Yesterday</span>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Will Grace</a>
-                        <span class="media-annotation pull-right">7:50 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Less a hello hey less saw vexedly pleasantly this much flamingo alas returned frighteningly some beneath jeez oh that overpaid oh within forlorn suddenly
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Margo Baker</a>
-                        <span class="media-annotation pull-right">2:03 pm <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Heard where and affecting dear hyena excluding hey confused the one
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Margo Baker</a>
-                        <span class="media-annotation pull-right">5:14 pm <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Messily changed much yet much this forbidding that so hey
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Will Grace</a>
-                        <span class="media-annotation pull-right">1:30 pm <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    And hello exotic staunch bee goodness expectant much combed fox placed far this at oh less opposite much factually
-                </div>
-            </li>
-
-            <li class="media date-step text-muted">
-                <span>Today</span>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Will Grace</a>
-                        <span class="media-annotation pull-right">2:29 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Besides lax yikes and a much deservedly much that constructively flexibly darn a one and and whooped without the and darn contemplated jokingly some ordered oh domestic possessive far
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Margo Baker</a>
-                        <span class="media-annotation pull-right">8:20 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    So because one badger a over more impotent pending frustratingly gosh when
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body">
-                    <div class="media-heading">
-                        <a href="#" class="text-semibold">Will Grace</a>
-                        <span class="media-annotation pull-right">9:00 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                    </div>
-                    Fantastic close echidna crud fatuously much extensively alas beat up far consoled manfully that far one owing one perversely jeepers some
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle img-md" alt=""></div>
-                <div class="media-body media-middle">
-                    <i class="icon-menu"></i>
-                </div>
-            </li>
-        </ul>
-
-        <textarea name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <ul class="icons-list icons-list-extended mt-10">
-                    <li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Send photo"><i class="icon-file-picture"></i></a></li>
-                    <li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Send video"><i class="icon-file-video"></i></a></li>
-                    <li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Send file"><i class="icon-file-plus"></i></a></li>
-                </ul>
+<div class="col-md-12">
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">Ticket Chats <i class="icon-arrow-right14 position-left"></i><span class="text-primary">@Model.TICKET_NAME</span></h6>
+            <div class="heading-elements">
+                <a title="Go Back To All Application" href="@Url.Action("TicketsList", "Tickets")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> All Tickets</a>
             </div>
+        </div>
 
-            <div class="col-xs-6 text-right">
-                <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+        <div class="panel-body">
+            <ul class="media-list chat-stacked content-group" data-bind="foreach: vmaTicketChats">
+                <li class="media">
+                    <div class="media-left"><img src="~/assets/images/profile.jpg" class="img-circle img-md" alt=""></div>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <a href="#" class="text-semibold"><span data-bind="text: sParticipantName"></span></a>
+                            <span class="media-annotation pull-right"><span data-bind="text: sRepliedDate"></span></span>
+                        </div>
+                        <div class="text-muted text-size-small">
+                            <span data-bind="html: sChatMessage"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <textarea name="enter-message" id="txtChatMessage" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <input type="file" onchange="fnSaveChatFile();" id="fuChatFile" name="fuChatFile" style="visibility: hidden; width: 1px; height: 1px" multiple />
+                    <button onclick="fnSendChat();" type="button" id="btnSend" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+                </div>
+
+                <div class="col-xs-6 text-right">
+                    <a href="#" id="btnUploadFile" onclick="document.getElementById('fuChatFile').click(); return false" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-file-plus"></i></b> Upload File</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 @section InlineScriptsRelated
 {
-    
+    <script type="text/javascript">
+        //Incident status
+        var enmTicketChatTypes = {
+            text: 1,
+            png: 2,
+            jpg: 3,
+            jpeg: 4,
+            doc: 5,
+            docx: 6,
+            pdf: 7
+        }
+
+        function fnGetTicketChats() {
+
+            var dataToSend = JSON.stringify({
+                nTicketID: Number(@Model.ID)
+            });
+            $.ajax({
+                url: '@Url.Action("JGetTicketChats", "Tickets")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    ViewModel.vmaTicketChats.removeAll();
+                    response.forEach(function (arrItem) {
+                        var icon = "<i class='icon-file-picture text-muted'></i>";
+                        var vChatMessage = "";
+                        var arrChatType = arrItem.TICKET_CHAT_TYPE_ID;
+                        if (arrChatType != enmTicketChatTypes.text) {
+                            if (arrChatType == enmTicketChatTypes.jpeg || arrChatType == enmTicketChatTypes.jpg ||
+                                arrChatType == enmTicketChatTypes.png) {
+                                icon = "<i class='icon-file-picture text-muted'></i>";
+                            }
+                            else if (arrChatType == enmTicketChatTypes.doc || arrChatType == enmTicketChatTypes.docx) {
+                                icon = "<i class='icon-file-word text-muted'></i>";
+                            }
+                            else if (arrChatType == enmTicketChatTypes.pdf) {
+                                icon = "<i class='icon-file-pdf text-muted'></i>";
+                            }
+                            var filename = arrItem.REPLY_FILE_PATH.split('/').pop();
+                            console.log(filename);
+                            debugger;
+                            vChatMessage = icon + '&nbsp;&nbsp;<a onclick="fnDownloadFile(\'' + filename.trim() + '\');">' + filename + '</a>';
+
+                        }
+                        else {
+                            vChatMessage = arrItem.REPLY_MESSAGE;
+                        }
+                        //CHAT_TYPE "text"
+                        //ID 20
+                        //PARTICIPANT_FULL_NAME "Admin"
+                        //REPLIED_DATE "/Date(1493920140000)/"
+                        //REPLY_FILE_PATH null
+                        //REPLY_MESSAGE "sample string 4"
+                        //TICKET_CHAT_TYPE_ID 1
+                        //TICKET_ID  5
+                        //TICKET_PARTICIPANT_ID  3
+
+                        var oItem = {
+                            nTicketChatID: arrItem.ID,
+                            cChatType: arrItem.TICKET_CHAT_TYPE_ID,
+                            sChatMessage: vChatMessage,
+                            sParticipantName: arrItem.PARTICIPANT_FULL_NAME,
+                            sRepliedDate: moment(arrItem.REPLIED_DATE).format("DD/MM/YYYY HH:mm A")
+                        };
+
+                        ViewModel.AddToChatData(oItem);
+                    });
+                    $(".media-list").animate({ scrollTop: $('.media-list').prop("scrollHeight") }, 1000);
+
+                },
+                error: function (response) {
+                    lstTicketChats = null;
+                }
+            })
+
+        }
+
+        function fnCheckFileSize(fileid) {
+            var fileSize = 0;
+            try {
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
+                fileSize = fileSize / 1024; //size in kb
+            }
+            catch (e) {
+                fileSize = 0;
+                console.log(ex);
+            }
+            return fileSize;
+        }
+
+        function fnIsValidFileExtension(sExtension) {
+            var bIsInValidExt = false;
+            if (sExtension != "PDF" && sExtension != "DOC" && sExtension != "DOCX" && sExtension != "PNG" && sExtension != "JPG" && sExtension != "JPEG") {
+                bIsInValidExt = true;
+            }
+            return bIsInValidExt;
+        }
+
+
+        function fnSendChat() {
+            if ($("#txtChatMessage").val() == "" || $("#txtChatMessage").val() == null) {
+                return false;
+            }
+            var dataToSend = JSON.stringify({
+                nTicketID: Number(@Model.ID),
+                sChatMessage: $("#txtChatMessage").val()
+            });
+            $.ajax({
+                url: '@Url.Action("JSendChat", "Tickets")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    if (response.nResult == 1) {
+                        fnGetTicketChats();
+                        $("#txtChatMessage").val("");
+                    }
+                    else {
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function (response) {
+                    ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                }
+            })
+        }
+
+
+        function fnSaveChatFile() {
+            var data = new FormData();
+            var files = $("#fuChatFile").get(0).files;
+
+            if (files.length <= 0) {
+                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                return false;
+            }
+
+            var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+            var nUploadedSize = fnCheckFileSize('fuChatFile');
+            if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                return false;
+            }
+
+            var extension = $("#fuChatFile").val().split('.').pop().toUpperCase();
+            var bIsInValidExt = fnIsValidFileExtension(extension);
+            if (bIsInValidExt) {
+                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG,DOC,DOCX and PDF is allowed.", NotificationType.Warning);
+                return false;
+            }
+            var vChatType = -99;
+
+            switch (extension) {
+                case "JPEG":
+                    vChatType = enmTicketChatTypes.jpeg;
+                    break;
+                case "JPG":
+                    vChatType = enmTicketChatTypes.jpg;
+                    break;
+                case "PNG":
+                    vChatType = enmTicketChatTypes.png;
+                    break;
+                case "DOC":
+                    vChatType = enmTicketChatTypes.doc;
+                    break;
+                case "DOC":
+                    vChatType = enmTicketChatTypes.docx;
+                    break;
+                case "PDF":
+                    vChatType = enmTicketChatTypes.pdf;
+                    break;
+
+            }
+            data.append("ChatFile", files[0]);
+            data.append("nTicketID", Number(@Model.ID));
+            data.append("nChatTypeID", Number(vChatType));
+
+            $.ajax({
+                url: '@Url.Action("JSaveChatFile", "Tickets")',
+                type: "POST",
+                processData: false,
+                data: data,
+                dataType: 'json',
+                contentType: false,
+                success: function (result, response) {
+                    if (result.nResult == 1) {
+                        fnGetTicketChats();
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+
+                    $("#fuChatFile").val('');
+                },
+                error: function (er) { ShowStatusBarNotification("General error occured.", NotificationType.Error); }
+
+            });
+            return false;
+        }
+
+        function fnDownloadFile(vfileName) {
+            window.location = '@Url.Action("DownloadFile", "Tickets")?nTicketID=' + Number(@Model.ID) + '&sFileName=' + vfileName;
+            return false;
+
+
+        }
+        //Knockout ViewModel
+        $(document).ready(function () {
+            ViewModel = function () {
+                var self = this;
+
+                self.vmaTicketChats = ko.observableArray([]);
+                self.fnAddToChatData = function (oItem) {
+                    self.vmaTicketChats.push(ko.utils.extend({}, oItem));
+                }
+
+                return {
+                    vmaTicketChats: vmaTicketChats,
+                    AddToChatData: fnAddToChatData
+                };
+            }();
+        });
+        //EndKnockout ViewModel
+        //Entry Point
+        $(document).ready(function () {
+
+            ko.applyBindings(ViewModel);
+            fnGetTicketChats();
+
+            setInterval(function () { fnGetTicketChats(); }, 20000);
+
+        });
+
+    </script>
 }

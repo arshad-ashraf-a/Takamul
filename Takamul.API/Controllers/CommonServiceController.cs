@@ -11,6 +11,7 @@
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -108,7 +109,99 @@ namespace Takamul.API.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulMembeInfo);
         }
-        #endregion 
+        #endregion
+
+        #region Method :: HttpResponseMessage :: GetAllAreas
+        // GET: CommonService/GetAllAreas
+        /// <summary>
+        /// Get list of areas
+        /// </summary>
+        /// <returns></returns>
+        /// 
+
+        [Route("CommonService/GetAllAreas")]
+        [HttpGet]
+        public HttpResponseMessage GetAllArea()
+        {
+            List<AreaInfo> oAreaInfolsts = new List<AreaInfo>();
+
+            List<AreaInfoViewModel> oAreaListViewModellsts = this.oICommonServices.oGetAllAreas();
+
+            foreach (AreaInfoViewModel item in oAreaListViewModellsts)
+            {
+                var oAreaInfo = new AreaInfo()
+                {
+                    AREACODE = item.AREACODE,
+                    AREA_NAME = item.AREA_NAME
+                };
+                oAreaInfolsts.Add(oAreaInfo);
+
+            }
+
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, oAreaInfolsts);
+        }
+        #endregion
+
+        #region Method :: HttpResponseMessage :: GetAllWilayats
+        // GET: CommonService/GetAllWilayats
+        /// <summary>
+        /// Get list of Wilayats
+        /// </summary>
+        /// <param name="sAreaCode"></param>
+        /// <returns></returns>
+        /// 
+        [Route("CommonService/GetAllWilayats")]
+        [HttpGet]
+        public HttpResponseMessage GetAllWilayats(string sAreaCode)
+        {
+            List<WilayatInfo> oWilayatList = new List<WilayatInfo>();
+            List<WilayatInfoViewModel> oWilayatViewModellsts = this.oICommonServices.oGetAllWilayats(sAreaCode);
+
+            foreach (WilayatInfoViewModel item in oWilayatViewModellsts)
+            {
+                var WilayatInfo = new WilayatInfo
+                {
+                    WILAYATCODE = item.WILAYATCODE,
+                    WILLAYATNAME = item.WILLAYATNAME
+                };
+                oWilayatList.Add(WilayatInfo);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, oWilayatList);
+        }
+        #endregion
+
+        #region Method :: HttpResponseMessage :: GetAllVillages
+        // GET: CommonService/OGetVillageList
+        /// <summary>
+        /// Get village detailed infomations
+        /// </summary>
+        /// <param name="sWilaaytCode"></param>
+        /// <returns></returns>
+        /// 
+        [Route("CommonService/GetAllVillages")]
+        [HttpGet]
+        public HttpResponseMessage GetAllVillages(string sWilaaytCode)
+        {
+            List<VillageInfo> oVillageList = new List<VillageInfo>();
+            List<VillageInfoViewModel> oVillageViewModellsts = this.oICommonServices.oGetAllVillages(sWilaaytCode);
+
+            foreach (VillageInfoViewModel item in oVillageViewModellsts)
+            {
+                var oVillage = new VillageInfo()
+                {
+                    VILLAGECODE = item.VILLAGECODE,
+                    VILLAGENAME = item.VILLAGENAME
+
+                };
+                oVillageList.Add(oVillage);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oVillageList);
+        }
+        #endregion
+
 
         #endregion
     }

@@ -5,12 +5,12 @@ namespace Takamul.Services
 {
     public interface ILookupServices
     {
-        #region Method :: IlGetAllIncidentStatus
+        #region Method :: lGetAllTicketStatus
         /// <summary>
-        /// Get incident status
+        /// Get ticket status
         /// </summary>
         /// <returns></returns>
-        List<Lookup> IlGetAllIncidentStatus();
+        List<Lookup> lGetAllTicketStatus();
         #endregion
     }
 }

@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using Data.Core;
 using Takamul.Models;
+using System.Data.Common;
 
 namespace Takamul.Services
 {
@@ -18,15 +19,16 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region IlGetAllIncidentStatus
+        #region lGetAllTicketStatus
         /// <summary>
         /// Get incident status
         /// </summary>
         /// <returns></returns>
-        public List<Lookup> IlGetAllIncidentStatus()
+        public List<Lookup> lGetAllTicketStatus()
         {
             #region ":Get Sp Result:"
-            List<Lookup> lookups = this.ExecuteStoredProcedureList<Lookup>("Inc_GetAllIncidentStatusLookUps");
+
+            List<Lookup> lookups = this.ExecuteStoredProcedureList<Lookup>("GetAllTicketStatusLookup");
             return lookups;
             #endregion
         }

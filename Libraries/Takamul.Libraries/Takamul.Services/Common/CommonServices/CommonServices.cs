@@ -108,8 +108,75 @@ namespace Takamul.Services
             return oResponse;
             #endregion
         }
+
         #endregion
-        
+
+        #region Method :: AreaInfo :: oGetAllAreas
+        /// <summary>
+        ///  Get all areas
+        /// </summary>
+        /// <returns></returns>
+        public List<AreaInfoViewModel> oGetAllAreas()
+        {
+
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, null, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<AreaInfoViewModel> lstAreaDetails = this.ExecuteStoredProcedureList<AreaInfoViewModel>("GetAllAreas", arrParameters.ToArray());
+            return lstAreaDetails;
+
+            #endregion
+
+        }
+        #endregion
+
+        #region Method :: WilayatInfoViewModel :: oGetAllWilayats
+        /// <summary>
+        ///  Get all wilayat
+        /// </summary>
+        /// <returns></returns>
+        public List<WilayatInfoViewModel> oGetAllWilayats(string sAreaCode)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<WilayatInfoViewModel> lstWilayatDetails = this.ExecuteStoredProcedureList<WilayatInfoViewModel>("GetAllWilayats", arrParameters.ToArray());
+            return lstWilayatDetails;
+
+            #endregion
+
+        }
+        #endregion
+
+        #region Method :: VillageInfoViewModel :: oGetAllVillages
+        /// <summary>
+        ///  Get all villages
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <returns></returns>
+        public List<VillageInfoViewModel> oGetAllVillages(string sWilayatCode)
+        {
+
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("WilayatCode", SqlDbType.NVarChar, sWilayatCode, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<VillageInfoViewModel> lstVillage = this.ExecuteStoredProcedureList<VillageInfoViewModel>("GetAllVillages", arrParameters.ToArray());
+            return lstVillage;
+
+            #endregion
+
+        }
+        #endregion
+
 
         #endregion
     }

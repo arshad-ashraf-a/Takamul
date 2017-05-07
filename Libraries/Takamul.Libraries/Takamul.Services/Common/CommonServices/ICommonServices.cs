@@ -34,5 +34,32 @@ namespace Takamul.Services
         Response oInsertMobileUser(UserInfoViewModel oUserInfoViewModel);
         #endregion
 
+
+        #region Method :: Response :: oGetAllAreas
+        /// <summary>
+        /// Get area list
+        /// </summary>
+        /// <returns></returns>
+        List<AreaInfoViewModel> oGetAllAreas();
+        #endregion
+
+        #region Method :: Response :: oGetAllWilayats
+        /// <summary>
+        /// Get Wilayats list
+        /// </summary>
+        /// <param name="oAreaCode"></param>
+        /// <returns></returns>
+        List<WilayatInfoViewModel> oGetAllWilayats(string AreaCode);
+        #endregion
+
+        #region Method :: Response :: oGetAllVillages
+        /// <summary>
+        /// Get Villages
+        /// </summary>
+        /// <param name="oWilayatCode"></param>
+        /// <returns></returns>
+        List<VillageInfoViewModel> oGetAllVillages(string WilayatCode);
+        #endregion
+
     }
 }

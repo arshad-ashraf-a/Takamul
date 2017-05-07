@@ -25,10 +25,10 @@
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Ticket ID</label>
+                                            <label class="col-lg-4 control-label">Ticket Code</label>
                                             <div class="col-lg-5">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
-                                                       placeholder="Application ID">
+                                                <input type="text" class="form-control col-xs-6" id="txtSearchByTicketCode" name="txtSearchByTicketCode"
+                                                       placeholder="Ticket Code">
                                             </div>
                                         </div>
                                     </div>
@@ -37,8 +37,31 @@
                                         <div class="form-group">
                                             <label class="col-lg-4 control-label">Ticket Name</label>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationName" name="txtSearchByApplicationName"
-                                                       placeholder="Application Name">
+                                                <input type="text" class="form-control col-xs-6" id="txtSearchByTicketName" name="txtSearchByTicketName"
+                                                       placeholder="Ticket Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Ticket Status</label>
+                                            <div class="col-lg-5">
+                                                <select class="form-control" id="ddlTicketStatus" name="ddlTicketStatus">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Participant User</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control" id="ddlParticipantUser" name="ddlParticipantUser">
+                                                    <option></option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -47,8 +70,8 @@
                         </fieldset>
                         <hr class="sp-1" />
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllTickets();">Seach<i class="fa fa-search position-right"></i></button>
-                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>
+                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllTickets(); return false;">Seach<i class="fa fa-search position-right"></i></button>
+                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch(); return false;">Clear</button>
                         </div>
                         <div class="row search-option-buttons">
                             <div class="col-sm-6">
@@ -111,22 +134,24 @@
                 'Ticket Name',
                 'Ticket Description',
                 'Ticket Status',
-                'Ticket Status Remark',
+                'Status Remark',
                 'Is Active',
                 'Created Date',
                 'Options' // Options
             ];
 
-            //string sIncidentNo,string sIncidentName,string sFromDate,string sToDate,
-            //                           string sIncidentStatus,string sIncidentType
-
-            @*var vSearchEventByName = $("#txtSearchEventByName").val();
+            var vTicketCode = $("#txtSearchByTicketCode").val();
+            var vTicketName = $("#txtSearchByTicketName").val();
+            var vTicketStatusId = Number($("#ddlTicketStatus").val());
+            var vParticipantID = Number($("#ddlParticipantUser").val());
             var params = {
-                'sSearchByEventName': vSearchEventByName
+                'sTicketCode': vTicketCode,
+                'sTicketName': vTicketName,
+                'nTicketStatusId': vTicketStatusId,
+                'nParticipantID': vParticipantID
 
             };
-            var sBindDataUrl = '@Url.Action("JBindAllTickets", "Tickets")' + '?' + jQuery.param(params);*@
-            var sBindDataUrl = '@Url.Action("JBindAllTickets", "Tickets")';
+            var sBindDataUrl = '@Url.Action("JBindAllTickets", "Tickets")' + '?' + jQuery.param(params);
 
             var sAddUrl = "#";
             var sEditUrl = "#";
@@ -142,12 +167,15 @@
                     },
                      {
                          name: ConstantsNames.TicketCode,
-                         width: 150, editable: false,
-                         align: EnumColumnsAlignment.Center
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             return "<div class='text-semibold'><a onclick='fnGoToTicketDetails(" + rowObject.ID + ")' href='#'>" + rowObject.TICKET_CODE + "</a></div>";
+                         }
                      },
                     {
                         name: ConstantsNames.TicketName,
-                        width: 150, editable: false,
+                        width: 100, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
                     {
@@ -157,17 +185,17 @@
                     },
                     {
                         name: ConstantsNames.TicketStatusName,
-                        width: 150, editable: false,
+                        width: 50, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
                     {
                         name: ConstantsNames.TicketStatusRemark,
-                        width: 150, editable: false,
+                        width: 50, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
                     {
                         name: ConstantsNames.IsActive,
-                        width: 150, editable: false,
+                        width: 50, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var bIsActive = rowObject.IS_ACTIVE;
@@ -183,7 +211,7 @@
                     },
                     {
                         name: ConstantsNames.CreatedDate,
-                        width: 150, editable: false,
+                        width: 50, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
                     }
@@ -205,19 +233,60 @@
             });
         }
 
-        function fnGoToTicketDetails() {
-            var gdTicket = $('#' + sGridViewSelector);
-            var vTicketID = gdTicket.jqGrid('getGridParam', 'selrow');
-
+        function fnGoToTicketDetails(nTicketID) {
+            debugger;
+            var vTicketID = -99;
+            if (nTicketID != null && nTicketID != undefined && nTicketID != -99) {
+                vTicketID = nTicketID;
+            }
+            else {
+                var gdTicket = $('#' + sGridViewSelector);
+                vTicketID = gdTicket.jqGrid('getGridParam', 'selrow');
+            }
             var link = '@Url.Action("TicketDetails", "Tickets", new { nTicketID = "replace" })';
             link = link.replace("replace", vTicketID);
 
             window.location.href = link;
         }
 
+        function fnFillTicketStatus() {
+            //TODO:: option add 'ALL'
+            debugger;
+            FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '- Select Status - ', ' ', [],
+                function () {
+                    //Success Function
+                    $("#ddlTicketStatus").select2({ width: '100%' });
+                },
+                function () {
+                    //Error
+                })
+        }
+
+        function fnFillApplicationUsers() {
+            //TODO:: option add 'ALL'
+            FillDropDownRoot('@Url.Action("JGetApplicationUsers", "Users")', 'POST', false, 'ddlParticipantUser', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
+                function () {
+                    //Success Function
+                    $("#ddlParticipantUser").select2({ width: '100%' });
+                },
+                function () {
+                    //Error
+                })
+        }
+
+        function fnClearSearch() {
+            $("#txtSearchByTicketCode").val("");
+            $("#txtSearchByTicketName").val("");
+            $('#ddlTicketStatus').val($('#ddlTicketStatus option:first-child').val()).trigger('change');
+            $('#ddlParticipantUser').val($('#ddlParticipantUser option:first-child').val()).trigger('change');
+        }
+
         //Entry Point
         $(document).ready(function () {
+            fnFillTicketStatus();
+            fnFillApplicationUsers();
             fnBindAllTickets();
+
         });
     </script>
 }
