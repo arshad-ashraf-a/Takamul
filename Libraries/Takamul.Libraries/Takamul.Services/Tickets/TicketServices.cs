@@ -50,12 +50,11 @@ namespace Takamul.Services
         /// <param name="nTicketID"></param>
         /// <param name="nUserID"></param>
         /// <returns></returns>
-        public List<TicketViewModel> IlGetAllActiveTickets(int nApplicationID, int nTicketID, int nUserID)
+        public List<TicketViewModel> IlGetAllActiveTickets(int nApplicationID, int nUserID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
             #endregion
 

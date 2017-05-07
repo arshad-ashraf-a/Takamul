@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Takamul.Models.ViewModel
+namespace Takamul.Models
 {
     public class EventViewModel
     {
@@ -34,6 +34,8 @@ namespace Takamul.Models.ViewModel
 
         public float Latitude { get; set; }
         public float Longitude { get; set; }
+        public string BASE64EVENTIMG { set; get; }
+
 
         #region :: Constructor ::
         public EventViewModel()

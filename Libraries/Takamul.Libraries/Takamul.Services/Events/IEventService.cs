@@ -80,5 +80,15 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oDeleteEvent(int nEventID);
         #endregion
+
+        #region Method ::EventsViewModel :: oGetEventsbyDate
+        /// <summary>
+        /// Get events details by dEventDate
+        /// </summary>
+        /// <param name="dEventDate"></param>
+        /// <returns>List of Event</returns>
+       List<EventViewModel> oGetEventsbyDate(DateTime dEventDate,int nApplicationID);
+        #endregion
+
     }
 }

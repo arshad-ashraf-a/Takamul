@@ -222,7 +222,7 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAreaLists()
         {
-            List<AreaInfo> oAreaInfolsts = null;
+            List<AreaInfo> oAreaInfolsts = new List<AreaInfo>();
                        
             List<AreaInfoViewModel> oAreaListViewModellsts = this.oIAuthenticationService.OGetAreaList();
 
@@ -256,7 +256,7 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage OGetWilayatList(string sAreaCode)
         {
-            List<WilayatInfo> oWilayatList = null;
+            List<WilayatInfo> oWilayatList = new List<WilayatInfo>();
            List< WilayatInfoViewModel> oWilayatViewModellsts = this.oIAuthenticationService.OGetWilayatList(sAreaCode);
 
             foreach (WilayatInfoViewModel item in oWilayatViewModellsts)
@@ -286,7 +286,7 @@ namespace Takamul.API.Controllers
         [HttpGet]
         public HttpResponseMessage OGetVillageList(string sWilaaytCode)
         {
-            List<VillageInfo> oVillageList = null;
+            List<VillageInfo> oVillageList = new List<VillageInfo>();
            List<VillageInfoViewModel> oVillageViewModellsts = this.oIAuthenticationService.OGetVillageList(sWilaaytCode);
 
             foreach (VillageInfoViewModel item in oVillageViewModellsts)

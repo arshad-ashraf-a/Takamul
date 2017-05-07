@@ -62,7 +62,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetAllTickets(int nApplicationID, int nUserID)
         {
             List<TakamulTicket> lstTakamulTicket = null;
-            var lstTickets = this.oITicketServices.IlGetAllActiveTickets(nApplicationID, -99, nUserID);
+            var lstTickets = this.oITicketServices.IlGetAllActiveTickets(nApplicationID, nUserID);
             if (lstTickets.Count() > 0)
             {
                 lstTakamulTicket = new List<TakamulTicket>();

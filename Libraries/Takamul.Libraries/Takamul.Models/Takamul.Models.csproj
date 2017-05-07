@@ -75,6 +75,9 @@
     <Compile Include="EVENTS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MEMBER_INFO.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="NEWS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
