@@ -249,6 +249,7 @@
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="DBScript\Takamul_script_07-05-2017_11-45.sql" />
+    <Content Include="DBScript\Takamul_script_08-05-2017.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_script.sql" />
@@ -256,7 +257,6 @@
     <Content Include="DBScript\DBScript.Drop_All_Procedures.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Tables.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Tbls_Procs_Func_Views.sql" />
-    <Content Include="DBScript\Help.txt" />
     <Content Include="DBScript\script 02Apr2017 - 05-34.sql" />
     <Content Include="DBScript\Takamul_script_07-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_samh_03-05-2017.sql" />
@@ -949,6 +949,8 @@
     <Content Include="Views\MemberInfo\_EditMemberInfo.cshtml" />
     <Content Include="Views\Tickets\TicketsList.cshtml" />
     <Content Include="Views\Tickets\TicketDetails.cshtml" />
+    <Content Include="Views\Users\UsersList.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -985,7 +987,6 @@
     <Folder Include="assets\js\pages\" />
     <Folder Include="UploadFolder\" />
     <Folder Include="Views\News\" />
-    <Folder Include="Views\Users\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

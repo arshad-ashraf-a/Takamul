@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
 
@@ -41,6 +42,17 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: UserProfile
+        public ActionResult UserProfile(int nUserID)
+        {
+            UserInfoViewModel oUserInfoViewModel = this.oIUserServicesService.oGetUserDetails(nUserID);
+            this.PageTitle = "User Profile";
+            this.TitleHead = "User Profile";
+
+            return View(oUserInfoViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -51,9 +63,9 @@ namespace LDC.eServices.Portal.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetApplicationUsers()
+        public JsonResult JGetApplicationUsers(int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstUsers = this.oIUserServicesService.lGetApplicationUsers(this.CurrentApplicationID);
+            var lstUsers = this.oIUserServicesService.lGetApplicationUsers(this.CurrentApplicationID, nPage, nRows);
             return Json(lstUsers, JsonRequestBehavior.AllowGet);
         }
         #endregion

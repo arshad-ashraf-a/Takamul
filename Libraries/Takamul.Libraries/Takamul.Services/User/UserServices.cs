@@ -47,12 +47,14 @@ namespace Takamul.Services
         ///  Get list of application users
         /// </summary>
         /// <returns></returns>
-        public List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID)
+        public List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, int nPageNumber, int nRowspPage)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -64,6 +66,36 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: UserInfoViewModel :: oGetUserDetails
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <returns></returns>
+        public UserInfoViewModel oGetUserDetails(int nUserID)
+        {
+            UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, 1, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, 1, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetApplicationUsers", arrParameters.ToArray());
+            if (lstUsers.Count == 1)
+            {
+                oUserInfoViewModel = lstUsers[0];
+                enumUserType oEnmUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUserInfoViewModel.USER_TYPE_ID.ToString(), true);
+                oUserInfoViewModel.UserType = oEnmUserType;
+            }
+            return oUserInfoViewModel;
+
+            #endregion
+
+        }
+        #endregion
         #endregion
     }
 }

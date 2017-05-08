@@ -21,9 +21,16 @@ namespace Takamul.Services
         ///  Get list of application users
         /// </summary>
         /// <returns></returns>
-        List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID);
-        
+        List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, int nPageNumber, int nRowspPage);
+
         #endregion
 
+        #region Method :: UserInfoViewModel :: oGetUserDetails
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <returns></returns>
+        UserInfoViewModel oGetUserDetails(int nUserID);
+        #endregion
     }
 }

@@ -61,7 +61,7 @@ namespace LDC.eServices.Portal.Controllers
 
         #region ::  Methods ::
 
-        #region JsonResult :: Bind Grid All Events
+        #region JsonResult :: Bind Grid All Tickets
         /// <summary>
         /// Bind all application tickets
         /// </summary>

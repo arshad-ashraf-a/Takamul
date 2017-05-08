@@ -194,14 +194,14 @@ namespace Takamul.API.Controllers
                     PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
                     Email = oUserInfoViewModel.EMAIL,
                     Addresss = oUserInfoViewModel.ADDRESS,
-                    IsActive = oUserInfoViewModel.IS_ACTIVE,
-                    IsUserBlocked = oUserInfoViewModel.IS_BLOCKED,
+                    IsActive = (bool)oUserInfoViewModel.IS_ACTIVE,
+                    IsUserBlocked = (bool)oUserInfoViewModel.IS_BLOCKED,
                     BlockedRemarks = oUserInfoViewModel.BLOCKED_REMARKS,
-                    IsOTPVerified = oUserInfoViewModel.IS_OTP_VALIDATED,
-                    IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS,
-                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED,
-                    TicketSubmissionIntervalDays = oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
-                    LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE.ToString("DD/mm/YYYY")
+                    IsOTPVerified = (bool)oUserInfoViewModel.IS_OTP_VALIDATED,
+                    IsSmsSent = (bool)oUserInfoViewModel.SMS_SENT_STATUS,
+                    IsTicketSubmissionRestricted = (bool)oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED,
+                    TicketSubmissionIntervalDays = (int)oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
+                    LastTicketSubmissionDate = Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("DD/mm/YYYY")
                 };
             }
 

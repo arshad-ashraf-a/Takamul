@@ -1,0 +1,278 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-horizontal" action="#">
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <fieldset>
+                            <legend class="text-semibold">
+                                <i class="fa fa-search position-left"></i>
+                                Search User
+                                <div class="content-group pull-right">
+
+                                    <a class="control-arrow mt-10" data-toggle="collapse" data-target="#demo1" aria-expanded="true">
+                                        <i class="icon-circle-down2"></i>
+                                    </a>
+                                </div>
+
+                            </legend>
+                            <div class="collapse in" id="demo1" aria-expanded="true">
+
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Ticket Code</label>
+                                            <div class="col-lg-5">
+                                                <input type="text" class="form-control col-xs-6" id="txtSearchByTicketCode" name="txtSearchByTicketCode"
+                                                       placeholder="Ticket Code">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Ticket Name</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control col-xs-6" id="txtSearchByTicketName" name="txtSearchByTicketName"
+                                                       placeholder="Ticket Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Ticket Status</label>
+                                            <div class="col-lg-5">
+                                                <select class="form-control" id="ddlUserstatus" name="ddlUserstatus">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Participant User</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control" id="ddlParticipantUser" name="ddlParticipantUser">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr class="sp-1" />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllUsers(); return false;">Seach<i class="fa fa-search position-right"></i></button>
+                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch(); return false;">Clear</button>
+                        </div>
+                        <div class="row search-option-buttons">
+                            <div class="col-sm-6">
+
+                            </div>
+
+                            <div class="col-sm-6 text-right">
+                                <ul class="list-inline no-margin-bottom">
+                                    <li>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="fakeWidth col-md-12"></div>
+        <div id="dvUsers">
+        </div>
+    </div>
+</div>
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+
+        var sGridViewSelector = "grid-table";
+        var sGridViewPagerSelector = "grid-pager";
+        function fnBindAllUsers() {
+            ShowLoader();
+            $("#dvUsers").hide();
+            $("#dvUsers").empty();
+            var table = document.createElement('table');
+            table.id = sGridViewSelector;
+            var pager = document.createElement('div');
+            pager.id = sGridViewPagerSelector;
+
+            $('#dvUsers').append(table);
+            $('#dvUsers').append(pager);
+
+            var ConstantsNames =
+                {
+                    ID: 'ID',
+                    UserFullName: 'FULL_NAME',
+                    UserType: 'USER_TYPE_NAME',
+                    PhoneNumber: 'PHONE_NUMBER',
+                    Email: 'EMAIL',
+                    IsBlocked: 'IS_BLOCKED',
+                    IsActive: 'IS_ACTIVE',
+                    CreatedDate: 'CREATED_DATE'
+                };
+            var sCaption = 'All Users';
+            var oArrColumnNames = [
+                '',//Hidden Columns Represent ID Int Value
+                'Full Name',
+                'User Type',
+                'Phone Number',
+                'Email',
+                'Is Blocked',
+                'Is Active',
+                'Created Date',
+                'Options' // Options
+            ];
+
+            @*var vTicketCode = $("#txtSearchByTicketCode").val();
+            var vTicketName = $("#txtSearchByTicketName").val();
+            var vUserstatusId = Number($("#ddlUserstatus").val());
+            var vParticipantID = Number($("#ddlParticipantUser").val());
+            var params = {
+                'sTicketCode': vTicketCode,
+                'sTicketName': vTicketName,
+                'nUserstatusId': vUserstatusId,
+                'nParticipantID': vParticipantID
+
+            };
+            var sBindDataUrl = '@Url.Action("JGetApplicationUsers", "Users")' + '?' + jQuery.param(params);*@
+            var sBindDataUrl = '@Url.Action("JGetApplicationUsers", "Users")';
+
+            var sAddUrl = "#";
+            var sEditUrl = "#";
+            var sDeleteUrl = "#";
+            var oArrGridContextMenu = [
+                                        { MenuTitle: "Options" },
+                                        { Caption: "Details", EventName: "fnGoToUserProfile();", RowId: true }
+            ];
+            var oArrColsModel = [
+                    {
+                        name: ConstantsNames.ID, editable: false,
+                        key: true, hidden: true
+                    },
+                     {
+                         name: ConstantsNames.UserFullName,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             return "<div class='text-semibold'><a onclick='fnGoToUserProfile(" + rowObject.ID + ")' href='#'>" + rowObject.FULL_NAME + "</a></div>";
+                         }
+                     },
+                    {
+                        name: ConstantsNames.UserType,
+                        width: 100, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.PhoneNumber,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.Email,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.IsBlocked,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_BLOCKED;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.IsActive,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    }
+            ];
+
+            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
+            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+
+                $(window).bind('resize', function () {
+                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
+                }).trigger('resize');
+
+
+                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
+
+                $("#dvUsers").show();
+                HideLoader();
+            });
+        }
+
+        function fnGoToUserProfile(nUserID) {
+            debugger;
+            var vUserID = -99;
+            if (nUserID != null && nUserID != undefined && nUserID != -99) {
+                vUserID = nUserID;
+            }
+            else {
+                var gdUser = $('#' + sGridViewSelector);
+                vUserID = gdUser.jqGrid('getGridParam', 'selrow');
+            }
+            var link = '@Url.Action("UserProfile", "Users", new { nUserID = "replace" })';
+            link = link.replace("replace", vUserID);
+
+            window.location.href = link;
+        }
+
+       
+        function fnClearSearch() {
+            //$("#txtSearchByTicketCode").val("");
+            //$("#txtSearchByTicketName").val("");
+            //$('#ddlUserstatus').val($('#ddlUserstatus option:first-child').val()).trigger('change');
+            //$('#ddlParticipantUser').val($('#ddlParticipantUser option:first-child').val()).trigger('change');
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnBindAllUsers();
+
+        });
+    </script>
+}

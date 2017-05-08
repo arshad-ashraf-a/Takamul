@@ -7,6 +7,7 @@
 /* Last Modified Date   : -                                                                         */
 /* Description          : used for hold of user data                                                */
 /****************************************************************************************************/
+using Infrastructure.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,23 +22,33 @@ namespace Takamul.Models.ViewModel
         public int APPLICATION_ID { get; set; }
         public int USER_TYPE_ID { get; set; }
         public int USER_ID { get; set; }
+        public string USER_NAME { get; set; }
         public string FULL_NAME { get; set; }
         public string PHONE_NUMBER { get; set; }
         public string EMAIL { get; set; }
         public string CIVIL_ID { get; set; }
         public string ADDRESS { get; set; }
-        public int AREA_ID { get; set; }
-        public int WILAYAT_ID { get; set; }
-        public int VILLAGE_ID { get; set; }
-        public int OTP_NUMBER { get; set; }
-        public bool IS_ACTIVE { get; set; }
-        public bool IS_BLOCKED { get; set; }
-        public bool SMS_SENT_STATUS { get; set; }
-        public bool IS_OTP_VALIDATED { get; set; }
+        public Nullable<int> AREA_ID { get; set; }
+        public Nullable<int> WILAYAT_ID { get; set; }
+        public Nullable<int> VILLAGE_ID { get; set; }
+        public Nullable<int> OTP_NUMBER { get; set; }
+        public Nullable<bool> IS_ACTIVE { get; set; }
+        public Nullable<bool> IS_BLOCKED { get; set; }
+        public Nullable<bool> SMS_SENT_STATUS { get; set; }
+        public Nullable<bool> IS_OTP_VALIDATED { get; set; }
         public string BLOCKED_REMARKS { get; set; }
-        public bool IS_TICKET_SUBMISSION_RESTRICTED { get; set; }
-        public int TICKET_SUBMISSION_INTERVAL_DAYS { get; set; }
-        public DateTime LAST_TICKET_SUBMISSION_DATE { get; set; }
+        public Nullable<bool> IS_TICKET_SUBMISSION_RESTRICTED { get; set; }
+        public Nullable<int> TICKET_SUBMISSION_INTERVAL_DAYS { get; set; }
+        public Nullable<DateTime> LAST_TICKET_SUBMISSION_DATE { get; set; }
+        public string USER_TYPE_NAME { get; set; }
+        public string AREA_DESC_ARB { get; set; }
+        public string AREA_DESC_ENG { get; set; }
+        public string WILAYAT_DESC_ARB { get; set; }
+        public string WILAYAT_DESC_ENG { get; set; }
+        public string VILLAGE_DESC_ARB { get; set; }
+        public string VILLAGE_DESC_ENG { get; set; }
+        public Nullable<DateTime> CREATED_DATE { get; set; }
+        public enumUserType UserType { get; set; }
 
         #region :: Constructor ::
         public UserInfoViewModel()
@@ -46,6 +57,7 @@ namespace Takamul.Models.ViewModel
             this.APPLICATION_ID = -99;
             this.USER_TYPE_ID = -99;
             this.USER_ID = -99;
+            this.USER_NAME = string.Empty;
             this.FULL_NAME = string.Empty;
             this.PHONE_NUMBER = string.Empty;
             this.EMAIL = string.Empty;
@@ -63,7 +75,15 @@ namespace Takamul.Models.ViewModel
             this.IS_TICKET_SUBMISSION_RESTRICTED = false;
             this.TICKET_SUBMISSION_INTERVAL_DAYS = 0;
             this.LAST_TICKET_SUBMISSION_DATE = DateTime.MinValue;
-        } 
+            this.USER_TYPE_NAME = string.Empty;
+            this.AREA_DESC_ARB = string.Empty;
+            this.AREA_DESC_ENG = string.Empty;
+            this.WILAYAT_DESC_ARB = string.Empty;
+            this.WILAYAT_DESC_ENG = string.Empty;
+            this.VILLAGE_DESC_ARB = string.Empty;
+            this.VILLAGE_DESC_ENG = string.Empty;
+            this.CREATED_DATE = DateTime.MinValue;
+        }
         #endregion
     }
 }

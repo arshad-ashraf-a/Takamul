@@ -72,8 +72,33 @@ namespace Infrastructure.Core
     }
     #endregion
 
+    #region Enum :: UserType
+    /// <summary>
+    /// Enum User Types
+    /// </summary>
+    public enum enumUserType
+    {
+        /// <summary>
+        /// Admin 
+        /// </summary>
+        Admin = 1,
+        /// <summary>
+        /// Member
+        /// </summary>
+        Member = 2,
+        /// <summary>
+        /// Staff
+        /// </summary>
+        Staff = 3,
+        /// <summary>
+        /// MobileUser
+        /// </summary>
+        MobileUser = 4
+    }
+    #endregion
+
     public class EnumHandler
     {
-        
+
     }
 }
