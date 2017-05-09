@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
@@ -67,6 +68,76 @@ namespace LDC.eServices.Portal.Controllers
         {
             var lstUsers = this.oIUserServicesService.lGetApplicationUsers(this.CurrentApplicationID, nPage, nRows);
             return Json(lstUsers, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Update profile information
+        /// <summary>
+        /// Update profile information
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JUpdateProfileInformation(UserInfoViewModel oUserInfoViewModel)
+        {
+            Response oResponseResult = null;
+
+            oUserInfoViewModel.MODIFIED_BY = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oIUserServicesService.oUpdateProfileInformation(oUserInfoViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Update user password
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JUpdateUserPassword(int nUserID,string sPassword)
+        {
+            Response oResponseResult = null;
+
+            int nModifiedBy = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oIUserServicesService.oUpdateUserPassowrd(nUserID,sPassword,nModifiedBy);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
         }
         #endregion
 

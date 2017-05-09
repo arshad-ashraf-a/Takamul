@@ -47,7 +47,10 @@ namespace Takamul.Models.ViewModel
         public string WILAYAT_DESC_ENG { get; set; }
         public string VILLAGE_DESC_ARB { get; set; }
         public string VILLAGE_DESC_ENG { get; set; }
+        public Nullable<int> CREATED_BY { get; set; }
+        public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<DateTime> CREATED_DATE { get; set; }
+        public Nullable<DateTime> MODIFIED_DATE { get; set; }
         public enumUserType UserType { get; set; }
 
         #region :: Constructor ::

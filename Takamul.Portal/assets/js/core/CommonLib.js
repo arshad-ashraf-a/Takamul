@@ -49,7 +49,6 @@ function AjaxCallAndFillCascadeDropDown(Url, HttpVerb, Async, ParentDropDown, Ch
         if (Showloading) {
             ShowLoader();
         }
-        debugger;
         $("#" + ChildDropDown).html("");
         $.ajax({
             url: Url,

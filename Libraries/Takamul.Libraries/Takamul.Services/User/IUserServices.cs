@@ -32,5 +32,23 @@ namespace Takamul.Services
         /// <returns></returns>
         UserInfoViewModel oGetUserDetails(int nUserID);
         #endregion
+
+        #region Method :: Response :: oUpdateProfileInformation
+        /// <summary>
+        /// Update profile information
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateProfileInformation(UserInfoViewModel oUserInfoViewModel);
+        #endregion
+
+        #region Method :: Response :: oUpdateUserPassowrd
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateUserPassowrd(int nUserID, string sPassword, int nModifiedBy);
+        #endregion
     }
 }

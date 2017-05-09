@@ -86,9 +86,9 @@ namespace LDC.eServices.Portal.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetAllVillages(string sWilayatCode)
+        public JsonResult JGetAllVillages(string sAreaCode,string sWilayatCode)
         {
-            var lstVillages = this.oICommonServices.oGetAllVillages(sWilayatCode);
+            var lstVillages = this.oICommonServices.oGetAllVillages(sAreaCode,sWilayatCode);
             return Json(lstVillages, JsonRequestBehavior.AllowGet);
         }
         #endregion

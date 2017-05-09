@@ -555,7 +555,7 @@
             <returns></returns>
             
         </member>
-        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllVillages(System.String)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllVillages(System.String,System.String)">
             <summary>
             Get village detailed infomations
             </summary>

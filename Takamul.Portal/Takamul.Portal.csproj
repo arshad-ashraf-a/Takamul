@@ -250,6 +250,7 @@
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="DBScript\Takamul_script_07-05-2017_11-45.sql" />
     <Content Include="DBScript\Takamul_script_08-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_09-05-2017.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_script.sql" />
