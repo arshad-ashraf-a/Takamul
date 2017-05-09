@@ -51,8 +51,6 @@
                                         <i class='icon-cancel-circle2 text-warning position-left'></i>
                                     }
                                 </a>
-                                <a class="text-danger text-center no-margin" href="#">View Blocked Remark</a>
-
                             </li>
                             @if (Model.UserType == Infrastructure.Core.enumUserType.Member)
                             {
@@ -245,6 +243,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label>Area</label>
+
                                             <input type="text" value="Munich" class="form-control">
                                         </div>
                                         <div class="col-md-4">
@@ -1814,8 +1813,64 @@
     </div>
 </div>
 
-
 @section InlineScriptsRelated
 {
+    <script type="text/javascript">
+        function fnFillAreas(sAreaddlID, sWilayatddlID) {
+            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', true, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '- Select Area - ', '- No data found -', [],
+                function () {
+                    //Success Function
+                    fnFillWilayats("-99");
+                    $("#ddlAreaddlID").select2({
+                        width: '100%'
+                    })
+                    .on('change', function () {
+                        $(this).closest('form').validate().element($(this));
+                        fnFillWilayats($("#ddlAreaddlID").val());
+                    });
+                },
+                function () {
+                    //Error
+                });
 
+        }
+
+        function fnFillWilayats(sAreaCode) {
+            var oParameters = {};
+            oParameters['sAreaCode'] = sAreaCode;
+
+            AjaxCallAndFillCascadeDropDown('@Url.Action("JGetAllWilayat", "Common")',
+                                            'Post', true,
+                                            "ddAreaddlID", "ddlWilayatddlID",
+                                            "WILAYATCODE", "WILLAYATNAME",
+                                            "- Select Station -",
+                                            "- No data found -",
+                                            oParameters, true);
+            $("#" + sWilayatddlID).select2({ width: '100%' })
+                                .on('change', function () {
+                                    $(this).closest('form').validate().element($(this));
+                                    fnFillVillages($("#ddlVillageID").val());
+                                });;
+        }
+
+        function fnFillVillages(sWilayatCode) {
+            var oParameters = {};
+            oParameters['sWilayatCode'] = sWilayatCode;
+            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', true, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '- Select Area - ', '- No data found -', [],
+                function () {
+                    //Success Function
+                    fnFillWilayats("-99");
+                    $("#" + sAreaddlID).select2({
+                        width: '100%'
+                    })
+                    .on('change', function () {
+                        $(this).closest('form').validate().element($(this));
+                        fnFillWilayats($("#" + sAreaddlID).val());
+                    });
+                },
+                function () {
+                    //Error
+                });
+        }
+    </script>
 }

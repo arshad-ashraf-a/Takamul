@@ -54,6 +54,45 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region Method :: JsonResult :: JGetAllAreas
+        /// <summary>
+        /// Get all areas list
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetAllAreas()
+        {
+            var lstAreas = this.oICommonServices.oGetAllAreas();
+            return Json(lstAreas, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetAllWilayat
+        /// <summary>
+        /// Get all wilayat list
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetAllWilayat(string sAreaCode)
+        {
+            var lstWilayats = this.oICommonServices.oGetAllWilayats(sAreaCode);
+            return Json(lstWilayats, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetAllVillages
+        /// <summary>
+        /// Get all village list
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetAllVillages(string sWilayatCode)
+        {
+            var lstVillages = this.oICommonServices.oGetAllVillages(sWilayatCode);
+            return Json(lstVillages, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #endregion
     }
 }
