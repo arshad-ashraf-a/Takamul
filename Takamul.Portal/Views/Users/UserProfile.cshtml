@@ -1,4 +1,5 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Infrastructure.Utilities
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -52,7 +53,7 @@
                                     }
                                 </a>
                             </li>
-                            @if (Model.UserType == Infrastructure.Core.enumUserType.Member)
+                            @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
                             {
                                 <li>
                                     <a href="#messages" data-toggle="tab">
@@ -68,38 +69,14 @@
                                     </a>
                                 </li>
                             }
-                            <li class="navigation-divider"></li>
-                            <li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button></li>
+                            @*<li class="navigation-divider"></li>*@
+                            @*<li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button></li>*@
                         </ul>
                     </div>
                 </div>
                 <!-- /user details -->
-                <!-- Online users -->
-                <div class="sidebar-category">
-                    <div class="category-title">
-                        <span>User Tickets</span>
-                        <ul class="icons-list">
-                            <li><a href="#" data-action="collapse"></a></li>
-                        </ul>
-                    </div>
-
-                    <div class="category-content">
-                        <ul class="media-list">
-                            @*<li class="media">
-                                    <a href="#" class="media-left"><img src="assets/images/demo/users/face1.jpg" class="img-sm img-circle" alt=""></a>
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading text-semibold">James Alexander</a>
-                                        <span class="text-size-mini text-muted display-block">Santa Ana, CA.</span>
-                                    </div>
-                                    <div class="media-right media-middle">
-                                        <span class="status-mark border-success"></span>
-                                    </div>
-                                </li>*@
-                        </ul>
-                    </div>
-                </div>
                 <!-- /user details -->
-                @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
+                @if (Model.UserType != Infrastructure.Core.enumUserType.MobileUser && (Model.ID == BaseController.CurrentUser.nUserID || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin))
                 {
                     <!-- Account Settings -->
                     <div class="sidebar-category">
@@ -144,24 +121,24 @@
                 <div class="tab-pane fade in active" id="profile">
 
                     <!-- Daily stats -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
+                    @*<div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                                <div class="heading-elements">
+                                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
 
-                                <ul class="icons-list">
-                                    <li><a data-action="reload"></a></li>
-                                </ul>
+                                    <ul class="icons-list">
+                                        <li><a data-action="reload"></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="panel-body">
-                            <div class="chart-container">
-                                <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
+                            <div class="panel-body">
+                                <div class="chart-container">
+                                    <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <!-- /daily stats -->
                     <!-- Profile info -->
                     <div class="panel panel-flat">

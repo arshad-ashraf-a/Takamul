@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
 
@@ -34,18 +35,32 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: ApplicationsList
         public ActionResult ApplicationsList()
         {
-            this.PageTitle = "Applications List";
-            this.TitleHead = "Applications List";
+            if (BaseController.CurrentUser.UserType == enumUserType.Admin)
+            {
 
-            return View();
+                this.PageTitle = "Applications List";
+                this.TitleHead = "Applications List";
+
+                return View();
+            }else
+            {
+                return RedirectToAction("Index", "AccessDenied");
+            }
         }
         #endregion
 
-        #region View :: ApplicationsDetails
-        public ActionResult ApplicationsDetails()
+        #region View :: AppDashboard
+        public ActionResult AppDashboard()
         {
-            this.TitleHead = "Application Details";
-            return View();
+            this.TitleHead = "Application DashBoard";
+            if (BaseController.CurrentUser.CurrentApplicationID == -99)
+            {
+              return  RedirectToAction("Login", "Account", new { area = "" });
+            }
+            this.CurrentApplicationID = BaseController.CurrentUser.CurrentApplicationID;
+            ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
+            this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
+            return View(oApplicationViewModel);
         }
         #endregion
 
@@ -64,7 +79,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         public JsonResult JBindAllApplications(int nSearchByApplicationID,string sSearchByApplicationName,int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstApplications = this.oIApplicationService.IlGetAllApplications(nSearchByApplicationID, sSearchByApplicationName,nPage, nRows, sColumnName, sColumnOrder);
+            var lstApplications = this.oIApplicationService.IlGetAllApplications(nSearchByApplicationID, sSearchByApplicationName,nPage, nRows);
             return Json(lstApplications, JsonRequestBehavior.AllowGet);
         }
         #endregion

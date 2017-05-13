@@ -58,7 +58,7 @@ namespace Takamul.Services
 
         #region :: Methods ::
 
-        #region Method :: IPagedList<ApplicationViewModel> :: IlGetAllApplications
+        #region Method :: List<ApplicationViewModel> :: IlGetAllApplications
         /// <summary>
         ///  Get all applications
         /// </summary>
@@ -69,47 +69,19 @@ namespace Takamul.Services
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public IPagedList<ApplicationViewModel> IlGetAllApplications(int nSearchByAppliationID,string sSearchByApplicationName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+        public List<ApplicationViewModel> IlGetAllApplications(int nApplicationID, string sSearchByApplicationName, int nPageNumber, int nRowspPage)
         {
-            #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
-            var lstApplications = (from c in this.ApplicationsDBSet
-                                  where sSearchByApplicationName == null || c.APPLICATION_NAME.Contains(sSearchByApplicationName)
-                                  where nSearchByAppliationID == -99 || c.ID == nSearchByAppliationID
-                                  orderby c.ID descending
-                                  select new
-                                  {
-                                      ID = c.ID,
-                                      APPLICATION_NAME = c.APPLICATION_NAME,
-                                      APPLICATION_EXPIRY_DATE = c.APPLICATION_EXPIRY_DATE,
-                                      APPLICATION_LOGO_PATH = c.APPLICATION_LOGO_PATH,
-                                      DEFAULT_THEME_COLOR = c.DEFAULT_THEME_COLOR,
-                                      IS_ACTIVE = c.IS_ACTIVE,
-                                      CREATED_DATE = c.CREATED_DATE,
-
-                                  });
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationName", SqlDbType.VarChar, sSearchByApplicationName, 200, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
             #endregion
 
-            #region Execute The Query And Return Page Result
-            var oTempApplicationPagedResult = new PagedList<dynamic>(lstApplications, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
-            int nTotal = oTempApplicationPagedResult.TotalCount;
-            PagedList<ApplicationViewModel> plstApplicaiton = new PagedList<ApplicationViewModel>(oTempApplicationPagedResult.Select(oApplicationPagedResult => new ApplicationViewModel
-            {
-                ID = oApplicationPagedResult.ID,
-                APPLICATION_NAME = oApplicationPagedResult.APPLICATION_NAME,
-                APPLICATION_EXPIRY_DATE = oApplicationPagedResult.APPLICATION_EXPIRY_DATE,
-                APPLICATION_LOGO_PATH = oApplicationPagedResult.APPLICATION_LOGO_PATH,
-                DEFAULT_THEME_COLOR = oApplicationPagedResult.DEFAULT_THEME_COLOR,
-                IS_ACTIVE = oApplicationPagedResult.IS_ACTIVE,
-                CREATED_DATE = oApplicationPagedResult.CREATED_DATE,
-                
-            }), oTempApplicationPagedResult.PageIndex, oTempApplicationPagedResult.PageSize, oTempApplicationPagedResult.TotalCount);
-
-            if (plstApplicaiton.Count > 0)
-            {
-                plstApplicaiton[0].TotalCount = nTotal;
-            }
-
-            return plstApplicaiton;
+            #region ":Get Sp Result:"
+            List<ApplicationViewModel> lstApplications = this.ExecuteStoredProcedureList<ApplicationViewModel>("GetAllApplications", arrParameters.ToArray());
+            return lstApplications;
             #endregion
         }
         #endregion
@@ -140,6 +112,31 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: ApplicationViewModel :: oGetApplicationStatistics
+        /// <summary>
+        ///  Get application details
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        public ApplicationViewModel oGetApplicationStatistics(int nApplicationID)
+        {
+            ApplicationViewModel oApplicationViewModel = null;
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<ApplicationViewModel> lstApplications = this.ExecuteStoredProcedureList<ApplicationViewModel>("GetApplicationStatistics", arrParameters.ToArray());
+            if (lstApplications.Count > 0)
+            {
+                oApplicationViewModel = lstApplications[0];
+            }
+            return oApplicationViewModel;
+            #endregion
+
+        }
+        #endregion
 
         #endregion
     }

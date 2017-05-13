@@ -23,6 +23,7 @@ namespace Takamul.Models.ViewModel
         public int USER_TYPE_ID { get; set; }
         public int USER_ID { get; set; }
         public string USER_NAME { get; set; }
+        public string PASSWORD { get; set; }
         public string FULL_NAME { get; set; }
         public string PHONE_NUMBER { get; set; }
         public string EMAIL { get; set; }
@@ -61,6 +62,7 @@ namespace Takamul.Models.ViewModel
             this.USER_TYPE_ID = -99;
             this.USER_ID = -99;
             this.USER_NAME = string.Empty;
+            this.PASSWORD = string.Empty;
             this.FULL_NAME = string.Empty;
             this.PHONE_NUMBER = string.Empty;
             this.EMAIL = string.Empty;

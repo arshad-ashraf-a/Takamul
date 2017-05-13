@@ -57,6 +57,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialUpdateTicket
+        /// <summary>
+        ///  Edit area master
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        public PartialViewResult PartialUpdateTicket(TicketViewModel oTicketViewModel)
+        {
+            return PartialView("_UpdateTicket", oTicketViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -70,9 +82,9 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public JsonResult JBindAllTickets(string sTicketCode,string sTicketName,int nTicketStatusId,int nParticipantID, int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JBindAllTickets(string sTicketCode, string sTicketName, int nTicketStatusId, int nParticipantID, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID,nParticipantID,nTicketStatusId,sTicketCode,sTicketName, nPage, nRows);
+            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID, nParticipantID, nTicketStatusId, sTicketCode, sTicketName, nPage, nRows);
             return Json(lstEvents, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -244,6 +256,62 @@ namespace LDC.eServices.Portal.Controllers
             }
             catch (Exception) { }
             return File(oFileToDownload, "application/force-download", sFileName);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetTop5Tickets
+        /// <summary>
+        /// Get ticket chats
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult JGetTop5Tickets()
+        {
+            var lstOpenTickets = this.oITicketServices.lGetTop5TicketsByStatus(this.CurrentApplicationID, Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.TicketStatusOpenID)));
+            var lstClosedTickets = this.oITicketServices.lGetTop5TicketsByStatus(this.CurrentApplicationID, Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.TicketStatusClosedID)));
+            var lstRejectedTickets = this.oITicketServices.lGetTop5TicketsByStatus(this.CurrentApplicationID, Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.TicketStatusRejectedID)));
+            return Json(new
+            {
+                lstOpenTickets = lstOpenTickets,
+                lstClosedTickets = lstClosedTickets,
+                lstRejectedTickets = lstRejectedTickets
+            }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Edit Ticket
+       /// <summary>
+       /// Edit Ticket
+       /// </summary>
+       /// <param name="nTicketID"></param>
+       /// <param name="bIsActive"></param>
+       /// <param name="nTicketStatusID"></param>
+       /// <param name="sRejectReason"></param>
+       /// <returns></returns>
+        [HttpPost]
+        public JsonResult JEditTicket(int nTicketID,bool bIsActive, int nTicketStatusID,string sRejectReason)
+        {
+            Response oResponseResult = null;
+
+            oResponseResult = this.oITicketServices.oUpdateTicket(nTicketID,nTicketStatusID,bIsActive,sRejectReason,CurrentUser.nUserID);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
         }
         #endregion
 

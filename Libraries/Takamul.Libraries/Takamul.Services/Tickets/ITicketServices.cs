@@ -37,6 +37,15 @@ namespace Takamul.Services
 
         #endregion
 
+        #region Method :: List<TicketViewModel> :: lGetTop5TicketsByStatus
+        /// <summary>
+        /// Get top 5 ticket by status
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        List<TicketViewModel> lGetTop5TicketsByStatus(int nApplicationID, int nTicketStatusID);
+        #endregion
+
         #region Method :: TicketViewModel :: oGetTicketDetails
         /// <summary>
         /// Get ticket details by ticket id
@@ -72,6 +81,15 @@ namespace Takamul.Services
         /// <param name="oTicketChatViewModel"></param>
         /// <returns></returns>
         Response oInsertTicketChat(TicketChatViewModel oTicketChatViewModel);
+        #endregion
+
+        #region Method :: Response :: oUpdateTicket
+        /// <summary>
+        /// Udpate Ticket
+        /// </summary>
+        /// <param name="oTicketChatViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateTicket(int nTicketID, int nTicketStatusID, bool nIsActive, string sRejectReason, int nDoneBy);
         #endregion
     }
 }

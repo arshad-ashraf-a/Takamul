@@ -1,0 +1,120 @@
+﻿@model Takamul.Models.ViewModel.TicketViewModel
+<div class="row">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <table class="table table-bordered table-framed">
+                <thead>
+                    <tr>
+                        <th class="text-center">Ticket Code</th>
+                        <th>Ticket Name</th>
+                        <th class="text-center">Ticket Status</th>
+                        <th class="text-center">Is Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">@Model.TICKET_CODE</td>
+                        <td>@Model.TICKET_NAME</td>
+                        <td class="text-center">@Model.TICKET_STATUS_NAME</td>
+                        <td class="text-center">
+                            @if (@Model.IS_ACTIVE)
+                            {
+                                <i class='icon-checkmark-circle text-success position-left'></i>
+                            }
+                            else
+                            {
+                                <i class='icon-cancel-circle2 text-warning position-left'></i>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @* Ticket Status*@
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Ticket Status</label>
+                                <div class="col-lg-8">
+                                    <select id="ddlUpdateTicketStatus" name="ddlUpdateTicketStatus" onchange="fnTicketStatusDDLOnChange()"
+                                            class="select2 col-xs-12 col-sm-9"
+                                            style="padding:0;">
+                                        <option value="">&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        @* Is Active*@
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Is Active</label>
+                                <div class="col-lg-8">
+                                    @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group" id="dvRejectReason" style="display:none;">
+                            <div class="col-md-12">
+                                @* Reject Reason*@
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Reject Reason</label>
+                                    <div class="col-lg-10">
+                                        <textarea id="txtRejectReason" class="form-control" placeholder="enter reject reason&hellip;&hellip;"
+                                                  cols="5" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="clearfix"></div>
+                <hr class="sp-1" />
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-xs" onclick="IncidentManagement.PageFunctions.UpdateTRMStatus(); return false;">Update</button>
+                    <button type="submit" class="btn bg-slate-300 btn-xs" onclick="IncidentManagement.PageFunctions.CancelUpdateTRMStatus(); return false;">Cancel</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".styled").uniform({
+        radioClass: 'choice'
+    });
+
+    function fnFillTicketStatus() {
+        //TODO:: option add 'ALL'
+        debugger;
+        FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlUpdateTicketStatus', 'ID', 'Name', '- Select Status - ', ' ', [],
+            function () {
+                //Success Function
+                $("#ddlUpdateTicketStatus").select2({ width: '100%' });
+                $("#ddlUpdateTicketStatus").select2('val', String(@Model.TICKET_STATUS_ID));
+            },
+            function () {
+                //Error
+            })
+    }
+
+    function fnTicketStatusDDLOnChange() {
+        var bIsShowRejectReason = ($("#ddlUpdateTicketStatus").val() == "3"); // Ticket Status -> Rejeted
+        if (bIsShowRejectReason)
+            $("#dvRejectReason").show();
+        else
+            $("#dvRejectReason").hide();
+    }
+
+    //Entry Point
+    $(document).ready(function () {
+        fnFillTicketStatus();
+
+    });
+</script>

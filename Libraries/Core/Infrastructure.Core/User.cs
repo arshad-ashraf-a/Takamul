@@ -21,7 +21,7 @@ namespace Infrastructure.Core
         {
             get { return userName; }
             set { userName = value; }
-        } 
+        }
         #endregion
 
         #region sPassword
@@ -131,7 +131,7 @@ namespace Infrastructure.Core
         {
             get { return birthDay; }
             set { birthDay = value; }
-        } 
+        }
         #endregion
 
         #region PreferedLanguage
@@ -147,7 +147,7 @@ namespace Infrastructure.Core
             }
         }
 
-        private Languages oPreferedLanguage; 
+        private Languages oPreferedLanguage;
         #endregion
 
         #region CurrentLanguageID
@@ -180,6 +180,11 @@ namespace Infrastructure.Core
                 this.nCurrentApplicationID = value;
             }
         }
+        #endregion
+
+        #region UserType 
+
+        public enumUserType UserType { get; set; }
         #endregion
     }
 }

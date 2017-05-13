@@ -227,6 +227,27 @@ namespace Infrastructure.Utilities
         }
         #endregion
 
+        #region Property :: CurrentApplicationName
+        public string CurrentApplicationName
+        {
+            get
+            {
+                string sCurrentAppName = string.Empty ;
+                if (base.Session["ApplicationName"] != null)
+                {
+                    sCurrentAppName = base.Session["ApplicationName"].ToString();
+                }
+                return sCurrentAppName;
+            }
+            set
+            {
+                base.Session["ApplicationName"] = value;
+            }
+        }
+        #endregion
+
+
+
         #endregion
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -234,7 +255,6 @@ namespace Infrastructure.Utilities
             if (CurrentUser == null)
             {
                 filterContext.Result = RedirectToAction("Login", "Account", new { area = "" });
-
             }
 
         }

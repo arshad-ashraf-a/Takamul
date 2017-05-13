@@ -86,5 +86,57 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region TicketStatusOpenID
+        /// <summary>
+        /// Ticket Status Open ID
+        /// </summary>
+        public static string TicketStatusOpenID
+        {
+            get
+            {
+                return "TicketStatusOpenID";
+            }
+        }
+        #endregion
+
+        #region TicketStatusClosedID
+        /// <summary>
+        /// Ticket Closed Open ID
+        /// </summary>
+        public static string TicketStatusClosedID
+        {
+            get
+            {
+                return "TicketStatusClosedID";
+            }
+        }
+        #endregion
+
+        #region TicketStatusRejectedID
+        /// <summary>
+        /// Ticket Rejected Open ID
+        /// </summary>
+        public static string TicketStatusRejectedID
+        {
+            get
+            {
+                return "TicketStatusRejectedID";
+            }
+        }
+        #endregion
+
+        #region DefaultUserAccountPassword
+        /// <summary>
+        ///DefaultUserAccountPassword
+        /// </summary>
+        public static string DefaultUserAccountPassword
+        {
+            get
+            {
+                return "DefaultUserAccountPassword";
+            }
+        }
+        #endregion
+
     }
 }

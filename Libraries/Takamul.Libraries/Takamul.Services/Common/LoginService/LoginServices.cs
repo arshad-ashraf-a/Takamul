@@ -130,6 +130,11 @@ namespace Takamul.Services
                             oUser.nUserID = oReader.FieldExists("ID") ? Convert.ToInt32(oReader["ID"]) : -99;
                             oUser.sUserName = oReader.FieldExists("USER_NAME") ? oReader["USER_NAME"].ToString() : string.Empty;
                             oUser.sUserTypeName = oReader.FieldExists("USER_TYPE_NAME") ? oReader["USER_TYPE_NAME"].ToString() : string.Empty;
+                            oUser.sUserFullNameEnglish = oReader.FieldExists("FULL_NAME") ? oReader["FULL_NAME"].ToString() : string.Empty;
+                            oUser.sUserTypeIDs = oReader.FieldExists("USER_TYPE_ID") ? oReader["USER_TYPE_ID"].ToString() : string.Empty;
+                            oUser.CurrentApplicationID = oReader.FieldExists("APPLICATION_ID") ? Convert.ToInt32(oReader["APPLICATION_ID"].ToString()) : -99;
+                            enumUserType oEnmUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUser.sUserTypeIDs.ToString(), true);
+                            oUser.UserType = oEnmUserType;
                         }
                         this.OperationResult = 1;
                     }

@@ -2,6 +2,7 @@
 @using System.Web.Optimization;
 @using Takamul.Portal.Resources.Common;
 @using Takamul.Portal.Resources.Controls.GridView;
+@using Takamul.Portal.App_Code;
 @{
     BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
 
@@ -96,37 +97,42 @@
                             <ul class="navigation navigation-main navigation-accordion">
                                 <!-- Main -->
                                 <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                                <li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                             
-                                <li><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
 
-                                <li><a href="#"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
+                                @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
+                                {
+                                    @*<li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>*@
 
+                                    <li class="active"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+                                }
+                                else
+                                {
+                                    <li class="active"><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
+                                }
                                 <!-- Appearance -->
-                                <li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
-                                    <ul>
-                                        <li><a href="#">Reports 1</a></li>
-                                        <li><a href="#">Reports 2</a></li>
-                                        <li><a href="#">Reports 3</a></li>
-                                    </ul>
-                                </li>
+                                @*<li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
+                                        <ul>
+                                            <li><a href="#">Reports 1</a></li>
+                                            <li><a href="#">Reports 2</a></li>
+                                            <li><a href="#">Reports 3</a></li>
+                                        </ul>
+                                    </li>*@
                                 <!-- /appearance -->
                                 <!-- Appearance -->
                                 @*<li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
-                                    <ul>
-                                        <li><a href="#">Users</a></li>
-                                        <li><a href="#">Roles</a></li>
-                                        <li><a href="#">Role Privillages</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
-                                    <ul></ul>
-                                </li>*@
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
+                                        <ul>
+                                            <li><a href="#">Users</a></li>
+                                            <li><a href="#">Roles</a></li>
+                                            <li><a href="#">Role Privillages</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
+                                        <ul></ul>
+                                    </li>*@
                                 <!-- /appearance -->
                             </ul>
                         </div>
@@ -147,25 +153,42 @@
                                     <span class="text-semibold">
                                         @oBaseController.TitleHead
                                     </span>
-                                    <small class="display-block">App Name<i class="icon-arrow-right14 position-left"></i><span class="text-primary">Primary  with single button</span> </small>
+                                    <small class="display-block">App Name<i class="icon-arrow-right14 position-left"></i><span class="text-primary">@oBaseController.CurrentApplicationName</span> </small>
                                 </h4>
                             }
                         </div>
-                        <div class="heading-elements">
-                            <div class="heading-btn-group">
-                                <a title="Go Back To All Application" href="@Url.Action("ApplicationsList", "Applications")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> Back To List</a>
-                                @*<a href="#" class="btn btn-link btn-float has-text"><i class="fa fa-mail-reply-all text-primary"></i><span>Go Back</span></a>*@
+                        @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
+                        {
+                            <div class="heading-elements">
+                                <div class="heading-btn-group">
+                                    <a title="Go Back To All Application" href="@Url.Action("ApplicationsList", "Applications")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> Back To List</a>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div class="breadcrumb-line no-padding">
                         <div class="text-center p-5">
-                            <a href="@Url.Action("ApplicationsList", "Applications")" class="btn btn-info btn-float btn-float-md ml-20"><i class="icon-home4"></i> <span>App DashBoard</span></a>
-                            <a href="@Url.Action("MemberInfoList", "MemberInfo")" class="btn btn-info btn-float btn-float-md"><i class="icon-user"></i> <span>App Member Info</span></a>
-                            <a href="@Url.Action("TicketsList", "Tickets")" class="btn btn-info btn-float btn-float-md"><i class="icon-comment-discussion"></i> <span>App Tickets</span></a>
-                            <a class="btn btn-info btn-float btn-float-md"><i class="icon-newspaper"></i> <span>App News</span></a>
-                            <a href="@Url.Action("EventsList", "Events")" class="btn btn-info btn-float btn-float-md"><i class="icon-list-numbered"></i> <span>App Events</span></a>
-                            <a href="@Url.Action("UsersList", "Users")" class="btn btn-info btn-float btn-float-md"><i class="icon-users4"></i> <span>App Users</span></a>
+                            <a href="@Url.Action("AppDashboard", "Applications")" class="btn btn-info btn-float btn-float-md ml-20 @Url.sMakeMenuActive("AppDashboard", "Applications", "")">
+                                <i class="icon-home4"></i>
+                                <span>App DashBoard</span>
+                            </a>
+                            <a href="@Url.Action("MemberInfoList", "MemberInfo")" class="btn btn-info btn-float btn-float-md @Url.sMakeMenuActive("MemberInfoList", "MemberInfo", "")"><i class="icon-user"></i> <span>App Member Info</span></a>
+                            <a href="@Url.Action("TicketsList", "Tickets")" class="btn btn-info btn-float btn-float-md @Url.sMakeMenuActive("TicketsList", "Tickets", "")">
+                                <i class="icon-comment-discussion"></i>
+                                <span>App Tickets</span>
+                            </a>
+                            <a class="btn btn-info btn-float btn-float-md">
+                                <i class="icon-newspaper"></i>
+                                <span>App News</span>
+                            </a>
+                            <a href="@Url.Action("EventsList", "Events")" class="btn btn-info btn-float btn-float-md @Url.sMakeMenuActive("EventsList", "Events", "")">
+                                <i class="icon-list-numbered"></i>
+                                <span>App Events</span>
+                            </a>
+                            <a href="@Url.Action("UsersList", "Users")" class="btn btn-info btn-float btn-float-md @Url.sMakeMenuActive("UsersList", "Users", "")">
+                                <i class="icon-users4"></i>
+                                <span>App Users</span>
+                            </a>
                         </div>
                     </div>
 
@@ -175,30 +198,30 @@
                         <div id="dvPopUpWindowContainer"></div>
                     </div>
                     @*<div class="col-md-12">
-                        <div class="table-responsive">
-                            <div class="panel panel-flat mb-5">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Application Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="success">
-                                            <td>Eugene</td>
-                                            <td>Kopyov</td>
-                                            <td>@@Kopyov</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive">
+                                <div class="panel panel-flat mb-5">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Application Name</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="success">
+                                                <td>Eugene</td>
+                                                <td>Kopyov</td>
+                                                <td>@@Kopyov</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    </div>*@
+                        </div>*@
                     @*<div class="clearfix"></div>
-                    <hr class="bg-slate-300 no-margin mb-5" />
-                    <div class="clearfix"></div>*@
+                        <hr class="bg-slate-300 no-margin mb-5" />
+                        <div class="clearfix"></div>*@
                     @RenderBody()
 
                 </div>
@@ -234,8 +257,6 @@
     <!-- Core JS files -->
     @Scripts.Render("~/bundles/CoreScripts")
     <!-- core JS files -->
-
-
     <!-- Core Js Utilities -->
     @Scripts.Render("~/bundles/CoreScriptUtilities")
     <!-- core JS Utilities -->
@@ -247,6 +268,38 @@
     @RenderSection("SpecificPluginScripts", false)
     @RenderSection("InlineScriptsRelated", false)
     <script type="text/javascript">
+        function fnGoToApplicationDetais(nApplicationID) {
+            var vApplicationID = -99;
+            if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
+                vApplicationID = nApplicationID;
+            }
+            else {
+                var gdApplicationist = $('#' + sGridViewSelector);
+                vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
+            }
+
+            $.ajax({
+                url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
+                type: 'POST',
+                data: { nApplicationID: vApplicationID },
+                async: true,
+                success: function (result, response) {
+                    if (result.nResult == 1) {
+                        url = '@Url.Action("AppDashboard", "Applications")';
+                        window.location.href = url;
+
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function (result, response) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            });
+
+
+        }
 
         $(document).ajaxStart(function () {
             ShowLoader();

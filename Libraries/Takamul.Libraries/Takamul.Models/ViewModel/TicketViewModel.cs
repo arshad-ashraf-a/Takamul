@@ -32,7 +32,12 @@ namespace Takamul.Models.ViewModel
         public DateTime CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
+        public string MobileParticipantName { get; set; }
         public int TotalCount { get; set; }
+
+        public String LastTicketChatMessage { get; set; }
+        public Nullable<DateTime> LastTicketChatCreatedDate { get; set; }
+
 
         #region :: Constructor ::
         public TicketViewModel()
@@ -53,6 +58,9 @@ namespace Takamul.Models.ViewModel
             this.CREATED_DATE = DateTime.MinValue;
             this.MODIFIED_BY = -99;
             this.MODIFIED_DATE = DateTime.MinValue;
+            this.LastTicketChatMessage = string.Empty;
+            this.MobileParticipantName = string.Empty;
+            this.LastTicketChatCreatedDate = DateTime.MinValue;
         } 
         #endregion
     }

@@ -248,9 +248,7 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
-    <Content Include="DBScript\Takamul_script_07-05-2017_11-45.sql" />
-    <Content Include="DBScript\Takamul_script_08-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_09-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_13-05-2017.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_script.sql" />
@@ -258,17 +256,6 @@
     <Content Include="DBScript\DBScript.Drop_All_Procedures.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Tables.sql" />
     <Content Include="DBScript\DBScript.Drop_All_Tbls_Procs_Func_Views.sql" />
-    <Content Include="DBScript\script 02Apr2017 - 05-34.sql" />
-    <Content Include="DBScript\Takamul_script_07-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_samh_03-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_01-04-2017.sql" />
-    <Content Include="DBScript\Takamul_script_02-04-2017_23-00.sql" />
-    <Content Include="DBScript\Takamul_script_02-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_05-04-2016_20-35.sql" />
-    <Content Include="DBScript\Takamul_script_06-04-2017_21-11.sql" />
-    <Content Include="DBScript\Takamul_script_29-03-2017.sql" />
-    <Content Include="DBScript\Takamul_script_31-03-2017_07-21.sql" />
-    <Content Include="DBScript\Takamul_Tbl_script_07-04-2017_09-40.sql" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -860,12 +847,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\HelperExtension.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\AccessDeniedController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\MemberInfoController.cs" />
@@ -941,7 +930,7 @@
     <Content Include="Views\web.config" />
     <Content Include="Views\Applications\ApplicationsList.cshtml" />
     <Content Include="Views\Shared\_AppLayout.cshtml" />
-    <Content Include="Views\Applications\ApplicationsDetails.cshtml" />
+    <Content Include="Views\Applications\AppDashboard.cshtml" />
     <Content Include="Views\Events\EventsList.cshtml" />
     <Content Include="Views\Events\AddNewEvent.cshtml" />
     <Content Include="Views\Events\EditEvent.cshtml" />
@@ -952,6 +941,10 @@
     <Content Include="Views\Tickets\TicketDetails.cshtml" />
     <Content Include="Views\Users\UsersList.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\AccessDenied\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Tickets\_UpdateTicket.cshtml" />
+    <Content Include="Views\Users\_AddApplicationUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

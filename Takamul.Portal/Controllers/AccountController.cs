@@ -9,6 +9,7 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using Takamul.Services;
 using Takamul.Models;
+using Infrastructure.Utilities;
 
 namespace LDC.eServices.Portal.Controllers
 {
@@ -33,7 +34,13 @@ namespace LDC.eServices.Portal.Controllers
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
                 else
-                    return RedirectToAction("Index", "Home");
+                {
+                    if (BaseController.CurrentUser.UserType == enumUserType.Admin)
+                        return RedirectToAction("ApplicationsList", "Applications");
+                    else
+                        return RedirectToAction("AppDashboard", "Applications");
+                }
+               
             }
             else
             {
