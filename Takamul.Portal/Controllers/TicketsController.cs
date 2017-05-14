@@ -247,14 +247,16 @@ namespace LDC.eServices.Portal.Controllers
         public virtual ActionResult DownloadFile(int nTicketID, string sFileName)
         {
             byte[] oFileToDownload = null;
-            FileAccessService oFileAccessService = new FileAccessService();
+            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
             try
             {
                 string sFileFullPath = Path.Combine(this.CurrentApplicationID.ToString(), nTicketID.ToString(), sFileName);
                 oFileToDownload = oFileAccessService.ReadFile(sFileFullPath);
             }
-            catch (Exception) { }
+            catch (Exception ex) {
+
+            }
             return File(oFileToDownload, "application/force-download", sFileName);
         }
         #endregion

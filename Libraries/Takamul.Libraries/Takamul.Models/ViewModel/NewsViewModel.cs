@@ -49,6 +49,7 @@ namespace Takamul.Models.ViewModel
             this.CREATED_BY = -99;
             this.FileName = string.Empty;
             this.FileExtension = string.Empty;
+            this.PUBLISHED_DATE = DateTime.MinValue;
             //this.FileId = string.Empty;
         } 
         #endregion

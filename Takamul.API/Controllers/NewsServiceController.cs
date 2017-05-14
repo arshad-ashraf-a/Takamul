@@ -8,6 +8,7 @@
 /* Description          : Manage news operations                                                 */
 /*************************************************************************************************/
 
+using Infrastructure.Core;
 using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -69,8 +70,10 @@ namespace Takamul.API.Controllers
                         NewsID = news.ID,
                         ApplicationID = news.APPLICATION_ID,
                         NewsContent = news.NEWS_CONTENT,
-                        NewsTitle = news.NEWS_TITLE
-
+                        NewsTitle = news.NEWS_TITLE,
+                        PublishedDate = news.PUBLISHED_DATE,
+                        Base64NewsImage = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                       
                     };
                     lstTakamulNews.Add(oTakamulNews);
                 }
@@ -98,7 +101,9 @@ namespace Takamul.API.Controllers
                     NewsID = oNewsViewModel.ID,
                     ApplicationID = oNewsViewModel.APPLICATION_ID,
                     NewsContent = oNewsViewModel.NEWS_CONTENT,
-                    NewsTitle = oNewsViewModel.NEWS_TITLE
+                    NewsTitle = oNewsViewModel.NEWS_TITLE,
+                    PublishedDate = oNewsViewModel.PUBLISHED_DATE,
+                    Base64NewsImage = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulNews);

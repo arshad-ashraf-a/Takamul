@@ -22,6 +22,7 @@ namespace Takamul.Models.ApiViewModel
         public string NewsTitle { get; set; }
         public string NewsContent { get; set; }
         public string Base64NewsImage { get; set; }
+        public DateTime PublishedDate { get; set; }
 
         #region :: Constructor ::
         public TakamulNews()
@@ -31,6 +32,7 @@ namespace Takamul.Models.ApiViewModel
             this.NewsTitle = string.Empty;
             this.NewsContent = string.Empty;
             this.Base64NewsImage = string.Empty;
+            this.PublishedDate = DateTime.MinValue;
         } 
         #endregion
     }

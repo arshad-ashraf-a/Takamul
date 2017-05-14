@@ -118,8 +118,7 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
-
-        [Route("CommonService/GetAllAreas")]
+        
         [HttpGet]
         public HttpResponseMessage GetAllArea()
         {
@@ -152,7 +151,6 @@ namespace Takamul.API.Controllers
         /// <param name="sAreaCode"></param>
         /// <returns></returns>
         /// 
-        [Route("CommonService/GetAllWilayats")]
         [HttpGet]
         public HttpResponseMessage GetAllWilayats(string sAreaCode)
         {
@@ -178,10 +176,9 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get village detailed infomations
         /// </summary>
-        /// <param name="sWilaaytCode"></param>
+        /// <param name="sAreaCode"></param>
+        /// <param name="sWilayatCode"></param>
         /// <returns></returns>
-        /// 
-        [Route("CommonService/GetAllVillages")]
         [HttpGet]
         public HttpResponseMessage GetAllVillages(string sAreaCode,string sWilayatCode)
         {
