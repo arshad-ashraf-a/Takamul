@@ -183,10 +183,10 @@ namespace Takamul.API.Controllers
         /// 
         [Route("CommonService/GetAllVillages")]
         [HttpGet]
-        public HttpResponseMessage GetAllVillages(string sWilaaytCode)
+        public HttpResponseMessage GetAllVillages(string sAreaCode,string sWilayatCode)
         {
             List<VillageInfo> oVillageList = new List<VillageInfo>();
-            List<VillageInfoViewModel> oVillageViewModellsts = this.oICommonServices.oGetAllVillages(sWilaaytCode);
+            List<VillageInfoViewModel> oVillageViewModellsts = this.oICommonServices.oGetAllVillages(sAreaCode,sWilayatCode);
 
             foreach (VillageInfoViewModel item in oVillageViewModellsts)
             {

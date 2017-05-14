@@ -27,6 +27,14 @@ namespace Takamul.Models.ViewModel
         public DateTime CREATED_DATE { get; set; }
         public int TotalCount { get; set; }
 
+        public int TotalMobileUserCount { get; set; }
+        public int TotalMobileBlockedUserCount { get; set; }
+        public int TotalTicketCount { get; set; }
+        public int TotalTicketOpenCount { get; set; }
+        public int TotalTicketClosedCount { get; set; }
+        public int TotalTicketChatCount { get; set; }
+        public string MemberName { get; set; }
+
         #region :: Constructor ::
         public ApplicationViewModel()
         {

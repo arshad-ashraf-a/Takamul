@@ -25,16 +25,6 @@ namespace Takamul.Services
         MemberInfoViewModel oGetMemberInfo(int nApplicationID);
         #endregion
 
-        #region Method :: Response :: oInsertMobileUser
-        /// <summary>
-        /// Insert Mobile User
-        /// </summary>
-        /// <param name="oUserInfoViewModel"></param>
-        /// <returns></returns>
-        Response oInsertMobileUser(UserInfoViewModel oUserInfoViewModel);
-        #endregion
-
-
         #region Method :: Response :: oGetAllAreas
         /// <summary>
         /// Get area list
@@ -56,9 +46,10 @@ namespace Takamul.Services
         /// <summary>
         /// Get Villages
         /// </summary>
-        /// <param name="oWilayatCode"></param>
+        /// <param name="sAreaCode"></param>
+        /// <param name="sWilayatCode"></param>
         /// <returns></returns>
-        List<VillageInfoViewModel> oGetAllVillages(string WilayatCode);
+        List<VillageInfoViewModel> oGetAllVillages(string sAreaCode, string sWilayatCode);
         #endregion
 
     }

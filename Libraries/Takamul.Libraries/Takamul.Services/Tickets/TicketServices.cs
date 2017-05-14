@@ -93,6 +93,28 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<TicketViewModel> :: lGetTop5TicketsByStatus
+        /// <summary>
+        /// Get top 5 ticket by status
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        public List<TicketViewModel> lGetTop5TicketsByStatus(int nApplicationID, int nTicketStatusID)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusId", SqlDbType.Int, nTicketStatusID, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<TicketViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketViewModel>("GetTop5TicketsByStatus", arrParameters.ToArray());
+            return lstTickets;
+            #endregion
+
+        }
+        #endregion
+
         #region Method :: TicketViewModel :: oGetTicketDetails
         /// <summary>
         /// Get ticket details by ticket id
@@ -209,6 +231,44 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertTicketChat", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
+        #region Method :: Response :: oUpdateTicket
+        /// <summary>
+        /// Udpate Ticket
+        /// </summary>
+        /// <param name="oTicketChatViewModel"></param>
+        /// <returns></returns>
+        public Response oUpdateTicket(int nTicketID,int nTicketStatusID,bool nIsActive,string sRejectReason,int nDoneBy )
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusID", SqlDbType.Int, nTicketStatusID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsActive", SqlDbType.Bit,nIsActive , int.MaxValue, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_StatusRemark", SqlDbType.VarChar, sRejectReason, 1000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ModifiedBy", SqlDbType.Int, nDoneBy, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("UpdateTicket", arrParameters.ToArray());
                 oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());
             }
             catch (Exception Ex)

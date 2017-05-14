@@ -1,4 +1,5 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Infrastructure.Utilities
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -52,7 +53,7 @@
                                     }
                                 </a>
                             </li>
-                            @if (Model.UserType == Infrastructure.Core.enumUserType.Member)
+                            @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
                             {
                                 <li>
                                     <a href="#messages" data-toggle="tab">
@@ -68,82 +69,14 @@
                                     </a>
                                 </li>
                             }
-                            <li class="navigation-divider"></li>
-                            <li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button></li>
+                            @*<li class="navigation-divider"></li>*@
+                            @*<li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button></li>*@
                         </ul>
                     </div>
                 </div>
                 <!-- /user details -->
-                <!-- Online users -->
-                <div class="sidebar-category">
-                    <div class="category-title">
-                        <span>User Tickets</span>
-                        <ul class="icons-list">
-                            <li><a href="#" data-action="collapse"></a></li>
-                        </ul>
-                    </div>
-
-                    <div class="category-content">
-                        <ul class="media-list">
-                            <li class="media">
-                                <a href="#" class="media-left"><img src="assets/images/demo/users/face1.jpg" class="img-sm img-circle" alt=""></a>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">James Alexander</a>
-                                    <span class="text-size-mini text-muted display-block">Santa Ana, CA.</span>
-                                </div>
-                                <div class="media-right media-middle">
-                                    <span class="status-mark border-success"></span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <a href="#" class="media-left"><img src="assets/images/demo/users/face2.jpg" class="img-sm img-circle" alt=""></a>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Jeremy Victorino</a>
-                                    <span class="text-size-mini text-muted display-block">Dowagiac, MI.</span>
-                                </div>
-                                <div class="media-right media-middle">
-                                    <span class="status-mark border-danger"></span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <a href="#" class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-sm img-circle" alt=""></a>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Margo Baker</a>
-                                    <span class="text-size-mini text-muted display-block">Kasaan, AK.</span>
-                                </div>
-                                <div class="media-right media-middle">
-                                    <span class="status-mark border-success"></span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <a href="#" class="media-left"><img src="assets/images/demo/users/face4.jpg" class="img-sm img-circle" alt=""></a>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Beatrix Diaz</a>
-                                    <span class="text-size-mini text-muted display-block">Neenah, WI.</span>
-                                </div>
-                                <div class="media-right media-middle">
-                                    <span class="status-mark border-warning"></span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <a href="#" class="media-left"><img src="assets/images/demo/users/face5.jpg" class="img-sm img-circle" alt=""></a>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Richard Vango</a>
-                                    <span class="text-size-mini text-muted display-block">Grapevine, TX.</span>
-                                </div>
-                                <div class="media-right media-middle">
-                                    <span class="status-mark border-grey-400"></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <!-- /user details -->
-                @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
+                @if (Model.UserType != Infrastructure.Core.enumUserType.MobileUser && (Model.ID == BaseController.CurrentUser.nUserID || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin))
                 {
                     <!-- Account Settings -->
                     <div class="sidebar-category">
@@ -163,15 +96,15 @@
 
                                 <li>
                                     <label>New Password</label>
-                                    <input type="text" id="txtPassword" name="txtPassword" class="form-control" />
+                                    <input type="password" id="txtPassword" name="txtPassword" class="form-control" />
                                 </li>
 
                                 <li>
                                     <label>Confirm Password</label>
-                                    <input type="text" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
+                                    <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
                                 </li>
 
-                                <li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Password </button></li>
+                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> Change Password </button></li>
                             </ul>
                         </div>
                     </div>
@@ -188,24 +121,24 @@
                 <div class="tab-pane fade in active" id="profile">
 
                     <!-- Daily stats -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
+                    @*<div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                                <div class="heading-elements">
+                                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
 
-                                <ul class="icons-list">
-                                    <li><a data-action="reload"></a></li>
-                                </ul>
+                                    <ul class="icons-list">
+                                        <li><a data-action="reload"></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="panel-body">
-                            <div class="chart-container">
-                                <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
+                            <div class="panel-body">
+                                <div class="chart-container">
+                                    <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <!-- /daily stats -->
                     <!-- Profile info -->
                     <div class="panel panel-flat">
@@ -221,7 +154,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <div action="#">
+                            <form id="frmProfileInformation" class="form-horizontal" action="#" novalidate="novalidate">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -243,16 +176,22 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label>Area</label>
+                                            <select id="ddlAreaddlID" name="ddlAreaddlID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
 
-                                            <input type="text" value="Munich" class="form-control">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Wilayat</label>
-                                            <input type="text" value="Bayern" class="form-control">
+                                            <select id="ddlWilayatddlID" name="ddlWilayatddlID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
                                         </div>
                                         <div class="col-md-4">
                                             <label>Village</label>
-                                            <input type="text" value="1031" class="form-control">
+                                            <select id="ddlVillageID" name="ddlVillageID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -270,49 +209,27 @@
                                     </div>
                                 </div>
 
-                                <div class="text-right">
-                                    <button type="submit" class="btn bg-grey">Update <i class="icon-arrow-right14 position-right"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /profile info -->
-                    <!-- Account settings -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">General settings<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a data-action="collapse"></a></li>
-
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div action="#">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Restrict Ticket Submission</label>
-                                            <input type="text" value="Kopyov" readonly="readonly" value="@Model.IS_TICKET_SUBMISSION_RESTRICTED" class="form-control">
+                                            <br />
+                                            <input type="checkbox" class="styled" id="chkRestrictTicketSubmission" checked="@Model.IS_TICKET_SUBMISSION_RESTRICTED">
                                         </div>
-
                                         <div class="col-md-6">
                                             <label>Ticket Submission Interval Days</label>
-                                            <input type="password" value="@Model.TICKET_SUBMISSION_INTERVAL_DAYS" readonly="readonly" class="form-control">
+                                            <input id="txtTicketSubmissionIntervalDays" value="@Model.TICKET_SUBMISSION_INTERVAL_DAYS" class="form-control">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="submit" class="btn bg-grey">Update <i class="icon-arrow-right14 position-right"></i></button>
+                                    <button type="button" class="btn bg-grey" id="btnUpdateProfileInformation" onclick="fnUpdateProfileInformation();">Update <i class="icon-arrow-right14 position-right"></i></button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    <!-- /account settings -->
+                    <!-- /profile info -->
                     @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
                     {
                     <!-- Permissions settings -->
@@ -372,1440 +289,6 @@
                     <!-- /Permissions settings -->
                     }
                 </div>
-
-                <div class="tab-pane fade" id="schedule">
-
-                    <!-- Available hours -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">Available hours<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a data-action="collapse"></a></li>
-
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="chart-container">
-                                <div class="chart has-fixed-height" id="plans" _echarts_instance_="1494231080703" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0);"><div style="position: relative; overflow: hidden; width: 100px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none;"></div><canvas width="100" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /available hours -->
-                    <!-- Calendar -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">My schedule<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a data-action="collapse"></a></li>
-
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="schedule fc fc-unthemed fc-ltr"><div class="fc-toolbar fc-header-toolbar"><div class="fc-left"><div class="fc-button-group"><button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button><button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button></div><button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">today</button></div><div class="fc-right"><div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active">month</button><button type="button" class="fc-agendaWeek-button fc-button fc-state-default">week</button><button type="button" class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">day</button></div></div><div class="fc-center"><h2>&nbsp;</h2></div><div class="fc-clear"></div></div><div class="fc-view-container"><div class="fc-view fc-month-view"></div></div></div>
-                        </div>
-                    </div>
-                    <!-- /calendar -->
-
-                </div>
-
-                <div class="tab-pane fade" id="messages">
-
-                    <!-- My inbox -->
-                    <div class="panel panel-white">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">My Inbox</h6>
-
-                            <div class="heading-elements not-collapsible">
-                                <span class="label bg-blue heading-text">25 new today</span>
-                            </div>
-                        </div>
-
-                        <div class="panel-toolbar panel-toolbar-inbox">
-                            <div class="navbar navbar-default">
-                                <ul class="nav navbar-nav visible-xs-block no-border">
-                                    <li>
-                                        <a class="text-center collapsed" data-toggle="collapse" data-target="#inbox-toolbar-toggle-multiple">
-                                            <i class="icon-circle-down2"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
-                                    <div class="btn-group navbar-btn">
-                                        <button type="button" class="btn btn-default btn-icon btn-checkbox-all">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </button>
-
-                                        <button type="button" class="btn btn-default btn-icon dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                        </button>
-
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Select all</a></li>
-                                            <li><a href="#">Select read</a></li>
-                                            <li><a href="#">Select unread</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Clear selection</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="btn-group navbar-btn">
-                                        <button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">Compose</span></button>
-                                        <button type="button" class="btn btn-default"><i class="icon-bin"></i> <span class="hidden-xs position-right">Delete</span></button>
-                                        <button type="button" class="btn btn-default"><i class="icon-spam"></i> <span class="hidden-xs position-right">Spam</span></button>
-                                    </div>
-
-                                    <div class="navbar-right">
-                                        <p class="navbar-text"><span class="text-semibold">1-50</span> of <span class="text-semibold">528</span></p>
-
-                                        <div class="btn-group navbar-left navbar-btn">
-                                            <button type="button" class="btn btn-default btn-icon disabled"><i class="icon-arrow-left12"></i></button>
-                                            <button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button>
-                                        </div>
-
-                                        <div class="btn-group navbar-btn">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <i class="icon-cog3"></i>
-                                                <span class="caret"></span>
-                                            </button>
-
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
-                                                <li><a href="#">One more line</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-inbox table-lg">
-                                <tbody data-link="row" class="rowlink">
-                                    <tr class="unread">
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/spotify.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Spotify</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">On Tower-hill, as you go down</div>
-                                            <span class="table-inbox-preview">To the London docks, you may have seen a crippled beggar (or KEDGER, as the sailors say) holding a painted board before him, representing the tragic scene in which he lost his leg</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            11:09 pm
-                                        </td>
-                                    </tr>
-
-                                    <tr class="unread">
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-warning-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">J</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">James Alexander</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject"><span class="label bg-success position-left">Promo</span> There are three whales and three boats</div>
-                                            <span class="table-inbox-preview">And one of the boats (presumed to contain the missing leg in all its original integrity) is being crunched by the jaws of the foremost whale</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            10:21 pm
-                                        </td>
-                                    </tr>
-
-                                    <tr class="unread">
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face2.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Nathan Jacobson</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Any time these ten years, they tell me, has that man held up</div>
-                                            <span class="table-inbox-preview">That picture, and exhibited that stump to an incredulous world. But the time of his justification has now come. His three whales are as good whales as were ever published in Wapping, at any rate; and his stump</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            8:37 pm
-                                        </td>
-                                    </tr>
-
-                                    <tr class="unread">
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-indigo-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">M</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Margo Baker</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Throughout the Pacific, and also in Nantucket, and New Bedford</div>
-                                            <span class="table-inbox-preview">and Sag Harbor, you will come across lively sketches of whales and whaling-scenes, graven by the fishermen themselves on Sperm Whale-teeth, or ladies' busks wrought out of the Right Whale-bone</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            4:28 am
-                                        </td>
-                                    </tr>
-
-                                    <tr class="unread">
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/dribbble.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Dribbble</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">The whalemen call the numerous little ingenious contrivances</div>
-                                            <span class="table-inbox-preview">They elaborately carve out of the rough material, in their hours of ocean leisure. Some of them have little boxes of dentistical-looking implements</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Dec 5
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-brown-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">H</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Hanna Dorman</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Some of them have little boxes of dentistical-looking implements</div>
-                                            <span class="table-inbox-preview">Specially intended for the skrimshandering business. But, in general, they toil with their jack-knives alone; and, with that almost omnipotent tool of the sailor</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Dec 5
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/twitter.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Twitter</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject"><span class="label bg-indigo-400 position-left">Order</span> Long exile from Christendom</div>
-                                            <span class="table-inbox-preview">And civilization inevitably restores a man to that condition in which God placed him, i.e. what is called savagery</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Dec 4
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-pink-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">V</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Vanessa Aurelius</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Your true whale-hunter is as much a savage as an Iroquois</div>
-                                            <span class="table-inbox-preview">I myself am a savage, owning no allegiance but to the King of the Cannibals; and ready at any moment to rebel against him. Now, one of the peculiar characteristics of the savage in his domestic hours</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Dec 4
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face8.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">William Brenson</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">An ancient Hawaiian war-club or spear-paddle</div>
-                                            <span class="table-inbox-preview">In its full multiplicity and elaboration of carving, is as great a trophy of human perseverance as a Latin lexicon. For, with but a bit of broken sea-shell or a shark's tooth</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Dec 4
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/facebook.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Facebook</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">As with the Hawaiian savage, so with the white sailor-savage</div>
-                                            <span class="table-inbox-preview">With the same marvellous patience, and with the same single shark's tooth, of his one poor jack-knife, he will carve you a bit of bone sculpture, not quite as workmanlike</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Dec 3
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face16.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Vicky Barna</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject"><span class="label bg-pink-400 position-left">Track</span> Achilles's shield</div>
-                                            <span class="table-inbox-preview">Wooden whales, or whales cut in profile out of the small dark slabs of the noble South Sea war-wood, are frequently met with in the forecastles of American whalers. Some of them are done with much accuracy</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Dec 2
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/youtube.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Youtube</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">At some old gable-roofed country houses</div>
-                                            <span class="table-inbox-preview">You will see brass whales hung by the tail for knockers to the road-side door. When the porter is sleepy, the anvil-headed whale would be best. But these knocking whales are seldom remarkable as faithful essays</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 30
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face24.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Tony Gurrano</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">On the spires of some old-fashioned churches</div>
-                                            <span class="table-inbox-preview">You will see sheet-iron whales placed there for weather-cocks; but they are so elevated, and besides that are to all intents and purposes so labelled with "HANDS OFF!" you cannot examine them</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 28
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-danger-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">B</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Barbara Walden</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">In bony, ribby regions of the earth</div>
-                                            <span class="table-inbox-preview">Where at the base of high broken cliffs masses of rock lie strewn in fantastic groupings upon the plain, you will often discover images as of the petrified forms</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 28
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/amazon.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Amazon</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Here and there from some lucky point of view</div>
-                                            <span class="table-inbox-preview">You will catch passing glimpses of the profiles of whales defined along the undulating ridges. But you must be a thorough whaleman, to see these sights; and not only that, but if you wish to return to such a sight again</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 27
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-pink-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">J</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Jon Peterson</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Questions explained agreeable preferred strangers</div>
-                                            <span class="table-inbox-preview">Set put shyness offices his females him distant. Improve has message besides shy himself cheered however how son. Quick judge other leave ask first chief her. Indeed or remark always silent seemed narrow be</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 26
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face9.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Christian Owen</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Depart do be so he enough talent sociable</div>
-                                            <span class="table-inbox-preview">Up do view time they shot. He concluded disposing provision by questions as situation. Its estimating are motionless day sentiments end. Calling an imagine at forbade. At name no an what like spot. Pressed my</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 25
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face6.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Hanna Manila</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">You fully seems stand nay own point walls</div>
-                                            <span class="table-inbox-preview">Increasing travelling own simplicity you astonished expression boisterous. Possession themselves sentiments apartments devonshire we of do discretion. Enjoyment discourse ye continued pronounce we necessary abilities</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 24
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-slate-600 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">B</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Bruce James</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Own partiality motionless was old excellence</div>
-                                            <span class="table-inbox-preview">Announcing of invitation principles in. Cold in late or deal. Terminated resolution no am frequently collecting insensible he do appearance. Projection invitation affronting admiration if no on or. It as instrument</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 23
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face5.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Johnny Brace</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Melancholy particular devonshire alteration</div>
-                                            <span class="table-inbox-preview">She suspicion dejection saw instantly. Well deny may real one told yet saw hard dear. Bed chief house rapid right the. Set noisy one state tears which. No girl oh part must fact high my he. Simplicity in excellence</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 22
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/brands/bing.png" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Bing</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">As it so contrasted oh estimating instrument</div>
-                                            <span class="table-inbox-preview">Size like body some one had. Are conduct viewing boy minutes warrant expense. Tolerably behaviour may admitting daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 21
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-success-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">D</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Daniel Stern</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Stronger unpacked felicity to of mistaken</div>
-                                            <span class="table-inbox-preview">Fanny at wrong table ye in. Be on easily cannot innate in lasted months on. Differed and and felicity steepest mrs age outweigh. Opinions learning likewise daughter now age outweigh. Raptures stanhill my greatest</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 20
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <span class="btn bg-purple-400 btn-rounded btn-icon btn-xs">
-                                                <span class="letter-icon">L</span>
-                                            </span>
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Luke Almens</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Denote simple fat denied add worthy</div>
-                                            <span class="table-inbox-preview">As some he so high down am week. Conduct esteems by cottage to pasture we winding. On assistance he cultivated considered frequently. Person how having tended direct own day man. Saw sufficient indulgence one own you</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 19
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-empty3 text-muted"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face4.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Lucy Williams</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Frequently partiality possession resolution at</div>
-                                            <span class="table-inbox-preview">Engaged its was evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began of cause an scale. Subjects he prospect elegance followed no overcame possible it on</span>
-                                        </td>
-                                        <td class="table-inbox-attachment"></td>
-                                        <td class="table-inbox-time">
-                                            Nov 18
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="table-inbox-checkbox rowlink-skip">
-                                            <div class="checker"><span><input type="checkbox" class="styled"></span></div>
-                                        </td>
-                                        <td class="table-inbox-star rowlink-skip">
-                                            <a href="mail_read.html">
-                                                <i class="icon-star-full2 text-warning-300"></i>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-image">
-                                            <img src="assets/images/demo/users/face1.jpg" class="img-circle img-xs" alt="">
-                                        </td>
-                                        <td class="table-inbox-name">
-                                            <a href="#">
-                                                <div class="letter-icon-title text-default">Josh Garrett</div>
-                                            </a>
-                                        </td>
-                                        <td class="table-inbox-message">
-                                            <div class="table-inbox-subject">Post no so what deal evil rent by real in</div>
-                                            <span class="table-inbox-preview">But her ready least set lived spite solid. September how men saw tolerably two behaviour arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward</span>
-                                        </td>
-                                        <td class="table-inbox-attachment">
-                                            <i class="icon-attachment text-muted"></i>
-                                        </td>
-                                        <td class="table-inbox-time">
-                                            Nov 17
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /my inbox -->
-
-                </div>
-
-                <div class="tab-pane fade" id="orders">
-
-                    <!-- Orders history -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">Orders history<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <span class="heading-text"><i class="icon-arrow-down22 text-danger"></i> <span class="text-semibold">- 29.4%</span></span>
-                            </div>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="chart-container">
-                                <div class="chart" id="visits" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0);" _echarts_instance_="1494231080702"><div style="position: relative; overflow: hidden; width: 100px; height: 300px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 300px; user-select: none;"></div><canvas width="100" height="300" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="300" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="300" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Product name</th>
-                                        <th>Size</th>
-                                        <th>Colour</th>
-                                        <th>Article number</th>
-                                        <th>Units</th>
-                                        <th>Price</th>
-                                        <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="active border-double">
-                                        <td colspan="7" class="text-semibold">New orders</td>
-                                        <td class="text-right">
-                                            <span class="badge badge-default">24</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right" style="width: 45px;">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/1.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Fathom Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-grey position-left"></span>
-                                                Processing
-                                            </div>
-                                        </td>
-                                        <td>34cm x 29cm</td>
-                                        <td>Orange</td>
-                                        <td>
-                                            <a href="#">1237749</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 79.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/2.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Mystery Air Long Sleeve T Shirt</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-grey position-left"></span>
-                                                Processing
-                                            </div>
-                                        </td>
-                                        <td>L</td>
-                                        <td>Process Red</td>
-                                        <td>
-                                            <a href="#">345634</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 38.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/3.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Women’s Prospect Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-grey position-left"></span>
-                                                Processing
-                                            </div>
-                                        </td>
-                                        <td>46cm x 28cm</td>
-                                        <td>Neu Nordic Print</td>
-                                        <td>
-                                            <a href="#">5739584</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 60.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/4.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Overlook Short Sleeve T Shirt</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-grey position-left"></span>
-                                                Processing
-                                            </div>
-                                        </td>
-                                        <td>M</td>
-                                        <td>Gray Heather</td>
-                                        <td>
-                                            <a href="#">434450</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 35.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="active border-double">
-                                        <td colspan="7" class="text-semibold">Shipped orders</td>
-                                        <td class="text-right">
-                                            <span class="badge bg-success">42</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/5.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Infinite Ride Liner</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>43</td>
-                                        <td>Black</td>
-                                        <td>
-                                            <a href="#">34739</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 210.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/6.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Custom Snowboard</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>151</td>
-                                        <td>Black/Blue</td>
-                                        <td>
-                                            <a href="#">5574832</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 600.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/7.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Kids' Day Hiker 20L Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>24cm x 29cm</td>
-                                        <td>Figaro Stripe</td>
-                                        <td>
-                                            <a href="#">6684902</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 55.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/8.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Lunch Sack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>24cm x 20cm</td>
-                                        <td>Junk Food Print</td>
-                                        <td>
-                                            <a href="#">5574829</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 20.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/9.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Cambridge Jacket</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>XL</td>
-                                        <td>Nomad/Railroad</td>
-                                        <td>
-                                            <a href="#">475839</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 175.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/10.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Covert Jacket</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-success position-left"></span>
-                                                Shipped
-                                            </div>
-                                        </td>
-                                        <td>XXL</td>
-                                        <td>Mocha/Glacier Sierra</td>
-                                        <td>
-                                            <a href="#">589439</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 126.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="active border-double">
-                                        <td colspan="7" class="text-semibold">Cancelled orders</td>
-                                        <td class="text-right">
-                                            <span class="badge bg-danger">9</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/11.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Day Hiker Pinnacle 31L Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-danger position-left"></span>
-                                                Cancelled
-                                            </div>
-                                        </td>
-                                        <td>42cm x 26.5cm</td>
-                                        <td>Blotto Ripstop</td>
-                                        <td>
-                                            <a href="#">5849305</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 130.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/12.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Kids' Gromlet Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-danger position-left"></span>
-                                                Cancelled
-                                            </div>
-                                        </td>
-                                        <td>22cm x 20cm</td>
-                                        <td>Slime Camo Print</td>
-                                        <td>
-                                            <a href="#">4438495</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 35.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/13.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Tinder Backpack</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-danger position-left"></span>
-                                                Cancelled
-                                            </div>
-                                        </td>
-                                        <td>42cm x 26cm</td>
-                                        <td>Dark Tide Twill</td>
-                                        <td>
-                                            <a href="#">4759383</a>
-                                        </td>
-                                        <td>2</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 180.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="no-padding-right">
-                                            <a href="#">
-                                                <img src="assets/images/demo/products/14.jpeg" height="60" class="" alt="">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-semibold">Almighty Snowboard Boot</a>
-                                            <div class="text-muted text-size-small">
-                                                <span class="status-mark bg-danger position-left"></span>
-                                                Cancelled
-                                            </div>
-                                        </td>
-                                        <td>45</td>
-                                        <td>Multiweave</td>
-                                        <td>
-                                            <a href="#">34432</a>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <h6 class="no-margin text-semibold">€ 370.00</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            <ul class="icons-list">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a href="#"><i class="icon-truck"></i> Track parcel</a></li>
-                                                        <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
-                                                        <li><a href="#"><i class="icon-wallet"></i> Payment details</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="icon-warning2"></i> Report problem</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /orders history -->
-
-                </div>
             </div>
             <!-- /tab content -->
 
@@ -1816,61 +299,272 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
-        function fnFillAreas(sAreaddlID, sWilayatddlID) {
-            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', true, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '- Select Area - ', '- No data found -', [],
+        var sAreaCode = sWilayatCode = sVillageCode = "-99";
+        function fnFillAreas() {
+            var vDefer = $.Deferred();
+            var bIsDataBinded = false;
+            $.when
+               (
+
+            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', false, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '- Select Area - ', '- No data found -', [],
                 function () {
                     //Success Function
-                    fnFillWilayats("-99");
                     $("#ddlAreaddlID").select2({
                         width: '100%'
                     })
                     .on('change', function () {
-                        $(this).closest('form').validate().element($(this));
+                        //$(this).closest('form').validate().element($(this));
                         fnFillWilayats($("#ddlAreaddlID").val());
                     });
+                    bIsDataBinded = true;
+
                 },
                 function () {
                     //Error
+                })
+
+
+             ).done(
+                function () {
+                    fnFillWilayats(-99);
+                    //Resolve promise
+                    vDefer.resolve(bIsDataBinded);
                 });
 
+            return vDefer.promise();
         }
 
         function fnFillWilayats(sAreaCode) {
             var oParameters = {};
             oParameters['sAreaCode'] = sAreaCode;
 
+            //FillDropDownCascade(Url, HttpVerb, Async, ParentDropDown, ChildDropDown, Key, Value, SelectMessage, NotExistMessage, Parameters, onSuccess, onFailure) {
+
             AjaxCallAndFillCascadeDropDown('@Url.Action("JGetAllWilayat", "Common")',
-                                            'Post', true,
-                                            "ddAreaddlID", "ddlWilayatddlID",
+                                            'Post', false,
+                                            "ddlAreaddlID", "ddlWilayatddlID",
                                             "WILAYATCODE", "WILLAYATNAME",
-                                            "- Select Station -",
+                                            "- Select Wilayat -",
                                             "- No data found -",
                                             oParameters, true);
-            $("#" + sWilayatddlID).select2({ width: '100%' })
+
+
+
+            $("#ddlWilayatddlID").select2({ width: '100%' })
                                 .on('change', function () {
-                                    $(this).closest('form').validate().element($(this));
-                                    fnFillVillages($("#ddlVillageID").val());
-                                });;
+                                    //$(this).closest('form').validate().element($(this));
+                                    fnFillVillages(sAreaCode,$("#ddlWilayatddlID").val());
+                                });
+            fnFillVillages(sAreaCode,$("#ddlWilayatddlID").val());
         }
 
-        function fnFillVillages(sWilayatCode) {
+        function fnFillVillages(sAreaCode,sWilayatCode) {
             var oParameters = {};
+            oParameters['sAreaCode'] = sAreaCode;
             oParameters['sWilayatCode'] = sWilayatCode;
-            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', true, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '- Select Area - ', '- No data found -', [],
+            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', false, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '- Select Village - ', '- No data found -', oParameters,
                 function () {
                     //Success Function
-                    fnFillWilayats("-99");
-                    $("#" + sAreaddlID).select2({
+                    $("#ddlVillageID").select2({
                         width: '100%'
                     })
                     .on('change', function () {
-                        $(this).closest('form').validate().element($(this));
-                        fnFillWilayats($("#" + sAreaddlID).val());
+                        //$(this).closest('form').validate().element($(this));
                     });
                 },
                 function () {
                     //Error
                 });
         }
+
+        function fnProfileInformationValidateInitialization() {
+
+            var validator = $('#frmProfileInformation').validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    txtFullName: {
+                        required: true
+                    },
+                    txtCivilID: {
+                        required: true
+                    },
+                    txtPhoneNumber: {
+                        required: true
+                    }
+                },
+                messages: {
+                    txtFullName: "This field is required.",
+                    txtCivilID: "This field is required.",
+                    txtPhoneNumber: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+        function fnUpdateProfileInformation(){
+            debugger;
+            $('#frmProfileInformation').removeClass('hide');
+            if (!$('#frmProfileInformation').valid()) {
+                return false;
+            }
+
+            var nAreaID = Number($("#ddlAreaddlID").val());
+            var nWilayatID = Number($("#ddlWilayatddlID").val());
+            var nVillageID = Number($("#ddlVillageID").val());
+            var bIsTicketSubmissionRestricted = $("#chkRestrictTicketSubmission").is(':checked') ? true : false;
+
+            var dataToSend = JSON.stringify({
+                ID: Number(@Model.ID),
+                FULL_NAME: $("#txtFullName").val(),
+                PHONE_NUMBER: $("#txtPhoneNumber").val(),
+                EMAIL: $("#txtEmail").val(),
+                CIVIL_ID: $("#txtCivilID").val(),
+                ADDRESS: $("#txtAddress").val(),
+                AREA_ID: nAreaID,
+                WILAYAT_ID: nWilayatID,
+                VILLAGE_ID: nVillageID,
+                TICKET_SUBMISSION_INTERVAL_DAYS: $("#txtTicketSubmissionIntervalDays").val(),
+                IS_TICKET_SUBMISSION_RESTRICTED:bIsTicketSubmissionRestricted
+            });
+
+
+
+            $.ajax({
+                url: '@Url.Action("JUpdateProfileInformation", "Users")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    if (response.nResult == 1) {
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Success)
+                    }
+                    else{
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Error)
+                    }
+                },
+                error: function (response) {
+                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                }
+            })
+        }
+
+        function fnUpdateUserPassword(){
+            var bIsEnteredSamePassword =  $("#txtPassword").val() ===  $("#txtConfirmPassword").val();
+            if (!bIsEnteredSamePassword) {
+                ShowStatusBarNotification("Password and confirm password do not match.Please enter it again.", NotificationType.Warning)
+                return false;
+            }
+
+
+            var dataToSend = JSON.stringify({
+                nUserID: Number(@Model.ID),
+                sPassword: $("#txtPassword").val()
+            });
+
+            $.ajax({
+                url: '@Url.Action("JUpdateUserPassword", "Users")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    if (response.nResult == 1) {
+                        $("#txtPassword").val("") ;  $("#txtConfirmPassword").val("");
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Success)
+                    }
+                    else{
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Error)
+                    }
+                },
+                error: function (response) {
+                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                }
+            })
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnProfileInformationValidateInitialization();
+            var sAreaID = "-99";
+            var sWilayatID = "-99";
+            var sVillageID= "-99";
+            sAreaID = @(Model.AREA_ID.HasValue ? Model.AREA_ID.Value.ToString() : "-99");
+            sWilayatID = @(Model.WILAYAT_ID.HasValue ? Model.WILAYAT_ID.Value.ToString() : "-99");
+            sVillageID = @(Model.VILLAGE_ID.HasValue ? Model.VILLAGE_ID.Value.ToString() : "-99");
+
+            var promiseDeclarationBind =  fnFillAreas();
+            promiseDeclarationBind.done(function (bIsDataBinded) {
+                debugger;
+                if (sAreaID != "-99") {
+                    $("#ddlAreaddlID").select2('val', String(sAreaID));
+                }
+            });
+
+            if (sWilayatID != "-99") {
+                $("#ddlWilayatddlID").select2('val', String(sWilayatID));
+            }
+            debugger;
+            if (sVillageID != "-99") {
+                //$("#ddlVillageID").select2('val', String(sVillageID));
+                $("#ddlVillageID").val(String(sVillageID)).trigger('change.select2');
+            }
+
+            //if (sAreaID != "-99") {
+            //    $("#ddlAreaddlID").select2('val', String(sAreaCode));
+            //}
+
+
+        });
+
     </script>
 }

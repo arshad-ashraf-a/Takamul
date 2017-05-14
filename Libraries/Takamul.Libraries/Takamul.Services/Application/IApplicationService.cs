@@ -17,7 +17,7 @@ namespace Takamul.Services
 {
     public interface IApplicationService
     {
-        #region Method :: IPagedList<ApplicationViewModel> :: IlGetAllApplications
+        #region Method :: List<ApplicationViewModel> :: IlGetAllApplications
         /// <summary>
         ///  Get all applications
         /// </summary>
@@ -28,7 +28,7 @@ namespace Takamul.Services
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        IPagedList<ApplicationViewModel> IlGetAllApplications(int nSearchByAppliationID, string sSearchByApplicationName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
+        List<ApplicationViewModel> IlGetAllApplications(int nApplicationID, string sSearchByApplicationName, int nPageNumber, int nRowspPage);
         #endregion
 
         #region Method :: ApplicationViewModel :: oGetApplicationDetails
@@ -38,6 +38,15 @@ namespace Takamul.Services
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
         ApplicationViewModel oGetApplicationDetails(int nApplicationID);
+        #endregion
+
+        #region Method :: ApplicationViewModel :: oGetApplicationStatistics
+        /// <summary>
+        ///  Get application details
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        ApplicationViewModel oGetApplicationStatistics(int nApplicationID);
         #endregion
     }
 }

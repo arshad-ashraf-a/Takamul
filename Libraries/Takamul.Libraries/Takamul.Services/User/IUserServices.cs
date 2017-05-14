@@ -21,7 +21,7 @@ namespace Takamul.Services
         ///  Get list of application users
         /// </summary>
         /// <returns></returns>
-        List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, int nPageNumber, int nRowspPage);
+        List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, int nUserTypeID, string sUserSeach, int nPageNumber, int nRowspPage);
 
         #endregion
 
@@ -31,6 +31,33 @@ namespace Takamul.Services
         /// </summary>
         /// <returns></returns>
         UserInfoViewModel oGetUserDetails(int nUserID);
+        #endregion
+
+        #region Method :: Response :: oInsertUser
+        /// <summary>
+        /// Insert Mobile User
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        Response oInsertUser(UserInfoViewModel oUserInfoViewModel);
+        #endregion
+
+        #region Method :: Response :: oUpdateProfileInformation
+        /// <summary>
+        /// Update profile information
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateProfileInformation(UserInfoViewModel oUserInfoViewModel);
+        #endregion
+
+        #region Method :: Response :: oUpdateUserPassowrd
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="oUserInfoViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateUserPassowrd(int nUserID, string sPassword, int nModifiedBy);
         #endregion
     }
 }

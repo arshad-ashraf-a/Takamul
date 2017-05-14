@@ -92,37 +92,41 @@
                             <ul class="navigation navigation-main navigation-accordion">
                                 <!-- Main -->
                                 <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                                <li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                             
-                                <li><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+                                @*<li><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>*@
 
-                                <li><a href="#"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
-
+                                @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
+                                {
+                                    <li><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
+                                }
                                 <!-- Appearance -->
-                                <li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
-                                    <ul>
-                                        <li><a href="#">Reports 1</a></li>
-                                        <li><a href="#">Reports 2</a></li>
-                                        <li><a href="#">Reports 3</a></li>
-                                    </ul>
-                                </li>
+                                @*<li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
+                                        <ul>
+                                            <li><a href="#">Reports 1</a></li>
+                                            <li><a href="#">Reports 2</a></li>
+                                            <li><a href="#">Reports 3</a></li>
+                                        </ul>
+                                    </li>*@
                                 <!-- /appearance -->
                                 <!-- Appearance -->
                                 @*<li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
-                                    <ul>
-                                        <li><a href="#">Users</a></li>
-                                        <li><a href="#">Roles</a></li>
-                                        <li><a href="#">Role Privillages</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
-                                    <ul></ul>
-                                </li>*@
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
+                                        <ul>
+                                            <li><a href="#">Users</a></li>
+                                            <li><a href="#">Roles</a></li>
+                                            <li><a href="#">Role Privillages</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
+                                        <ul></ul>
+                                    </li>*@
                                 <!-- /appearance -->
                             </ul>
                         </div>
@@ -201,6 +205,38 @@
     @RenderSection("SpecificPluginScripts", false)
     @RenderSection("InlineScriptsRelated", false)
     <script type="text/javascript">
+        function fnGoToApplicationDetais(nApplicationID) {
+            var vApplicationID = -99;
+            if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
+                vApplicationID = nApplicationID;
+            }
+            else {
+                var gdApplicationist = $('#' + sGridViewSelector);
+                vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
+            }
+
+            $.ajax({
+                url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
+                type: 'POST',
+                data: { nApplicationID: vApplicationID },
+                async: true,
+                success: function (result, response) {
+                    if (result.nResult == 1) {
+                        url = '@Url.Action("AppDashboard", "Applications")';
+                        window.location.href = url;
+
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function (result, response) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            });
+
+
+        }
 
         $(document).ajaxStart(function () {
             ShowLoader();

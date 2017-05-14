@@ -26,19 +26,21 @@
                     </div>
                 </li>
             </ul>
+            @if (Model.TICKET_STATUS_ID == 1) //Open Status
+            {
+                <textarea name="enter-message" id="txtChatMessage" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
 
-            <textarea name="enter-message" id="txtChatMessage" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <input type="file" onchange="fnSaveChatFile();" id="fuChatFile" name="fuChatFile" style="visibility: hidden; width: 1px; height: 1px" multiple />
+                        <button onclick="fnSendChat();" type="button" id="btnSend" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+                    </div>
 
-            <div class="row">
-                <div class="col-xs-6">
-                    <input type="file" onchange="fnSaveChatFile();" id="fuChatFile" name="fuChatFile" style="visibility: hidden; width: 1px; height: 1px" multiple />
-                    <button onclick="fnSendChat();" type="button" id="btnSend" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+                    <div class="col-xs-6 text-right">
+                        <a href="#" id="btnUploadFile" onclick="document.getElementById('fuChatFile').click(); return false" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-file-plus"></i></b> Upload File</a>
+                    </div>
                 </div>
-
-                <div class="col-xs-6 text-right">
-                    <a href="#" id="btnUploadFile" onclick="document.getElementById('fuChatFile').click(); return false" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-file-plus"></i></b> Upload File</a>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -54,6 +56,13 @@
             doc: 5,
             docx: 6,
             pdf: 7
+        }
+
+        //Ticket status
+        var enmTicketStatus = {
+            Open: 1,
+            Closed: 2,
+            Rejected: 3
         }
 
         function fnGetTicketChats() {
@@ -93,15 +102,6 @@
                         else {
                             vChatMessage = arrItem.REPLY_MESSAGE;
                         }
-                        //CHAT_TYPE "text"
-                        //ID 20
-                        //PARTICIPANT_FULL_NAME "Admin"
-                        //REPLIED_DATE "/Date(1493920140000)/"
-                        //REPLY_FILE_PATH null
-                        //REPLY_MESSAGE "sample string 4"
-                        //TICKET_CHAT_TYPE_ID 1
-                        //TICKET_ID  5
-                        //TICKET_PARTICIPANT_ID  3
 
                         var oItem = {
                             nTicketChatID: arrItem.ID,

@@ -58,10 +58,7 @@ namespace Takamul.Services
 
             #region ":Get Sp Result:"
             List<UserInfoViewModel> lstUserDetails = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetMobileAppUserInfo", arrParameters.ToArray());
-            if (lstUserDetails.Count > 0)
-            {
-                return lstUserDetails[0];
-            }
+
             return oUserInfoViewModel;
             #endregion
 

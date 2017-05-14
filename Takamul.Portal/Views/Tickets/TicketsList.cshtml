@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Takamul.Portal.Resources.Controls.Buttons;
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
@@ -101,6 +102,12 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
+        //Ticket status
+        var enmTicketStatus = {
+            Open: 1,
+            Closed: 2,
+            Rejected: 3
+        }
 
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
@@ -123,6 +130,7 @@
                     TicketName: 'TICKET_NAME',
                     TicketDescription: 'TICKET_DESCRIPTION',
                     TicketStatusName: 'TICKET_STATUS_NAME',
+                    TicketStatusID: 'TICKET_STATUS_ID',
                     TicketStatusRemark: 'TICKET_STATUS_REMARK',
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE'
@@ -130,16 +138,20 @@
             var sCaption = 'All Tickets';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
+                '',//Hidden Columns Represent TICKET_STATUS_ID Int Value
+                '',//Hidden Columns Represent TICKET_CODE Int Value
+                '',//Hidden Columns Represent IS_ACTIVE Int Value
+                '',//Hidden Columns Represent TICKET_STATUS_REMARK Int Value
+                '',//Hidden Columns Represent TICKET_STATUS_NAME Int Value
                 'Ticket Code',
                 'Ticket Name',
                 'Ticket Description',
                 'Ticket Status',
-                'Status Remark',
                 'Is Active',
                 'Created Date',
                 'Options' // Options
             ];
-
+            debugger;
             var vTicketCode = $("#txtSearchByTicketCode").val();
             var vTicketName = $("#txtSearchByTicketName").val();
             var vTicketStatusId = Number($("#ddlTicketStatus").val());
@@ -158,15 +170,35 @@
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
-                                        { Caption: "Details", EventName: "fnGoToTicketDetails();", RowId: true }
+                                        { Caption: "Details", EventName: "fnGoToTicketDetails();", RowId: true },
+                                        { Caption: "Update Ticket", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
             ];
             var oArrColsModel = [
                     {
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                    {
+                        name: ConstantsNames.TicketStatusID, editable: false,
+                        key: false, hidden: true
+                    },
                      {
-                         name: ConstantsNames.TicketCode,
+                         name: ConstantsNames.TicketCode, editable: false,
+                         key: false, hidden: true
+                     },
+                       {
+                           name: ConstantsNames.IsActive, editable: false,
+                           key: false, hidden: true
+                       },
+                        {
+                            name: ConstantsNames.TicketStatusRemark, editable: false,
+                            key: false, hidden: true
+                        },
+                      {
+                          name: ConstantsNames.TicketStatusName, editable: false,
+                          key: false, hidden: true
+                      },
+                     {
                          width: 50, editable: false,
                          align: EnumColumnsAlignment.Center,
                          formatter: function (cellvalue, options, rowObject) {
@@ -184,17 +216,24 @@
                         align: EnumColumnsAlignment.Center
                     },
                     {
-                        name: ConstantsNames.TicketStatusName,
-                        width: 50, editable: false,
-                        align: EnumColumnsAlignment.Center
+                        width: 80, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var htmlString = '';
+                            if (cellvalue != null) {
+                                htmlString += cellvalue;
+                            }
+                            htmlString += "<div class='media-body'>";
+                            htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>" + rowObject.TICKET_STATUS_NAME + "</a>";
+                            if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Rejected) {
+                                htmlString += '<div class="text-semibold"><a onclick="fnShowRejectReasonDesc(\'' + rowObject.ID + '\');return false;" href="#">[ View Reject Reason ]</a></div>';
+                            }
+                            htmlString += "</div>";
+
+                            return htmlString;
+                        }
                     },
                     {
-                        name: ConstantsNames.TicketStatusRemark,
-                        width: 50, editable: false,
-                        align: EnumColumnsAlignment.Center
-                    },
-                    {
-                        name: ConstantsNames.IsActive,
                         width: 50, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
@@ -264,7 +303,7 @@
 
         function fnFillApplicationUsers() {
             //TODO:: option add 'ALL'
-            FillDropDownRoot('@Url.Action("JGetApplicationUsers", "Users")', 'POST', false, 'ddlParticipantUser', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
+            FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlParticipantUser', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
                 function () {
                     //Success Function
                     $("#ddlParticipantUser").select2({ width: '100%' });
@@ -279,6 +318,124 @@
             $("#txtSearchByTicketName").val("");
             $('#ddlTicketStatus').val($('#ddlTicketStatus option:first-child').val()).trigger('change');
             $('#ddlParticipantUser').val($('#ddlParticipantUser option:first-child').val()).trigger('change');
+        }
+
+
+        function fnLoadPartialUpdateTicket() {
+
+            var gdTicketList = $('#' + sGridViewSelector);
+            var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
+            var rowData = gdTicketList.getRowData(vTicketID);
+            debugger;
+            var sTicketCode = rowData.TICKET_CODE;
+            var sTicketName = rowData.TICKET_NAME;
+            var sTicketStatusName = rowData.TICKET_STATUS_NAME;
+            var nTicketStatusID = rowData.TICKET_STATUS_ID;
+            var bIsTicketActive = rowData.IS_ACTIVE;
+
+            var dataToSend = JSON.stringify({
+                ID: vTicketID,
+                TICKET_CODE: sTicketCode,
+                TICKET_NAME: sTicketName,
+                TICKET_STATUS_NAME: sTicketStatusName,
+                TICKET_STATUS_ID: nTicketStatusID,
+                IS_ACTIVE: bIsTicketActive
+            });
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Update Ticket',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialUpdateTicket", "Tickets")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Update",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             //Update Ticket
+                             debugger;
+                             var bIsShowRejectReason = ($("#ddlUpdateTicketStatus").val() == "3");// Ticket Staus -> Rejected
+                             if (bIsShowRejectReason) {
+                                 if ($("#txtRejectReason").val() == "") {
+                                     ShowStatusBarNotification("Please enter reject reason.", NotificationType.Warning);
+                                     return;
+                                 }
+                             }
+
+                             var gdTicketList = $('#' + sGridViewSelector);
+                             var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
+
+                             var vTicketStatusID = $("#ddlUpdateTicketStatus").val();
+                             var bIsActive = $("#IS_ACTIVE").prop("checked");
+                             var vsRejectReasonDesc = bIsShowRejectReason ? $("#txtRejectReason").val() : "";
+
+                             //int nTicketID,bool bIsActive, int nTicketStatusID,string sRejectReason
+                             var dataToSend = JSON.stringify({
+                                 nTicketID: vTicketID,
+                                 nTicketStatusID: vTicketStatusID,
+                                 bIsActive: bIsActive,
+                                 sRejectReason: vsRejectReasonDesc
+                             });
+
+                             //Update status
+                             $.ajax({
+                                 url: '@Url.Action("JEditTicket", "Tickets")',
+                                 type: 'POST',
+                                 contentType: 'application/json',
+                                 data: dataToSend,
+                                 success: function (result, response) {
+                                     if (result.nResult == 1) {
+                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                                         $("#dvPopUpWindow").dialog("close");
+                                         fnBindAllTickets();
+                                     }
+                                     else {
+                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                     }
+                                 },
+                                 error: function (result, response) {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                 }
+                             })
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnShowRejectReasonDesc(nTicketID) {
+            var gdTicketList = $('#' + sGridViewSelector);
+            var rowData = gdTicketList.getRowData(nTicketID);
+
+
+            if (rowData.TICKET_STATUS_REMARK != "") {
+                ShowAlertDialog(rowData.TICKET_STATUS_REMARK, '@Buttons.Close');
+            }
         }
 
         //Entry Point
