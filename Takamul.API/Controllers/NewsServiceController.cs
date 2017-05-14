@@ -70,6 +70,7 @@ namespace Takamul.API.Controllers
                         ApplicationID = news.APPLICATION_ID,
                         NewsContent = news.NEWS_CONTENT,
                         NewsTitle = news.NEWS_TITLE
+
                     };
                     lstTakamulNews.Add(oTakamulNews);
                 }

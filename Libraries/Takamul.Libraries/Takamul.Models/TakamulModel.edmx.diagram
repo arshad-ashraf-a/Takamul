@@ -7,14 +7,14 @@
       <Diagram DiagramId="730e63fc61a94b9c838c3303fa74a033" Name="Diagram1">
         <EntityTypeShape EntityType="TakamulModel.APPLICATIONS" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="2.125" PointY="0.5" />
-        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="2.125" PointY="4.25" />
         <AssociationConnector Association="TakamulModel.FK_EVENTS_APPLICATIONS" />
-        <AssociationConnector Association="TakamulModel.FK_NEWS_APPLICATIONS" />
-        <EntityTypeShape EntityType="TakamulModel.TICKETS" Width="1.5" PointX="0.5" PointY="4.25" />
+        <EntityTypeShape EntityType="TakamulModel.TICKETS" Width="1.5" PointX="0.5" PointY="5.625" />
         <AssociationConnector Association="TakamulModel.FK_TICKETS_APPLICATIONS" />
         <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="3.75" PointY="0.5" />
         <AssociationConnector Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" />
-      </Diagram>
+        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="2.75" PointY="6.125" />
+        <AssociationConnector Association="TakamulModel.FK_NEWS_APPLICATIONS" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

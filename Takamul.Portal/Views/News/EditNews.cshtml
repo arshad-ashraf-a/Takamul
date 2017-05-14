@@ -1,0 +1,234 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+@model Takamul.Models.ViewModel.NewsViewModel
+
+@using (Html.BeginForm("JEditNews", "News", FormMethod.Post, new { id = "frmEditNews", @class = "form-horizontal" }))
+{
+    <div class="col-md-12">
+
+        <div class="panel panel-white">
+            <div class="panel-heading">
+                <h6 class="panel-title"> Edit New News</h6>
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID)
+                @* News Title*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">News Title&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.NEWS_TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = "news title" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* News Description*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">News Description&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                @Html.EditorFor(model => model.NEWS_CONTENT, new { htmlAttributes = new { @class = "form-control", placeholder = "news description" } })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @* Notify User*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Notify User</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_NOTIFY_USER", Model.IS_NOTIFY_USER, new { @class = "styled" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Is Active*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Is Active</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+                
+                @* File Uploads*@
+                <div class="editor-field">
+                    <input type="file" name="file" multiple="multiple" />
+
+                    <ul class="attachment">                       
+                            <li>
+                                <a class="title" href="/TakamulPortal/News/Download/?p=@(Model.FileId + Model.FileExtension)&d=@Model.FileName">@Model.FileName</a>
+                                <a href="javascript:void(0);" data-id="@Model.FileId" class="deleteItem">X</a>
+                            </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditNews()">Update</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
+            <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
+        </div>
+    </div>
+}
+
+
+
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+        $(".styled").uniform({
+            radioClass: 'choice'
+        });
+
+        function fnNewsValidateInitialization() {
+            var validator = $('#frmEditNews').validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    NEWS_TITLE: {
+                        required: true
+                    },
+                    NEWS_CONTENT: {
+                        required: true
+                    }                   
+                },
+                messages: {
+                    NEWS_TITLE: "This field is required.",
+                    NEWS_CONTENT: "This field is required."
+                    
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+
+        function fnEditNews() {
+            if (!$("#frmEditNews").valid()) {
+                return false;
+            }
+            var formData = $("#frmEditNews").serialize();
+
+            $.ajax({
+                url: '@Url.Action("JEditNews", "News")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        function fnClearControls() {
+            $("#NEWS_TITLE").val("");
+            $("#NEWS_CONTENT").val("");
+           
+            
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnNewsValidateInitialization();
+        });
+
+
+        $('.deleteItem').click(function (e) {
+            e.preventDefault();
+            var $ctrl = $(this);
+            if (confirm('Do you really want to delete this file?')) {
+                $.ajax({
+                    url: '@Url.Action("DeleteFile")',
+                    type: 'POST',
+                    data: { id: $(this).data('id') }
+                }).done(function (data) {
+                    if (data.Result == "OK") {
+                        $ctrl.closest('li').remove();
+                    }
+                    else if (data.Result.Message) {
+                        alert(data.Result.Message);
+                    }
+                }).fail(function () {
+                    alert("There is something wrong. Please try again.");
+                })
+
+            }
+        });
+
+    </script>
+}

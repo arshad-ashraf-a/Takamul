@@ -22,6 +22,7 @@ namespace Takamul.Models
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
+        public Nullable<int> USER_ID { get; set; }
     
         public virtual APPLICATIONS APPLICATIONS { get; set; }
     }

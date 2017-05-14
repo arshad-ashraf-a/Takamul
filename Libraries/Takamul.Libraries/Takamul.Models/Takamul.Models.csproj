@@ -103,6 +103,7 @@
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Compile Include="ViewModel\AreaInfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />
+    <Compile Include="ViewModel\FileDetails.cs" />
     <Compile Include="ViewModel\PlacePrediction.cs" />
     <Compile Include="ViewModel\TicketChatViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />

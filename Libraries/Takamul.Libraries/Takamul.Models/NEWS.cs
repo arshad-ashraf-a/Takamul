@@ -21,10 +21,14 @@ namespace Takamul.Models
         public string NEWS_CONTENT { get; set; }
         public Nullable<bool> IS_NOTIFY_USER { get; set; }
         public Nullable<bool> IS_ACTIVE { get; set; }
+        public Nullable<System.DateTime> PUBLISHED_DATE { get; set; }
         public Nullable<int> CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
+        public Nullable<System.Guid> FileId { get; set; }
+        public string FileName { get; set; }
+        public string FileExtension { get; set; }
     
         public virtual APPLICATIONS APPLICATIONS { get; set; }
     }

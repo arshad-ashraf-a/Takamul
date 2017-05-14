@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -865,6 +865,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\MemberInfoController.cs" />
@@ -943,7 +944,6 @@
     <Content Include="Views\Applications\ApplicationsDetails.cshtml" />
     <Content Include="Views\Events\EventsList.cshtml" />
     <Content Include="Views\Events\AddNewEvent.cshtml" />
-    <Content Include="Views\Events\EditEvent.cshtml" />
     <Content Include="Views\MemberInfo\MemberInfoList.cshtml" />
     <Content Include="Views\MemberInfo\_AddMemberInfo.cshtml" />
     <Content Include="Views\MemberInfo\_EditMemberInfo.cshtml" />
@@ -951,6 +951,11 @@
     <Content Include="Views\Tickets\TicketDetails.cshtml" />
     <Content Include="Views\Users\UsersList.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\News\AddNewNews.cshtml" />
+    <Content Include="Views\Events\EditEvent.cshtml" />
+    <Content Include="Views\News\NewsList.cshtml" />
+    <Content Include="Views\News\EditNews.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -986,7 +991,6 @@
     <Folder Include="assets\js\charts\" />
     <Folder Include="assets\js\pages\" />
     <Folder Include="UploadFolder\" />
-    <Folder Include="Views\News\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1003,7 +1007,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19612</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Takamul.Portal</IISUrl>
+          <IISUrl>http://localhost:19612/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
