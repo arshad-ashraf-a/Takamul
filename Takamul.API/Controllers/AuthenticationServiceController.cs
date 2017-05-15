@@ -189,8 +189,8 @@ namespace Takamul.API.Controllers
             {
                 oTakamulUser = new TakamulUser()
                 {
-                    UserID = oUserInfoViewModel.USER_ID,
-                    ApplicationID = oUserInfoViewModel.USER_ID,
+                    UserID = oUserInfoViewModel.ID,
+                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
                     PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
                     Email = oUserInfoViewModel.EMAIL,
                     Addresss = oUserInfoViewModel.ADDRESS,
@@ -198,10 +198,10 @@ namespace Takamul.API.Controllers
                     IsUserBlocked = (bool)oUserInfoViewModel.IS_BLOCKED,
                     BlockedRemarks = oUserInfoViewModel.BLOCKED_REMARKS,
                     IsOTPVerified = (bool)oUserInfoViewModel.IS_OTP_VALIDATED,
-                    IsSmsSent = (bool)oUserInfoViewModel.SMS_SENT_STATUS,
-                    IsTicketSubmissionRestricted = (bool)oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED,
+                    IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS != null ? oUserInfoViewModel.SMS_SENT_STATUS : false,
+                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED != null ? oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED : true ,
                     TicketSubmissionIntervalDays = (int)oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
-                    LastTicketSubmissionDate = Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("DD/mm/YYYY")
+                    LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE != null ? Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("dd/MM/yyyy") : ""
                 };
             }
 

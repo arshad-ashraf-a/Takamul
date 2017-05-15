@@ -97,17 +97,23 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetMemberInfo(int nApplicationID)
         {
             TakamulMembeInfo oTakamulMembeInfo = null;
-            MemberInfoViewModel oNewsViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID);
-            if (oNewsViewModel != null)
+            List<TakamulMembeInfo> lstTakamulMembeInfo = null;
+            List<MemberInfoViewModel> lstMemberInfoViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID);
+            if (lstMemberInfoViewModel.Count > 0)
             {
-                oTakamulMembeInfo = new TakamulMembeInfo()
+                lstTakamulMembeInfo = new List<TakamulMembeInfo>();
+                foreach (var oMemberInfoViewModel in lstMemberInfoViewModel)
                 {
-                    ApplicationID = oNewsViewModel.APPLICATION_ID,
-                    MemberInfoTitle = oNewsViewModel.MEMBER_INFO_TITLE,
-                    MemberInfoDesc = oNewsViewModel.MEMBER_INFO_DESCRIPTION
-                };
+                    oTakamulMembeInfo = new TakamulMembeInfo()
+                    {
+                        ApplicationID = oMemberInfoViewModel.APPLICATION_ID,
+                        MemberInfoTitle = oMemberInfoViewModel.MEMBER_INFO_TITLE,
+                        MemberInfoDesc = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION
+                    };
+                    lstTakamulMembeInfo.Add(oTakamulMembeInfo);
+                }
             }
-            return Request.CreateResponse(HttpStatusCode.OK, oTakamulMembeInfo);
+            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulMembeInfo);
         }
         #endregion
 

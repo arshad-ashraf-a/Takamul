@@ -157,7 +157,8 @@ namespace Takamul.API.Controllers
                     }
                     TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
                     {
-                        TicketID = oTicketChatItem.ID,
+                        ApplicationID = oTicketChatItem.APPLICATION_ID,
+                        TicketID = oTicketChatItem.TICKET_ID,
                         ReplyMessage = oTicketChatItem.REPLY_MESSAGE,
                         ReplyDate = oTicketChatItem.REPLIED_DATE,
                         TicketChatID = oTicketChatItem.ID,

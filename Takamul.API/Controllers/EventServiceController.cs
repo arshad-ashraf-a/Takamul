@@ -70,6 +70,8 @@ namespace Takamul.API.Controllers
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
                         EVENTNAME = Events.EVENT_NAME,
                         EVENTDATE = Events.EVENT_DATE,
+                        Latitude =  Events.EVENT_LATITUDE,
+                        Longitude = Events.EVENT_LONGITUDE,
                         BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
@@ -100,7 +102,9 @@ namespace Takamul.API.Controllers
                     EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
                     EVENTNAME = oEventsViewModel.EVENT_NAME,
                     EVENTDATE = oEventsViewModel.EVENT_DATE,
-                    BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                     Latitude = oEventsViewModel.EVENT_LATITUDE,
+                     Longitude = oEventsViewModel.EVENT_LONGITUDE,
+                     BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
@@ -131,6 +135,8 @@ namespace Takamul.API.Controllers
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
                         EVENTNAME = Events.EVENT_NAME,
                         EVENTDATE = Events.EVENT_DATE,
+                        Latitude = Events.EVENT_LATITUDE,
+                        Longitude = Events.EVENT_LONGITUDE,
                         BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                     };
                     lstTakamulEvents.Add(oTakamulEvents);

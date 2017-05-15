@@ -16,13 +16,13 @@ namespace Takamul.Services
 {
     public interface ICommonServices
     {
-        #region Method :: MemberInfoViewModel :: oGetMemberInfo
+        #region Method :: List<MemberInfoViewModel> :: oGetMemberInfo
         /// <summary>
         /// Get member info
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns>List of News</returns>
-        MemberInfoViewModel oGetMemberInfo(int nApplicationID);
+        List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID);
         #endregion
 
         #region Method :: Response :: oGetAllAreas
