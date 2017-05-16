@@ -187,6 +187,42 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: Response :: oOTPforAppReinstall
+        /// <summary>
+        ///  Send OTP for app reinstall
+        /// </summary>
+        /// <param name="nMob"></param>
+        /// <param name="nOTPNumber"></param>
+        /// <returns></returns>
+       public Response oOTPforAppReinstall(string nMob,int nOTPNumber)
+        {
+            #region ": Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Mobile", SqlDbType.NVarChar, nOTPNumber, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("SendOTPOnAppReinstall", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+
+        }
+        #endregion
+
         #endregion
     }
 }

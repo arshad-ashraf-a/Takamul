@@ -209,6 +209,46 @@ namespace Takamul.API.Controllers
         }
         #endregion
 
+        #region Method :: HttpResponseMessage :: GetOTPForAppReinstall
+        // GET: api/Authentication/GetOTPForAppReinstall
+        /// <summary>
+        /// Get user detailed infomations
+        /// </summary>
+        /// <param name="nMob"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetOTPForAppReinstall(string nMob)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+            Response oResponse = this.oIAuthenticationService.oOTPforAppReinstall(nMob, nOTPNumber);
+
+            if (oResponse.OperationResult == enumOperationResult.Success)
+            {
+                oApiResponse.OperationResult = 1;
+                oApiResponse.OperationResultMessage = "OTP has been successfully sent.";
+
+                //TODO::integrate with sms service and update status to database
+                oApiResponse.ResponseCode = nOTPNumber.ToString();
+            }
+            else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
+            {
+                oApiResponse.OperationResult = -2;
+                oApiResponse.OperationResultMessage = "You have exceeded the maximum number of attempt.Please contact app administrator.";
+
+                //TODO::integrate with sms service and update status to database
+                oApiResponse.ResponseCode = nOTPNumber.ToString();
+            }
+            else
+            {
+                oApiResponse.OperationResult = 0;
+                oApiResponse.OperationResultMessage = "An error occured.Please try again later.";
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+
+        }
+        #endregion
+
 
 
         #endregion

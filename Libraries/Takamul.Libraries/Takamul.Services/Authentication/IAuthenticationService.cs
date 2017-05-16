@@ -54,6 +54,15 @@ namespace Takamul.Services
         Response oResendOTPNumber(int nUserID,int nOTPNumber);
         #endregion
 
+        #region Method :: Response :: oOTPforAppReinstall
+        /// <summary>
+        ///  Resend user otp number
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="nOTPNumber"></param>
+        /// <returns></returns>
+        Response oOTPforAppReinstall(string nMob, int nOTPNumber);
+        #endregion
 
 
     }
