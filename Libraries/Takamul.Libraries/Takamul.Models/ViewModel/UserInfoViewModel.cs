@@ -88,6 +88,10 @@ namespace Takamul.Models.ViewModel
             this.VILLAGE_DESC_ARB = string.Empty;
             this.VILLAGE_DESC_ENG = string.Empty;
             this.CREATED_DATE = DateTime.MinValue;
+            this.MODIFIED_DATE = DateTime.MinValue;
+            this.CREATED_BY = -99;
+            this.MODIFIED_BY = -99;
+            this.UserType = enumUserType.Undefined;
         }
         #endregion
     }

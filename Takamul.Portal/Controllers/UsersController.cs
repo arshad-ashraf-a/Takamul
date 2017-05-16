@@ -67,6 +67,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialChangeUserStatus
+        /// <summary>
+        /// Change user status 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public PartialViewResult PartialChangeUserStatus(UserInfoViewModel oUserInfoViewModel)
+        {
+            return PartialView("_ChangeUserStatus", oUserInfoViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::

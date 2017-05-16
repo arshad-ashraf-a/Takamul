@@ -88,6 +88,7 @@
                     IsBlocked: 'IS_BLOCKED',
                     IsActive: 'IS_ACTIVE',
                     IsOTPVerified: 'IS_OTP_VALIDATED',
+                    OTPNumber: 'OTP_NUMBER',
                     CreatedDate: 'CREATED_DATE'
                 };
             var sCaption = 'All Users';
@@ -99,7 +100,8 @@
                 'Email',
                 'Is Blocked',
                 'Is Active',
-                //'Is OTP Verified',
+                'OTP Verified',
+                'OTP Number',
                 'Created Date',
                 'Options' // Options
             ];
@@ -182,22 +184,30 @@
                             return htmlString;
                         }
                     },
-                     //{
-                     //    name: ConstantsNames.IsOTPVerified,
-                     //    width: 50, editable: false,
-                     //    align: EnumColumnsAlignment.Center,
-                     //    formatter: function (cellvalue, options, rowObject) {
-                     //        var bIsActive = rowObject.IS_ACTIVE;
-                     //        var htmlString = '';
-                     //        if (bIsActive) {
-                     //            htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
-                     //        }
-                     //        else {
-                     //            htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
-                     //        }
-                     //        return htmlString;
-                     //    }
-                     //},
+                     {
+                         name: ConstantsNames.IsOTPVerified,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             var htmlString = '';
+                             var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
+                             if (bIsOTPVerified != null) {
+                                
+                                 if (bIsOTPVerified) {
+                                     htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
+                                 }
+                                 else {
+                                     htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                 }
+                             }
+                             return htmlString;
+                         }
+                     },
+                     {
+                         name: ConstantsNames.OTPNumber,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center
+                     },
                     {
                         name: ConstantsNames.CreatedDate,
                         width: 50, editable: false,

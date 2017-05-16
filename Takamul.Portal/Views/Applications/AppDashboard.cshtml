@@ -156,7 +156,7 @@
                 <tr class="active border-double">
                     <td colspan="4">Active tickets</td>
                 </tr>
-
+                <!-- ko if: vmaActiveTickets().length > 0-->
                 <!-- ko foreach: vmaActiveTickets -->
                 <tr>
                     <td class="text-center">
@@ -170,12 +170,12 @@
                         </div>
 
                         <div class="media-body">
-                            <a href="#" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
+                            <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
                             <div class="text-muted text-size-small"><span class="status-mark border-blue position-left"></span> <span data-bind="text: sTicketStatusName"></span></div>
                         </div>
                     </td>
                     <td>
-                        <a href="#" class="text-default display-inline-block">
+                        <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="text-default display-inline-block">
                             <span class="text-semibold" data-bind="html: sTicketName"></span>
                             <span class="display-block text-muted" data-bind="text: sLastTicketChatMessage"></span>
                         </a>
@@ -188,18 +188,27 @@
                                     <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> Quick Reply</a></li>
                                     @*<li class="divider"></li>*@
                                     @*<li><a href="#"><i class="icon-cross2 text-danger"></i> Reject ticket</a></li>
-                                    <li><a href="#"><i class="icon-checkmark3 text-success"></i> Close ticket</a></li>*@
+                                        <li><a href="#"><i class="icon-checkmark3 text-success"></i> Close ticket</a></li>*@
                                 </ul>
                             </li>
                         </ul>
                     </td>
                 </tr>
                 <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: vmaActiveTickets().length > 0-->
+                <tr>
+                    <td colspan="4" class="text-warning">
+                        No active tickets found.
+                    </td>
+                </tr>
+                <!-- /ko -->​
 
                 <tr class="active border-double">
                     <td colspan="4">Closed tickets</td>
                 </tr>
 
+                <!-- ko if: vmaClosedTickets().length > 0-->
                 <!-- ko foreach: vmaClosedTickets -->
                 <tr>
                     <td class="text-center">
@@ -207,18 +216,18 @@
                     </td>
                     <td>
                         <div class="media-left media-middle">
-                            <a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
+                            <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
                                 <span class="letter-icon" data-bind="text: sParticipantFirstChar"></span>
                             </a>
                         </div>
 
                         <div class="media-body">
-                            <a href="#" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
+                            <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
                             <div class="text-muted text-size-small"><span class="status-mark border-blue position-left"></span> <span data-bind="text: sTicketStatusName"></span></div>
                         </div>
                     </td>
                     <td>
-                        <a href="#" class="text-default display-inline-block">
+                        <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="text-default display-inline-block">
                             <span class="text-semibold" data-bind="html: sTicketName"></span>
                             <span class="display-block text-muted" data-bind="text: sLastTicketChatMessage"></span>
                         </a>
@@ -237,13 +246,20 @@
                     </td>
                 </tr>
                 <!-- /ko -->
-
+                <!-- /ko -->​
+                <!-- ko ifnot: vmaClosedTickets().length > 0-->
+                <tr>
+                    <td colspan="4" class="text-warning">
+                        No closed tickets found.
+                    </td>
+                </tr>
+                <!-- /ko -->​
 
 
                 <tr class="active border-double">
                     <td colspan="4">Rejected tickets</td>
                 </tr>
-
+                <!-- ko if: vmaRejectedTickets().length > 0-->
                 <!-- ko foreach: vmaRejectedTickets -->
                 <tr>
                     <td class="text-center">
@@ -251,18 +267,18 @@
                     </td>
                     <td>
                         <div class="media-left media-middle">
-                            <a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
+                            <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
                                 <span class="letter-icon" data-bind="text: sParticipantFirstChar"></span>
                             </a>
                         </div>
 
                         <div class="media-body">
-                            <a href="#" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
+                            <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="display-inline-block text-default text-semibold letter-icon-title"><span data-bind="text: sMobileParticipantName"></span></a>
                             <div class="text-muted text-size-small"><span class="status-mark border-blue position-left"></span> <span data-bind="text: sTicketStatusName"></span></div>
                         </div>
                     </td>
                     <td>
-                        <a href="#" class="text-default display-inline-block">
+                        <a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }" class="text-default display-inline-block">
                             <span class="text-semibold" data-bind="html: sTicketName"></span>
                             <span class="display-block text-muted" data-bind="text: sLastTicketChatMessage"></span>
                         </a>
@@ -281,6 +297,14 @@
                     </td>
                 </tr>
                 <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: vmaRejectedTickets().length > 0-->
+                <tr>
+                    <td colspan="4" class="text-warning">
+                        No rejected tickets found.
+                    </td>
+                </tr>
+                <!-- /ko -->​
             </tbody>
 
         </table>
@@ -313,8 +337,12 @@
                     var current = moment();
 
                     response.lstOpenTickets.forEach(function (arrItem) {
-                        var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
-                        var oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+
+                        var oarrResponse = { Value: "--", Text: "--" };
+                        if (arrItem.LastTicketChatCreatedDate != null) {
+                            var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
+                            oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+                        }
 
                         var ParticipantFirstName = arrItem.MobileParticipantName == null ? "---" : arrItem.MobileParticipantName;
                         var oItem = {
@@ -335,16 +363,20 @@
 
                     ViewModel.vmaClosedTickets.removeAll();
                     response.lstClosedTickets.forEach(function (arrItem) {
-                        var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
-                        var oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+                        var oarrResponse = { Value: "--", Text: "--" };
+                        if (arrItem.LastTicketChatCreatedDate != null) {
+                            var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
+                            oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+                        }
+                        var ParticipantFirstName = arrItem.MobileParticipantName == null ? "---" : arrItem.MobileParticipantName;
 
                         var oItem = {
                             nTicketID: arrItem.ID,
-                            sParticipantFirstChar: arrItem.MobileParticipantName.charAt(0),
+                            sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
                             sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
                             sTicketCode: arrItem.TICKET_CODE,
-                            sTicketName: '[' + arrItem.TICKET_CODE + '] ' + arrItem.TICKET_NAME,
+                            sTicketName: '[<span class="text-info">' + arrItem.TICKET_CODE + '</span>] ' + arrItem.TICKET_NAME,
                             sTicketStatusName: arrItem.TICKET_STATUS_NAME,
                             LastTicketChatCreatedDate: moment(arrItem.LastTicketChatCreatedDate).format("DD/MM/YYYY HH:mm A"),
                             nTicketChatTimeValue: oarrResponse.Value,
@@ -357,15 +389,20 @@
 
                     ViewModel.vmaRejectedTickets.removeAll();
                     response.lstRejectedTickets.forEach(function (arrItem) {
-                        var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
-                        var oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+                        var oarrResponse = { Value: "--", Text: "--" };
+                        if (arrItem.LastTicketChatCreatedDate != null) {
+                            var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
+                            oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
+                        }
+                        var ParticipantFirstName = arrItem.MobileParticipantName == null ? "---" : arrItem.MobileParticipantName;
+
                         var oItem = {
                             nTicketID: arrItem.ID,
-                            sParticipantFirstChar: arrItem.MobileParticipantName.charAt(0),
+                            sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
                             sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
                             sTicketCode: arrItem.TICKET_CODE,
-                            sTicketName: '[' + arrItem.TICKET_CODE + '] ' + arrItem.TICKET_NAME,
+                            sTicketName: '[<span class="text-info">' + arrItem.TICKET_CODE + '</span>] ' + arrItem.TICKET_NAME,
                             sTicketStatusName: arrItem.TICKET_STATUS_NAME,
                             LastTicketChatCreatedDate: moment(arrItem.LastTicketChatCreatedDate).format("DD/MM/YYYY HH:mm A"),
                             nTicketChatTimeValue: oarrResponse.Value,

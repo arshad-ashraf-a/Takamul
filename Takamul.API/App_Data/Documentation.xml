@@ -525,7 +525,7 @@
             <summary>
             Get user detailed infomations
             </summary>
-            <param name="nMob"></param>
+            <param name="nPhoneNumber"></param>
             <returns></returns>
         </member>
         <member name="T:Takamul.API.Controllers.CommonServiceController">

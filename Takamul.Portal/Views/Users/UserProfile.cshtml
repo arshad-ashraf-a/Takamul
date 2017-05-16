@@ -42,7 +42,11 @@
                             </li>
                             <li>
                                 <a href="#messages" data-toggle="tab">
-                                    Block
+                                    Blocked
+                                    @if ((bool)Model.IS_BLOCKED)
+                                    {
+                                        <span onclick="alert(1);" class="text-primary underlined clickable text-italic">[View Reason]</span>
+                                    }
                                     @if ((bool)Model.IS_BLOCKED)
                                     {
                                         <i class='icon-checkmark-circle text-success position-left'></i>
@@ -52,6 +56,7 @@
                                         <i class='icon-cancel-circle2 text-warning position-left'></i>
                                     }
                                 </a>
+
                             </li>
                             @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
                             {
@@ -69,8 +74,10 @@
                                     </a>
                                 </li>
                             }
-                            @*<li class="navigation-divider"></li>*@
-                            @*<li class="text-center"><button class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button></li>*@
+                            <li class="navigation-divider"></li>
+                            <li class="text-center">
+                                <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -451,7 +458,7 @@
         }
 
         function fnUpdateProfileInformation(){
-            debugger;
+
             $('#frmProfileInformation').removeClass('hide');
             if (!$('#frmProfileInformation').valid()) {
                 return false;
@@ -532,6 +539,74 @@
             })
         }
 
+        function fnLoadChangeUserStatus() {
+            var bIsOTPValidated = @Model.IS_OTP_VALIDATED.ToString().ToLower();
+            var bIsActive = @Model.IS_ACTIVE.ToString().ToLower() == true ? true :false;
+            var bIsBlocked = @Model.IS_BLOCKED.ToString().ToLower() == true ? true :false;
+            if (bIsOTPValidated!= null) { //Mobile user
+                
+            }
+            //bIsOTPValidated = @Model.IS_OTP_VALIDATED.ToString().ToLower() == true ? true :false;
+
+            var dataToSend = JSON.stringify({
+                ID: @Model.ID,
+                IS_ACTIVE: bIsActive,
+                IS_BLOCKED:bIsBlocked,
+                IS_OTP_VALIDATED: bIsOTPValidated,
+                UserType: Number(@Model.USER_TYPE_ID),
+                BLOCKED_REMARKS: '@Model.BLOCKED_REMARKS'
+            });
+
+
+
+            debugger;
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Update User Status',
+                autoOpen: true,
+                position: { my: "center", at: "top-50" },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+
+                    $.ajax({
+                        url: '@Url.Action("PartialChangeUserStatus", "Users")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Update",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             //Update Ticket
+                             debugger;
+
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+
+        }
+
+
         //Entry Point
         $(document).ready(function () {
             fnProfileInformationValidateInitialization();
@@ -544,7 +619,7 @@
 
             var promiseDeclarationBind =  fnFillAreas();
             promiseDeclarationBind.done(function (bIsDataBinded) {
-                debugger;
+
                 if (sAreaID != "-99") {
                     $("#ddlAreaddlID").select2('val', String(sAreaID));
                 }
@@ -553,7 +628,7 @@
             if (sWilayatID != "-99") {
                 $("#ddlWilayatddlID").select2('val', String(sWilayatID));
             }
-            debugger;
+
             if (sVillageID != "-99") {
                 //$("#ddlVillageID").select2('val', String(sVillageID));
                 $("#ddlVillageID").val(String(sVillageID)).trigger('change.select2');

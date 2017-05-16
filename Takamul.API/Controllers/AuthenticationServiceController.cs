@@ -214,14 +214,14 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get user detailed infomations
         /// </summary>
-        /// <param name="nMob"></param>
+        /// <param name="nPhoneNumber"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetOTPForAppReinstall(string nMob)
+        public HttpResponseMessage GetOTPForAppReinstall(string nPhoneNumber)
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
-            Response oResponse = this.oIAuthenticationService.oOTPforAppReinstall(nMob, nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oOTPforAppReinstall(nPhoneNumber, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {

@@ -79,6 +79,10 @@ namespace Infrastructure.Core
     public enum enumUserType
     {
         /// <summary>
+        /// Undefined 
+        /// </summary>
+        Undefined = -99,
+        /// <summary>
         /// Admin 
         /// </summary>
         Admin = 1,
