@@ -97,17 +97,23 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetMemberInfo(int nApplicationID)
         {
             TakamulMembeInfo oTakamulMembeInfo = null;
-            MemberInfoViewModel oNewsViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID);
-            if (oNewsViewModel != null)
+            List<TakamulMembeInfo> lstTakamulMembeInfo = null;
+            List<MemberInfoViewModel> lstMemberInfoViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID);
+            if (lstMemberInfoViewModel.Count > 0)
             {
-                oTakamulMembeInfo = new TakamulMembeInfo()
+                lstTakamulMembeInfo = new List<TakamulMembeInfo>();
+                foreach (var oMemberInfoViewModel in lstMemberInfoViewModel)
                 {
-                    ApplicationID = oNewsViewModel.APPLICATION_ID,
-                    MemberInfoTitle = oNewsViewModel.MEMBER_INFO_TITLE,
-                    MemberInfoDesc = oNewsViewModel.MEMBER_INFO_DESCRIPTION
-                };
+                    oTakamulMembeInfo = new TakamulMembeInfo()
+                    {
+                        ApplicationID = oMemberInfoViewModel.APPLICATION_ID,
+                        MemberInfoTitle = oMemberInfoViewModel.MEMBER_INFO_TITLE,
+                        MemberInfoDesc = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION
+                    };
+                    lstTakamulMembeInfo.Add(oTakamulMembeInfo);
+                }
             }
-            return Request.CreateResponse(HttpStatusCode.OK, oTakamulMembeInfo);
+            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulMembeInfo);
         }
         #endregion
 
@@ -118,8 +124,7 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
-
-        [Route("CommonService/GetAllAreas")]
+        
         [HttpGet]
         public HttpResponseMessage GetAllArea()
         {
@@ -152,7 +157,6 @@ namespace Takamul.API.Controllers
         /// <param name="sAreaCode"></param>
         /// <returns></returns>
         /// 
-        [Route("CommonService/GetAllWilayats")]
         [HttpGet]
         public HttpResponseMessage GetAllWilayats(string sAreaCode)
         {
@@ -178,10 +182,9 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get village detailed infomations
         /// </summary>
-        /// <param name="sWilaaytCode"></param>
+        /// <param name="sAreaCode"></param>
+        /// <param name="sWilayatCode"></param>
         /// <returns></returns>
-        /// 
-        [Route("CommonService/GetAllVillages")]
         [HttpGet]
         public HttpResponseMessage GetAllVillages(string sAreaCode,string sWilayatCode)
         {

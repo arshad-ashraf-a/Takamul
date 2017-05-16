@@ -42,27 +42,22 @@ namespace Takamul.Services
 
         #region :: Methods ::
 
-        #region Method :: MemberInfoViewModel :: oGetMemberInfo
+        #region Method :: List<MemberInfoViewModel> :: oGetMemberInfo
         /// <summary>
         /// Get member info
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns>List of News</returns>
-        public MemberInfoViewModel oGetMemberInfo(int nApplicationID)
+        public List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID)
         {
-            MemberInfoViewModel oNewsViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
-            List<MemberInfoViewModel> lstMemberInfo = this.ExecuteStoredProcedureList<MemberInfoViewModel>("GetAllActiveNews", arrParameters.ToArray());
-            if (lstMemberInfo.Count > 0)
-            {
-                return lstMemberInfo[0];
-            }
-            return oNewsViewModel;
+            List<MemberInfoViewModel> lstMemberInfo = this.ExecuteStoredProcedureList<MemberInfoViewModel>("GetMemberInfo", arrParameters.ToArray());
+            return lstMemberInfo;
             #endregion
         }
         #endregion 

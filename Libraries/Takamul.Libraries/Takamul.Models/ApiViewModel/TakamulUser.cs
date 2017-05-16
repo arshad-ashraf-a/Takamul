@@ -35,13 +35,13 @@ namespace Takamul.Models.ApiViewModel
         public int AreaID { get; set; }
         public int WilayatID { get; set; }
         public int VillageID { get; set; }
-        public bool IsUserBlocked { get; set; }
+        public bool? IsUserBlocked { get; set; }
         public string BlockedRemarks { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsOTPVerified { get; set; }
-        public bool IsSmsSent { get; set; }
-        public bool IsTicketSubmissionRestricted { get; set; }
-        public int TicketSubmissionIntervalDays { get; set; }
+        public bool? IsActive { get; set; }
+        public bool? IsOTPVerified { get; set; }
+        public bool? IsSmsSent { get; set; }
+        public bool? IsTicketSubmissionRestricted { get; set; }
+        public int? TicketSubmissionIntervalDays { get; set; }
         public string LastTicketSubmissionDate { get; set; }
 
         #region :: Constructor ::

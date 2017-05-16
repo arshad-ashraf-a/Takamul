@@ -19,6 +19,7 @@ namespace Takamul.Models.ViewModel
     {
         public int ID { get; set; }
         public int TICKET_ID { get; set; }
+        public int APPLICATION_ID { get; set; }
         public string REPLY_MESSAGE { get; set; }
         public DateTime REPLIED_DATE { get; set; }
         public string REPLY_FILE_PATH { get; set; }
@@ -32,6 +33,7 @@ namespace Takamul.Models.ViewModel
         {
             this.ID = -99;
             this.TICKET_ID = -99;
+            this.APPLICATION_ID = -99;
             this.TICKET_PARTICIPANT_ID = -99;
             this.REPLY_MESSAGE = string.Empty;
             this.REPLIED_DATE = DateTime.MinValue;

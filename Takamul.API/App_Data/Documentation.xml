@@ -559,9 +559,9 @@
             <summary>
             Get village detailed infomations
             </summary>
-            <param name="sWilaaytCode"></param>
+            <param name="sAreaCode"></param>
+            <param name="sWilayatCode"></param>
             <returns></returns>
-            
         </member>
         <member name="T:Takamul.API.Controllers.EventServiceController">
             <summary>

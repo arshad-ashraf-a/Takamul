@@ -8,6 +8,7 @@
 /* Description          : Manage Events operations                                                 */
 /*************************************************************************************************/
 
+using Infrastructure.Core;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,9 @@ namespace Takamul.API.Controllers
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
                         EVENTNAME = Events.EVENT_NAME,
                         EVENTDATE = Events.EVENT_DATE,
-                        BASE64EVENTIMG = Events.BASE64EVENTIMG
+                        Latitude =  Events.EVENT_LATITUDE,
+                        Longitude = Events.EVENT_LONGITUDE,
+                        BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
@@ -99,7 +102,9 @@ namespace Takamul.API.Controllers
                     EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
                     EVENTNAME = oEventsViewModel.EVENT_NAME,
                     EVENTDATE = oEventsViewModel.EVENT_DATE,
-                    BASE64EVENTIMG = oEventsViewModel.BASE64EVENTIMG
+                     Latitude = oEventsViewModel.EVENT_LATITUDE,
+                     Longitude = oEventsViewModel.EVENT_LONGITUDE,
+                     BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
@@ -130,7 +135,9 @@ namespace Takamul.API.Controllers
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
                         EVENTNAME = Events.EVENT_NAME,
                         EVENTDATE = Events.EVENT_DATE,
-                        BASE64EVENTIMG = Events.BASE64EVENTIMG
+                        Latitude = Events.EVENT_LATITUDE,
+                        Longitude = Events.EVENT_LONGITUDE,
+                        BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }

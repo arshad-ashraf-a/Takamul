@@ -23,6 +23,8 @@ namespace Takamul.Models.ApiViewModel
         public string EVENTDESCRIPTION { get; set; }
         public string BASE64EVENTIMG { get; set; }
         public DateTime EVENTDATE { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
         #region :: Constructor ::
         public TakamulEvents()
@@ -31,7 +33,10 @@ namespace Takamul.Models.ApiViewModel
             this.APPLICATIONID = -99;
             this.EVENTNAME = string.Empty;
             this.EVENTDESCRIPTION = string.Empty;
-
+            this.BASE64EVENTIMG = string.Empty;
+            this.EVENTDATE = DateTime.MinValue;
+            this.Latitude = "-99";
+            this.Longitude = "-99";
         } 
         #endregion
     }

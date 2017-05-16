@@ -129,10 +129,15 @@ namespace Takamul.Services
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusId", SqlDbType.Int, -99, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCode", SqlDbType.VarChar, string.Empty, 10, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.VarChar, string.Empty, 300, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, 1, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, 1, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
-            List<TicketViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketViewModel>("GetAllActiveTickets", arrParameters.ToArray());
+            List<TicketViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketViewModel>("GetAllTickets", arrParameters.ToArray());
             if (lstTickets.Count > 0)
             {
                 return lstTickets[0];

@@ -316,9 +316,10 @@
                         var ticketChatCreatedDate = moment(arrItem.LastTicketChatCreatedDate);
                         var oarrResponse = fnTimeDifference(current, ticketChatCreatedDate)
 
+                        var ParticipantFirstName = arrItem.MobileParticipantName == null ? "---" : arrItem.MobileParticipantName;
                         var oItem = {
                             nTicketID: arrItem.ID,
-                            sParticipantFirstChar: arrItem.MobileParticipantName.charAt(0),
+                            sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
                             sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
                             sTicketCode: arrItem.TICKET_CODE,
