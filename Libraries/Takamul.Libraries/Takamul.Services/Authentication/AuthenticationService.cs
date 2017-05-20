@@ -207,7 +207,7 @@ namespace Takamul.Services
             try
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Mobile", SqlDbType.NVarChar, nMob, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Mobile", SqlDbType.VarChar, nMob, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
