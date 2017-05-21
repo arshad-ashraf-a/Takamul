@@ -251,6 +251,7 @@
     <Content Include="DBScript\Takamul_script_13-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_14-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_15-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_AddNewProc_16-05-17.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc.sql" />
