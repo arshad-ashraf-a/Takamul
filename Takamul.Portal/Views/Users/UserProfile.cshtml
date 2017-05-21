@@ -1,4 +1,5 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Takamul.Portal.Resources.Controls.Buttons;
 @using Infrastructure.Utilities
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
@@ -45,7 +46,7 @@
                                     Blocked
                                     @if ((bool)Model.IS_BLOCKED)
                                     {
-                                        <span onclick="alert(1);" class="text-primary underlined clickable text-italic">[View Reason]</span>
+                                        <span onclick="ShowAlertDialog('@Model.BLOCKED_REMARKS', '@Buttons.Close');" class="text-primary underlined clickable text-italic">[View Reason]</span>
                                     }
                                     @if ((bool)Model.IS_BLOCKED)
                                     {
@@ -543,10 +544,6 @@
             var bIsOTPValidated = @Model.IS_OTP_VALIDATED.ToString().ToLower();
             var bIsActive = @Model.IS_ACTIVE.ToString().ToLower() == true ? true :false;
             var bIsBlocked = @Model.IS_BLOCKED.ToString().ToLower() == true ? true :false;
-            if (bIsOTPValidated!= null) { //Mobile user
-                
-            }
-            //bIsOTPValidated = @Model.IS_OTP_VALIDATED.ToString().ToLower() == true ? true :false;
 
             var dataToSend = JSON.stringify({
                 ID: @Model.ID,
@@ -557,9 +554,6 @@
                 BLOCKED_REMARKS: '@Model.BLOCKED_REMARKS'
             });
 
-
-
-            debugger;
 
             $("#dvPopUpWindow").dialog({
                 title: 'Update User Status',
@@ -589,8 +583,8 @@
                          text: "Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
-                             //Update Ticket
-                             debugger;
+                             //Update user status
+                             fnUpdateUserStatus();
 
                          }
                      },
@@ -606,6 +600,28 @@
 
         }
 
+        function fnUpdateUserStatus(){
+            var formData = $("#frmUpdateUserStatus").serialize();
+            $.ajax({
+                url: '@Url.Action("JUpdateUserStatus", "Users")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                        $("#dvPopUpWindow").dialog("close");
+                        window.location.reload();
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+                    $(this).dialog("close");
+                }
+            })
+        }
 
         //Entry Point
         $(document).ready(function () {

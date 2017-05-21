@@ -1,52 +1,56 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmUpdateUserStatus", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    <div class="row">
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @* Is Active*@
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        @Html.CheckBox("IS_ACTIVE", (bool)Model.IS_ACTIVE, new { @class = "styled" }) Is Active
+                                    </div>
 
-<div class="row">
-    <div class="panel panel-white">
-        <div class="panel-body">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @* Is Active*@
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-lg-6">
-                                    @Html.CheckBox("IS_ACTIVE", (bool)Model.IS_ACTIVE, new { @class = "styled" }) Is Active
-                                </div>
-                             
-                            </div>
-                        </div>
-                        @* Is Blocked*@
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-lg-8">
-                                    @Html.CheckBox("IS_BLOCKED", (bool)Model.IS_BLOCKED, new { @class = "styled", onchange = "fnBlockedStatusOnChange();" }) Is Blocked
                                 </div>
                             </div>
-                        </div>
-                        @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
-                        {
-                            @* Is OTP Verified*@
+                            @* Is Blocked*@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-lg-8">
-                                        @Html.CheckBox("IS_OTP_VALIDATED", (bool)Model.IS_OTP_VALIDATED, new { @class = "styled" })Is OPT Verified
+                                        @Html.CheckBox("IS_BLOCKED", (bool)Model.IS_BLOCKED, new { @class = "styled", onchange = "fnBlockedStatusOnChange();" }) Is Blocked
                                     </div>
                                 </div>
                             </div>
+                            @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
+                        {
+                        @* Is OTP Verified*@
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-lg-8">
+                                    @Html.CheckBox("IS_OTP_VALIDATED", (bool)Model.IS_OTP_VALIDATED, new { @class = "styled" })Is OPT Verified
+                                </div>
+                            </div>
+                        </div>
                         }
-                    </div>
+                        </div>
 
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div class="form-group" id="dvBlockedReason" style="display:none;">
-                            <div class="col-md-12">
-                                @* Blocked Reason*@
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Blocked Reason</label>
-                                    <div class="col-lg-10">
-                                        <textarea id="txtBlockedReason" class="form-control" placeholder="enter blocked reason&hellip;&hellip;"
-                                                  cols="5" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="form-group" id="dvBlockedReason" style="display:none;">
+                                <div class="col-md-12">
+                                    @* Blocked Reason*@
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Blocked Reason</label>
+                                        <div class="col-lg-10">
+                                            <textarea id="txtBlockedReason" name="BLOCKED_REMARKS" value="@Model.BLOCKED_REMARKS" class="form-control" placeholder="enter blocked reason&hellip;&hellip;"
+                                                      cols="5" rows="5"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -56,8 +60,7 @@
             </div>
         </div>
     </div>
-</div>
-
+}
 <script type="text/javascript">
     $(".styled").uniform({
         radioClass: 'choice'
@@ -66,11 +69,22 @@
     function fnBlockedStatusOnChange() {
         var bIsChecked = ($("#IS_BLOCKED").is(':checked'));
         if (bIsChecked) {
-            $("#txtBlockedReason").val("");
             $("#dvBlockedReason").show();
         }
         else {
             $("#dvBlockedReason").hide();
         }
     }
+
+    //Entry Point
+    $(document).ready(function () {
+        debugger;
+        if (@Model.IS_BLOCKED.ToString().ToLower() == true) {
+            $("#dvBlockedReason").show();
+            $("#txtBlockedReason").val('@Model.BLOCKED_REMARKS');
+        }
+        else{
+            $("#dvBlockedReason").hide();
+        }
+    });
 </script>

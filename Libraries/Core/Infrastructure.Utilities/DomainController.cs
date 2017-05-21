@@ -1,20 +1,34 @@
-﻿using System.Web;
+﻿using Infrastructure.Core;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
 namespace Infrastructure.Utilities
 {
-    public class DomainController : Controller
+    public class DomainController : BaseController
     {
-        private void vBuildMainMenu()
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            int nCurrentAppID = -99;
+            if (BaseController.CurrentUser != null)
+            {
 
+                if (BaseController.CurrentUser.UserType == enumUserType.Admin)
+                {
+                    nCurrentAppID = this.CurrentApplicationID;
+                }
+                else
+                {
+                    this.CurrentApplicationID = BaseController.CurrentUser.CurrentApplicationID;
+                    nCurrentAppID = BaseController.CurrentUser.CurrentApplicationID;
+                }
+            }
+            if (nCurrentAppID == -99)
+            {
+                filterContext.Result = RedirectToAction("Login", "Account", new { area = "" });
+            }
         }
-        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-
-        //}
 
         //protected override void OnActionExecuting(ActionExecutingContext filterContext)
         //{

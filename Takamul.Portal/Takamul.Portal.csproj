@@ -858,6 +858,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessDeniedController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplicationDashboardController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -949,7 +950,7 @@
     <Content Include="Views\Events\EditEvent.cshtml" />
     <Content Include="Views\News\NewsList.cshtml" />
     <Content Include="Views\News\EditNews.cshtml" />
-    <Content Include="Views\Applications\AppDashboard.cshtml" />
+    <Content Include="Views\ApplicationDashboard\AppDashboard.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicket.cshtml" />
     <Content Include="Views\Users\_AddApplicationUser.cshtml" />
     <Content Include="Views\Users\_ChangeUserStatus.cshtml" />

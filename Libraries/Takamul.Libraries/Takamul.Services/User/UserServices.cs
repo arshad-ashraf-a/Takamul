@@ -236,6 +236,51 @@ namespace Takamul.Services
 
         #endregion
 
+        #region Method :: Response :: oUpdateUserStatus
+        /// <summary>
+        /// Update user status
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="bIsActive"></param>
+        /// <param name="bIsBlocked"></param>
+        /// <param name="bIsOTPVerified"></param>
+        /// <param name="sBlockedReason"></param>
+        /// <param name="nModifiedBy"></param>
+        /// <returns></returns>
+        public Response oUpdateUserStatus(int nUserID, bool bIsActive, bool bIsBlocked, bool bIsOTPVerified, string sBlockedReason, int nModifiedBy)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsActive", SqlDbType.Bit, bIsActive, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsBlocked", SqlDbType.Bit, bIsBlocked, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsOTPVerified", SqlDbType.Bit, bIsOTPVerified, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_BlockedReason", SqlDbType.VarChar, sBlockedReason, 1000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ModifiedBy", SqlDbType.Int, nModifiedBy, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("UpdateUserStatus", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[6].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+
+        #endregion
+
         #endregion
     }
 }

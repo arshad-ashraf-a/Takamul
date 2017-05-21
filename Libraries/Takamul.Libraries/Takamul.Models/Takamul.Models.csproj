@@ -100,6 +100,9 @@
     <Compile Include="TICKETS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="USER_TYPES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Compile Include="ViewModel\AreaInfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />

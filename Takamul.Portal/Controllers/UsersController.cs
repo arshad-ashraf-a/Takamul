@@ -12,7 +12,7 @@ using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
 {
-    public class UsersController : BaseController
+    public class UsersController : DomainController
     {
         #region ::  State ::
         #region Private Members
@@ -54,15 +54,14 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region View :: PartialAddStaffUser
+        #region View :: PartialAddUser
         /// <summary>
-        /// Add Staff User
+        /// Add User
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult PartialAddStaffUser()
+        public PartialViewResult PartialAddUser()
         {
             UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
-            oUserInfoViewModel.USER_TYPE_ID = (int)Infrastructure.Core.enumUserType.Staff;
             return PartialView("_AddApplicationUser", oUserInfoViewModel);
         }
         #endregion
@@ -191,10 +190,53 @@ namespace LDC.eServices.Portal.Controllers
             Response oResponseResult = null;
 
             oUserInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            oUserInfoViewModel.PASSWORD = CommonHelper.sGetConfigKeyValue(ConstantNames.DefaultUserAccountPassword);
+            enumUserType oUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUserInfoViewModel.USER_TYPE_ID.ToString());
+            if (oUserType == enumUserType.Staff)
+            {
+                oUserInfoViewModel.PASSWORD = CommonHelper.sGetConfigKeyValue(ConstantNames.DefaultUserAccountPassword);
+            }
             oUserInfoViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
 
             oResponseResult = this.oIUserServicesService.oInsertUser(oUserInfoViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Update user status
+        /// <summary>
+        ///  Update user status
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="bIsActive"></param>
+        /// <param name="bIsBlocked"></param>
+        /// <param name="bIsOTPVerified"></param>
+        /// <param name="sBlockedRemarks"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JUpdateUserStatus(UserInfoViewModel oUserInfoViewModel)
+        {
+            Response oResponseResult = null;
+
+            int nModifiedBy = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oIUserServicesService.oUpdateUserStatus(oUserInfoViewModel.ID, (bool)oUserInfoViewModel.IS_ACTIVE, (bool)oUserInfoViewModel.IS_BLOCKED, (bool)oUserInfoViewModel.IS_OTP_VALIDATED, oUserInfoViewModel.BLOCKED_REMARKS, nModifiedBy);
             this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)

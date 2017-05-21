@@ -11,7 +11,7 @@ using System.Web;
 
 namespace Infrastructure.Utilities
 {
-    public class BaseController : DomainController
+    public class BaseController : Controller
     {
         #region Properties
 

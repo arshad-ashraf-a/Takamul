@@ -14,7 +14,7 @@ using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
 {
-    public class EventsController : BaseController
+    public class EventsController : DomainController
     {
         #region ::  State ::
         #region Private Members

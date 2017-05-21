@@ -209,6 +209,7 @@
         }
 
         function fnGoToApplicationDetais(nApplicationID) {
+            debugger;
             var vApplicationID = -99;
             if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
                 vApplicationID = nApplicationID;
@@ -225,7 +226,7 @@
                 async: true,
                 success: function (result, response) {
                     if (result.nResult == 1) {
-                        url = '@Url.Action("AppDashboard", "Applications")';
+                        url = '@Url.Action("AppDashboard", "ApplicationDashboard")';
                         window.location.href = url;
 
                     }

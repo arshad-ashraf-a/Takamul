@@ -168,7 +168,7 @@
                     </div>
                     <div class="breadcrumb-line no-padding">
                         <div class="text-center p-5">
-                            <a href="@Url.Action("AppDashboard", "Applications")" class="btn btn-info btn-float btn-float-md ml-20 @Url.sMakeMenuActive("AppDashboard", "Applications", "")">
+                            <a href="@Url.Action("AppDashboard", "ApplicationDashboard")" class="btn btn-info btn-float btn-float-md ml-20 @Url.sMakeMenuActive("AppDashboard", "ApplicationDashboard", "")">
                                 <i class="icon-home4"></i>
                                 <span>App DashBoard</span>
                             </a>
@@ -285,7 +285,7 @@
                 async: true,
                 success: function (result, response) {
                     if (result.nResult == 1) {
-                        url = '@Url.Action("AppDashboard", "Applications")';
+                        url = '@Url.Action("AppDashboard", "ApplicationDashboard")';
                         window.location.href = url;
 
                     }

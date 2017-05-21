@@ -59,5 +59,19 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oUpdateUserPassowrd(int nUserID, string sPassword, int nModifiedBy);
         #endregion
+
+        #region Method :: Response :: oUpdateUserStatus
+        /// <summary>
+        /// Update user status
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="bIsActive"></param>
+        /// <param name="bIsBlocked"></param>
+        /// <param name="bIsOTPVerified"></param>
+        /// <param name="sBlockedReason"></param>
+        /// <param name="nModifiedBy"></param>
+        /// <returns></returns>
+        Response oUpdateUserStatus(int nUserID, bool bIsActive, bool bIsBlocked, bool bIsOTPVerified, string sBlockedReason, int nModifiedBy);
+        #endregion
     }
 }

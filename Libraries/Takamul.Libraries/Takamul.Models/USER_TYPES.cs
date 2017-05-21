@@ -12,17 +12,9 @@ namespace Takamul.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MEMBER_INFO
+    public partial class USER_TYPES
     {
         public int ID { get; set; }
-        public Nullable<int> APPLICATION_ID { get; set; }
-        public string MEMBER_INFO_TITLE { get; set; }
-        public string MEMBER_INFO_DESCRIPTION { get; set; }
-        public Nullable<int> CREATED_BY { get; set; }
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-        public Nullable<int> MODIFIED_BY { get; set; }
-        public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
-    
-        public virtual APPLICATIONS APPLICATIONS { get; set; }
+        public string TYPE { get; set; }
     }
 }

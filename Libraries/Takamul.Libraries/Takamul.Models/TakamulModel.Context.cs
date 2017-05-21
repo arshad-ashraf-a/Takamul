@@ -28,7 +28,8 @@ namespace Takamul.Models
         public virtual DbSet<APPLICATIONS> APPLICATIONS { get; set; }
         public virtual DbSet<EVENTS> EVENTS { get; set; }
         public virtual DbSet<TICKETS> TICKETS { get; set; }
-        public virtual DbSet<MEMBER_INFO> MEMBER_INFO { get; set; }
         public virtual DbSet<NEWS> NEWS { get; set; }
+        public virtual DbSet<USER_TYPES> USER_TYPES { get; set; }
+        public virtual DbSet<MEMBER_INFO> MEMBER_INFO { get; set; }
     }
 }

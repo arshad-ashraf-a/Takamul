@@ -37,32 +37,29 @@ namespace LDC.eServices.Portal.Controllers
         {
             if (BaseController.CurrentUser.UserType == enumUserType.Admin)
             {
-
                 this.PageTitle = "Applications List";
                 this.TitleHead = "Applications List";
 
                 return View();
-            }else
+            }
+            else
             {
                 return RedirectToAction("Index", "AccessDenied");
             }
         }
         #endregion
 
-        #region View :: AppDashboard
-        public ActionResult AppDashboard()
-        {
-            this.TitleHead = "Application DashBoard";
-            if (BaseController.CurrentUser.CurrentApplicationID == -99)
-            {
-              return  RedirectToAction("Login", "Account", new { area = "" });
-            }
-            this.CurrentApplicationID = BaseController.CurrentUser.CurrentApplicationID;
-            ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
-            this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
-            return View(oApplicationViewModel);
-        }
-        #endregion
+        //#region View :: AppDashboard
+        //public ActionResult AppDashboard()
+        //{
+        //    this.TitleHead = "Application DashBoard";
+           
+          
+        //    ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
+        //    this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
+        //    return View(oApplicationViewModel);
+        //}
+        //#endregion
 
         #endregion
 
@@ -77,9 +74,9 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public JsonResult JBindAllApplications(int nSearchByApplicationID,string sSearchByApplicationName,int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JBindAllApplications(int nSearchByApplicationID, string sSearchByApplicationName, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstApplications = this.oIApplicationService.IlGetAllApplications(nSearchByApplicationID, sSearchByApplicationName,nPage, nRows);
+            var lstApplications = this.oIApplicationService.IlGetAllApplications(nSearchByApplicationID, sSearchByApplicationName, nPage, nRows);
             return Json(lstApplications, JsonRequestBehavior.AllowGet);
         }
         #endregion

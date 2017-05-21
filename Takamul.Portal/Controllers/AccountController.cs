@@ -38,7 +38,7 @@ namespace LDC.eServices.Portal.Controllers
                     if (BaseController.CurrentUser.UserType == enumUserType.Admin)
                         return RedirectToAction("ApplicationsList", "Applications");
                     else
-                        return RedirectToAction("AppDashboard", "Applications");
+                        return RedirectToAction("AppDashboard", "ApplicationDashboard");
                 }
                
             }

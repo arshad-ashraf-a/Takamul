@@ -37,7 +37,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 pull-right">
-                                        <a title="Add new event" href="#" onclick="fnLoadPartialAddStaffUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Staff</a>
+                                        <a title="Add new user" href="#" onclick="fnLoadPartialAddUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New User</a>
                                     </div>
                                 </div>
 
@@ -63,7 +63,7 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
-
+        var enmUserType = { Staff: 3, MobileUser: 4 };
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
         function fnBindAllUsers() {
@@ -192,7 +192,7 @@
                              var htmlString = '';
                              var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
                              if (bIsOTPVerified != null) {
-                                
+
                                  if (bIsOTPVerified) {
                                      htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
                                  }
@@ -248,9 +248,9 @@
             window.location.href = link;
         }
 
-        function fnLoadPartialAddStaffUser() {
+        function fnLoadPartialAddUser() {
             $("#dvPopUpWindow").dialog({
-                title: 'Add Staff User',
+                title: 'Add User',
                 autoOpen: true,
                 position: { my: "center", at: "top-50", of: $(".fakeWidth") },
                 width: '50%',
@@ -259,7 +259,7 @@
                 open: function () {
                     $("#dvPopUpWindowContainer").html("");
                     $.ajax({
-                        url: '@Url.Action("PartialAddStaffUser", "Users")',
+                        url: '@Url.Action("PartialAddUser", "Users")',
                         type: 'POST',
                         contentType: 'application/json',
                         data: {},
@@ -278,7 +278,7 @@
                          text: "Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
-                             fnSaveStaffUser();
+                             fnSaveUser();
                          }
                      },
                      {
@@ -293,6 +293,7 @@
         }
 
         function fnAddUserValidateInitialization(sFormID) {
+            debugger;
             var validator = $('#' + sFormID).validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
@@ -302,13 +303,13 @@
                     FULL_NAME: {
                         required: true
                     },
-                    USER_NAME: {
+                    PHONE_NUMBER: {
                         required: true
                     }
                 },
                 messages: {
                     FULL_NAME: "This field is required.",
-                    USER_NAME: "This field is required."
+                    PHONE_NUMBER: "This field is required."
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -359,11 +360,19 @@
                 }
             });
         }
-
-        function fnSaveStaffUser() {
+        function fnSaveUser() {
             if (!$("#frmAddUserPartialPage").valid()) {
                 return false;
             }
+
+            var nUserType = Number($("#ddlUserTypeID").val());
+            if (nUserType == enmUserType.Staff) {
+                if ($("#txtUserNamePopUp").val() == "") {
+                    ShowStatusBarNotification("Please enter user name.", NotificationType.Warning);
+                    return false;
+                }
+            }
+
             var description;
             var bAdmRights;
             var rightparams;
