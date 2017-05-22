@@ -73,5 +73,14 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oUpdateUserStatus(int nUserID, bool bIsActive, bool bIsBlocked, bool bIsOTPVerified, string sBlockedReason, int nModifiedBy);
         #endregion
+
+        #region Method :: List<UserInfoViewModel> :: lGetAllMembers
+        /// <summary>
+        ///  Get list of member users
+        /// </summary>
+        /// <returns></returns>
+        List<UserInfoViewModel> lGetAllMembers(string sUserSeach, int nPageNumber, int nRowspPage);
+        #endregion
+
     }
 }

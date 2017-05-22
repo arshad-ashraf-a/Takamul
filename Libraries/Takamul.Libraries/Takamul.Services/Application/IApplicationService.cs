@@ -48,5 +48,15 @@ namespace Takamul.Services
         /// <returns></returns>
         ApplicationViewModel oGetApplicationStatistics(int nApplicationID);
         #endregion
+
+        #region Method :: Response :: oInsertApplication
+        /// <summary>
+        ///  Insert Application
+        /// </summary>
+        /// <param name="oApplicationViewModel"></param>
+        /// <returns></returns>
+        Response oInsertApplication(ApplicationViewModel oApplicationViewModel);
+        #endregion
+
     }
 }

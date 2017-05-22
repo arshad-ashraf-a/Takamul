@@ -22,8 +22,10 @@ namespace Takamul.Models.ViewModel
         public string APPLICATION_LOGO_PATH { get; set; }
         public string DEFAULT_THEME_COLOR { get; set; }
         public DateTime APPLICATION_EXPIRY_DATE { get; set; }
+        public string FORMATTED_EXPIRY_DATE { get; set; }
         public string APPLICATION_TOKEN { get; set; }
         public bool IS_ACTIVE { get; set; }
+        public int CREATED_BY { get; set; }
         public DateTime CREATED_DATE { get; set; }
         public int TotalCount { get; set; }
 
@@ -34,6 +36,7 @@ namespace Takamul.Models.ViewModel
         public int TotalTicketClosedCount { get; set; }
         public int TotalTicketChatCount { get; set; }
         public string MemberName { get; set; }
+        public int MemberUserID { get; set; }
 
         #region :: Constructor ::
         public ApplicationViewModel()
@@ -47,6 +50,8 @@ namespace Takamul.Models.ViewModel
             this.IS_ACTIVE = false;
             this.CREATED_DATE = DateTime.MinValue;
             this.TotalCount = 0;
+            this.CREATED_BY = -99;
+            this.FORMATTED_EXPIRY_DATE = string.Empty;
         } 
         #endregion
     }

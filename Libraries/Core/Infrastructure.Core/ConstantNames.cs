@@ -151,5 +151,18 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region TempUploadFolder
+        /// <summary>
+        ///Temporary Upload Folder
+        /// </summary>
+        public static string TempUploadFolder
+        {
+            get
+            {
+                return "TempUploadFolder";
+            }
+        }
+        #endregion
+
     }
 }

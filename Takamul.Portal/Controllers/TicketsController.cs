@@ -69,6 +69,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialAddTicket
+        /// <summary>
+        ///  Add ticket
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        public PartialViewResult PartialAddTicket(TicketViewModel oTicketViewModel)
+        {
+            return PartialView("_AddTicket", oTicketViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -317,9 +329,42 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region Method :: JsonResult :: Insert Ticket
+        /// <summary>
+        /// Insert Ticket
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JInserTicket(TicketViewModel oTicketViewModel)
+        {
+            Response oResponseResult = null;
+
+            oTicketViewModel.APPLICATION_ID = CurrentApplicationID;
+            oTicketViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oITicketServices.oInsertTicket(oTicketViewModel, oTicketViewModel.MobileParticipantId);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
-
-
+        #endregion
     }
 }

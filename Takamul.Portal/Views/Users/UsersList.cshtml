@@ -83,6 +83,7 @@
                     ID: 'ID',
                     UserFullName: 'FULL_NAME',
                     UserType: 'USER_TYPE_NAME',
+                    UserTypeId:'USER_TYPE_ID',
                     PhoneNumber: 'PHONE_NUMBER',
                     Email: 'EMAIL',
                     IsBlocked: 'IS_BLOCKED',
@@ -94,6 +95,7 @@
             var sCaption = 'All Users';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
+                '',//Hidden Columns Represent USER_TYPE_ID Int Value
                 'Full Name',
                 'User Type',
                 'Phone Number',
@@ -129,6 +131,10 @@
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                     {
+                         name: ConstantsNames.UserTypeId, editable: false,
+                         key: false, hidden: true
+                     },
                      {
                          name: ConstantsNames.UserFullName,
                          width: 100, editable: false,
@@ -190,14 +196,16 @@
                          align: EnumColumnsAlignment.Center,
                          formatter: function (cellvalue, options, rowObject) {
                              var htmlString = '';
-                             var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
-                             if (bIsOTPVerified != null) {
+                             if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
+                                 var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
+                                 if (bIsOTPVerified != null) {
 
-                                 if (bIsOTPVerified) {
-                                     htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
-                                 }
-                                 else {
-                                     htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                     if (bIsOTPVerified) {
+                                         htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
+                                     }
+                                     else {
+                                         htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                     }
                                  }
                              }
                              return htmlString;

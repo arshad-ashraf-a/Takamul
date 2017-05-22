@@ -33,6 +33,7 @@ namespace Takamul.Models.ViewModel
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
         public string MobileParticipantName { get; set; }
+        public int MobileParticipantId { get; set; }
         public int TotalCount { get; set; }
 
         public String LastTicketChatMessage { get; set; }

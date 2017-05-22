@@ -1,10 +1,14 @@
-﻿using Infrastructure.Core;
+﻿using Data.Core;
+using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
@@ -49,17 +53,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        //#region View :: AppDashboard
-        //public ActionResult AppDashboard()
-        //{
-        //    this.TitleHead = "Application DashBoard";
-           
-          
-        //    ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
-        //    this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
-        //    return View(oApplicationViewModel);
-        //}
-        //#endregion
+        #region View :: PartialAddApplication
+        /// <summary>
+        ///  Add application
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult PartialAddApplication()
+        {
+            ApplicationViewModel oApplicationViewModel = new ApplicationViewModel();
+            oApplicationViewModel.APPLICATION_EXPIRY_DATE = DateTime.Now;
+            return PartialView("_AddApplication", oApplicationViewModel);
+        }
+        #endregion
 
         #endregion
 
@@ -103,6 +108,133 @@ namespace LDC.eServices.Portal.Controllers
                 nResult = this.OperationResult,
                 sResultMessages = this.OperationResultMessages
             }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: Save Application Logo To Temp
+        /// <summary>
+        /// Save Application Logo To Temp
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JSaveApplicationLogoToTemp()
+        {
+            Response oResponseResult = new Response();
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            string sFullFilePath = string.Empty;
+
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var oFile = System.Web.HttpContext.Current.Request.Files["ApplicationLogoFile"];
+                HttpPostedFileBase filebase = new HttpPostedFileWrapper(oFile);
+
+                sRealFileName = filebase.FileName;
+                sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                FileAccessHandler oFileAccessHandler = new FileAccessHandler();
+
+                //DirectoryPath = TempUploadFolder from web.config 
+                string sDirectoryPath = string.Concat(CommonHelper.sGetConfigKeyValue(ConstantNames.TempUploadFolder));
+                sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                oFileAccessHandler.CreateDirectory(sDirectoryPath);
+                if (oFileAccessHandler.OperationResult == 1)
+                {
+                    oFileAccessHandler.WirteFile(sFullFilePath, filebase.InputStream);
+                    if (oFileAccessHandler.OperationResult == 1)
+                    {
+                        this.OperationResult = enumOperationResult.Success;
+                    }
+                    else
+                    {
+                        this.OperationResult = enumOperationResult.Faild;
+                    }
+                }
+                else
+                {
+                    this.OperationResult = enumOperationResult.Faild;
+                }
+            }
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
+                    break;
+                case enumOperationResult.AlreadyExistRecordFaild:
+                    this.OperationResultMessages = CommonResx.AlreadyExistRecordFaild;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages,
+                    sFileName = (this.OperationResult == enumOperationResult.Success) ? sModifiedFileName : string.Empty,
+                    sFullFilePath = (this.OperationResult == enumOperationResult.Success) ? sFullFilePath.Replace('\\', '/') : string.Empty
+                },
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Save Application
+        /// <summary>
+        /// Insert Application
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        //[ValidateAntiForgeryToken()]
+        public JsonResult JSaveApplication(ApplicationViewModel oApplicationViewModel)
+        {
+            Response oResponseResult = null;
+
+            var oFile = System.Web.HttpContext.Current.Request.Files["ApplicationLogoFile"];
+            HttpPostedFileBase filebase = new HttpPostedFileWrapper(oFile);
+
+            string sRealFileName = filebase.FileName;
+            string sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+
+            oApplicationViewModel.APPLICATION_EXPIRY_DATE = DateTime.ParseExact(oApplicationViewModel.FORMATTED_EXPIRY_DATE, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            oApplicationViewModel.APPLICATION_LOGO_PATH = sModifiedFileName;
+            oApplicationViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oIApplicationService.oInsertApplication(oApplicationViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    {
+                        this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                        //DirectoryPath = Saved Application ID
+                        string sDirectoryPath = oResponseResult.ResponseID;
+                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(filebase.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                        }
+                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                        this.OperationResult = enumOperationResult.Success;
+                    }
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
         }
         #endregion
 

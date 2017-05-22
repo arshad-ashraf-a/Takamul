@@ -68,6 +68,29 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<UserInfoViewModel> :: lGetAllMembers
+        /// <summary>
+        ///  Get list of member users
+        /// </summary>
+        /// <returns></returns>
+        public List<UserInfoViewModel> lGetAllMembers(string sUserSeach, int nPageNumber, int nRowspPage)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserSearch", SqlDbType.VarChar, sUserSeach, 100, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetAllMembers", arrParameters.ToArray());
+            return lstUsers;
+
+            #endregion
+
+        }
+        #endregion
+
         #region Method :: UserInfoViewModel :: oGetUserDetails
         /// <summary>
         ///  Get user details

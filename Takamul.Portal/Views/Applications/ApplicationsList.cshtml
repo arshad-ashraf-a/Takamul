@@ -4,7 +4,7 @@
 <div class="col-lg-12">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-horizontal" action="#">
+            <div class="form-horizontal" action="#" id="frmApplicationList">
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <fieldset>
@@ -67,11 +67,28 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="fakeWidth col-md-12"></div>
-        <div id="dvApplications">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title"> &nbsp;</h6>
+            <div class="heading-elements">
+                <div class="col-md-12">
+                    <div class="content-group-sm">
+                        <a title="Add new application" href="#" onclick="fnLoadPartialAddApplication();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Application</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="fakeWidth col-md-12"></div>
+                <div id="dvApplications">
+                </div>
+            </div>
         </div>
     </div>
+
+    
 </div>
 
 @section InlineScriptsRelated
@@ -242,8 +259,213 @@
 
         }
 
+        function fnLoadPartialAddApplication() {
+            $("#dvPopUpWindow").dialog({
+                title: 'Add Application',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $("#frmApplicationList") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAddApplication", "Applications")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            //fnAddTicketValidateInitialization("frmAddTicket");
+
+                            // Month and year menu
+                            $(".datepicker-menus").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                dateFormat: 'dd/mm/yy'
+                            });
+
+                            // Default file input style
+                            $(".file-styled").uniform({
+                                fileButtonClass: 'action btn btn-default'
+                            });
+
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+
+
+                },
+                buttons: [
+                     {
+                         text: "Save",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnSaveApplication();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnSaveApplication() {
+            var data = new FormData();
+            var files = $("#fuAddApplicationLogo").get(0).files;
+
+            if (files.length <= 0) {
+                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                return false;
+            }
+
+            var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+            var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
+            if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                return false;
+            }
+
+            var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
+            var bIsInValidExt = fnIsValidFileExtension(extension);
+            if (bIsInValidExt) {
+                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                return false;
+            }
+
+            var formData = $("#frmAddApplication").serializeArray();
+            data.append("ApplicationLogoFile", files[0]);
+            $.each(formData, function (key, input) {
+                    data.append(input.name, input.value);
+            });
+            debugger;
+            $.ajax({
+                url: '@Url.Action("JSaveApplication", "Applications")',
+                type: "POST",
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+                },
+                error: function (er) { }
+
+            });
+
+        }
+
+        function fnOnChangeApplicationLogoUploads() {
+            var data = new FormData();
+            var files = $("#fuAddApplicationLogo").get(0).files;
+
+            if (files.length <= 0) {
+                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                return false;
+            }
+
+            var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+            var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
+            if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                return false;
+            }
+
+            var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
+            var bIsInValidExt = fnIsValidFileExtension(extension);
+            if (bIsInValidExt) {
+                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                return false;
+            }
+
+            data.append("ApplicationLogoFile", files[0]);
+
+            $.ajax({
+                url: '@Url.Action("JSaveApplicationLogoToTemp", "Applications")',
+                type: "POST",
+                processData: false,
+                data: data,
+                dataType: 'json',
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            //ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+
+                    $("#fuPreliminaryFile").val('');
+                    $(".filename").text('')
+                },
+                error: function (er) { }
+
+            });
+            return false;
+        }
+
+        function fnIsValidFileExtension(sExtension) {
+            var bIsInValidExt = false;
+            if (sExtension != "PNG" && sExtension != "JPG" && sExtension != "JPEG") {
+                bIsInValidExt = true;
+            }
+            return bIsInValidExt;
+        }
+
+        function fnCheckFileSize(fileid) {
+            var fileSize = 0;
+            try {
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
+                fileSize = fileSize / 1024; //size in kb
+            }
+            catch (e) {
+                fileSize = 0;
+                console.log(ex);
+            }
+            return fileSize;
+        }
+
+        //Knockout ViewModel
+        $(document).ready(function () {
+            ViewModel = function () {
+                var self = this;
+                self.vmsApplicationLogoName = ko.observable('');
+                self.vmsApplicationLogoPath = ko.observable('');
+                return {
+                    vmsApplicationLogoName: vmsApplicationLogoName,
+                    vmsApplicationLogoPath: vmsApplicationLogoPath
+                };
+            }();
+        });
+        //EndKnockout ViewModel
+
         //Entry Point
         $(document).ready(function () {
+            ko.applyBindings(ViewModel);
             fnBindAllApplications();
         });
     </script>

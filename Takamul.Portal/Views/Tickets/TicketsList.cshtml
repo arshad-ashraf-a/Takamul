@@ -4,25 +4,23 @@
 }
 
 <div class="col-lg-12">
+
     <div class="row">
         <div class="col-md-12">
-            <div class="form-horizontal" action="#">
+            <div class="form-horizontal" action="#" id="frmTicketList">
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <fieldset>
-                            <legend class="text-semibold">
+                            <legend class="text-semibold no-padding-bottom">
                                 <i class="fa fa-search position-left"></i>
                                 Search Tickets
                                 <div class="content-group pull-right">
-
                                     <a class="control-arrow mt-10" data-toggle="collapse" data-target="#demo1" aria-expanded="true">
                                         <i class="icon-circle-down2"></i>
                                     </a>
                                 </div>
-
                             </legend>
                             <div class="collapse in" id="demo1" aria-expanded="true">
-
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -92,9 +90,25 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="fakeWidth col-md-12"></div>
-        <div id="dvTickets">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title"> &nbsp;</h6>
+            <div class="heading-elements">
+                <div class="col-md-12">
+                    <div class="content-group-sm">
+                        <a title="Add new ticket" href="#" onclick="fnLoadPartialAddTicket();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Ticket</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="fakeWidth col-md-12"></div>
+                <div id="dvTickets">
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -151,7 +165,7 @@
                 'Created Date',
                 'Options' // Options
             ];
-            debugger;
+
             var vTicketCode = $("#txtSearchByTicketCode").val();
             var vTicketName = $("#txtSearchByTicketName").val();
             var vTicketStatusId = Number($("#ddlTicketStatus").val());
@@ -171,7 +185,7 @@
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
                                         { Caption: "Details", EventName: "fnGoToTicketDetails();", RowId: true },
-                                        { Caption: "Update Ticket", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
+                                        { Caption: "Update Ticket Status", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
             ];
             var oArrColsModel = [
                     {
@@ -273,7 +287,7 @@
         }
 
         function fnGoToTicketDetails(nTicketID) {
-            debugger;
+
             var vTicketID = -99;
             if (nTicketID != null && nTicketID != undefined && nTicketID != -99) {
                 vTicketID = nTicketID;
@@ -290,7 +304,7 @@
 
         function fnFillTicketStatus() {
             //TODO:: option add 'ALL'
-            debugger;
+
             FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '- Select Status - ', ' ', [],
                 function () {
                     //Success Function
@@ -326,7 +340,7 @@
             var gdTicketList = $('#' + sGridViewSelector);
             var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
             var rowData = gdTicketList.getRowData(vTicketID);
-            debugger;
+
             var sTicketCode = rowData.TICKET_CODE;
             var sTicketName = rowData.TICKET_NAME;
             var sTicketStatusName = rowData.TICKET_STATUS_NAME;
@@ -371,7 +385,7 @@
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              //Update Ticket
-                             debugger;
+
                              var bIsShowRejectReason = ($("#ddlUpdateTicketStatus").val() == "3");// Ticket Staus -> Rejected
                              if (bIsShowRejectReason) {
                                  if ($("#txtRejectReason").val() == "") {
@@ -438,12 +452,178 @@
             }
         }
 
+        function fnLoadPartialAddTicket() {
+            $("#dvPopUpWindow").dialog({
+                title: 'Add Ticket',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $("#frmTicketList") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAddTicket", "Tickets")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            fnAddTicketValidateInitialization("frmAddTicket");
+
+                            //dialog select2 textbox focus issue
+                            if ($.ui && $.ui.dialog && $.ui.dialog.prototype._allowInteraction) {
+                                var ui_dialog_interaction = $.ui.dialog.prototype._allowInteraction;
+                                $.ui.dialog.prototype._allowInteraction = function (e) {
+                                    if ($(e.target).closest('.select2-dropdown').length) return true;
+                                    return ui_dialog_interaction.apply(this, arguments);
+                                };
+                            }
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+
+
+                },
+                buttons: [
+                     {
+                         text: "Save",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnSaveTicket();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnSaveTicket() {
+            if (!$("#frmAddTicket").valid()) {
+                return false;
+            }
+
+            //var nUserType = Number($("#ddlUserTypeID").val());
+            //if (nUserType == enmUserType.Staff) {
+            //    if ($("#txtUserNamePopUp").val() == "") {
+            //        ShowStatusBarNotification("Please enter user name.", NotificationType.Warning);
+            //        return false;
+            //    }
+            //}
+
+            var formData = $("#frmAddTicket").serialize();
+            $.ajax({
+                url: '@Url.Action("JInserTicket", "Tickets")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                        $("#dvPopUpWindow").dialog("close");
+                        fnBindAllTickets();
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+                    $("#dvPopUpWindow").dialog("close");
+                }
+            })
+        }
+
+        function fnAddTicketValidateInitialization(sFormID) {
+            jQuery.validator.addMethod("dropDownValidator", function (value, element, param) {
+                return this.optional(element) || value != param;
+            }, "Please choose a value!");
+
+            debugger;
+            var validator = $('#' + sFormID).validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    TICKET_NAME: {
+                        required: true
+                    },
+                    TICKET_DESCRIPTION: {
+                        required: true
+                    },
+                    MobileParticipantId: {
+                        dropDownValidator: "-99"
+                    },
+                },
+                messages: {
+                    TICKET_NAME: "This field is required.",
+                    TICKET_DESCRIPTION: "This field is required.",
+                    MobileParticipantId: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
         //Entry Point
         $(document).ready(function () {
             fnFillTicketStatus();
             fnFillApplicationUsers();
             fnBindAllTickets();
-
         });
     </script>
 }

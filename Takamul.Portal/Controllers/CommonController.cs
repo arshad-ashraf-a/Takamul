@@ -16,6 +16,7 @@ namespace LDC.eServices.Portal.Controllers
         #region Private Members
         private ICommonServices oICommonServices;
         private ILookupServices oILookupServices;
+        private IUserServices oIUserServices;
         #endregion
         #endregion
 
@@ -25,10 +26,12 @@ namespace LDC.eServices.Portal.Controllers
         /// </summary>
         /// <param name="oICommonServicesInitializer"></param>
         public CommonController(
+                                IUserServices oIUserServicesInitializer,
                                 ICommonServices oICommonServicesInitializer,
                                 ILookupServices oILookupServicesInitializer
             )
         {
+            this.oIUserServices = oIUserServicesInitializer;
             this.oICommonServices = oICommonServicesInitializer;
             this.oILookupServices = oILookupServicesInitializer;
         }
@@ -90,6 +93,19 @@ namespace LDC.eServices.Portal.Controllers
         {
             var lstVillages = this.oICommonServices.oGetAllVillages(sAreaCode,sWilayatCode);
             return Json(lstVillages, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetAllMemberUsers
+        /// <summary>
+        /// Get all member users
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetAllMemberUsers()
+        {
+            var lstMemberUsers = this.oIUserServices.lGetAllMembers(string.Empty, 1, int.MaxValue);
+            return Json(lstMemberUsers, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

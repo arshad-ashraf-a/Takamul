@@ -138,6 +138,50 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: Response :: oInsertApplication
+        /// <summary>
+        ///  Insert Application
+        /// </summary>
+        /// <param name="oApplicationViewModel"></param>
+        /// <returns></returns>
+        public Response oInsertApplication(ApplicationViewModel oApplicationViewModel)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationName", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_NAME, 200, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MemberUserID", SqlDbType.Int, oApplicationViewModel.MemberUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationLogoPath", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_LOGO_PATH, 300, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationExpiryDate", SqlDbType.SmallDateTime, oApplicationViewModel.APPLICATION_EXPIRY_DATE, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CreatedBy", SqlDbType.Int, oApplicationViewModel.CREATED_BY, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_ApplicationID", SqlDbType.Int, ParameterDirection.Output));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("InsertApplication", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[6].Value.ToString());
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+                    //Inserted Application ID
+                    oResponse.ResponseID = arrParameters[5].Value.ToString();
+                }
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
         #endregion
     }
 }
