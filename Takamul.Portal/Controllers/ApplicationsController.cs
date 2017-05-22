@@ -66,6 +66,17 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialEditApplication
+        /// <summary>
+        ///  Edit application
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult PartialEditApplication(ApplicationViewModel oApplicationViewModel)
+        {
+            return PartialView("_EditApplication", oApplicationViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -186,7 +197,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="oTicketViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        //[ValidateAntiForgeryToken()]
+        [ValidateAntiForgeryToken()]
         public JsonResult JSaveApplication(ApplicationViewModel oApplicationViewModel)
         {
             Response oResponseResult = null;
@@ -221,6 +232,74 @@ namespace LDC.eServices.Portal.Controllers
                             fileData = binaryReader.ReadBytes(filebase.ContentLength);
                         }
                         oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                        this.OperationResult = enumOperationResult.Success;
+                    }
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Edit Application
+        /// <summary>
+        /// Edit Application
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken()]
+        public JsonResult JEditApplication(ApplicationViewModel oApplicationViewModel)
+        {
+            Response oResponseResult = null;
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            HttpPostedFileBase filebase = null;
+            var oFile = System.Web.HttpContext.Current.Request.Files["ApplicationLogoFile"];
+            if (oFile != null)
+            {
+                filebase = new HttpPostedFileWrapper(oFile);
+                if (filebase.ContentLength > 0)
+                {
+                    sRealFileName = filebase.FileName;
+                    sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                }
+            }
+            oApplicationViewModel.APPLICATION_EXPIRY_DATE = DateTime.ParseExact(oApplicationViewModel.FORMATTED_EXPIRY_DATE, "d/M/yyyy", CultureInfo.InvariantCulture);
+            oApplicationViewModel.APPLICATION_LOGO_PATH = sModifiedFileName;
+            oApplicationViewModel.MODIFIED_BY = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oIApplicationService.oUpdateApplication(oApplicationViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    {
+                        this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                        if (oFile != null)
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                            //DirectoryPath = Saved Application ID
+                            string sDirectoryPath = oApplicationViewModel.ID.ToString();
+                            string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                            oFileAccessService.CreateDirectory(sDirectoryPath);
+                            byte[] fileData = null;
+                            using (var binaryReader = new BinaryReader(filebase.InputStream))
+                            {
+                                fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                            }
+                            oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                        }
                         this.OperationResult = enumOperationResult.Success;
                     }
                     break;

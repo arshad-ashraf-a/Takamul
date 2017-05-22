@@ -26,6 +26,7 @@ namespace Takamul.Models.ViewModel
         public string APPLICATION_TOKEN { get; set; }
         public bool IS_ACTIVE { get; set; }
         public int CREATED_BY { get; set; }
+        public int? MODIFIED_BY { get; set; }
         public DateTime CREATED_DATE { get; set; }
         public int TotalCount { get; set; }
 
@@ -36,7 +37,7 @@ namespace Takamul.Models.ViewModel
         public int TotalTicketClosedCount { get; set; }
         public int TotalTicketChatCount { get; set; }
         public string MemberName { get; set; }
-        public int MemberUserID { get; set; }
+        public int? MemberUserID { get; set; }
 
         #region :: Constructor ::
         public ApplicationViewModel()
@@ -52,6 +53,7 @@ namespace Takamul.Models.ViewModel
             this.TotalCount = 0;
             this.CREATED_BY = -99;
             this.FORMATTED_EXPIRY_DATE = string.Empty;
+            this.MODIFIED_BY = -99;
         } 
         #endregion
     }

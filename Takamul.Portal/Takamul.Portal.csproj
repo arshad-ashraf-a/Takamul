@@ -249,9 +249,6 @@
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
-    <Content Include="DBScript\Takamul_script_13-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_14-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_15-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_22-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_AddNewProc_16-05-17.sql" />
@@ -960,6 +957,7 @@
     <Content Include="Views\Tickets\_AddTicket.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicketDetails.cshtml" />
     <Content Include="Views\Applications\_AddApplication.cshtml" />
+    <Content Include="Views\Applications\_EditApplication.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

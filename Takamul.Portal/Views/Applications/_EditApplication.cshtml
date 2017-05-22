@@ -1,11 +1,12 @@
 ﻿@model Takamul.Models.ViewModel.ApplicationViewModel
 
-@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddApplication", @class = "form-horizontal" }))
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmEditApplication", @class = "form-horizontal" }))
 {
     <div class="panel panel-flat">
         <div class="panel-body">
 
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
 
             @* Application Name *@
             <div class="form-group">
@@ -44,22 +45,23 @@
             </div>
 
             @* Application Logo View *@
-            @*<div class="form-group">
+            <div class="form-group no-margin-bottom">
                 <div class="col-md-12">
-                    <div class="col-md-8 col-md-offset-4">
+                    <label class="col-lg-4 control-label">Uploaded Logo</label>
+                    <div class="col-md-8">
                         <div class="panel panel-flat">
-                            <div class="panel-body">
+                            <div class="panel-body p-5">
                                 <ul class="media-list">
                                     <li class="media">
                                         <div class="media-left media-middle">
                                             <i class="icon-file-picture icon-2x text-muted"></i>
                                         </div>
-                                        <div class="media-body">
-                                            <a href="#" class="media-heading text-semibold">Overdrew_scowled.doc</a>
+                                        <div class="media-body valign-middle">
+                                            <a href="#" onclick="fnDownloadFile(); return false;" class="media-heading text-semibold"> @System.IO.Path.GetFileName(Model.APPLICATION_LOGO_PATH)</a>
                                         </div>
                                         <div class="media-right media-middle">
                                             <ul class="icons-list icons-list-extended text-nowrap">
-                                                <li><a href="#"><i class="icon-download"></i></a></li>
+                                                <li><a href="#" onclick="fnDownloadFile(); return false;"><i class="icon-download"></i></a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -69,37 +71,59 @@
                     </div>
                 </div>
 
-            </div>*@
+            </div>
 
             @* Application Expiry Date *@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Application Expiry Date</label>
-                        <div class="col-lg-4">
+                        <div class="col-lg-5">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                @Html.EditorFor(model => model.FORMATTED_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.APPLICATION_EXPIRY_DATE.AddYears(1)).ToString("dd/MM/yyyy"), placeholder = "application expiry date" } })
+                                @Html.EditorFor(model => model.FORMATTED_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.APPLICATION_EXPIRY_DATE).ToString("dd/MM/yyyy"), placeholder = "application expiry date" } })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+            @* Application Expiry Date *@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Is Active</label>
+                        <div class="col-lg-5">
+                                @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
 }
 <script type="text/javascript">
+    $(".styled").uniform({
+        radioClass: 'choice'
+    });
+
     function fnFillAllMemberUsers() {
         //TODO:: option add 'ALL'
         FillDropDownRoot('@Url.Action("JGetAllMemberUsers", "Common")', 'POST', false, 'ddlMemberUser', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
             function () {
                 //Success Function
                 $("#ddlMemberUser").select2({ width: '100%' });
+                $("#ddlMemberUser").select2('val', String(@Model.MemberUserID));
             },
             function () {
                 //Error
             })
+    }
+
+    function fnDownloadFile() {
+        var sFileFullPath = '@Model.APPLICATION_LOGO_PATH';
+        window.location = '@Url.Action("DownloadFile", "Common")?sFileFullPath=' + sFileFullPath;
+        return false;
     }
 
     //Entry Point

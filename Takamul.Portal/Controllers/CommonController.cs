@@ -109,6 +109,21 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region Method :: ActionResult :: DownloadFile
+        public virtual ActionResult DownloadFile(string sFileFullPath)
+        {
+            byte[] oFileToDownload = null;
+            FileAccessService oFileAccessService = new FileAccessService();
+
+            try
+            {
+                oFileToDownload = oFileAccessService.ReadFile(sFileFullPath);
+            }
+            catch (Exception) { }
+            return File(oFileToDownload, "application/force-download", System.IO.Path.GetFileName(sFileFullPath));
+        }
+        #endregion
+
         #endregion
     }
 }

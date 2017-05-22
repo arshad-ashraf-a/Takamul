@@ -58,5 +58,14 @@ namespace Takamul.Services
         Response oInsertApplication(ApplicationViewModel oApplicationViewModel);
         #endregion
 
+        #region Method :: Response :: oUpdateApplication
+        /// <summary>
+        ///  oUpdate Application 
+        /// </summary>
+        /// <param name="oApplicationViewModel"></param>
+        /// <returns></returns>
+        Response oUpdateApplication(ApplicationViewModel oApplicationViewModel);
+        #endregion
+
     }
 }

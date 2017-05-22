@@ -182,6 +182,46 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: Response :: oUpdateApplication
+        /// <summary>
+        ///  Update Application
+        /// </summary>
+        /// <param name="oApplicationViewModel"></param>
+        /// <returns></returns>
+        public Response oUpdateApplication(ApplicationViewModel oApplicationViewModel)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oApplicationViewModel.ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationName", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_NAME, 200, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MemberUserID", SqlDbType.Int, oApplicationViewModel.MemberUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationLogoPath", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_LOGO_PATH, 300, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationExpiryDate", SqlDbType.SmallDateTime, oApplicationViewModel.APPLICATION_EXPIRY_DATE, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsActive", SqlDbType.Bit, oApplicationViewModel.IS_ACTIVE, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ModifiedBy", SqlDbType.Int, oApplicationViewModel.MODIFIED_BY, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("UpdateApplication", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[7].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
         #endregion
     }
 }

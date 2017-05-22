@@ -4,92 +4,52 @@
 <div class="col-lg-12">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-horizontal" action="#" id="frmApplicationList">
-                <div class="panel panel-flat">
+            <div class="clearfix"></div>
+            <div id="frmApplicationList" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title"> &nbsp;</h6>
+                        <div class="heading-elements">
+                            <div class="col-md-12">
+                                <div class="content-group-sm">
+                                    <div class="col-md-2 no-padding">
+                                        <input type="text" class="form-control" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
+                                               placeholder="App ID">
+                                    </div>
+                                    <div class="col-md-6 no-padding">
+                                        <div class="input-group content-group">
+                                            <div class="has-feedback">
+                                                <input type="text" class="form-control" id="txtSearchByApplicationName" name="txtSearchByApplicationName"
+                                                       placeholder="App Name">
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary btn-xs no-margin-top" onclick="fnBindAllApplications();">Seach<i class="fa fa-search position-right"></i></button>
+                                                @*<button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mr-15 pull-right">
+                                        <a title="Add new application" href="#" onclick="fnLoadPartialAddApplication();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Application</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-body">
-                        <fieldset>
-                            <legend class="text-semibold">
-                                <i class="fa fa-search position-left"></i>
-                                Search Application
-                                <div class="content-group pull-right">
-
-                                    <a class="control-arrow mt-10" data-toggle="collapse" data-target="#demo1" aria-expanded="true">
-                                        <i class="icon-circle-down2"></i>
-                                    </a>
-                                </div>
-
-                            </legend>
-                            <div class="collapse in" id="demo1" aria-expanded="true">
-
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Application ID</label>
-                                            <div class="col-lg-5">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
-                                                       placeholder="Application ID">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Application Name</label>
-                                            <div class="col-lg-8">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByApplicationName" name="txtSearchByApplicationName"
-                                                       placeholder="Application Name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <hr class="sp-1" />
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllApplications();">Seach<i class="fa fa-search position-right"></i></button>
-                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>
-                        </div>
-                        <div class="row search-option-buttons">
-                            <div class="col-sm-6">
-
-                            </div>
-
-                            <div class="col-sm-6 text-right">
-                                <ul class="list-inline no-margin-bottom">
-                                    <li>
-                                    </li>
-                                </ul>
+                        <div class="row">
+                            <div class="fakeWidth col-md-12"></div>
+                            <div id="dvApplications">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-
-    <div class="panel panel-white">
-        <div class="panel-heading">
-            <h6 class="panel-title"> &nbsp;</h6>
-            <div class="heading-elements">
-                <div class="col-md-12">
-                    <div class="content-group-sm">
-                        <a title="Add new application" href="#" onclick="fnLoadPartialAddApplication();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Application</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="fakeWidth col-md-12"></div>
-                <div id="dvApplications">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
 </div>
+
 
 @section InlineScriptsRelated
 {
@@ -118,13 +78,17 @@
                     ApplicationExpiryDate: 'APPLICATION_EXPIRY_DATE',
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE',
-                    MemberName: 'MemberName'
+                    MemberName: 'MemberName',
+                    MemberUserID: 'MemberUserID'
                 };
             var sCaption = 'All Applications';
             var oArrColumnNames = [
                 'Application Name',
                 'App ID',//Hidden Columns Represent ID Int Value
                 '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
+                '',//Hidden Columns Represent MemberUserID String Value
+                '',//Hidden Columns Represent APPLICATION_NAME String Value
+                '',//Hidden Columns Represent IS_ACTIVE String Value
                 'Member',
                 'Application Expiry Date',
                 'Is Active',
@@ -148,10 +112,10 @@
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
                                         { Caption: "Details", EventName: "fnGoToApplicationDetais(-99);", RowId: true },
+                                        { Caption: "Edit Application", EventName: "fnPartialLoadEditApplication();", RowId: true },
             ];
             var oArrColsModel = [
                 {
-                    name: ConstantsNames.ApplicationName,
                     width: 150, editable: false,
                     align: EnumColumnsAlignment.Center,
                     formatter: function (cellvalue, options, rowObject) {
@@ -168,7 +132,20 @@
                         name: ConstantsNames.ApplicationLogoPath, editable: false,
                         key: false, hidden: true
                     },
-
+                     {
+                         name: ConstantsNames.MemberUserID, editable: false,
+                         key: false, hidden: true
+                     },
+                     {
+                         name: ConstantsNames.ApplicationName, editable: false,
+                         key: false, hidden: true
+                     },
+                     {
+                         name: ConstantsNames.IsActive,
+                         editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         hidden: true, key: false
+                     },
                      {
                          name: ConstantsNames.MemberName,
                          width: 150, editable: false,
@@ -181,7 +158,6 @@
                         formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
                     },
                     {
-                        name: ConstantsNames.IsActive,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
@@ -260,14 +236,15 @@
         }
 
         function fnLoadPartialAddApplication() {
+            var dialogWidth = 630;
             $("#dvPopUpWindow").dialog({
                 title: 'Add Application',
                 autoOpen: true,
-                position: { my: "center", at: "top-50", of: $("#frmApplicationList") },
                 width: '50%',
                 resizable: false,
                 modal: true,
-                open: function () {
+                open: function (event, ui) {
+                    $(this).parent().css('position', 'fixed');
                     $("#dvPopUpWindowContainer").html("");
                     $.ajax({
                         url: '@Url.Action("PartialAddApplication", "Applications")',
@@ -277,7 +254,7 @@
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
-                            //fnAddTicketValidateInitialization("frmAddTicket");
+                            fnAddApplicationValidateInitialization("frmAddApplication");
 
                             // Month and year menu
                             $(".datepicker-menus").datepicker({
@@ -319,6 +296,11 @@
         }
 
         function fnSaveApplication() {
+
+            if (!$("#frmAddApplication").valid()) {
+                return false;
+            }
+
             var data = new FormData();
             var files = $("#fuAddApplicationLogo").get(0).files;
 
@@ -344,7 +326,7 @@
             var formData = $("#frmAddApplication").serializeArray();
             data.append("ApplicationLogoFile", files[0]);
             $.each(formData, function (key, input) {
-                    data.append(input.name, input.value);
+                data.append(input.name, input.value);
             });
             debugger;
             $.ajax({
@@ -358,6 +340,7 @@
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             $("#dvPopUpWindow").dialog("close");
+                            fnBindAllApplications();
                         }
                         else {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
@@ -371,61 +354,6 @@
 
             });
 
-        }
-
-        function fnOnChangeApplicationLogoUploads() {
-            var data = new FormData();
-            var files = $("#fuAddApplicationLogo").get(0).files;
-
-            if (files.length <= 0) {
-                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
-                return false;
-            }
-
-            var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
-            var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
-            if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
-                return false;
-            }
-
-            var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
-            var bIsInValidExt = fnIsValidFileExtension(extension);
-            if (bIsInValidExt) {
-                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
-                return false;
-            }
-
-            data.append("ApplicationLogoFile", files[0]);
-
-            $.ajax({
-                url: '@Url.Action("JSaveApplicationLogoToTemp", "Applications")',
-                type: "POST",
-                processData: false,
-                data: data,
-                dataType: 'json',
-                contentType: false,
-                success: function (result, response) {
-                    if (response != null || response != '') {
-                        if (result.nResult == 1) {
-                            //ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-
-                        }
-                        else {
-                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                        }
-                    }
-                    else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
-                    }
-
-                    $("#fuPreliminaryFile").val('');
-                    $(".filename").text('')
-                },
-                error: function (er) { }
-
-            });
-            return false;
         }
 
         function fnIsValidFileExtension(sExtension) {
@@ -447,6 +375,216 @@
                 console.log(ex);
             }
             return fileSize;
+        }
+
+        function fnAddApplicationValidateInitialization(sFormID) {
+            jQuery.validator.addMethod("dropDownValidator", function (value, element, param) {
+                return this.optional(element) || value != param;
+            }, "Please choose a value!");
+
+            debugger;
+            var validator = $('#' + sFormID).validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    APPLICATION_NAME: {
+                        required: true
+                    },
+                    FORMATTED_EXPIRY_DATE: {
+                        required: true
+                    },
+                    MemberUserID: {
+                        dropDownValidator: "-99"
+                    },
+                },
+                messages: {
+                    APPLICATION_NAME: "This field is required.",
+                    FORMATTED_EXPIRY_DATE: "This field is required.",
+                    MemberUserID: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+        function fnPartialLoadEditApplication() {
+            var gdApplication = $('#' + sGridViewSelector);
+            var vAppplicationId = gdApplication.jqGrid('getGridParam', 'selrow');
+            var rowData = gdApplication.getRowData(vAppplicationId);
+            var sApplicationName = rowData.APPLICATION_NAME;
+            var sExpiryDate = rowData.APPLICATION_EXPIRY_DATE;
+            var bIsActive = rowData.IS_ACTIVE;
+            var sApplicationLogoPath = rowData.APPLICATION_LOGO_PATH;
+            var sMemberUserID = rowData.MemberUserID;
+            var dataToSend = JSON.stringify({
+                ID: vAppplicationId,
+                APPLICATION_NAME: sApplicationName,
+                APPLICATION_EXPIRY_DATE: moment(sExpiryDate, "DD/MM/YYYY").format("YYYY-MM-DD hh:mm:ss A"),
+                IS_ACTIVE: bIsActive,
+                APPLICATION_LOGO_PATH: sApplicationLogoPath,
+                MemberUserID: sMemberUserID,
+            });
+            debugger;
+            $("#dvPopUpWindow").dialog({
+                title: 'Edit Application',
+                autoOpen: true,
+                //position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function (event, ui) {
+                    $(this).parent().css('position', 'fixed');
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialEditApplication", "Applications")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            fnAddApplicationValidateInitialization("frmEditApplication");
+
+                            // Month and year menu
+                            $(".datepicker-menus").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                dateFormat: 'dd/mm/yy'
+                            });
+
+                            // Default file input style
+                            $(".file-styled").uniform({
+                                fileButtonClass: 'action btn btn-default'
+                            });
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Update",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnEditApplication();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $("#dvPopUpWindow").dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnEditApplication() {
+            if (!$("#frmEditApplication").valid()) {
+                return false;
+            }
+
+            var data = new FormData();
+            var files = $("#fuAddApplicationLogo").get(0).files;
+
+            if (files.length > 0) {
+
+                var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+                var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
+                if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    return false;
+                }
+
+                var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
+                var bIsInValidExt = fnIsValidFileExtension(extension);
+                if (bIsInValidExt) {
+                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    return false;
+                }
+            }
+
+            var formData = $("#frmEditApplication").serializeArray();
+            data.append("ApplicationLogoFile", files[0]);
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
+            debugger;
+            $.ajax({
+                url: '@Url.Action("JEditApplication", "Applications")',
+                type: "POST",
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                            fnBindAllApplications();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+                },
+                error: function (er) { }
+
+            });
+
+
         }
 
         //Knockout ViewModel
