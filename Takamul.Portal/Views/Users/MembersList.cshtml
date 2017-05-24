@@ -1,0 +1,521 @@
+﻿
+@{
+    
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"></div>
+            <div id="frmMembersList" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title"> &nbsp;</h6>
+                        <div class="heading-elements">
+                            <div class="col-md-12">
+                                <div class="content-group-sm">
+                                    <div class="col-md-2 no-padding">
+                                        <input type="text" class="form-control" id="txtSearchByMemberID" name="txtSearchByMemberID"
+                                               placeholder="App ID">
+                                    </div>
+                                    <div class="col-md-6 no-padding">
+                                        <div class="input-group content-group">
+                                            <div class="has-feedback">
+                                                <input type="text" class="form-control" id="txtSearchByMemberName" name="txtSearchByMemberName"
+                                                       placeholder="App Name">
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary btn-xs no-margin-top" onclick="fnBindAllMembers();">Seach<i class="fa fa-search position-right"></i></button>
+                                                @*<button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mr-15 pull-right">
+                                        <a title="Add new application" href="#" onclick="fnLoadPartialAddMember();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Member</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="fakeWidth col-md-12"></div>
+                            <div id="dvMembers">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+
+        var sGridViewSelector = "grid-table";
+        var sGridViewPagerSelector = "grid-pager";
+        function fnBindAllMembers() {
+            ShowLoader();
+            $("#dvMembers").hide();
+            $("#dvMembers").empty();
+            var table = document.createElement('table');
+            table.id = sGridViewSelector;
+            var pager = document.createElement('div');
+            pager.id = sGridViewPagerSelector;
+
+            $('#dvMembers').append(table);
+            $('#dvMembers').append(pager);
+
+            var ConstantsNames =
+                {
+                    ID: 'ID',
+                    MemberName: 'MemberName',
+                    LastLoggedIn: 'LastLoggedIn',
+                    IsActive: 'IsActive',
+                    Phone: 'Phone',
+                    IsActive: 'IsActive',
+                    CreatedDate: 'CREATED_DATE'
+                };
+            var sCaption = 'All Members';
+            var oArrColumnNames = [
+                'Member Name',
+                'Member ID',//Hidden Columns Represent ID Int Value
+                '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
+                '',//Hidden Columns Represent MemberUserID String Value
+                '',//Hidden Columns Represent MemberName String Value
+                '',//Hidden Columns Represent IS_ACTIVE String Value
+                'Last LoggedIn',
+                'Is Active',
+                'Phone',
+                'Created Date',
+                'Options' // Options
+            ];
+
+
+            var vSearchByMemberID = $("#txtSearchByMemberID").val() == "" ? -99 : $("#txtSearchByMemberID").val();
+            var vSearchByMemberName = $("#txtSearchByMemberName").val();
+            var params = {
+                'nSearchByMemberID': vSearchByMemberID,
+                'sSearchByMemberName': vSearchByMemberName
+
+            };
+            var sBindDataUrl = '@Url.Action("JBindAllMembers", "Members")' + '?' + jQuery.param(params);
+
+            var sAddUrl = "#";
+            var sEditUrl = "#";
+            var sDeleteUrl = "#";
+            var oArrGridContextMenu = [
+                                        { MenuTitle: "Options" },
+                                        { Caption: "Details", EventName: "fnGoToMemberDetais(-99);", RowId: true },
+                                        { Caption: "Edit Member", EventName: "fnPartialLoadEditMember();", RowId: true },
+            ];
+            var oArrColsModel = [
+                {
+                    width: 150, editable: false,
+                    align: EnumColumnsAlignment.Center,
+                    formatter: function (cellvalue, options, rowObject) {
+                        return "<div class='text-semibold'><a onclick='fnGoToMemberDetais(" + rowObject.ID + ")' href='#'>" + rowObject.MemberName + "</a></div>";
+                    }
+                },
+                    {
+                        name: ConstantsNames.ID, editable: false,
+                        key: true,
+                        align: EnumColumnsAlignment.Center,
+
+                    },
+                     {
+                         name: ConstantsNames.MemberName, editable: false,
+                         key: false, hidden: true
+                     },
+                     {
+                         name: ConstantsNames.IsActive,
+                         editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         hidden: true, key: false
+                     },
+                     {
+                         name: ConstantsNames.Phone,
+                         width: 150, editable: false,
+                         align: EnumColumnsAlignment.Center
+                     },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    },
+                    {
+                        name: ConstantsNames.LastLoggedIn,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    },
+                    {
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    }
+            ];
+
+            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
+            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+
+                $(window).bind('resize', function () {
+                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
+                }).trigger('resize');
+
+
+                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
+
+                $("#dvMembers").show();
+                HideLoader();
+            });
+        }
+
+        function fnClearSearch() {
+            $("#txtSearchByMemberID").val("");
+            $("#txtSearchByMemberName").val("");
+        }
+
+        function fnGoToMemberDetais(nMemberID) {
+            debugger;
+            var vMemberID = -99;
+            if (nMemberID != null && nMemberID != undefined && nMemberID != -99) {
+                vMemberID = nMemberID;
+            }
+            else {
+                var gdMemberist = $('#' + sGridViewSelector);
+                vMemberID = gdMemberist.jqGrid('getGridParam', 'selrow');
+            }
+
+            $.ajax({
+                url: '@Url.Action("JSetCurrentMemberID", "Members")',
+                type: 'POST',
+                data: { nMemberID: vMemberID },
+                async: true,
+                success: function (result, response) {
+                    if (result.nResult == 1) {
+                        url = '@Url.Action("AppDashboard", "MemberDashboard")';
+                        window.location.href = url;
+
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function (result, response) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            });
+
+
+        }
+
+        function fnLoadPartialAddMember() {
+            var dialogWidth = 630;
+            $("#dvPopUpWindow").dialog({
+                title: 'Add Member',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function (event, ui) {
+                    $(this).parent().css('position', 'fixed');
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAddMember", "Members")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            fnAddApplicationValidateInitialization("frmAddMember");
+
+                            // Month and year menu
+                            $(".datepicker-menus").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                dateFormat: 'dd/mm/yy'
+                            });
+
+                            // Default file input style
+                            $(".file-styled").uniform({
+                                fileButtonClass: 'action btn btn-default'
+                            });
+
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+
+
+                },
+                buttons: [
+                     {
+                         text: "Save",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnSaveMember();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnSaveMember() {
+
+            if (!$("#frmAddMember").valid()) {
+                return false;
+            }
+
+            var formData = $("#frmAddMember").serializeArray();
+            
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
+            debugger;
+            $.ajax({
+                url: '@Url.Action("JSaveMember", "Members")',
+                type: "POST",
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                            fnBindAllMembers();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+                },
+                error: function (er) { }
+
+            });
+
+        } 
+         
+
+        function fnAddApplicationValidateInitialization(sFormID) {
+            jQuery.validator.addMethod("dropDownValidator", function (value, element, param) {
+                return this.optional(element) || value != param;
+            }, "Please choose a value!");
+
+            debugger;
+            var validator = $('#' + sFormID).validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    MemberName: {
+                        required: true
+                    }, 
+                },
+                messages: {
+                    MemberName: "This field is required.",
+                    
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    } 
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+        function fnPartialLoadEditMember() {
+            var gdApplication = $('#' + sGridViewSelector);
+            var vMemberId = gdApplication.jqGrid('getGridParam', 'selrow');
+            var rowData = gdApplication.getRowData(vAppplicationId);
+            var sMemberName = rowData.MemberName;
+            var sLastLoggedDate = rowData.LastLoggedIn;
+            var bIsActive = rowData.IsActive;
+            
+            var dataToSend = JSON.stringify({
+                ID: vMemberId,
+                MemberName: sMemberName,
+                LastLoggedIn: moment(sExpiryDate, "DD/MM/YYYY").format("YYYY-MM-DD hh:mm:ss A"),
+                IsActive: bIsActive,
+            });
+            debugger;
+            $("#dvPopUpWindow").dialog({
+                title: 'Edit Member',
+                autoOpen: true,
+                //position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function (event, ui) {
+                    $(this).parent().css('position', 'fixed');
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialEditMember", "Members")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            fnAddApplicationValidateInitialization("frmEditMember");
+
+                            // Month and year menu
+                            $(".datepicker-menus").datepicker({
+                                changeMonth: true,
+                                changeYear: true,
+                                dateFormat: 'dd/mm/yy'
+                            });
+
+                            // Default file input style
+                            $(".file-styled").uniform({
+                                fileButtonClass: 'action btn btn-default'
+                            });
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Update",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnEditMember();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $("#dvPopUpWindow").dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnEditMember() {
+            if (!$("#frmEditMember").valid()) {
+                return false;
+            }  
+             
+
+            var formData = $("#frmEditMember").serializeArray();
+           
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
+            debugger;
+            $.ajax({
+                url: '@Url.Action("JEditMember", "Members")',
+                type: "POST",
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                            fnBindAllMembers();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+                },
+                error: function (er) { }
+
+            });
+
+
+        }
+
+         
+
+        //Entry Point
+        $(document).ready(function () {
+           // ko.applyBindings(ViewModel);
+            fnBindAllMembers();
+        });
+    </script>
+}
+

@@ -249,6 +249,32 @@ namespace Takamul.API.Controllers
         }
         #endregion
 
+        #region Method :: HttpResponseMessage :: ValidateOTPNumberReinstall
+        // GET: api/Authentication/ValidateOTPNumberReinstall
+        /// <summary>
+        /// Validate user OTP Number without Userid mainly in case of app reinstall
+        /// </summary>
+        /// <param name="nOTPNumber"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage ValidateOTPNumberReinstall( int nOTPNumber)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            Response oResponse = this.oIAuthenticationService.oValidateOTPNumberReinstall(nOTPNumber);
+
+            if (oResponse.OperationResult == enumOperationResult.Success)
+            {
+                oApiResponse.OperationResult = 1;
+                oApiResponse.OperationResultMessage = "OTP verified successfully.";
+            }
+            else
+            {
+                oApiResponse.OperationResult = 0;
+                oApiResponse.OperationResultMessage = "Please contact app administrator.";
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+        }
+        #endregion 
 
 
         #endregion

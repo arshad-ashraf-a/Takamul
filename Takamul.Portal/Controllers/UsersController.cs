@@ -78,6 +78,22 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: MembersList
+        public ActionResult MembersList()
+        {
+            if (BaseController.CurrentUser.UserType == enumUserType.Admin)
+            {
+                this.PageTitle = "Members List";
+                this.TitleHead = "Members List";
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "AccessDenied");
+            }
+        }
+        #endregion
         #endregion
 
         #region ::  Methods ::
@@ -258,6 +274,21 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region JsonResult :: Bind Grid All Memebers
+        /// <summary>
+        /// Bind All Members
+        /// </summary>
+        /// <param name="nPage"></param>
+        /// <param name="nRows"></param>
+        /// <param name="sColumnName"></param>
+        /// <param name="sColumnOrder"></param>
+        /// <returns></returns>
+        public JsonResult JBindAllMembers(int nSearchByMemberID, string sSearchByMemberName, int nPage, int nRows, string sColumnName, string sColumnOrder)
+        {
+            var lstMembers = this.oIUserServicesService.IlGetAllMembers(nSearchByMemberID, sSearchByMemberName, nPage, nRows);
+            return Json(lstMembers, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         #endregion
     }
 }

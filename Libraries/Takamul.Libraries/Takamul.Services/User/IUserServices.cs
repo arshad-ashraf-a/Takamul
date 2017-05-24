@@ -82,5 +82,19 @@ namespace Takamul.Services
         List<UserInfoViewModel> lGetAllMembers(string sUserSeach, int nPageNumber, int nRowspPage);
         #endregion
 
+        #region Method :: List<UserInfoViewModel> :: IlGetAllMembers
+        /// <summary>
+        ///  Get all members
+        /// </summary>
+        /// <param name="nSearchByMemberID"></param>
+        /// <param name="sSearchByMemberName"></param>
+        /// <param name="nPageIndex"></param>
+        /// <param name="nPageSize"></param>
+        /// <param name="sColumnName"></param>
+        /// <param name="sColumnOrder"></param>
+        /// <returns></returns>
+        List<UserInfoViewModel> IlGetAllMembers(int nSearchByMemberID, string sSearchByMemberName, int nPageNumber, int nRowspPage);
+        #endregion
+
     }
 }

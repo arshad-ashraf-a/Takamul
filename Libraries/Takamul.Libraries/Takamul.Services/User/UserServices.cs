@@ -304,6 +304,34 @@ namespace Takamul.Services
 
         #endregion
 
+        #region Method :: List<UserInfoViewModel> :: IlGetAllApplications
+        /// <summary>
+        ///  Get all members
+        /// </summary>
+        /// <param name="nSearchByMemberID"></param>
+        /// <param name="sSearchByMemberName"></param>
+        /// <param name="nPageIndex"></param>
+        /// <param name="nPageSize"></param>
+        /// <param name="sColumnName"></param>
+        /// <param name="sColumnOrder"></param>
+        /// <returns></returns>
+        public List<UserInfoViewModel> IlGetAllMembers(int nSearchByMemberID, string sSearchByMemberName, int nPageNumber, int nRowspPage)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MemberId", SqlDbType.Int, nSearchByMemberID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MemberName", SqlDbType.VarChar, sSearchByMemberName, 200, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetAllMembers", arrParameters.ToArray());
+            return lstUsers;
+            #endregion
+        }
+        #endregion
+
         #endregion
     }
 }
