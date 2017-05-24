@@ -495,44 +495,41 @@
         <member name="M:Takamul.API.Controllers.AuthenticationServiceController.RegisterUser(Takamul.Models.ApiViewModel.TakamulUser)">
             <summary>
             Register a mobile user
+            <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</para>
             </summary>
             <param name="oTakamulUser"></param>
-            <returns></returns>
+            <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String)">
             <summary>
-            Resend user OTP Number
+            Resend user OTP Number by phone number
+            <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
             </summary>
-            <param name="nUserID"></param>
-            <returns></returns>
+            <param name="sPhoneNumber"></param>
+            <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.Int32,System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.String,System.Int32)">
             <summary>
-            Validate user OTP Number
+            Validate user OTP Number by phone number
+            <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</para>
+            <para>-->[TakamulUserResponse]</para>
             </summary>
-            <param name="nUserID"></param>
+            <param name="sPhoneNumber"></param>
             <param name="nOTPNumber"></param>
-            <returns></returns>
+            <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
         <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetails(System.Int32)">
             <summary>
-            Get user detailed infomations
+            Get user detailed infomations by user id 
             </summary>
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetOTPForAppReinstall(System.String)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetailsByPhoneNumber(System.String)">
             <summary>
-            Get user detailed infomations
+            Get user detailed infomations by phone number
             </summary>
-            <param name="nPhoneNumber"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumberReinstall(System.Int32)">
-            <summary>
-            Validate user OTP Number without Userid mainly in case of app reinstall
-            </summary>
-            <param name="nOTPNumber"></param>
+            <param name="sPhoneNumber"></param>
             <returns></returns>
         </member>
         <member name="T:Takamul.API.Controllers.CommonServiceController">
