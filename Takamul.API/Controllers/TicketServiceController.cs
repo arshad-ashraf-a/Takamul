@@ -68,17 +68,30 @@ namespace Takamul.API.Controllers
                 lstTakamulTicket = new List<TakamulTicket>();
                 foreach (var ticket in lstTickets)
                 {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(ticket.DEFAULT_IMAGE))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
                     TakamulTicket oTakamulTicket = new TakamulTicket()
                     {
                         TicketID = ticket.ID,
+                        TicketCode = ticket.TICKET_CODE,
                         ApplicationID = ticket.APPLICATION_ID,
-                        Base64DefaultImage = ticket.DEFAULT_IMAGE,
+                        Base64DefaultImage = sBase64DefaultImage,
                         TicketName = ticket.TICKET_NAME,
                         TicketDescription = ticket.TICKET_DESCRIPTION,
                         TicketStatusID = ticket.TICKET_STATUS_ID,
                         TicketStatusRemark = ticket.TICKET_STATUS_REMARK,
                         TicketStatusName = ticket.TICKET_STATUS_NAME
                     };
+                    
                     lstTakamulTicket.Add(oTakamulTicket);
                 }
             }
@@ -101,7 +114,7 @@ namespace Takamul.API.Controllers
             if (oTicketViewModel != null)
             {
                 string sBase64DefaultImage = string.Empty;
-                if (oTicketViewModel.DEFAULT_IMAGE != null)
+                if (!string.IsNullOrEmpty(oTicketViewModel.DEFAULT_IMAGE))
                 {
                     FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
                     byte[] oByteFile = oFileAccessService.ReadFile(oTicketViewModel.DEFAULT_IMAGE);
@@ -116,6 +129,7 @@ namespace Takamul.API.Controllers
                     TicketID = oTicketViewModel.ID,
                     ApplicationID = oTicketViewModel.APPLICATION_ID,
                     Base64DefaultImage = sBase64DefaultImage,
+                    TicketCode = oTicketViewModel.TICKET_CODE,
                     TicketName = oTicketViewModel.TICKET_NAME,
                     TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
                     TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,

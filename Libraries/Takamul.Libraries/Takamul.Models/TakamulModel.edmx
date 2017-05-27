@@ -10,7 +10,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="APPLICATION_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="APPLICATION_NAME" Type="nvarchar" MaxLength="200" />
           <Property Name="APPLICATION_LOGO_PATH" Type="varchar" MaxLength="300" />
           <Property Name="DEFAULT_THEME_COLOR" Type="varchar" MaxLength="50" />
           <Property Name="APPLICATION_EXPIRY_DATE" Type="smalldatetime" />
@@ -27,13 +27,14 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
-          <Property Name="EVENT_NAME" Type="varchar" MaxLength="300" />
-          <Property Name="EVENT_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="EVENT_NAME" Type="nvarchar" MaxLength="300" />
+          <Property Name="EVENT_DESCRIPTION" Type="nvarchar" MaxLength="1000" />
           <Property Name="EVENT_DATE" Type="smalldatetime" />
-          <Property Name="EVENT_LOCATION_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="EVENT_LOCATION_NAME" Type="nvarchar" MaxLength="100" />
           <Property Name="EVENT_LATITUDE" Type="varchar" MaxLength="50" />
           <Property Name="EVENT_LONGITUDE" Type="varchar" MaxLength="50" />
           <Property Name="IS_ACTIVE" Type="bit" />
+          <Property Name="EVENT_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
@@ -45,8 +46,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
-          <Property Name="MEMBER_INFO_TITLE" Type="varchar" MaxLength="50" />
-          <Property Name="MEMBER_INFO_DESCRIPTION" Type="varchar" MaxLength="2000" />
+          <Property Name="MEMBER_INFO_TITLE" Type="nvarchar" MaxLength="50" />
+          <Property Name="MEMBER_INFO_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
@@ -58,15 +59,12 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
-          <Property Name="NEWS_TITLE" Type="varchar" MaxLength="300" />
+          <Property Name="NEWS_TITLE" Type="nvarchar" MaxLength="300" />
           <Property Name="NEWS_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
-          <Property Name="NEWS_CONTENT" Type="varchar(max)" />
+          <Property Name="NEWS_CONTENT" Type="nvarchar(max)" />
           <Property Name="IS_NOTIFY_USER" Type="bit" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="PUBLISHED_DATE" Type="smalldatetime" />
-          <Property Name="FileId" Type="uniqueidentifier" />
-          <Property Name="FileName" Type="varchar" MaxLength="200" />
-          <Property Name="FileExtension" Type="varchar" MaxLength="50" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
@@ -79,8 +77,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
           <Property Name="TICKET_CODE" Type="varchar" MaxLength="10" />
-          <Property Name="TICKET_NAME" Type="varchar" MaxLength="300" />
-          <Property Name="TICKET_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="TICKET_NAME" Type="nvarchar" MaxLength="300" />
+          <Property Name="TICKET_DESCRIPTION" Type="nvarchar" MaxLength="1000" />
           <Property Name="DEFAULT_IMAGE" Type="varchar" MaxLength="500" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="TICKET_STATUS_ID" Type="int" />
@@ -89,13 +87,6 @@
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
-        </EntityType>
-        <EntityType Name="USER_TYPES">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TYPE" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_MEMBER_INFO_APPLICATIONS">
           <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="0..1" />
@@ -115,7 +106,6 @@
           <EntitySet Name="MEMBER_INFO" EntityType="Self.MEMBER_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TICKETS" EntityType="Self.TICKETS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USER_TYPES" EntityType="Self.USER_TYPES" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_MEMBER_INFO_APPLICATIONS" Association="Self.FK_MEMBER_INFO_APPLICATIONS">
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="MEMBER_INFO" EntitySet="MEMBER_INFO" />
@@ -127,34 +117,25 @@
       <Schema Namespace="TakamulModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TakamulConnection" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="APPLICATIONS" EntityType="TakamulModel.APPLICATIONS" />
-          <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
-          <AssociationSet Name="FK_EVENTS_APPLICATIONS" Association="TakamulModel.FK_EVENTS_APPLICATIONS">
-            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
-            <End Role="EVENTS" EntitySet="EVENTS" />
-          </AssociationSet>
           <EntitySet Name="TICKETS" EntityType="TakamulModel.TICKETS" />
           <AssociationSet Name="FK_TICKETS_APPLICATIONS" Association="TakamulModel.FK_TICKETS_APPLICATIONS">
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="TICKETS" EntitySet="TICKETS" />
           </AssociationSet>
-          <EntitySet Name="NEWS" EntityType="TakamulModel.NEWS" />
-          <AssociationSet Name="FK_NEWS_APPLICATIONS" Association="TakamulModel.FK_NEWS_APPLICATIONS">
-            <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
-            <End Role="NEWS" EntitySet="NEWS" />
-          </AssociationSet>
-          <EntitySet Name="USER_TYPES" EntityType="TakamulModel.USER_TYPES" />
           <EntitySet Name="MEMBER_INFO" EntityType="TakamulModel.MEMBER_INFO" />
           <AssociationSet Name="FK_MEMBER_INFO_APPLICATIONS" Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS">
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="MEMBER_INFO" EntitySet="MEMBER_INFO" />
           </AssociationSet>
+          <EntitySet Name="NEWS" EntityType="TakamulModel.NEWS" />
+          <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="APPLICATION_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="APPLICATION_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="APPLICATION_LOGO_PATH" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="DEFAULT_THEME_COLOR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="APPLICATION_EXPIRY_DATE" Type="DateTime" Precision="0" />
@@ -164,50 +145,17 @@
           <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="MODIFIED_BY" Type="Int32" />
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="EVENTS" Relationship="TakamulModel.FK_EVENTS_APPLICATIONS" FromRole="APPLICATIONS" ToRole="EVENTS" />
           <NavigationProperty Name="TICKETS" Relationship="TakamulModel.FK_TICKETS_APPLICATIONS" FromRole="APPLICATIONS" ToRole="TICKETS" />
-          <NavigationProperty Name="NEWS" Relationship="TakamulModel.FK_NEWS_APPLICATIONS" FromRole="APPLICATIONS" ToRole="NEWS" />
           <NavigationProperty Name="MEMBER_INFO" Relationship="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" FromRole="APPLICATIONS" ToRole="MEMBER_INFO" />
           </EntityType>
-        <EntityType Name="EVENTS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="EVENT_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_DATE" Type="DateTime" Precision="0" />
-          <Property Name="EVENT_LOCATION_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_LONGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IS_ACTIVE" Type="Boolean" />
-          <Property Name="CREATED_BY" Type="Int32" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="MODIFIED_BY" Type="Int32" />
-          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="APPLICATIONS" Relationship="TakamulModel.FK_EVENTS_APPLICATIONS" FromRole="EVENTS" ToRole="APPLICATIONS" />
-        </EntityType>
-        <Association Name="FK_EVENTS_APPLICATIONS">
-          <End Type="TakamulModel.APPLICATIONS" Role="APPLICATIONS" Multiplicity="0..1" />
-          <End Type="TakamulModel.EVENTS" Role="EVENTS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APPLICATIONS">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EVENTS">
-              <PropertyRef Name="APPLICATION_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TICKETS">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="TICKET_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="TICKET_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TICKET_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="TICKET_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DEFAULT_IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IS_ACTIVE" Type="Boolean" />
           <Property Name="TICKET_STATUS_ID" Type="Int32" />
@@ -231,54 +179,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="NEWS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="NEWS_TITLE" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="NEWS_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="NEWS_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IS_NOTIFY_USER" Type="Boolean" />
-          <Property Name="IS_ACTIVE" Type="Boolean" />
-          <Property Name="PUBLISHED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="CREATED_BY" Type="Int32" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="MODIFIED_BY" Type="Int32" />
-          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="FileId" Type="Guid" />
-          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FileExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="APPLICATIONS" Relationship="TakamulModel.FK_NEWS_APPLICATIONS" FromRole="NEWS" ToRole="APPLICATIONS" />
-        </EntityType>
-        <Association Name="FK_NEWS_APPLICATIONS">
-          <End Type="TakamulModel.APPLICATIONS" Role="APPLICATIONS" Multiplicity="0..1" />
-          <End Type="TakamulModel.NEWS" Role="NEWS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APPLICATIONS">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="NEWS">
-              <PropertyRef Name="APPLICATION_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="USER_TYPES">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="MEMBER_INFO">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="MEMBER_INFO_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MEMBER_INFO_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="MEMBER_INFO_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MEMBER_INFO_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="CREATED_BY" Type="Int32" />
           <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="MODIFIED_BY" Type="Int32" />
@@ -297,6 +205,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="NEWS_TITLE" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="NEWS_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NEWS_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IS_NOTIFY_USER" Type="Boolean" />
+          <Property Name="IS_ACTIVE" Type="Boolean" />
+          <Property Name="PUBLISHED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="EVENTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="EVENT_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EVENT_LOCATION_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EVENT_LONGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_ACTIVE" Type="Boolean" />
+          <Property Name="EVENT_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -320,25 +264,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EVENTS">
-            <EntityTypeMapping TypeName="TakamulModel.EVENTS">
-              <MappingFragment StoreEntitySet="EVENTS">
-                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
-                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
-                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
-                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
-                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
-                <ScalarProperty Name="EVENT_LONGITUDE" ColumnName="EVENT_LONGITUDE" />
-                <ScalarProperty Name="EVENT_LATITUDE" ColumnName="EVENT_LATITUDE" />
-                <ScalarProperty Name="EVENT_LOCATION_NAME" ColumnName="EVENT_LOCATION_NAME" />
-                <ScalarProperty Name="EVENT_DATE" ColumnName="EVENT_DATE" />
-                <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
-                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
-                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TICKETS">
             <EntityTypeMapping TypeName="TakamulModel.TICKETS">
               <MappingFragment StoreEntitySet="TICKETS">
@@ -358,12 +283,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MEMBER_INFO">
+            <EntityTypeMapping TypeName="TakamulModel.MEMBER_INFO">
+              <MappingFragment StoreEntitySet="MEMBER_INFO">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="MEMBER_INFO_DESCRIPTION" ColumnName="MEMBER_INFO_DESCRIPTION" />
+                <ScalarProperty Name="MEMBER_INFO_TITLE" ColumnName="MEMBER_INFO_TITLE" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NEWS">
             <EntityTypeMapping TypeName="TakamulModel.NEWS">
               <MappingFragment StoreEntitySet="NEWS">
-                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="FileId" ColumnName="FileId" />
                 <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
                 <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
@@ -379,23 +315,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USER_TYPES">
-            <EntityTypeMapping TypeName="TakamulModel.USER_TYPES">
-              <MappingFragment StoreEntitySet="USER_TYPES">
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MEMBER_INFO">
-            <EntityTypeMapping TypeName="TakamulModel.MEMBER_INFO">
-              <MappingFragment StoreEntitySet="MEMBER_INFO">
+          <EntitySetMapping Name="EVENTS">
+            <EntityTypeMapping TypeName="TakamulModel.EVENTS">
+              <MappingFragment StoreEntitySet="EVENTS">
                 <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
                 <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
-                <ScalarProperty Name="MEMBER_INFO_DESCRIPTION" ColumnName="MEMBER_INFO_DESCRIPTION" />
-                <ScalarProperty Name="MEMBER_INFO_TITLE" ColumnName="MEMBER_INFO_TITLE" />
+                <ScalarProperty Name="EVENT_IMG_FILE_PATH" ColumnName="EVENT_IMG_FILE_PATH" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="EVENT_LONGITUDE" ColumnName="EVENT_LONGITUDE" />
+                <ScalarProperty Name="EVENT_LATITUDE" ColumnName="EVENT_LATITUDE" />
+                <ScalarProperty Name="EVENT_LOCATION_NAME" ColumnName="EVENT_LOCATION_NAME" />
+                <ScalarProperty Name="EVENT_DATE" ColumnName="EVENT_DATE" />
+                <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
+                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

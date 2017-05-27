@@ -55,6 +55,7 @@ namespace Takamul.Services
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
             #endregion
 
@@ -186,8 +187,8 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oTicketViewModel.APPLICATION_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nParticipantUserID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.VarChar, oTicketViewModel.TICKET_NAME, 300, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketDesciption", SqlDbType.VarChar, oTicketViewModel.TICKET_DESCRIPTION, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.NVarChar, oTicketViewModel.TICKET_NAME, 300, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketDesciption", SqlDbType.NVarChar, oTicketViewModel.TICKET_DESCRIPTION, 5000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DefaultImagePath", SqlDbType.VarChar, oTicketViewModel.DEFAULT_IMAGE, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
@@ -230,7 +231,7 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, oTicketChatViewModel.TICKET_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Ticket_Participant_Id", SqlDbType.Int, oTicketChatViewModel.TICKET_PARTICIPANT_ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.VarChar, oTicketChatViewModel.REPLY_MESSAGE, int.MaxValue, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.NVarChar, oTicketChatViewModel.REPLY_MESSAGE, 4000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyFilePath", SqlDbType.VarChar, oTicketChatViewModel.REPLY_FILE_PATH, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketChatTypeId", SqlDbType.Int, oTicketChatViewModel.TICKET_CHAT_TYPE_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));

@@ -81,6 +81,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialViewTicketInfo
+        /// <summary>
+        ///  View ticket info
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        public PartialViewResult PartialViewTicketInfo(TicketViewModel oTicketViewModel)
+        {
+            return PartialView("_ViewTicketInfo", oTicketViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -339,6 +351,20 @@ namespace LDC.eServices.Portal.Controllers
         public JsonResult JInserTicket(TicketViewModel oTicketViewModel)
         {
             Response oResponseResult = null;
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            HttpPostedFileBase filebase = null;
+            var oFile = System.Web.HttpContext.Current.Request.Files["TicketImage"];
+            if (oFile != null)
+            {
+                filebase = new HttpPostedFileWrapper(oFile);
+                if (filebase.ContentLength > 0)
+                {
+                    sRealFileName = filebase.FileName;
+                    sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                    oTicketViewModel.DEFAULT_IMAGE = sModifiedFileName;
+                }
+            }
 
             oTicketViewModel.APPLICATION_ID = CurrentApplicationID;
             oTicketViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
@@ -349,6 +375,21 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    if (oFile != null)
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                        //DirectoryPath = Saved Application ID + Inserted Ticket ID 
+                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), oResponseResult.ResponseID.ToString());
+                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(filebase.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                        }
+                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                    }
                     this.OperationResultMessages = CommonResx.MessageEditSuccess;
                     break;
                 case enumOperationResult.Faild:

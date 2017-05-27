@@ -89,7 +89,7 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oUserInfoViewModel.APPLICATION_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeId", SqlDbType.Int, oUserInfoViewModel.USER_TYPE_ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.VarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.NVarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, oUserInfoViewModel.PHONE_NUMBER, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Email", SqlDbType.VarChar, oUserInfoViewModel.EMAIL, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CivilID", SqlDbType.VarChar, oUserInfoViewModel.CIVIL_ID, 50, ParameterDirection.Input));

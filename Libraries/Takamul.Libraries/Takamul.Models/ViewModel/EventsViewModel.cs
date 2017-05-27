@@ -31,7 +31,7 @@ namespace Takamul.Models
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
         public bool IS_ACTIVE { get; set; }
         public int TotalCount { get; set; }
-
+        public string EVENT_IMG_FILE_PATH { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public string BASE64EVENTIMG { set; get; }
@@ -54,6 +54,7 @@ namespace Takamul.Models
             this.MODIFIED_DATE = DateTime.MinValue;
             this.IS_ACTIVE = false;
             this.TotalCount = 0;
+            this.EVENT_IMG_FILE_PATH = string.Empty;
         }
         #endregion
     }

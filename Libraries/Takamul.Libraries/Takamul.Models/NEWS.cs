@@ -26,10 +26,5 @@ namespace Takamul.Models
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
-        public Nullable<System.Guid> FileId { get; set; }
-        public string FileName { get; set; }
-        public string FileExtension { get; set; }
-    
-        public virtual APPLICATIONS APPLICATIONS { get; set; }
     }
 }

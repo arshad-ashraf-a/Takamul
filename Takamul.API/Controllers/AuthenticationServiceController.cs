@@ -86,7 +86,7 @@ namespace Takamul.API.Controllers
                         oApiResponse.ResponseCode = nOTPNumber.ToString();
                         //TODO::integrate with sms service and update status to database
                     }
-                    if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
+                    else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
                     {
                         oApiResponse.OperationResult = -3;
                         oApiResponse.OperationResultMessage = "The user already exists.Please contact app administrator";

@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -251,6 +251,7 @@
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_22-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_27-05-2017.sql" />
     <Content Include="DBScript\Takamul_script_AddNewProc_16-05-17.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Data.sql" />
@@ -937,7 +938,7 @@
     <Content Include="Views\Applications\ApplicationsList.cshtml" />
     <Content Include="Views\Shared\_AppLayout.cshtml" />
     <Content Include="Views\Events\EventsList.cshtml" />
-    <Content Include="Views\Events\AddNewEvent.cshtml" />
+    <Content Include="Views\Events\_AddNewEvent.cshtml" />
     <Content Include="Views\MemberInfo\MemberInfoList.cshtml" />
     <Content Include="Views\MemberInfo\_AddMemberInfo.cshtml" />
     <Content Include="Views\MemberInfo\_EditMemberInfo.cshtml" />
@@ -946,10 +947,10 @@
     <Content Include="Views\Users\UsersList.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\News\AddNewNews.cshtml" />
-    <Content Include="Views\Events\EditEvent.cshtml" />
+    <Content Include="Views\News\_AddNews.cshtml" />
+    <Content Include="Views\Events\_EditEvent.cshtml" />
     <Content Include="Views\News\NewsList.cshtml" />
-    <Content Include="Views\News\EditNews.cshtml" />
+    <Content Include="Views\News\_EditNews.cshtml" />
     <Content Include="Views\ApplicationDashboard\AppDashboard.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicket.cshtml" />
     <Content Include="Views\Users\_AddApplicationUser.cshtml" />
@@ -959,6 +960,7 @@
     <Content Include="Views\Applications\_AddApplication.cshtml" />
     <Content Include="Views\Applications\_EditApplication.cshtml" />
     <Content Include="Views\Users\MembersList.cshtml" />
+    <Content Include="Views\Tickets\_ViewTicketInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

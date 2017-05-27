@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -48,25 +49,25 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region View :: AddNewNews
-        public ActionResult AddNewNews()
+        #region View :: PartialAddNews
+        public ActionResult PartialAddNews()
         {
-            this.PageTitle = "Add New News";
-            this.TitleHead = "Add New News";
+            this.PageTitle = "Add News";
+            this.TitleHead = "Add News";
 
             NewsViewModel oNewsViewModel = new NewsViewModel();
             oNewsViewModel.PUBLISHED_DATE = DateTime.Now;
-            return View(oNewsViewModel);
+            return View("_AddNews", oNewsViewModel);
         }
         #endregion
 
-        #region View :: EditNews
-        public ActionResult EditNews(int nNewsID)
+        #region View :: PartialEditNews
+        public ActionResult PartialEditNews(int nNewsID)
         {
-            NewsViewModel oNewsViewModel = this.oINewsService.oGetNewsDetails(nNewsID);
             this.PageTitle = "Edit New News";
             this.TitleHead = "Edit New News";
-            return View(oNewsViewModel);
+            NewsViewModel oNewsViewModel = this.oINewsService.oGetNewsDetails(nNewsID);
+            return View("_EditNews", oNewsViewModel);
         }
         #endregion
 
@@ -101,43 +102,41 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JSaveNews(NewsViewModel oNewsViewModel)
         {
-            
+
             Response oResponseResult = null;
-            
-            //oNewsViewModel.FileDetails = fileDetails;
-             
+
+            var oFile = System.Web.HttpContext.Current.Request.Files["NewsImage"];
+            HttpPostedFileBase filebase = new HttpPostedFileWrapper(oFile);
+
+            string sRealFileName = filebase.FileName;
+            string sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+            oNewsViewModel.APPLICATION_ID = this.CurrentApplicationID;
+            oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(oNewsViewModel.FORMATTED_PUBLISHED_DATE, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            oNewsViewModel.NEWS_IMG_FILE_PATH = Path.Combine(CurrentApplicationID.ToString(), "News", sModifiedFileName).Replace('\\', '/');
             oNewsViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
-            oNewsViewModel.APPLICATION_ID = CurrentApplicationID;
-            
-           // int InsertedID = this.oINewsService.oInsertNews(oNewsViewModel);
-            //this.OperationResult = oResponseResult.OperationResult;
-            //FileDetail fileDetails = new FileDetail();
-            for (int i = 0; i < Request.Files.Count; i++)
-            {
-                var file = Request.Files[i];
-                if (file != null && file.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(file.FileName);
-                    oNewsViewModel.FileName = fileName;
-                    oNewsViewModel.FileExtension = Path.GetExtension(fileName);
-                    oNewsViewModel.FileId = Guid.NewGuid(); 
 
-                    var path = Path.Combine(Server.MapPath("~/UploadFolder/"), oNewsViewModel.FileId + oNewsViewModel.FileExtension);
-                    file.SaveAs(path);
-
-                }
-
-                oResponseResult = this.oINewsService.oInsertNews(oNewsViewModel);
-
-                break;
-
-            }
-            
+            oResponseResult = this.oINewsService.oInsertNews(oNewsViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
-                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                    {
+                        this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                        //DirectoryPath = Application ID + News Folder
+                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
+                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(filebase.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                        }
+                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                        this.OperationResult = enumOperationResult.Success;
+                    }
                     break;
                 case enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageAddFailed;
@@ -146,8 +145,8 @@ namespace LDC.eServices.Portal.Controllers
             return Json(
                 new
                 {
-                    nResult = 1,
-                    sResultMessages = CommonResx.MessageAddSuccess
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
                 },
                 JsonRequestBehavior.AllowGet);
         }
@@ -164,39 +163,50 @@ namespace LDC.eServices.Portal.Controllers
         public JsonResult JEditNews(NewsViewModel oNewsViewModel)
         {
             Response oResponseResult = null;
-
-            oNewsViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
-            oNewsViewModel.APPLICATION_ID = CurrentApplicationID;
-
-            if (Request.Files.Count > 0)
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            HttpPostedFileBase filebase = null;
+            var oFile = System.Web.HttpContext.Current.Request.Files["NewsImage"];
+            if (oFile != null)
             {
-                for (int i = 0; i < Request.Files.Count; i++)
+                filebase = new HttpPostedFileWrapper(oFile);
+                if (filebase.ContentLength > 0)
                 {
-                    var file = Request.Files[i];
-
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        oNewsViewModel.FileExtension = Path.GetExtension(fileName);
-                        oNewsViewModel.FileName = fileName;
-                        oNewsViewModel.FileId = Guid.NewGuid();                        
-                        var path = Path.Combine(Server.MapPath("~/UploadFolder/"), oNewsViewModel.FileId + oNewsViewModel.FileExtension);
-                        file.SaveAs(path);
-                        oResponseResult = this.oINewsService.oUpdateNews(oNewsViewModel);
-
-                    }
+                    sRealFileName = filebase.FileName;
+                    sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                    oNewsViewModel.NEWS_IMG_FILE_PATH = Path.Combine(this.CurrentApplicationID.ToString(), "News", sModifiedFileName).Replace('\\', '/');
                 }
             }
-            else
-            {
-                oResponseResult = this.oINewsService.oUpdateNews(oNewsViewModel);
-                this.OperationResult = oResponseResult.OperationResult;
-            }
+
+            oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(oNewsViewModel.FORMATTED_PUBLISHED_DATE, "d/M/yyyy", CultureInfo.InvariantCulture);
+            
+            oNewsViewModel.MODIFIED_BY = Convert.ToInt32(CurrentUser.nUserID);
+
+            oResponseResult = this.oINewsService.oUpdateNews(oNewsViewModel);
+            this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
-                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                    {
+                        this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                        if (oFile != null)
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                            //DirectoryPath = Saved Application ID + News Folder
+                            string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
+                            string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                            oFileAccessService.CreateDirectory(sDirectoryPath);
+                            byte[] fileData = null;
+                            using (var binaryReader = new BinaryReader(filebase.InputStream))
+                            {
+                                fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                            }
+                            oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                        }
+                        this.OperationResult = enumOperationResult.Success;
+                    }
                     break;
                 case enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageAddFailed;
@@ -283,12 +293,7 @@ namespace LDC.eServices.Portal.Controllers
                     this.OperationResultMessages = CommonResx.MessageDeleteFailed;
                 }
 
-                //Delete file from the file system
-                var path = Path.Combine(Server.MapPath("~/UploadFolder/"), files.FileId + files.FileExtension);
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
+                ////TODO :: Delete file from the file system
 
             }
 

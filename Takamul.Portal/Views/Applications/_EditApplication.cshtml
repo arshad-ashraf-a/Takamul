@@ -88,19 +88,20 @@
                 </div>
             </div>
 
-            @* Application Expiry Date *@
+            @* Is Active *@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Is Active</label>
                         <div class="col-lg-5">
-                                @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })                            </div>
+                            @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
+    </div>
+
 }
 <script type="text/javascript">
     $(".styled").uniform({

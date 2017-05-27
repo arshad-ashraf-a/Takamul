@@ -26,18 +26,17 @@
                 background-color: #9eeffe;
             }
 </style>
-@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddEvent", @class = "form-horizontal" }))
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmEditEvent", @class = "form-horizontal" }))
 {
     <div class="col-md-12">
 
         <div class="panel panel-white">
             <div class="panel-heading">
-                <h6 class="panel-title"> Add New Event</h6>
-
+                <h6 class="panel-title"> Edit New Event</h6>
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-
+                @Html.HiddenFor(model => model.ID)
                 @* Event Name*@
                 <div class="form-group">
                     <div class="col-md-12">
@@ -57,7 +56,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">Event Description&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_DESCRIPTION, new { htmlAttributes = new { @class = "form-control", placeholder = "event description" } })
+                                <textarea class="form-control" rows="4" placeholder="event description" cols="5" id="EVENT_DESCRIPTION" name="EVENT_DESCRIPTION">@Model.EVENT_DESCRIPTION</textarea>
                             </div>
                         </div>
 
@@ -119,11 +118,68 @@
 
                     </div>
                 </div>
+
+                @* Is Active*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Is Active</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @* Event Image View *@
+                @if (!string.IsNullOrEmpty(Model.EVENT_IMG_FILE_PATH))
+                {
+                    <div class="form-group no-margin-bottom">
+                        <div class="col-md-12">
+                            <label class="col-lg-4 control-label">Uploaded Event Image</label>
+                            <div class="col-md-8">
+                                <div class="panel panel-flat">
+                                    <div class="panel-body p-5">
+                                        <ul class="media-list">
+                                            <li class="media">
+                                                <div class="media-left media-middle">
+                                                    <i class="icon-file-picture icon-2x text-muted"></i>
+                                                </div>
+                                                <div class="media-body valign-middle">
+                                                    <a href="#" onclick="fnDownloadFile(); return false;" class="media-heading text-semibold"> @System.IO.Path.GetFileName(Model.EVENT_IMG_FILE_PATH)</a>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <ul class="icons-list icons-list-extended text-nowrap">
+                                                        <li><a href="#" onclick="fnDownloadFile(); return false;"><i class="icon-download"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                @* Event Image *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Event Image</label>
+                            <div class="col-lg-8">
+                                <input type="file" id="fuEventImage" class="file-styled">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveEvent()">Save</button>
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditEvent()">Update</button>
             <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
             <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
         </div>
@@ -136,9 +192,12 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
+        $(".styled").uniform({
+            radioClass: 'choice'
+        });
 
         function fnEventValidateInitialization() {
-            var validator = $('#frmAddEvent').validate({
+            var validator = $('#frmEditEvent').validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
                 focusInvalid: true,
@@ -222,30 +281,81 @@
         }
 
 
-        function fnSaveEvent() {
-            if (!$("#frmAddEvent").valid()) {
+        function fnEditEvent() {
+            if (!$("#frmEditEvent").valid()) {
                 return false;
             }
-            var formData = $("#frmAddEvent").serialize();
+
+            var data = new FormData();
+            var files = $("#fuEventImage").get(0).files;
+
+            if (files.length > 0) {
+
+                var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+                var nUploadedSize = fnCheckFileSize('fuEventImage');
+                if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    return false;
+                }
+
+                var extension = $("#fuEventImage").val().split('.').pop().toUpperCase();
+                var bIsInValidExt = fnIsValidFileExtension(extension);
+                if (bIsInValidExt) {
+                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    return false;
+                }
+            }
+
+            var formData = $("#frmEditEvent").serializeArray();
+            data.append("EventImage", files[0]);
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
 
             $.ajax({
-                url: '@Url.Action("JSaveEvent", "Events")',
+                url: '@Url.Action("JEditEvent", "Events")',
                 type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                    if (result.nResult == 1) {
-                        fnClearControls();
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            window.location.reload();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
                     }
                     else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
                     }
                 },
-                error: function () {
+                error: function (er) { }
 
-                }
-            })
+            });
+        }
+
+        function fnIsValidFileExtension(sExtension) {
+            var bIsInValidExt = false;
+            if (sExtension != "PNG" && sExtension != "JPG" && sExtension != "JPEG") {
+                bIsInValidExt = true;
+            }
+            return bIsInValidExt;
+        }
+
+        function fnCheckFileSize(fileid) {
+            var fileSize = 0;
+            try {
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
+                fileSize = fileSize / 1024; //size in kb
+            }
+            catch (e) {
+                fileSize = 0;
+                console.log(ex);
+            }
+            return fileSize;
         }
 
         function fnClearControls() {
@@ -322,10 +432,19 @@
             });
         }
 
+        function fnDownloadFile() {
+            var sFileFullPath = '@Model.EVENT_IMG_FILE_PATH';
+            window.location = '@Url.Action("DownloadFile", "Common")?sFileFullPath=' + sFileFullPath;
+            return false;
+        }
+
         $("#EVENT_LOCATION_NAME").on('change', function () {
             $(this).closest('form').validate().element($(this));
             $(this).closest('form').find($('#EVENT_LATITUDE')).validate();
             $(this).closest('form').find($('#EVENT_LONGITUDE')).validate();
         });
+
+
+
     </script>
 }
