@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="730e63fc61a94b9c838c3303fa74a033" Name="Diagram1" ZoomLevel="87">
+      <Diagram DiagramId="730e63fc61a94b9c838c3303fa74a033" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="TakamulModel.APPLICATIONS" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="2.125" PointY="0.5" />
         <AssociationConnector Association="TakamulModel.FK_EVENTS_APPLICATIONS" />

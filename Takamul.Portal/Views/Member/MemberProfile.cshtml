@@ -1,0 +1,664 @@
+﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Infrastructure.Utilities
+
+@{
+    
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<div class="col-md-12 has-detached-left  pace-done">
+    <div class="sidebar-detached">
+        <div class="sidebar sidebar-default sidebar-separate">
+            <div class="sidebar-content">
+
+                <!-- User details -->
+                <div class="content-group">
+                    <div class="panel-body bg-indigo-400 border-radius-top text-center" style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png); background-size: contain;">
+                        <div class="content-group-sm">
+                            <h6 class="text-semibold no-margin-bottom">
+                                @Model.FULL_NAME
+                            </h6>
+
+                            <span class="display-block">@Model.USER_TYPE_NAME</span>
+                        </div>
+
+                        <a href="#" class="display-inline-block content-group-sm">
+                            <img src="~/assets/images/profile.jpg" class="img-circle img-responsive" alt="" style="width: 110px; height: 110px;">
+                        </a>
+                    </div>
+
+                    <div class="panel no-border-top no-border-radius-top">
+                        <ul class="navigation">
+                            <li>
+                                <a href="#messages" data-toggle="tab">
+                                    Active
+                                    @if ((bool)Model.IS_ACTIVE)
+                                    {
+                                        <i class='icon-checkmark-circle text-success position-left'></i>
+                                    }
+                                    else
+                                    {
+                                        <i class='icon-cancel-circle2 text-warning position-left'></i>
+                                    }
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#messages" data-toggle="tab">
+                                    Blocked
+                                    @if ((bool)Model.IS_BLOCKED)
+                                    {
+                                        <span onclick="ShowAlertDialog('@Model.BLOCKED_REMARKS', '@Buttons.Close');" class="text-primary underlined clickable text-italic">[View Reason]</span>
+                                    }
+                                    @if ((bool)Model.IS_BLOCKED)
+                                    {
+                                        <i class='icon-checkmark-circle text-success position-left'></i>
+                                    }
+                                    else
+                                    {
+                                        <i class='icon-cancel-circle2 text-warning position-left'></i>
+                                    }
+                                </a>
+
+                            </li>
+                            @if (Model.UserType == Infrastructure.Core.enumUserType.MobileUser)
+                            {
+                                <li>
+                                    <a href="#messages" data-toggle="tab">
+                                        OTP Verified
+                                        @if ((bool)Model.IS_OTP_VALIDATED)
+                                        {
+                                            <i class='icon-checkmark-circle text-success position-left'></i>
+                                        }
+                                        else
+                                        {
+                                            <i class='icon-cancel-circle2 text-warning position-left'></i>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                            <li class="navigation-divider"></li>
+                            <li class="text-center">
+                                <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /user details -->
+                <!-- /user details -->
+                @if (Model.UserType != Infrastructure.Core.enumUserType.MobileUser && (Model.ID == BaseController.CurrentUser.nUserID || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin))
+                {
+                    <!-- Account Settings -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <span>Account Settings</span>
+                            <ul class="icons-list">
+                                <li><a href="#" data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="category-content">
+                            <ul class="progress-list">
+                                <li>
+                                    <label>User Name</label>
+                                    <input type="text" id="txtUserName" value="@Model.USER_NAME" class="form-control" disabled />
+                                </li>
+
+                                <li>
+                                    <label>New Password</label>
+                                    <input type="password" id="txtPassword" name="txtPassword" class="form-control" />
+                                </li>
+
+                                <li>
+                                    <label>Confirm Password</label>
+                                    <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
+                                </li>
+
+                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> Change Password </button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /Account Settings -->
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container-detached">
+        <div class="content-detached" style="margin-left:230px;">
+
+            <!-- Tab content -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="profile">
+
+                    <!-- Daily stats -->
+                    @*<div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                                <div class="heading-elements">
+                                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
+
+                                    <ul class="icons-list">
+                                        <li><a data-action="reload"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="chart-container">
+                                    <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!-- /daily stats -->
+                    <!-- Profile info -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Profile information<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+
+                                    <li><a data-action="close"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <form id="frmProfileInformation" class="form-horizontal" action="#" novalidate="novalidate">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Full name</label>
+                                            <input type="text" id="txtFullName" value="@Model.FULL_NAME" name="txtFullName" class="form-control">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Civil ID</label>
+                                            <input type="text" id="txtCivilID" name="txtCivilID" value="@Model.CIVIL_ID" class="form-control">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Phone Number</label>
+                                            <input type="text" id="txtPhoneNumber" name="txtPhoneNumber" value="@Model.PHONE_NUMBER" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Area</label>
+                                            <select id="ddlAreaddlID" name="ddlAreaddlID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Wilayat</label>
+                                            <select id="ddlWilayatddlID" name="ddlWilayatddlID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Village</label>
+                                            <select id="ddlVillageID" name="ddlVillageID"
+                                                    class="form-control col-xs-12 col-sm-9"
+                                                    style="padding:0;"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                            <input type="text" id="txtEmail" name="txtEmail" value="@Model.EMAIL" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Address</label>
+                                            <input type="text" id="txtAddress" name="txtAddress" value="@Model.ADDRESS" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Restrict Ticket Submission</label>
+                                            <br />
+                                            <input type="checkbox" class="styled" id="chkRestrictTicketSubmission" checked="@Model.IS_TICKET_SUBMISSION_RESTRICTED">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Ticket Submission Interval Days</label>
+                                            <input id="txtTicketSubmissionIntervalDays" value="@Model.TICKET_SUBMISSION_INTERVAL_DAYS" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="button" class="btn bg-grey" id="btnUpdateProfileInformation" onclick="fnUpdateProfileInformation();">Update <i class="icon-arrow-right14 position-right"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /profile info -->
+                    @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
+                    {
+                    <!-- Permissions settings -->
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Permissions settings<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="collapse"></a></li>
+
+                                        <li><a data-action="close"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Eugene</td>
+                                                <td>Kopyov</td>
+                                                <td>@@Kopyov</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Victoria</td>
+                                                <td>Baker</td>
+                                                <td>@@Vicky</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>James</td>
+                                                <td>Alexander</td>
+                                                <td>@@Alex</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Franklin</td>
+                                                <td>Morrison</td>
+                                                <td>@@Frank</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- /Permissions settings -->
+                    }
+                </div>
+            </div>
+            <!-- /tab content -->
+
+        </div>
+    </div>
+</div>
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+        var sAreaCode = sWilayatCode = sVillageCode = "-99";
+        function fnFillAreas() {
+            var vDefer = $.Deferred();
+            var bIsDataBinded = false;
+            $.when
+               (
+
+            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', false, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '- Select Area - ', '- No data found -', [],
+                function () {
+                    //Success Function
+                    $("#ddlAreaddlID").select2({
+                        width: '100%'
+                    })
+                    .on('change', function () {
+                        //$(this).closest('form').validate().element($(this));
+                        fnFillWilayats($("#ddlAreaddlID").val());
+                    });
+                    bIsDataBinded = true;
+
+                },
+                function () {
+                    //Error
+                })
+
+
+             ).done(
+                function () {
+                    fnFillWilayats(-99);
+                    //Resolve promise
+                    vDefer.resolve(bIsDataBinded);
+                });
+
+            return vDefer.promise();
+        }
+
+        function fnFillWilayats(sAreaCode) {
+            var oParameters = {};
+            oParameters['sAreaCode'] = sAreaCode;
+
+            //FillDropDownCascade(Url, HttpVerb, Async, ParentDropDown, ChildDropDown, Key, Value, SelectMessage, NotExistMessage, Parameters, onSuccess, onFailure) {
+
+            AjaxCallAndFillCascadeDropDown('@Url.Action("JGetAllWilayat", "Common")',
+                                            'Post', false,
+                                            "ddlAreaddlID", "ddlWilayatddlID",
+                                            "WILAYATCODE", "WILLAYATNAME",
+                                            "- Select Wilayat -",
+                                            "- No data found -",
+                                            oParameters, true);
+
+
+
+            $("#ddlWilayatddlID").select2({ width: '100%' })
+                                .on('change', function () {
+                                    //$(this).closest('form').validate().element($(this));
+                                    fnFillVillages(sAreaCode,$("#ddlWilayatddlID").val());
+                                });
+            fnFillVillages(sAreaCode,$("#ddlWilayatddlID").val());
+        }
+
+        function fnFillVillages(sAreaCode,sWilayatCode) {
+            var oParameters = {};
+            oParameters['sAreaCode'] = sAreaCode;
+            oParameters['sWilayatCode'] = sWilayatCode;
+            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', false, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '- Select Village - ', '- No data found -', oParameters,
+                function () {
+                    //Success Function
+                    $("#ddlVillageID").select2({
+                        width: '100%'
+                    })
+                    .on('change', function () {
+                        //$(this).closest('form').validate().element($(this));
+                    });
+                },
+                function () {
+                    //Error
+                });
+        }
+
+        function fnProfileInformationValidateInitialization() {
+
+            var validator = $('#frmProfileInformation').validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    txtFullName: {
+                        required: true
+                    },
+                    txtCivilID: {
+                        required: true
+                    },
+                    txtPhoneNumber: {
+                        required: true
+                    }
+                },
+                messages: {
+                    txtFullName: "This field is required.",
+                    txtCivilID: "This field is required.",
+                    txtPhoneNumber: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+        function fnUpdateProfileInformation(){
+
+            $('#frmProfileInformation').removeClass('hide');
+            if (!$('#frmProfileInformation').valid()) {
+                return false;
+            }
+
+            var nAreaID = Number($("#ddlAreaddlID").val());
+            var nWilayatID = Number($("#ddlWilayatddlID").val());
+            var nVillageID = Number($("#ddlVillageID").val());
+            var bIsTicketSubmissionRestricted = $("#chkRestrictTicketSubmission").is(':checked') ? true : false;
+
+            var dataToSend = JSON.stringify({
+                ID: Number(@Model.ID),
+                FULL_NAME: $("#txtFullName").val(),
+                PHONE_NUMBER: $("#txtPhoneNumber").val(),
+                EMAIL: $("#txtEmail").val(),
+                CIVIL_ID: $("#txtCivilID").val(),
+                ADDRESS: $("#txtAddress").val(),
+                AREA_ID: nAreaID,
+                WILAYAT_ID: nWilayatID,
+                VILLAGE_ID: nVillageID,
+                TICKET_SUBMISSION_INTERVAL_DAYS: $("#txtTicketSubmissionIntervalDays").val(),
+                IS_TICKET_SUBMISSION_RESTRICTED:bIsTicketSubmissionRestricted
+            });
+
+
+
+            $.ajax({
+                url: '@Url.Action("JUpdateProfileInformation", "Users")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    if (response.nResult == 1) {
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Success)
+                    }
+                    else{
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Error)
+                    }
+                },
+                error: function (response) {
+                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                }
+            })
+        }
+
+        function fnUpdateUserPassword(){
+            var bIsEnteredSamePassword =  $("#txtPassword").val() ===  $("#txtConfirmPassword").val();
+            if (!bIsEnteredSamePassword) {
+                ShowStatusBarNotification("Password and confirm password do not match.Please enter it again.", NotificationType.Warning)
+                return false;
+            }
+
+
+            var dataToSend = JSON.stringify({
+                nUserID: Number(@Model.ID),
+                sPassword: $("#txtPassword").val()
+            });
+
+            $.ajax({
+                url: '@Url.Action("JUpdateUserPassword", "Users")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (response) {
+                    if (response.nResult == 1) {
+                        $("#txtPassword").val("") ;  $("#txtConfirmPassword").val("");
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Success)
+                    }
+                    else{
+                        ShowStatusBarNotification(response.sResultMessages, NotificationType.Error)
+                    }
+                },
+                error: function (response) {
+                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                }
+            })
+        }
+
+        function fnLoadChangeUserStatus() {
+            var bIsOTPValidated = @Model.IS_OTP_VALIDATED.ToString().ToLower();
+            var bIsActive = @Model.IS_ACTIVE.ToString().ToLower() == true ? true :false;
+            var bIsBlocked = @Model.IS_BLOCKED.ToString().ToLower() == true ? true :false;
+
+            var dataToSend = JSON.stringify({
+                ID: @Model.ID,
+                IS_ACTIVE: bIsActive,
+                IS_BLOCKED:bIsBlocked,
+                IS_OTP_VALIDATED: bIsOTPValidated,
+                UserType: Number(@Model.USER_TYPE_ID),
+                BLOCKED_REMARKS: '@Model.BLOCKED_REMARKS'
+            });
+
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Update User Status',
+                autoOpen: true,
+                position: { my: "center", at: "top-50" },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+
+                    $.ajax({
+                        url: '@Url.Action("PartialChangeUserStatus", "Users")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Update",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             //Update user status
+                             fnUpdateUserStatus();
+
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+
+        }
+
+        function fnUpdateUserStatus(){
+            var formData = $("#frmUpdateUserStatus").serialize();
+            $.ajax({
+                url: '@Url.Action("JUpdateUserStatus", "Users")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                        $("#dvPopUpWindow").dialog("close");
+                        window.location.reload();
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+                    $(this).dialog("close");
+                }
+            })
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnProfileInformationValidateInitialization();
+            var sAreaID = "-99";
+            var sWilayatID = "-99";
+            var sVillageID= "-99";
+            sAreaID = @(Model.AREA_ID.HasValue ? Model.AREA_ID.Value.ToString() : "-99");
+            sWilayatID = @(Model.WILAYAT_ID.HasValue ? Model.WILAYAT_ID.Value.ToString() : "-99");
+            sVillageID = @(Model.VILLAGE_ID.HasValue ? Model.VILLAGE_ID.Value.ToString() : "-99");
+
+            var promiseDeclarationBind =  fnFillAreas();
+            promiseDeclarationBind.done(function (bIsDataBinded) { 
+
+                if (sAreaID != "-99") {
+                    $("#ddlAreaddlID").select2('val', String(sAreaID));
+                }
+            });
+
+            if (sWilayatID != "-99") {
+                $("#ddlWilayatddlID").select2('val', String(sWilayatID));
+            }
+
+            if (sVillageID != "-99") {
+                //$("#ddlVillageID").select2('val', String(sVillageID));
+                $("#ddlVillageID").val(String(sVillageID)).trigger('change.select2');
+            }
+
+            //if (sAreaID != "-99") {
+            //    $("#ddlAreaddlID").select2('val', String(sAreaCode));
+            //}
+
+
+        });
+
+    </script>
+}

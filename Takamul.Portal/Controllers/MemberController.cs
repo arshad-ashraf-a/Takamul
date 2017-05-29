@@ -10,9 +10,9 @@ using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
 
-namespace LDC.eServices.Portal.Controllers
+namespace Takamul.Portal.Controllers
 {
-    public class UsersController : DomainController
+    public class MemberController : DomainController
     {
         #region ::  State ::
         #region Private Members
@@ -25,26 +25,26 @@ namespace LDC.eServices.Portal.Controllers
         /// UsersController Constructor 
         /// </summary>
         /// <param name="oIUserServicesInitializer"></param>
-        public UsersController(IUserServices oIUserServicesInitializer)
+        public MemberController(IUserServices oIUserServicesInitializer)
         {
             this.oIUserServicesService = oIUserServicesInitializer;
         }
-        #endregion
+        #endregion 
 
         #region :: Behaviour ::
 
-        #region View :: UsersList
-        public ActionResult UsersList()
+        #region View :: MembersList
+        public ActionResult MembersList()
         {
-            this.PageTitle = "Users List";
-            this.TitleHead = "Users List";
+            this.PageTitle = "Member List";
+            this.TitleHead = "Member List";
 
             return View();
         }
         #endregion
 
-        #region View :: UserProfile
-        public ActionResult UserProfile(int nUserID)
+        #region View :: MemberProfile
+        public ActionResult MemberProfile(int nUserID)
         {
             UserInfoViewModel oUserInfoViewModel = this.oIUserServicesService.oGetUserDetails(nUserID);
             this.PageTitle = "User Profile";
@@ -54,31 +54,31 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region View :: PartialAddUser
+        #region View :: PartialAddMember
         /// <summary>
         /// Add User
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult PartialAddUser()
+        public PartialViewResult PartialAddMember()
         {
             UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
-            return PartialView("_AddApplicationUser", oUserInfoViewModel);
+            return PartialView("AddMember", oUserInfoViewModel);
         }
         #endregion
 
-        #region View :: PartialChangeUserStatus
+        #region View :: PartialChangeMemberStatus
         /// <summary>
         /// Change user status 
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public PartialViewResult PartialChangeUserStatus(UserInfoViewModel oUserInfoViewModel)
+        public PartialViewResult PartialChangeMemberStatus(UserInfoViewModel oUserInfoViewModel)
         {
             return PartialView("_ChangeUserStatus", oUserInfoViewModel);
         }
         #endregion
 
-        
+
 
         #endregion
 
@@ -128,10 +128,10 @@ namespace LDC.eServices.Portal.Controllers
 
             switch (this.OperationResult)
             {
-                case enumOperationResult.Success:
+                case Infrastructure.Core.enumOperationResult.Success:
                     this.OperationResultMessages = CommonResx.MessageEditSuccess;
                     break;
-                case enumOperationResult.Faild:
+                case Infrastructure.Core.enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageEditFailed;
                     break;
             }
@@ -163,10 +163,10 @@ namespace LDC.eServices.Portal.Controllers
 
             switch (this.OperationResult)
             {
-                case enumOperationResult.Success:
+                case Infrastructure.Core.enumOperationResult.Success:
                     this.OperationResultMessages = CommonResx.MessageEditSuccess;
                     break;
-                case enumOperationResult.Faild:
+                case Infrastructure.Core.enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageEditFailed;
                     break;
             }
@@ -260,7 +260,19 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-         
+        #region Method :: JsonResult :: JGetAllMembers
+        /// <summary>
+        /// Get all members
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetAllMembers(string sUserSearch, int nPage, int nRows, string sColumnName, string sColumnOrder)
+        {
+            var lstUsers = this.oIUserServicesService.lGetAllMembers(sUserSearch, nPage, nRows);
+            return Json(lstUsers, JsonRequestBehavior.AllowGet);
+        }
         #endregion
+        #endregion
+
     }
 }

@@ -76,7 +76,36 @@ namespace LDC.eServices.Portal.Controllers
             return PartialView("_EditApplication", oApplicationViewModel);
         }
         #endregion
+        #region View :: MembersList
 
+        
+        public ActionResult MembersList()
+        {
+            if (BaseController.CurrentUser.UserType == enumUserType.Admin)
+            {
+                this.PageTitle = "Members List";
+                this.TitleHead = "Members List";
+
+                return View("~/Views/Member/MembersList.cshtml");
+            }
+            else
+            {
+                return RedirectToAction("Index", "AccessDenied");
+            }
+        }
+        #endregion
+
+        #region View :: PartialAddMember
+        /// <summary>
+        /// Add User
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult PartialAddMember()
+        {
+            UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
+            return PartialView("~/Views/Member/_AddMember", oUserInfoViewModel);
+        }
+        #endregion
         #endregion
 
         #region ::  Methods ::

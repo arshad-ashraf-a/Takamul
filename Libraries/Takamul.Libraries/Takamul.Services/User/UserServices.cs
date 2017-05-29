@@ -77,6 +77,7 @@ namespace Takamul.Services
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserSearch", SqlDbType.VarChar, sUserSeach, 100, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));

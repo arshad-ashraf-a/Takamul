@@ -1,0 +1,389 @@
+﻿
+@{
+    ViewBag.Title = "MembersList";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+ <div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"></div>
+            <form id="frmUserList" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title"> &nbsp;</h6>
+                        <div class="heading-elements">
+                            <div class="col-md-12">
+                                <div class="pull-right content-group-sm">
+                                    
+                                    <div class="col-md-5">
+                                        <div class="input-group content-group">
+
+                                            <div class="has-feedback has-feedback-left">
+                                                <input type="text" id="txtSearchUser" class="form-control input-xs" placeholder="search user">
+                                                <div class="form-control-feedback">
+                                                    <i class="icon-search4 text-muted text-size-base"></i>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" onclick="fnBindAllUsers(); return false;" class="btn btn-primary btn-xs">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 pull-right">
+                                        <a title="Add new user" href="#" onclick="fnLoadPartialAddUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New User</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="fakeWidth col-md-12"></div>
+                            <div id="dvUsers">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+        var enmUserType = { Staff: 3, MobileUser: 4 };
+        var sGridViewSelector = "grid-table";
+        var sGridViewPagerSelector = "grid-pager";
+        function fnBindAllUsers() {
+            ShowLoader();
+            $("#dvUsers").hide();
+            $("#dvUsers").empty();
+            var table = document.createElement('table');
+            table.id = sGridViewSelector;
+            var pager = document.createElement('div');
+            pager.id = sGridViewPagerSelector;
+
+            $('#dvUsers').append(table);
+            $('#dvUsers').append(pager);
+
+            var ConstantsNames =
+                {
+                    ID: 'ID',
+                    UserFullName: 'FULL_NAME',                  
+                    PhoneNumber: 'PHONE_NUMBER',
+                    Email: 'EMAIL',
+                    IsBlocked: 'IS_BLOCKED',
+                    IsActive: 'IS_ACTIVE',
+                    IsOTPVerified: 'IS_OTP_VALIDATED',
+                    OTPNumber: 'OTP_NUMBER',
+                    CreatedDate: 'CREATED_DATE'
+                };
+            var sCaption = 'All Users';
+            var oArrColumnNames = [
+                '',//Hidden Columns Represent ID Int Value               
+                'Full Name',               
+                'Phone Number',
+                'Email',
+                'Is Blocked',
+                'Is Active',
+                'OTP Verified',
+                'OTP Number',
+                'Created Date',
+                'Options' // Options
+            ];
+
+             
+            var vUserSearch = $("#txtSearchUser").val();
+
+            var params = {                 
+                'sUserSearch': vUserSearch
+            };
+            var sBindDataUrl = '@Url.Action("JGetApplicationUsers", "Member")' + '?' + jQuery.param(params);
+            //var sBindDataUrl = '@Url.Action("JGetApplicationUsers", "Member")';
+
+            var sAddUrl = "#";
+            var sEditUrl = "#";
+            var sDeleteUrl = "#";
+            var oArrGridContextMenu = [
+                                        { MenuTitle: "Options" },
+                                        { Caption: "Details", EventName: "fnGoToUserProfile();", RowId: true }
+            ];
+            var oArrColsModel = [
+                    {
+                        name: ConstantsNames.ID, editable: false,
+                        key: true, hidden: true
+                    },
+                     
+                     {
+                         name: ConstantsNames.UserFullName,
+                         width: 100, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             return "<div class='text-semibold'><a onclick='fnGoToUserProfile(" + rowObject.ID + ")' href='#'>" + rowObject.FULL_NAME + "</a></div>";
+                         }
+                     },                    
+                    {
+                        name: ConstantsNames.PhoneNumber,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.Email,
+                        width: 100, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.IsBlocked,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_BLOCKED;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.IsActive,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                     {
+                         name: ConstantsNames.IsOTPVerified,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             var htmlString = '';
+                             if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
+                                 var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
+                                 if (bIsOTPVerified != null) {
+
+                                     if (bIsOTPVerified) {
+                                         htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
+                                     }
+                                     else {
+                                         htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                     }
+                                 }
+                             }
+                             return htmlString;
+                         }
+                     },
+                     {
+                         name: ConstantsNames.OTPNumber,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center
+                     },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 50, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                    }
+            ];
+
+            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
+            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+
+                $(window).bind('resize', function () {
+                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
+                }).trigger('resize');
+
+
+                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
+
+                $("#dvUsers").show();
+                HideLoader();
+            });
+        }
+
+        function fnGoToUserProfile(nUserID) {
+            debugger;
+            var vUserID = -99;
+            if (nUserID != null && nUserID != undefined && nUserID != -99) {
+                vUserID = nUserID;
+            }
+            else {
+                var gdUser = $('#' + sGridViewSelector);
+                vUserID = gdUser.jqGrid('getGridParam', 'selrow');
+            }
+            var link = '@Url.Action("MemberProfile", "Member", new { nUserID = "replace" })';
+            link = link.replace("replace", vUserID);
+
+            window.location.href = link;
+        }
+
+        function fnLoadPartialAddUser() {
+            $("#dvPopUpWindow").dialog({
+                title: 'Add User',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAddMember", "Member")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                            fnAddUserValidateInitialization("frmAddUserPartialPage");
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                     {
+                         text: "Save",
+                         "class": 'btn btn-sm bg-slate',
+                         click: function () {
+                             fnSaveUser();
+                         }
+                     },
+                     {
+                         text: 'Cancel',
+                         "class": 'btn btn-sm btn-default',
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     }
+                ]
+            });
+        }
+
+        function fnAddUserValidateInitialization(sFormID) {
+            debugger;
+            var validator = $('#' + sFormID).validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    FULL_NAME: {
+                        required: true
+                    },
+                    PHONE_NUMBER: {
+                        required: true
+                    }
+                },
+                messages: {
+                    FULL_NAME: "This field is required.",
+                    PHONE_NUMBER: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+        function fnSaveUser() {
+            if (!$("#frmAddUserPartialPage").valid()) {
+                return false;
+            }           
+
+            var description;
+            var bAdmRights;
+            var rightparams;
+
+            var formData = $("#frmAddUserPartialPage").serialize();
+            $.ajax({
+                url: '@Url.Action("JInsertUser", "Members")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                        $("#dvPopUpWindow").dialog("close");
+                        fnBindAllUsers();
+                    }
+                    else {
+                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                    }
+                },
+                error: function () {
+                    $(this).dialog("close");
+                }
+            })
+        }
+
+
+        //Entry Point
+        $(document).ready(function () {
+            fnBindAllUsers();
+
+        });
+    </script>
+}

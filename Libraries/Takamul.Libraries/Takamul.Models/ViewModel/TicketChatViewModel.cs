@@ -27,6 +27,7 @@ namespace Takamul.Models.ViewModel
         public int TICKET_CHAT_TYPE_ID { get; set; }
         public string CHAT_TYPE { get; set; }
         public string PARTICIPANT_FULL_NAME { get; set; }
+        public int TICKET_STATUS { get; set; }
 
         #region :: Constructor ::
         public TicketChatViewModel()
@@ -41,6 +42,7 @@ namespace Takamul.Models.ViewModel
             this.TICKET_CHAT_TYPE_ID = -99;
             this.CHAT_TYPE = string.Empty;
             this.PARTICIPANT_FULL_NAME = string.Empty;
+            TICKET_STATUS = -99;
         } 
         #endregion
     }

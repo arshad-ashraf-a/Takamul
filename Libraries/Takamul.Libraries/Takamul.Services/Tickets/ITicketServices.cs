@@ -91,5 +91,14 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oUpdateTicket(int nTicketID, int nTicketStatusID, bool nIsActive, string sRejectReason, int nDoneBy);
         #endregion
+        #region Method :: Response :: oResolveTicket
+        /// <summary>
+        /// Udpate Ticket
+        /// </summary>
+        /// <param name="oTicketChatViewModel"></param>
+        /// <returns></returns>
+        Response oResolveTicket(int nTicketID, int nTicketStatusID, int nDoneBy);
+        #endregion
+        
     }
 }

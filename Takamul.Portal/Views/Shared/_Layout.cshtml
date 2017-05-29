@@ -96,8 +96,8 @@
 
                                 @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
                                 {
-                                    <li><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
-                                    <li><a href="@Url.Action("MembersList", "Users")" id="layout1"><i class="icon-list-unordered"></i> All Members</a></li>
+                                    <li class="active"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+                                    <li ><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> All Members</a></li>
                                 }
                                 else
                                 {

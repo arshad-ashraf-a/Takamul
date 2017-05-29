@@ -342,6 +342,49 @@ namespace Takamul.API.Controllers
             oApiResponse.OperationResultMessage = "Model validation failed";
             return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
+        #endregion
+
+        #region Method :: HttpResponseMessage :: ResolveTicket
+        // POST: api/TakamulTicket/UpdateTicket
+        /// <summary>
+        /// Post a ticket chat
+        /// </summary>
+        /// <param name="oTicketId"></param>
+        /// /// <param name="oUserid"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage ResolveTicket(int oTicketId,int oUserid)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+            if (ModelState.IsValid)
+            {
+                try
+                {                  
+
+                    Response oResponse = this.oITicketServices.oResolveTicket(oTicketId,2, oUserid);
+                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    {
+                       
+                        oApiResponse.OperationResult = 1;
+                    }
+                    else
+                    {
+                        oApiResponse.OperationResult = 0;
+                        oApiResponse.OperationResultMessage = "Chat post failed.";
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+                }
+                catch (Exception Ex)
+                {
+                    oApiResponse.OperationResult = 0;
+                    oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+                }
+            }
+            oApiResponse.OperationResult = 0;
+            oApiResponse.OperationResultMessage = "Model validation failed";
+            return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
+        }
         #endregion 
 
         #endregion

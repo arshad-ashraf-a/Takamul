@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -96,8 +96,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\My World\My Works\TypyingCentre\TypyingCentre\bin\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -860,6 +860,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationDashboardController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
@@ -958,7 +959,9 @@
     <Content Include="Views\Tickets\_UpdateTicketDetails.cshtml" />
     <Content Include="Views\Applications\_AddApplication.cshtml" />
     <Content Include="Views\Applications\_EditApplication.cshtml" />
-    <Content Include="Views\Users\MembersList.cshtml" />
+    <Content Include="Views\Member\MembersList.cshtml" />
+    <Content Include="Views\Member\MemberProfile.cshtml" />
+    <Content Include="Views\Member\AddMember.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1010,7 +1013,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19612</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Takamul.Portal/</IISUrl>
+          <IISUrl>http://localhost/Takamul.Portal</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

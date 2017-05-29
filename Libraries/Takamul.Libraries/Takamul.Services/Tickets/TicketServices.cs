@@ -288,6 +288,44 @@ namespace Takamul.Services
         }
         #endregion
 
+
+        #region Method :: Response :: oResolveTicket
+        /// <summary>
+        /// Udpate Ticket
+        /// </summary>
+        /// <param name="oTicketChatViewModel"></param>
+        /// <returns></returns>
+       public Response oResolveTicket(int nTicketID, int nTicketStatusID,int nDoneBy)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusID", SqlDbType.Int, nTicketStatusID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ModifiedBy", SqlDbType.Int, nDoneBy, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("ResolveTicket", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
+                oResponse.OperationResultMessage = "Ticket has been resolved";
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
         #endregion
     }
 }
