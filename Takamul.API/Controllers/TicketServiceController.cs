@@ -91,7 +91,7 @@ namespace Takamul.API.Controllers
                         TicketStatusRemark = ticket.TICKET_STATUS_REMARK,
                         TicketStatusName = ticket.TICKET_STATUS_NAME
                     };
-                    
+
                     lstTakamulTicket.Add(oTakamulTicket);
                 }
             }
@@ -367,37 +367,32 @@ namespace Takamul.API.Controllers
         /// /// <param name="oUserid"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage ResolveTicket(int oTicketId,int oUserid)
+        public HttpResponseMessage ResolveTicket(int oTicketId, int oUserid)
         {
             ApiResponse oApiResponse = new ApiResponse();
-            if (ModelState.IsValid)
-            {
-                try
-                {                  
 
-                    Response oResponse = this.oITicketServices.oResolveTicket(oTicketId,2, oUserid);
-                    if (oResponse.OperationResult == enumOperationResult.Success)
-                    {
-                       
-                        oApiResponse.OperationResult = 1;
-                    }
-                    else
-                    {
-                        oApiResponse.OperationResult = 0;
-                        oApiResponse.OperationResultMessage = "Chat post failed.";
-                    }
-                    return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+            try
+            {
+                Response oResponse = this.oITicketServices.oResolveTicket(oTicketId, Convert.ToInt32(ConstantNames.TicketStatusClosedID), oUserid);
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+
+                    oApiResponse.OperationResult = 1;
+                    oApiResponse.OperationResultMessage = "Ticket has been resolved.";
                 }
-                catch (Exception Ex)
+                else
                 {
                     oApiResponse.OperationResult = 0;
-                    oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+                    oApiResponse.OperationResultMessage = "Ticket resolve failed.";
                 }
+                return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
             }
-            oApiResponse.OperationResult = 0;
-            oApiResponse.OperationResultMessage = "Model validation failed";
-            return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
+            catch (Exception Ex)
+            {
+                oApiResponse.OperationResult = 0;
+                oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+            }
         }
         #endregion 
 

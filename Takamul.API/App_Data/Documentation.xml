@@ -642,6 +642,14 @@
             <param name="oTakamulTicketChat"></param>
             <returns></returns>
         </member>
+        <member name="M:Takamul.API.Controllers.TicketServiceController.ResolveTicket(System.Int32,System.Int32)">
+            <summary>
+            Post a ticket chat
+            </summary>
+            <param name="oTicketId"></param>
+            /// <param name="oUserid"></param>
+            <returns></returns>
+        </member>
         <member name="T:Takamul.API.Controllers.NewsServiceController">
             <summary>
             News Service
