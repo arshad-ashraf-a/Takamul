@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <a title="Add new event" href="@Url.Action("AddNewNews", "News")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Event</a>
+                                        <a title="Add new event" href="@Url.Action("PartialAddNews", "News")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New News</a>
                                     </div>
                                 </div>
 
@@ -80,7 +80,7 @@
             var sCaption = 'All News';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
-                'News Name',
+                'News Title',
                 'Published Date',
                 'Notify User',
                 'Is Active',
@@ -123,13 +123,12 @@
                          formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
                      },                   
                       {
-                          name: ConstantsNames.NotifyUser,
                           width: 150, editable: false,
                           align: EnumColumnsAlignment.Center,
                           formatter: function (cellvalue, options, rowObject) {
-                              var bIsActive = rowObject.NotifyUser;
+                              var bIsNotify = rowObject.IS_NOTIFY_USER;
                               var htmlString = '';
-                              if (bIsActive) {
+                              if (bIsNotify) {
                                   htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
                               }
                               else {
@@ -139,7 +138,6 @@
                           }
                       }, 
                     {
-                        name: ConstantsNames.IsActive,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
@@ -182,7 +180,7 @@
             var gdEvent = $('#' + sGridViewSelector);
             var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
 
-            var link = '@Url.Action("EditNews", "News", new { nNewsID = "replace" })';
+            var link = '@Url.Action("PartialEditNews", "News", new { nNewsID = "replace" })';
             link = link.replace("replace", vEventID);
 
             window.location.href = link;

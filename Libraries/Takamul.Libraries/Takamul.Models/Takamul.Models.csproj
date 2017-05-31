@@ -60,6 +60,7 @@
     <Compile Include="ApiViewModel\TakamulMembeInfo.cs" />
     <Compile Include="ApiViewModel\TakamulTicketChat.cs" />
     <Compile Include="ApiViewModel\TakamulTicket.cs" />
+    <Compile Include="ApiViewModel\TakamulUserResponse.cs" />
     <Compile Include="ApiViewModel\TakamulUser.cs" />
     <Compile Include="ApiViewModel\TakamulNews.cs" />
     <Compile Include="ApiViewModel\VillageInfo.cs" />
@@ -98,9 +99,6 @@
       <DependentUpon>TakamulModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="TICKETS.cs">
-      <DependentUpon>TakamulModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="USER_TYPES.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />

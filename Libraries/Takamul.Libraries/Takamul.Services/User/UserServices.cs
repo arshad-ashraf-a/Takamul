@@ -145,7 +145,7 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeId", SqlDbType.Int, oUserInfoViewModel.USER_TYPE_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserName", SqlDbType.VarChar, oUserInfoViewModel.USER_NAME, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Password", SqlDbType.VarChar, oUserInfoViewModel.PASSWORD, 50, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.VarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.NVarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, oUserInfoViewModel.PHONE_NUMBER, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Email", SqlDbType.VarChar, oUserInfoViewModel.EMAIL, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CivilID", SqlDbType.VarChar, oUserInfoViewModel.CIVIL_ID, 50, ParameterDirection.Input));
@@ -194,11 +194,11 @@ namespace Takamul.Services
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, oUserInfoViewModel.ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.VarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.NVarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, oUserInfoViewModel.PHONE_NUMBER, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Email", SqlDbType.VarChar, oUserInfoViewModel.EMAIL, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CivilID", SqlDbType.VarChar, oUserInfoViewModel.CIVIL_ID, 50, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Address", SqlDbType.VarChar, oUserInfoViewModel.ADDRESS, 300, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Address", SqlDbType.NVarChar, oUserInfoViewModel.ADDRESS, 300, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_AreaId", SqlDbType.Int, oUserInfoViewModel.AREA_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_WilayatId", SqlDbType.Int, oUserInfoViewModel.WILAYAT_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_VillageId", SqlDbType.Int, oUserInfoViewModel.VILLAGE_ID, ParameterDirection.Input));

@@ -65,6 +65,17 @@ namespace Takamul.API.Controllers
                 lstTakamulNews = new List<TakamulNews>();
                 foreach (var news in lstNews)
                 {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(news.NEWS_IMG_FILE_PATH))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(news.NEWS_IMG_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
                     TakamulNews oTakamulNews = new TakamulNews()
                     {
                         NewsID = news.ID,
@@ -72,8 +83,8 @@ namespace Takamul.API.Controllers
                         NewsContent = news.NEWS_CONTENT,
                         NewsTitle = news.NEWS_TITLE,
                         PublishedDate = news.PUBLISHED_DATE,
-                        Base64NewsImage = ConstantNames.TempBase64Image //TODO :: Change temp to real value
-                       
+                        Base64NewsImage = sBase64DefaultImage
+
                     };
                     lstTakamulNews.Add(oTakamulNews);
                 }
@@ -96,6 +107,17 @@ namespace Takamul.API.Controllers
             NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);
             if (oNewsViewModel != null)
             {
+                string sBase64DefaultImage = string.Empty;
+                if (!string.IsNullOrEmpty(oNewsViewModel.NEWS_IMG_FILE_PATH))
+                {
+                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                    byte[] oByteFile = oFileAccessService.ReadFile(oNewsViewModel.NEWS_IMG_FILE_PATH);
+                    if (oByteFile.Length > 0)
+                    {
+                        sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                    }
+                }
+
                 oTakamulNews = new TakamulNews()
                 {
                     NewsID = oNewsViewModel.ID,
@@ -103,7 +125,7 @@ namespace Takamul.API.Controllers
                     NewsContent = oNewsViewModel.NEWS_CONTENT,
                     NewsTitle = oNewsViewModel.NEWS_TITLE,
                     PublishedDate = oNewsViewModel.PUBLISHED_DATE,
-                    Base64NewsImage = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                    Base64NewsImage = sBase64DefaultImage
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulNews);

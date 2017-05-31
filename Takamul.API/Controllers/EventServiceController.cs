@@ -9,6 +9,7 @@
 /*************************************************************************************************/
 
 using Infrastructure.Core;
+using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -61,18 +62,29 @@ namespace Takamul.API.Controllers
             if (lstEvents.Count() > 0)
             {
                 lstTakamulEvents = new List<TakamulEvents>();
-                foreach (var Events in lstEvents)
+                foreach (var oEvent in lstEvents)
                 {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(oEvent.EVENT_IMG_FILE_PATH))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(oEvent.EVENT_IMG_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
                     TakamulEvents oTakamulEvents = new TakamulEvents()
                     {
-                        EventID = Events.ID,
-                        APPLICATIONID = Events.APPLICATION_ID,
-                        EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
-                        EVENTNAME = Events.EVENT_NAME,
-                        EVENTDATE = Events.EVENT_DATE,
-                        Latitude =  Events.EVENT_LATITUDE,
-                        Longitude = Events.EVENT_LONGITUDE,
-                        BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                        EventID = oEvent.ID,
+                        APPLICATIONID = oEvent.APPLICATION_ID,
+                        EVENTDESCRIPTION = oEvent.EVENT_DESCRIPTION,
+                        EVENTNAME = oEvent.EVENT_NAME,
+                        EVENTDATE = oEvent.EVENT_DATE,
+                        Latitude =  oEvent.EVENT_LATITUDE,
+                        Longitude = oEvent.EVENT_LONGITUDE,
+                        BASE64EVENTIMG = sBase64DefaultImage
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
@@ -95,16 +107,27 @@ namespace Takamul.API.Controllers
             EventViewModel oEventsViewModel = this.oIEventsServices.oGetEventDetails(nEventsID);
             if (oEventsViewModel != null)
             {
-                 oTakamulEvents = new TakamulEvents()
+                string sBase64DefaultImage = string.Empty;
+                if (!string.IsNullOrEmpty(oEventsViewModel.EVENT_IMG_FILE_PATH))
+                {
+                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                    byte[] oByteFile = oFileAccessService.ReadFile(oEventsViewModel.EVENT_IMG_FILE_PATH);
+                    if (oByteFile.Length > 0)
+                    {
+                        sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                    }
+                }
+
+                oTakamulEvents = new TakamulEvents()
                 {
                     EventID = oEventsViewModel.ID,
                     APPLICATIONID = oEventsViewModel.APPLICATION_ID,
                     EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
                     EVENTNAME = oEventsViewModel.EVENT_NAME,
                     EVENTDATE = oEventsViewModel.EVENT_DATE,
-                     Latitude = oEventsViewModel.EVENT_LATITUDE,
-                     Longitude = oEventsViewModel.EVENT_LONGITUDE,
-                     BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                    Latitude = oEventsViewModel.EVENT_LATITUDE,
+                    Longitude = oEventsViewModel.EVENT_LONGITUDE,
+                    BASE64EVENTIMG = sBase64DefaultImage
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
@@ -128,6 +151,17 @@ namespace Takamul.API.Controllers
                 lstTakamulEvents = new List<TakamulEvents>();
                 foreach (var Events in lstEvents)
                 {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(Events.EVENT_IMG_FILE_PATH))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(Events.EVENT_IMG_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
                     TakamulEvents oTakamulEvents = new TakamulEvents()
                     {
                         EventID = Events.ID,
@@ -137,7 +171,7 @@ namespace Takamul.API.Controllers
                         EVENTDATE = Events.EVENT_DATE,
                         Latitude = Events.EVENT_LATITUDE,
                         Longitude = Events.EVENT_LONGITUDE,
-                        BASE64EVENTIMG = ConstantNames.TempBase64Image //TODO :: Change temp to real value
+                        BASE64EVENTIMG = sBase64DefaultImage
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }

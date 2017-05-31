@@ -48,9 +48,10 @@ namespace Takamul.API.Controllers
         // POST: api/Authentication/RegisterUser
         /// <summary>
         /// Register a mobile user
+        /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</para>
         /// </summary>
         /// <param name="oTakamulUser"></param>
-        /// <returns></returns>
+        /// <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         [HttpPost]
         public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser)
         {
@@ -85,6 +86,12 @@ namespace Takamul.API.Controllers
                         oApiResponse.ResponseCode = nOTPNumber.ToString();
                         //TODO::integrate with sms service and update status to database
                     }
+                    else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
+                    {
+                        oApiResponse.OperationResult = -3;
+                        oApiResponse.OperationResultMessage = "The user already exists.Please contact app administrator";
+
+                    }
                     else
                     {
                         oApiResponse.OperationResult = 0;
@@ -106,18 +113,19 @@ namespace Takamul.API.Controllers
         #endregion 
 
         #region Method :: HttpResponseMessage :: ResendOTPNumber
-        //GET: api/Authentication/ResendOTPNumber? nUserID = &nOTPNumber =
+        //GET: api/Authentication/ResendOTPNumber?nPhoneNumber=
         /// <summary>
-        /// Resend user OTP Number
+        /// Resend user OTP Number by phone number
+        /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
         /// </summary>
-        /// <param name="nUserID"></param>
-        /// <returns></returns>
+        /// <param name="sPhoneNumber"></param>
+        /// <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ResendOTPNumber(int nUserID)
+        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber)
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
-            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(nUserID, nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
@@ -131,9 +139,11 @@ namespace Takamul.API.Controllers
             {
                 oApiResponse.OperationResult = -2;
                 oApiResponse.OperationResultMessage = "You have exceeded the maximum number of attempt.Please contact app administrator.";
-
-                //TODO::integrate with sms service and update status to database
-                oApiResponse.ResponseCode = nOTPNumber.ToString();
+            }
+            else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
+            {
+                oApiResponse.OperationResult = -3;
+                oApiResponse.OperationResultMessage = "The user does not exist.Please contact app administrator";
             }
             else
             {
@@ -147,35 +157,63 @@ namespace Takamul.API.Controllers
         #region Method :: HttpResponseMessage :: ValidateOTPNumber
         // GET: api/Authentication/ValidateOTPNumber
         /// <summary>
-        /// Validate user OTP Number
+        /// Validate user OTP Number by phone number
+        /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</para>
+        /// <para>-->[TakamulUserResponse]</para>
         /// </summary>
-        /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
+        /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(int nUserID, int nOTPNumber)
+        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber)
         {
+            TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
-            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(nUserID, nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(sPhoneNumber, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
+                UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(-99, sPhoneNumber);
+                TakamulUser oTakamulUser = new TakamulUser()
+                {
+                    UserID = oUserInfoViewModel.ID,
+                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
+                    PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
+                    Email = oUserInfoViewModel.EMAIL,
+                    Addresss = oUserInfoViewModel.ADDRESS,
+                    IsActive = (bool)oUserInfoViewModel.IS_ACTIVE,
+                    IsUserBlocked = (bool)oUserInfoViewModel.IS_BLOCKED,
+                    BlockedRemarks = oUserInfoViewModel.BLOCKED_REMARKS,
+                    IsOTPVerified = (bool)oUserInfoViewModel.IS_OTP_VALIDATED,
+                    IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS != null ? oUserInfoViewModel.SMS_SENT_STATUS : false,
+                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED != null ? oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED : true,
+                    TicketSubmissionIntervalDays = (int)oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
+                    LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE != null ? Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("dd/MM/yyyy") : ""
+                };
+                oTakamulUserResponse.TakamulUser = oTakamulUser;
                 oApiResponse.OperationResult = 1;
                 oApiResponse.OperationResultMessage = "User verified successfully.";
+
+            }
+            else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
+            {
+                oApiResponse.OperationResult = -3;
+                oApiResponse.OperationResultMessage = "The user does not exist.Please contact app administrator";
             }
             else
             {
                 oApiResponse.OperationResult = 0;
                 oApiResponse.OperationResultMessage = "Please contact app administrator.";
             }
-            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+            oTakamulUserResponse.ApiResponse = oApiResponse;
+            return Request.CreateResponse(HttpStatusCode.OK, oTakamulUserResponse);
         }
         #endregion 
 
         #region Method :: HttpResponseMessage :: GetUserDetails
         // GET: api/Authentication/GetUserDetails
         /// <summary>
-        /// Get user detailed infomations
+        /// Get user detailed infomations by user id 
         /// </summary>
         /// <param name="nUserID"></param>
         /// <returns></returns>
@@ -183,7 +221,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetUserDetails(int nUserID)
         {
             TakamulUser oTakamulUser = null;
-            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nUserID);
+            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nUserID, string.Empty);
 
             if (oUserInfoViewModel != null)
             {
@@ -199,7 +237,7 @@ namespace Takamul.API.Controllers
                     BlockedRemarks = oUserInfoViewModel.BLOCKED_REMARKS,
                     IsOTPVerified = (bool)oUserInfoViewModel.IS_OTP_VALIDATED,
                     IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS != null ? oUserInfoViewModel.SMS_SENT_STATUS : false,
-                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED != null ? oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED : true ,
+                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED != null ? oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED : true,
                     TicketSubmissionIntervalDays = (int)oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
                     LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE != null ? Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("dd/MM/yyyy") : ""
                 };
@@ -209,73 +247,42 @@ namespace Takamul.API.Controllers
         }
         #endregion
 
-        #region Method :: HttpResponseMessage :: GetOTPForAppReinstall
-        // GET: api/Authentication/GetOTPForAppReinstall
+        #region Method :: HttpResponseMessage :: GetUserDetailsByPhoneNumber
+        // GET: api/Authentication/GetUserDetailsByPhoneNumber
         /// <summary>
-        /// Get user detailed infomations
+        /// Get user detailed infomations by phone number
         /// </summary>
-        /// <param name="nPhoneNumber"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetOTPForAppReinstall(string nPhoneNumber)
+        public HttpResponseMessage GetUserDetailsByPhoneNumber(string sPhoneNumber)
         {
-            ApiResponse oApiResponse = new ApiResponse();
-            int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
-            Response oResponse = this.oIAuthenticationService.oOTPforAppReinstall(nPhoneNumber, nOTPNumber);
+            TakamulUser oTakamulUser = null;
+            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(-99, sPhoneNumber);
 
-            if (oResponse.OperationResult == enumOperationResult.Success)
+            if (oUserInfoViewModel != null)
             {
-                oApiResponse.OperationResult = 1;
-                oApiResponse.OperationResultMessage = "OTP has been successfully sent.";
-
-                //TODO::integrate with sms service and update status to database
-                oApiResponse.ResponseCode = nOTPNumber.ToString();
+                oTakamulUser = new TakamulUser()
+                {
+                    UserID = oUserInfoViewModel.ID,
+                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
+                    PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
+                    Email = oUserInfoViewModel.EMAIL,
+                    Addresss = oUserInfoViewModel.ADDRESS,
+                    IsActive = (bool)oUserInfoViewModel.IS_ACTIVE,
+                    IsUserBlocked = (bool)oUserInfoViewModel.IS_BLOCKED,
+                    BlockedRemarks = oUserInfoViewModel.BLOCKED_REMARKS,
+                    IsOTPVerified = (bool)oUserInfoViewModel.IS_OTP_VALIDATED,
+                    IsSmsSent = oUserInfoViewModel.SMS_SENT_STATUS != null ? oUserInfoViewModel.SMS_SENT_STATUS : false,
+                    IsTicketSubmissionRestricted = oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED != null ? oUserInfoViewModel.IS_TICKET_SUBMISSION_RESTRICTED : true,
+                    TicketSubmissionIntervalDays = (int)oUserInfoViewModel.TICKET_SUBMISSION_INTERVAL_DAYS,
+                    LastTicketSubmissionDate = oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE != null ? Convert.ToDateTime(oUserInfoViewModel.LAST_TICKET_SUBMISSION_DATE).ToString("dd/MM/yyyy") : ""
+                };
             }
-            else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
-            {
-                oApiResponse.OperationResult = -2;
-                oApiResponse.OperationResultMessage = "You have exceeded the maximum number of attempt.Please contact app administrator.";
 
-                //TODO::integrate with sms service and update status to database
-                oApiResponse.ResponseCode = nOTPNumber.ToString();
-            }
-            else
-            {
-                oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "An error occured.Please try again later.";
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
-
+            return Request.CreateResponse(HttpStatusCode.OK, oTakamulUser);
         }
         #endregion
-
-        #region Method :: HttpResponseMessage :: ValidateOTPNumberReinstall
-        // GET: api/Authentication/ValidateOTPNumberReinstall
-        /// <summary>
-        /// Validate user OTP Number without Userid mainly in case of app reinstall
-        /// </summary>
-        /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage ValidateOTPNumberReinstall( int nOTPNumber)
-        {
-            ApiResponse oApiResponse = new ApiResponse();
-            Response oResponse = this.oIAuthenticationService.oValidateOTPNumberReinstall(nOTPNumber);
-
-            if (oResponse.OperationResult == enumOperationResult.Success)
-            {
-                oApiResponse.OperationResult = 1;
-                oApiResponse.OperationResultMessage = "OTP verified successfully.";
-            }
-            else
-            {
-                oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "Please contact app administrator.";
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
-        }
-        #endregion 
-
 
         #endregion
     }

@@ -21,8 +21,9 @@ namespace Takamul.Services
         ///  Get user details
         /// </summary>
         /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
-        UserInfoViewModel oGetUserDetails(int nUserID);
+        UserInfoViewModel oGetUserDetails(int nUserID, string sPhoneNumber);
         #endregion
 
         #region Method :: Response :: oInsertMobileUser
@@ -38,41 +39,21 @@ namespace Takamul.Services
         /// <summary>
         ///  Validate user otp number
         /// </summary>
-        /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        Response oValidateOTPNumber(int nUserID, int nOTPNumber);
+        Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber);
         #endregion
 
-        #region Method :: Response :: oValidateOTPNumberReinstall
-        /// <summary>
-        ///  Validate user otp number
-        /// </summary>
-        /// <param name="nUserID"></param>
-        /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
-        Response oValidateOTPNumberReinstall(int nOTPNumber);
-        #endregion
         #region Method :: Response :: oResendOTPNumber
         /// <summary>
         ///  Resend user otp number
         /// </summary>
-        /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        Response oResendOTPNumber(int nUserID,int nOTPNumber);
+        Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber);
         #endregion
-
-        #region Method :: Response :: oOTPforAppReinstall
-        /// <summary>
-        ///  Resend user otp number
-        /// </summary>
-        /// <param name="nUserID"></param>
-        /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
-        Response oOTPforAppReinstall(string nMob, int nOTPNumber);
-        #endregion
-
 
     }
 }

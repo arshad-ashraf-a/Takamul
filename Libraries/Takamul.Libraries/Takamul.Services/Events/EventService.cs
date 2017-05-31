@@ -151,12 +151,11 @@ namespace Takamul.Services
             EventViewModel oEventsViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_EventId", SqlDbType.Int, nEventID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
-            List<EventViewModel> lstEvents = this.ExecuteStoredProcedureList<EventViewModel>("GetAllActiveEvents", arrParameters.ToArray());
+            List<EventViewModel> lstEvents = this.ExecuteStoredProcedureList<EventViewModel>("GetEventDetails", arrParameters.ToArray());
             if (lstEvents.Count > 0)
             {
                 return lstEvents[0];
@@ -191,10 +190,14 @@ namespace Takamul.Services
                         EVENT_LOCATION_NAME = oEventViewModel.EVENT_LOCATION_NAME,
                         EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE,
                         EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE,
-                        IS_ACTIVE = true,
+                        IS_ACTIVE = oEventViewModel.IS_ACTIVE,
                         CREATED_BY = oEventViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
                     };
+                    if (!oEventViewModel.EVENT_IMG_FILE_PATH.Equals(string.Empty))
+                    {
+                        oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;
+                    }
                     this.oTakamulConnection.EVENTS.Add(oEvent);
                     if (this.intCommit() > 0)
                     {
@@ -257,6 +260,10 @@ namespace Takamul.Services
                 oEvent.EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE;
                 oEvent.EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE;
                 oEvent.IS_ACTIVE = oEventViewModel.IS_ACTIVE;
+                if (!oEventViewModel.EVENT_IMG_FILE_PATH.Equals(string.Empty))
+                {
+                    oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;
+                }
                 oEvent.MODIFIED_BY = oEventViewModel.CREATED_BY;
                 oEvent.MODIFIED_DATE = DateTime.Now;
                 this.EventsDBSet.Attach(oEvent);
@@ -332,7 +339,6 @@ namespace Takamul.Services
         /// <returns>List of Events</returns>
         public List<EventViewModel> oGetEventsbyDate(DateTime dEventDate, int nApplicationID)
         {
-            EventViewModel oEventsViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Eventdate", SqlDbType.Date, dEventDate, ParameterDirection.Input));

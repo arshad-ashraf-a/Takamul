@@ -93,12 +93,11 @@ namespace Takamul.Services
             NewsViewModel oNewsViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_NewsId", SqlDbType.Int, nNewsID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
-            List<NewsViewModel> lstNews = this.ExecuteStoredProcedureList<NewsViewModel>("GetAllActiveNews", arrParameters.ToArray());
+            List<NewsViewModel> lstNews = this.ExecuteStoredProcedureList<NewsViewModel>("GetNewsDetails", arrParameters.ToArray());
             if (lstNews.Count > 0)
             {
                 return lstNews[0];
@@ -175,7 +174,6 @@ namespace Takamul.Services
             #region ": Insert :"
 
             Response oResponse = new Response();
-            int insertedId = 0;
             try
             {
                 if (oNewsViewModel != null)
@@ -185,14 +183,13 @@ namespace Takamul.Services
                         APPLICATION_ID = oNewsViewModel.APPLICATION_ID,
                         NEWS_TITLE = oNewsViewModel.NEWS_TITLE,
                         NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT,
+                        NEWS_IMG_FILE_PATH = oNewsViewModel.NEWS_IMG_FILE_PATH,
                         PUBLISHED_DATE = oNewsViewModel.PUBLISHED_DATE,                       
-                        IS_ACTIVE = true,
-                        IS_NOTIFY_USER = true,
+                        IS_ACTIVE = oNewsViewModel.IS_ACTIVE,
+                        IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER,
                         CREATED_BY = oNewsViewModel.CREATED_BY,
-                        CREATED_DATE = DateTime.Now,
-                        FileExtension = oNewsViewModel.FileExtension,
-                        FileName = oNewsViewModel.FileName,
-                        FileId = oNewsViewModel.FileId
+                        CREATED_DATE = DateTime.Now
+                     
                     };
                     this.oTakamulConnection.NEWS.Add(oNews);
                     
@@ -220,8 +217,6 @@ namespace Takamul.Services
             #endregion
         }
         #endregion
-
-        
 
         #region Method :: Response :: UpdateNews
         /// <summary>
@@ -251,22 +246,21 @@ namespace Takamul.Services
                 #endregion
 
                 #region Update Default NEWS
-
-                oNews.APPLICATION_ID = oNewsViewModel.APPLICATION_ID;
+                
                 oNews.NEWS_TITLE = oNewsViewModel.NEWS_TITLE;
                 oNews.NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT;
                 oNews.PUBLISHED_DATE = oNewsViewModel.PUBLISHED_DATE;
+                if (!oNewsViewModel.NEWS_IMG_FILE_PATH.Equals(string.Empty))
+                {
+                    oNews.NEWS_IMG_FILE_PATH = oNewsViewModel.NEWS_IMG_FILE_PATH;
+                }
                 oNews.IS_ACTIVE = oNewsViewModel.IS_ACTIVE;
-                oNews.MODIFIED_BY = oNewsViewModel.CREATED_BY;
+                oNews.IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER;
+                oNews.MODIFIED_BY = oNewsViewModel.MODIFIED_BY;
                 oNews.MODIFIED_DATE = DateTime.Now;
                 this.NewsDBSet.Attach(oNews);
                 this.oTakamulConnection.Entry(oNews).State = EntityState.Modified;
 
-                if (newsFile != null)
-                {
-                    //oResponse = oInsertNewsImage(newsFile);
-                    this.oTakamulConnection.Entry(newsFile).State = EntityState.Added;
-                }
                 if (this.intCommit() > 0)
                 {
                     oResponse.OperationResult = enumOperationResult.Success;
@@ -329,6 +323,7 @@ namespace Takamul.Services
             return fileDetail;
         }
         #endregion
+
         #region Method :: Response :: DeleteNews
         /// <summary>
         /// Delete event

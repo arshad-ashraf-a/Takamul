@@ -147,6 +147,7 @@
                     TicketStatusID: 'TICKET_STATUS_ID',
                     TicketStatusRemark: 'TICKET_STATUS_REMARK',
                     IsActive: 'IS_ACTIVE',
+                    DefaultImage: 'DEFAULT_IMAGE',
                     CreatedDate: 'CREATED_DATE'
                 };
             var sCaption = 'All Tickets';
@@ -157,9 +158,11 @@
                 '',//Hidden Columns Represent IS_ACTIVE Int Value
                 '',//Hidden Columns Represent TICKET_STATUS_REMARK Int Value
                 '',//Hidden Columns Represent TICKET_STATUS_NAME Int Value
+                '',//Hidden Columns Represent TICKET_DESCRIPTION Int Value
+                '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
                 'Ticket Code',
                 'Ticket Name',
-                'Ticket Description',
+                //'Ticket Description',
                 'Ticket Status',
                 'Is Active',
                 'Created Date',
@@ -184,8 +187,9 @@
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
                                         { MenuTitle: "Options" },
-                                        { Caption: "Details", EventName: "fnGoToTicketDetails();", RowId: true },
-                                        { Caption: "Update Ticket Status", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
+                                        { Caption: "Go To Chats", EventName: "fnGoToTicketDetails();", RowId: true },
+                                        { Caption: "Change Ticket Status", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
+                                        { Caption: "View Ticket Info", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
             ];
             var oArrColsModel = [
                     {
@@ -212,6 +216,14 @@
                           name: ConstantsNames.TicketStatusName, editable: false,
                           key: false, hidden: true
                       },
+                       {
+                           name: ConstantsNames.TicketDescription, editable: false,
+                           key: false, hidden: true
+                       },
+                      {
+                          name: ConstantsNames.DefaultImage, editable: false,
+                          key: false, hidden: true
+                      },
                      {
                          width: 50, editable: false,
                          align: EnumColumnsAlignment.Center,
@@ -224,11 +236,11 @@
                         width: 100, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
-                    {
-                        name: ConstantsNames.TicketDescription,
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center
-                    },
+                    //{
+                    //    name: ConstantsNames.TicketDescription,
+                    //    width: 150, editable: false,
+                    //    align: EnumColumnsAlignment.Center
+                    //},
                     {
                         width: 80, editable: false,
                         align: EnumColumnsAlignment.Center,
@@ -442,6 +454,7 @@
             });
         }
 
+
         function fnShowRejectReasonDesc(nTicketID) {
             var gdTicketList = $('#' + sGridViewSelector);
             var rowData = gdTicketList.getRowData(nTicketID);
@@ -450,6 +463,64 @@
             if (rowData.TICKET_STATUS_REMARK != "") {
                 ShowAlertDialog(rowData.TICKET_STATUS_REMARK, '@Buttons.Close');
             }
+        }
+
+        function fnLoadPartialViewTicketInfo() {
+
+            var gdTicketList = $('#' + sGridViewSelector);
+            var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
+            var rowData = gdTicketList.getRowData(vTicketID);
+
+            var sTicketCode = rowData.TICKET_CODE;
+            var sTicketName = rowData.TICKET_NAME;
+            var sTicketDescription = rowData.TICKET_DESCRIPTION;
+            var sTicketStatusName = rowData.TICKET_STATUS_NAME;
+            var nTicketStatusID = rowData.TICKET_STATUS_ID;
+            var bIsTicketActive = rowData.IS_ACTIVE;
+            var sDefaultImage = rowData.DEFAULT_IMAGE;
+
+            var dataToSend = JSON.stringify({
+                ID: vTicketID,
+                TICKET_CODE: sTicketCode,
+                TICKET_NAME: sTicketName,
+                TICKET_DESCRIPTION: sTicketDescription,
+                TICKET_STATUS_NAME: sTicketStatusName,
+                TICKET_STATUS_ID: nTicketStatusID,
+                IS_ACTIVE: bIsTicketActive,
+                DEFAULT_IMAGE: sDefaultImage
+            });
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Ticket Info',
+                autoOpen: true,
+                position: { my: "center", at: "top-50", of: $(".fakeWidth") },
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialViewTicketInfo", "Tickets")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [{
+                    text: 'Close',
+                    "class": 'btn btn-sm btn-default',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+            });
         }
 
         function fnLoadPartialAddTicket() {
@@ -512,34 +583,77 @@
                 return false;
             }
 
-            //var nUserType = Number($("#ddlUserTypeID").val());
-            //if (nUserType == enmUserType.Staff) {
-            //    if ($("#txtUserNamePopUp").val() == "") {
-            //        ShowStatusBarNotification("Please enter user name.", NotificationType.Warning);
-            //        return false;
-            //    }
-            //}
+            var data = new FormData();
+            var files = $("#fuTicketImage").get(0).files;
 
-            var formData = $("#frmAddTicket").serialize();
+            if (files.length > 0) {
+
+                var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+                var nUploadedSize = fnCheckFileSize('fuTicketImage');
+                if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    return false;
+                }
+
+                var extension = $("#fuTicketImage").val().split('.').pop().toUpperCase();
+                var bIsInValidExt = fnIsValidFileExtension(extension);
+                if (bIsInValidExt) {
+                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    return false;
+                }
+            }
+
+            var formData = $("#frmAddTicket").serializeArray();
+            data.append("TicketImage", files[0]);
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
+
             $.ajax({
                 url: '@Url.Action("JInserTicket", "Tickets")',
                 type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                    if (result.nResult == 1) {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-                        $("#dvPopUpWindow").dialog("close");
-                        fnBindAllTickets();
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                            fnBindAllTickets();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
                     }
                     else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
                     }
                 },
-                error: function () {
-                    $("#dvPopUpWindow").dialog("close");
-                }
-            })
+                error: function (er) { $("#dvPopUpWindow").dialog("close"); }
+
+            });
+        }
+
+        function fnIsValidFileExtension(sExtension) {
+            var bIsInValidExt = false;
+            if (sExtension != "PNG" && sExtension != "JPG" && sExtension != "JPEG") {
+                bIsInValidExt = true;
+            }
+            return bIsInValidExt;
+        }
+
+        function fnCheckFileSize(fileid) {
+            var fileSize = 0;
+            try {
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
+                fileSize = fileSize / 1024; //size in kb
+            }
+            catch (e) {
+                fileSize = 0;
+                console.log(ex);
+            }
+            return fileSize;
         }
 
         function fnAddTicketValidateInitialization(sFormID) {

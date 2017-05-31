@@ -45,11 +45,28 @@
                 </div>
             </div>
 
+            @* Ticket Image *@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Ticket Image</label>
+                        <div class="col-lg-8">
+                            <input type="file" id="fuTicketImage" class="file-styled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
 }
 <script type="text/javascript">
+    // Default file input style
+    $(".file-styled").uniform({
+        fileButtonClass: 'action btn btn-default'
+    });
+
     function fnFillTicketParticipantUsers() {
         //TODO:: option add 'ALL'
         FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlTicketParticipant', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],

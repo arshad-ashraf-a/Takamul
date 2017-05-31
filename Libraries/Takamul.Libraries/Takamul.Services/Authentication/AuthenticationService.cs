@@ -47,13 +47,15 @@ namespace Takamul.Services
         ///  Get user details
         /// </summary>
         /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
-        public UserInfoViewModel oGetUserDetails(int nUserID)
+        public UserInfoViewModel oGetUserDetails(int nUserID,string sPhoneNumber)
         {
             UserInfoViewModel oUserInfoViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -87,7 +89,7 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oUserInfoViewModel.APPLICATION_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeId", SqlDbType.Int, oUserInfoViewModel.USER_TYPE_ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.VarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_FullName", SqlDbType.NVarChar, oUserInfoViewModel.FULL_NAME, 100, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, oUserInfoViewModel.PHONE_NUMBER, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Email", SqlDbType.VarChar, oUserInfoViewModel.EMAIL, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CivilID", SqlDbType.VarChar, oUserInfoViewModel.CIVIL_ID, 50, ParameterDirection.Input));
@@ -123,10 +125,10 @@ namespace Takamul.Services
         /// <summary>
         ///  Validate user otp number
         /// </summary>
-        /// <param name="nUserID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        public Response oValidateOTPNumber(int nUserID, int nOTPNumber)
+        public Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber)
         {
             #region ": Sp Result:"
 
@@ -136,7 +138,7 @@ namespace Takamul.Services
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
@@ -155,42 +157,6 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region Method :: Response :: oValidateOTPNumberReinstall
-        /// <summary>
-        ///  Validate user otp number
-        /// </summary>        
-        /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
-        public Response oValidateOTPNumberReinstall(int nOTPNumber)
-        {
-            #region ": Sp Result:"
-
-            Response oResponse = new Response();
-
-            try
-            {
-                List<DbParameter> arrParameters = new List<DbParameter>();
-
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
-
-                this.ExecuteStoredProcedureCommand("ValidateOPTNumberReinstall", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[1].Value.ToString());
-            }
-            catch (Exception Ex)
-            {
-                oResponse.OperationResult = enumOperationResult.Faild;
-                //TODO : Log Error Message
-                oResponse.OperationResultMessage = Ex.Message.ToString();
-            }
-
-            return oResponse;
-            #endregion
-        }
-        #endregion
-
-        
-
         #region Method :: Response :: oResendOTPNumber
         /// <summary>
         ///  Resend user otp number
@@ -198,7 +164,7 @@ namespace Takamul.Services
         /// <param name="nUserID"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        public Response oResendOTPNumber(int nUserID, int nOTPNumber)
+        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber)
         {
             #region ": Sp Result:"
 
@@ -208,7 +174,7 @@ namespace Takamul.Services
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
@@ -224,42 +190,6 @@ namespace Takamul.Services
 
             return oResponse;
             #endregion
-        }
-        #endregion
-
-        #region Method :: Response :: oOTPforAppReinstall
-        /// <summary>
-        ///  Send OTP for app reinstall
-        /// </summary>
-        /// <param name="nMob"></param>
-        /// <param name="nOTPNumber"></param>
-        /// <returns></returns>
-       public Response oOTPforAppReinstall(string nMob,int nOTPNumber)
-        {
-            #region ": Sp Result:"
-
-            Response oResponse = new Response();
-
-            try
-            {
-                List<DbParameter> arrParameters = new List<DbParameter>();
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_Mobile", SqlDbType.VarChar, nMob, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
-
-                this.ExecuteStoredProcedureCommand("SendOTPOnAppReinstall", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
-            }
-            catch (Exception Ex)
-            {
-                oResponse.OperationResult = enumOperationResult.Faild;
-                //TODO : Log Error Message
-                oResponse.OperationResultMessage = Ex.Message.ToString();
-            }
-
-            return oResponse;
-            #endregion
-
         }
         #endregion
 

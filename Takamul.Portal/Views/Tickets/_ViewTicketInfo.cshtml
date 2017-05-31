@@ -1,0 +1,90 @@
+﻿@model Takamul.Models.ViewModel.TicketViewModel
+
+<div class="profile-user-info profile-user-info-striped">
+    <div class="profile-info-row">
+        <div class="profile-info-name width-250"> Ticket Code </div>
+
+        <div class="profile-info-value">
+            <span class="text-bold text-info"> @Model.TICKET_CODE</span>
+        </div>
+    </div>
+
+    <div class="profile-info-row">
+        <div class="profile-info-name"> Ticket Name </div>
+
+        <div class="profile-info-value">
+            @Model.TICKET_NAME
+        </div>
+    </div>
+
+    <div class="profile-info-row">
+        <div class="profile-info-name"> Ticket Description </div>
+
+        <div class="profile-info-value">
+            @Model.TICKET_DESCRIPTION
+        </div>
+    </div>
+
+    <div class="profile-info-row">
+        <div class="profile-info-name"> Ticket Status </div>
+
+        <div class="profile-info-value">
+            @Model.TICKET_STATUS_NAME
+        </div>
+    </div>
+
+    <div class="profile-info-row">
+        <div class="profile-info-name"> Is Active </div>
+
+        <div class="profile-info-value">
+            @if (Model.IS_ACTIVE)
+            {
+            <i class='icon-checkmark-circle text-success position-left'></i>
+            }
+            else
+            {
+            <i class='icon-cancel-circle2 text-warning position-left'></i>
+            }
+
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.DEFAULT_IMAGE))
+    {
+        <div class="profile-info-row">
+            <div class="profile-info-name"> Uploaded Ticket Image </div>
+
+            <div class="profile-info-value">
+                <div class="panel panel-flat">
+                    <div class="panel-body p-5">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-left media-middle">
+                                    <i class="icon-file-picture icon-2x text-muted"></i>
+                                </div>
+                                <div class="media-body valign-middle">
+                                    <a href="#" onclick="fnDownloadFile(); return false;" class="media-heading text-semibold"> @System.IO.Path.GetFileName(Model.DEFAULT_IMAGE)</a>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list icons-list-extended text-nowrap">
+                                        <li><a href="#" onclick="fnDownloadFile(); return false;"><i class="icon-download"></i></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>
+<script type="text/javascript">
+    function fnDownloadFile() {
+        var sFileFullPath = '@Model.DEFAULT_IMAGE';
+        window.location = '@Url.Action("DownloadFile", "Common")?sFileFullPath=' + sFileFullPath;
+        return false;
+    }
+
+</script>

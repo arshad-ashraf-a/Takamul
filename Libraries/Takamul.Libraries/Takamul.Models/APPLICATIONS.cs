@@ -17,9 +17,7 @@ namespace Takamul.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public APPLICATIONS()
         {
-            this.EVENTS = new HashSet<EVENTS>();
             this.TICKETS = new HashSet<TICKETS>();
-            this.NEWS = new HashSet<NEWS>();
             this.MEMBER_INFO = new HashSet<MEMBER_INFO>();
         }
     
@@ -36,11 +34,7 @@ namespace Takamul.Models
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EVENTS> EVENTS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TICKETS> TICKETS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NEWS> NEWS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_INFO> MEMBER_INFO { get; set; }
     }

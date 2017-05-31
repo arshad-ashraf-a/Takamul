@@ -27,7 +27,9 @@ namespace Takamul.Models.ViewModel
         public bool IS_NOTIFY_USER { get; set; }
         public int TotalCount { get; set; }
         public DateTime CREATED_DATE { get; set; }
+        public int? MODIFIED_BY { get; set; }
         public DateTime PUBLISHED_DATE { get; set; }
+        public string FORMATTED_PUBLISHED_DATE { get; set; }
         public int CREATED_BY { get; set; }
         public Guid FileId { get; set; }
         public string FileName { get; set; }
@@ -47,10 +49,12 @@ namespace Takamul.Models.ViewModel
             this.IS_NOTIFY_USER = false;
             this.TotalCount = -99;
             this.CREATED_BY = -99;
+            this.MODIFIED_BY = -99;
             this.FileName = string.Empty;
             this.FileExtension = string.Empty;
             this.PUBLISHED_DATE = DateTime.MinValue;
             //this.FileId = string.Empty;
+            this.FORMATTED_PUBLISHED_DATE = string.Empty;
         } 
         #endregion
     }

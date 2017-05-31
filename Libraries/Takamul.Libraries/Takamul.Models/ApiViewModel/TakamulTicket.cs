@@ -23,6 +23,7 @@ namespace Takamul.Models.ApiViewModel
         public int ApplicationID { get; set; }
         [Required]
         public string TicketName { get; set; }
+        public string TicketCode { get; set; }
         public string TicketDescription { get; set; }
         public string Base64DefaultImage { get; set; }
         public int DefaultImageType { get; set; }
@@ -37,6 +38,7 @@ namespace Takamul.Models.ApiViewModel
             this.ApplicationID = -99;
             this.TicketStatusID = -99;
             this.TicketName = string.Empty;
+            this.TicketCode = string.Empty;
             this.TicketDescription = string.Empty;
             this.Base64DefaultImage = string.Empty;
             this.TicketStatusName = string.Empty;

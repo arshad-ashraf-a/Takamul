@@ -1,0 +1,285 @@
+﻿@model Takamul.Models.ViewModel.NewsViewModel
+
+@{
+    ViewBag.Title = "AddNewNews";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddNews", @class = "form-horizontal" }))
+{
+    <div class="col-md-12">
+        <div class="panel panel-white">
+            <div class="panel-heading">
+                <h6 class="panel-title"> Add New Event</h6>
+
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+
+                @* News Title *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">News Title&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                                @Html.EditorFor(model => model.NEWS_TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = "news title" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* News Content *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">News Content&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="10" placeholder="news content" cols="5" id="NEWS_CONTENT" name="NEWS_CONTENT"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Is Active *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Is Active</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Is Notify User *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Is Notify User</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_NOTIFY_USER", Model.IS_NOTIFY_USER, new { @class = "styled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Published Date *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Published Date</label>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                    @Html.EditorFor(model => model.FORMATTED_PUBLISHED_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.PUBLISHED_DATE.AddYears(1)).ToString("dd/MM/yyyy"), placeholder = "published date" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* News Image *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">News Image</label>
+                            <div class="col-lg-8">
+                                <input type="file" id="fuAddNewsImage" class="file-styled">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveNews()">Save</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
+            <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
+        </div>
+    </div>
+}
+
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+        // Month and year menu
+        $(".datepicker-menus").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+
+        // Default file input style
+        $(".file-styled").uniform({
+            fileButtonClass: 'action btn btn-default'
+        });
+
+        function fnNewsValidateInitialization() {
+            var validator = $('#frmAddNews').validate({
+                errorElement: 'div',
+                errorClass: 'validation-error-label',
+                focusInvalid: true,
+                ignore: "",
+                rules: {
+                    NEWS_TITLE: {
+                        required: true
+                    },
+                    NEWS_CONTENT: {
+                        required: true
+                    },
+                    FORMATTED_PUBLISHED_DATE: {
+                        required: true
+                    }
+                },
+                messages: {
+                    NEWS_TITLE: "This field is required.",
+                    NEWS_CONTENT: "This field is required.",
+                    FORMATTED_PUBLISHED_DATE: "This field is required."
+                },
+                highlight: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+                },
+                success: function (e) {
+                    $(e).closest('.error-placement').removeClass('has-error');
+                    $(e).remove();
+                },
+                errorPlacement: function (error, element) {
+                    // Styled checkboxes, radios, bootstrap switch
+                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                            error.appendTo(element.parent().parent().parent().parent());
+                        }
+                        else {
+                            error.appendTo(element.parent().parent().parent().parent().parent());
+                        }
+                    }
+
+                        // Unstyled checkboxes, radios
+                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                        error.appendTo(element.parent().parent().parent());
+                    }
+
+                        // Input with icons and Select2
+                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    }
+
+                        // Inline checkboxes, radios
+                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                        // Input group, styled file input
+                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    }
+
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+
+                }
+            });
+        }
+
+        function fnIsValidFileExtension(sExtension) {
+            var bIsInValidExt = false;
+            if (sExtension != "PNG" && sExtension != "JPG" && sExtension != "JPEG") {
+                bIsInValidExt = true;
+            }
+            return bIsInValidExt;
+        }
+
+        function fnCheckFileSize(fileid) {
+            var fileSize = 0;
+            try {
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
+                fileSize = fileSize / 1024; //size in kb
+            }
+            catch (e) {
+                fileSize = 0;
+                console.log(ex);
+            }
+            return fileSize;
+        }
+
+        function fnSaveNews() {
+            if (!$("#frmAddNews").valid()) {
+                return false;
+            }
+
+            var data = new FormData();
+            var files = $("#fuAddNewsImage").get(0).files;
+
+            if (files.length <= 0) {
+                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                return false;
+            }
+
+            var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
+            var nUploadedSize = fnCheckFileSize('fuAddNewsImage');
+            if (Number(nUploadedSize) > Number(sizeAllowed)) {
+                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                return false;
+            }
+
+            var extension = $("#fuAddNewsImage").val().split('.').pop().toUpperCase();
+            var bIsInValidExt = fnIsValidFileExtension(extension);
+            if (bIsInValidExt) {
+                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                return false;
+            }
+
+            var formData = $("#frmAddNews").serializeArray();
+            data.append("NewsImage", files[0]);
+            $.each(formData, function (key, input) {
+                data.append(input.name, input.value);
+            });
+
+            debugger;
+            $.ajax({
+                url: '@Url.Action("JSaveNews", "News")',
+                type: "POST",
+                processData: false,
+                data: data,
+                contentType: false,
+                success: function (result, response) {
+                    if (response != null || response != '') {
+                        if (result.nResult == 1) {
+                            fnClearControls();
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                    }
+                },
+                error: function (er) { }
+
+            });
+        }
+
+        function fnClearControls() {
+            $("#NEWS_TITLE").val("");
+            $("#NEWS_CONTENT").val("");
+            $(".filename").text("");
+            $("#IS_ACTIVE").attr('checked', false);
+            $("#IS_NOTIFY_USER").attr('checked', false);
+        }
+
+        //Entry Point
+        $(document).ready(function () {
+            fnNewsValidateInitialization();
+        });
+    </script>
+}

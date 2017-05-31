@@ -3,6 +3,7 @@ using Infrastructure.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,12 +49,12 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: AddNewEvent
         public ActionResult AddNewEvent()
         {
-            this.PageTitle = "Add New Event";
-            this.TitleHead = "Add New Event";
+            this.PageTitle = "Add Event";
+            this.TitleHead = "Add Event";
 
             EventViewModel oEventViewModel = new EventViewModel();
             oEventViewModel.EVENT_DATE = DateTime.Now;
-            return View(oEventViewModel);
+            return View("_AddNewEvent",oEventViewModel);
         }
         #endregion
 
@@ -61,9 +62,9 @@ namespace LDC.eServices.Portal.Controllers
         public ActionResult EditEvent(int nEventID)
         {
             EventViewModel oEventViewModel = this.oIEventService.oGetEventDetails(nEventID);
-            this.PageTitle = "Edit New Event";
-            this.TitleHead = "Edit New Event";
-            return View(oEventViewModel);
+            this.PageTitle = "Edit Event";
+            this.TitleHead = "Edit Event";
+            return View("_EditEvent", oEventViewModel);
         }
         #endregion
 
@@ -225,6 +226,20 @@ namespace LDC.eServices.Portal.Controllers
         public JsonResult JSaveEvent(EventViewModel oEventViewModel)
         {
             Response oResponseResult = null;
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            HttpPostedFileBase filebase = null;
+            var oFile = System.Web.HttpContext.Current.Request.Files["EventImage"];
+            if (oFile != null)
+            {
+                filebase = new HttpPostedFileWrapper(oFile);
+                if (filebase.ContentLength > 0)
+                {
+                    sRealFileName = filebase.FileName;
+                    sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                    oEventViewModel.EVENT_IMG_FILE_PATH = Path.Combine(this.CurrentApplicationID.ToString(), "Events", sModifiedFileName).Replace('\\', '/');
+                }
+            }
 
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
@@ -235,6 +250,21 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    if (oFile != null)
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                        //DirectoryPath = Saved Application ID + Evemts Folder
+                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
+                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(filebase.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                        }
+                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                    }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.Faild:
@@ -262,7 +292,20 @@ namespace LDC.eServices.Portal.Controllers
         public JsonResult JEditEvent(EventViewModel oEventViewModel)
         {
             Response oResponseResult = null;
-
+            string sRealFileName = string.Empty;
+            string sModifiedFileName = string.Empty;
+            HttpPostedFileBase filebase = null;
+            var oFile = System.Web.HttpContext.Current.Request.Files["EventImage"];
+            if (oFile != null)
+            {
+                filebase = new HttpPostedFileWrapper(oFile);
+                if (filebase.ContentLength > 0)
+                {
+                    sRealFileName = filebase.FileName;
+                    sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
+                    oEventViewModel.EVENT_IMG_FILE_PATH = Path.Combine(this.CurrentApplicationID.ToString(), "Events", sModifiedFileName).Replace('\\', '/');
+                }
+            }
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
 
@@ -272,6 +315,21 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    if (oFile != null)
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                        //DirectoryPath = Saved Application ID + Evemts Folder
+                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
+                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(filebase.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                        }
+                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+                    }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.Faild:
