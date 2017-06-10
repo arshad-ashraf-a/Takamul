@@ -10,6 +10,8 @@ namespace Takamul.Portal.Providers
 {
     public class TakamulMembershipProvider : MembershipProvider
     {
+        private MembershipPasswordFormat _passwordFormat = MembershipPasswordFormat.Hashed;
+
         #region Not Used
 
         public override string ApplicationName
@@ -106,7 +108,7 @@ namespace Takamul.Portal.Providers
 
         public override MembershipPasswordFormat PasswordFormat
         {
-            get { throw new NotImplementedException(); }
+            get { return _passwordFormat; }
         }
 
         public override string PasswordStrengthRegularExpression

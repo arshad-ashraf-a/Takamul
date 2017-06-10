@@ -69,13 +69,23 @@ namespace Takamul.API.Controllers
                 foreach (var ticket in lstTickets)
                 {
                     string sBase64DefaultImage = string.Empty;
+                    string sRemoteFilePath = string.Empty;
                     if (!string.IsNullOrEmpty(ticket.DEFAULT_IMAGE))
                     {
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                        byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
-                        if (oByteFile.Length > 0)
+                        try
                         {
-                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                            byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
+                            if (oByteFile.Length > 0)
+                            {
+                                sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                            }
+
+                            sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
+                        }
+                        catch (Exception Ex)
+                        {
+                            sBase64DefaultImage = Ex.Message.ToString();
                         }
                     }
 
@@ -89,7 +99,8 @@ namespace Takamul.API.Controllers
                         TicketDescription = ticket.TICKET_DESCRIPTION,
                         TicketStatusID = ticket.TICKET_STATUS_ID,
                         TicketStatusRemark = ticket.TICKET_STATUS_REMARK,
-                        TicketStatusName = ticket.TICKET_STATUS_NAME
+                        TicketStatusName = ticket.TICKET_STATUS_NAME,
+                        RemoteFilePath = sRemoteFilePath
                     };
 
                     lstTakamulTicket.Add(oTakamulTicket);
@@ -147,10 +158,11 @@ namespace Takamul.API.Controllers
         /// Get ticket chats by ticket id
         /// </summary>
         /// <param name="nTicketID"></param>
-        /// <returns></returns>
+        /// <returns>TakamulTicketChatRepo</returns>
         [HttpGet]
         public HttpResponseMessage GetTicketChats(int nTicketID)
         {
+            TakamulTicketChatRepo oTakamulTicketChatRepo = new TakamulTicketChatRepo();
             List<TakamulTicketChat> lstTakamulTicket = null;
             List<TicketChatViewModel> lstTicketViewModel = this.oITicketServices.IlGetTicketChats(nTicketID);
             if (lstTicketViewModel.Count > 0)
@@ -160,7 +172,9 @@ namespace Takamul.API.Controllers
                 {
                     string sReplyMessage = string.Empty;
                     string sBase64ReplyImage = string.Empty;
-                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
+                    string sRemoteFilePath = string.Empty;
+                    //ticket chat type 2:png , 3:jpg, 4:jpeg
+                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID == 2 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 3 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 4)
                     {
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
                         byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
@@ -168,6 +182,10 @@ namespace Takamul.API.Controllers
                         {
                             sBase64ReplyImage = Convert.ToBase64String(oByteFile);
                         }
+                    }
+                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
+                    {
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketChatItem.REPLY_FILE_PATH);
                     }
                     TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
                     {
@@ -180,16 +198,41 @@ namespace Takamul.API.Controllers
                         TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
                         UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
                         UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
+                        RemoteFilePath = sRemoteFilePath,
                         Base64ReplyImage = sBase64ReplyImage
                     };
 
                     lstTakamulTicket.Add(oTakamulTicketChat);
+                    oTakamulTicketChatRepo.TakamulTicketChatList = lstTakamulTicket;
                 }
 
+                TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
+                TakamulTicket oTakamulTicket = null;
+                if (oTicketViewModel != null)
+                {
+                    oTakamulTicket = new TakamulTicket()
+                    {
+                        TicketID = oTicketViewModel.ID,
+                        ApplicationID = oTicketViewModel.APPLICATION_ID,
+                        TicketCode = oTicketViewModel.TICKET_CODE,
+                        TicketName = oTicketViewModel.TICKET_NAME,
+                        TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
+                        TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
+                        TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
+                        TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
+                    };
+                    oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;
+
+                    //TODO:: Replace with original code
+                    if (oTicketViewModel.TICKET_STATUS_ID == 3) //Rejected
+                    {
+                        oTakamulTicketChatRepo.RejectReason = "some reject reason from database";
+                    }
+                }
             }
-            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulTicket);
+            return Request.CreateResponse(HttpStatusCode.OK, oTakamulTicketChatRepo);
         }
-        #endregion 
+        #endregion
 
         #region Method :: HttpResponseMessage :: CreateTicket
         // POST: api/TakamulTicket/CreateTicket
@@ -198,9 +241,10 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="oTakamulTicket"></param>
         /// <param name="nUserID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage CreateTicket(TakamulTicket oTakamulTicket, int nUserID)
+        public HttpResponseMessage CreateTicket(TakamulTicket oTakamulTicket, int nUserID, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
             if (ModelState.IsValid)
@@ -234,7 +278,7 @@ namespace Takamul.API.Controllers
                     };
 
                     Response oResponse = this.oITicketServices.oInsertTicket(oTicketViewModel, nUserID);
-                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    if (oResponse.nOperationResult == 1)
                     {
                         if (!string.IsNullOrEmpty(sDefaultImagePath) && !string.IsNullOrEmpty(oTakamulTicket.Base64DefaultImage))
                         {
@@ -253,8 +297,33 @@ namespace Takamul.API.Controllers
                     }
                     else
                     {
-                        oApiResponse.OperationResult = 0;
-                        oApiResponse.OperationResultMessage = "Ticket insert failed.";
+                        switch (oResponse.nOperationResult)
+                        {
+                            case -5:
+                                oApiResponse.OperationResult = -5;
+                                oApiResponse.OperationResultMessage = "The Application is expired";
+                                break;
+                            case -6:
+                                oApiResponse.OperationResult = -6;
+                                oApiResponse.OperationResultMessage = "OTP is not verified.";
+                                break;
+                            case -7:
+                                oApiResponse.OperationResult = -7;
+                                oApiResponse.OperationResultMessage = "User is blocked.";
+                                break;
+                            case -8:
+                                oApiResponse.OperationResult = -8;
+                                oApiResponse.OperationResultMessage = "Ticket submission is restricted.";
+                                break;
+                            case -9:
+                                oApiResponse.OperationResult = -9;
+                                oApiResponse.OperationResultMessage = "Ticket Submission Interval Days reached.";
+                                break;
+                            default:
+                                oApiResponse.OperationResult = 0;
+                                oApiResponse.OperationResultMessage = "Ticket insert failed.";
+                                break;
+                        }
                     }
                     return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
                 }
@@ -277,9 +346,10 @@ namespace Takamul.API.Controllers
         /// Post a ticket chat
         /// </summary>
         /// <param name="oTakamulTicketChat"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage PostTicketChat(TakamulTicketChat oTakamulTicketChat)
+        public HttpResponseMessage PostTicketChat(TakamulTicketChat oTakamulTicketChat, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
             if (ModelState.IsValid)
@@ -327,7 +397,7 @@ namespace Takamul.API.Controllers
                     };
 
                     Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
-                    if (oResponse.OperationResult == enumOperationResult.Success)
+                    if (oResponse.nOperationResult == 1)
                     {
                         if (!string.IsNullOrEmpty(sFullFilePath) && !string.IsNullOrEmpty(oTakamulTicketChat.Base64ReplyImage))
                         {
@@ -337,11 +407,37 @@ namespace Takamul.API.Controllers
                             oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
                         }
                         oApiResponse.OperationResult = 1;
+                        oApiResponse.OperationResultMessage = "Success.";
                     }
                     else
                     {
-                        oApiResponse.OperationResult = 0;
-                        oApiResponse.OperationResultMessage = "Chat post failed.";
+                        switch (oResponse.nOperationResult)
+                        {
+                            case -5:
+                                oApiResponse.OperationResult = -5;
+                                oApiResponse.OperationResultMessage = "The Application is expired";
+                                break;
+                            case -6:
+                                oApiResponse.OperationResult = -6;
+                                oApiResponse.OperationResultMessage = "OTP is not verified.";
+                                break;
+                            case -7:
+                                oApiResponse.OperationResult = -7;
+                                oApiResponse.OperationResultMessage = "User is blocked.";
+                                break;
+                            case -8:
+                                oApiResponse.OperationResult = -8;
+                                oApiResponse.OperationResultMessage = "Ticket submission is restricted.";
+                                break;
+                            case -9:
+                                oApiResponse.OperationResult = -9;
+                                oApiResponse.OperationResultMessage = "Ticket Submission Interval Days reached.";
+                                break;
+                            default:
+                                oApiResponse.OperationResult = 0;
+                                oApiResponse.OperationResultMessage = "chat post failed.";
+                                break;
+                        }
                     }
                     return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
                 }
@@ -361,7 +457,7 @@ namespace Takamul.API.Controllers
         #region Method :: HttpResponseMessage :: ResolveTicket
         // POST: api/TakamulTicket/UpdateTicket
         /// <summary>
-        /// Post a ticket chat
+        /// Resolve a ticket 
         /// </summary>
         /// <param name="oTicketId"></param>
         /// /// <param name="oUserid"></param>
@@ -384,6 +480,44 @@ namespace Takamul.API.Controllers
                 {
                     oApiResponse.OperationResult = 0;
                     oApiResponse.OperationResultMessage = "Ticket resolve failed.";
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
+            }
+            catch (Exception Ex)
+            {
+                oApiResponse.OperationResult = 0;
+                oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+            }
+        }
+        #endregion 
+
+        #region Method :: HttpResponseMessage :: DeleteTicket
+        // POST: api/TakamulTicket/UpdateTicket
+        /// <summary>
+        /// Delete a ticket
+        /// </summary>
+        /// <param name="oTicketId"></param>
+        /// /// <param name="oUserid"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage DeleteTicket(int oTicketId, int oUserid)
+        {
+            ApiResponse oApiResponse = new ApiResponse();
+
+            try
+            {
+                Response oResponse = this.oITicketServices.oDeleteTicket(oTicketId, oUserid);
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+
+                    oApiResponse.OperationResult = 1;
+                    oApiResponse.OperationResultMessage = "Ticket has been deleted.";
+                }
+                else
+                {
+                    oApiResponse.OperationResult = 0;
+                    oApiResponse.OperationResultMessage = "Ticket deletion failed.";
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
             }

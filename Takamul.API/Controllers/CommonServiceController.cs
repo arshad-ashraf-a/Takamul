@@ -79,7 +79,8 @@ namespace Takamul.API.Controllers
                     Base64ApplicationLogo = sBase64AppLogo,
                     ApplicationToken = oApplicationViewModel.APPLICATION_TOKEN,
                     DefaultThemeColor = oApplicationViewModel.DEFAULT_THEME_COLOR,
-                    IsActive = oApplicationViewModel.IS_ACTIVE
+                    IsActive = oApplicationViewModel.IS_ACTIVE,
+                    IsApplicationExpired = oApplicationViewModel.APPLICATION_EXPIRY_DATE > DateTime.Now
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulApplication);
@@ -122,15 +123,14 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get list of areas
         /// </summary>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
-        /// 
-        
         [HttpGet]
-        public HttpResponseMessage GetAllArea()
+        public HttpResponseMessage GetAllArea(int nLanguageID)
         {
             List<AreaInfo> oAreaInfolsts = new List<AreaInfo>();
 
-            List<AreaInfoViewModel> oAreaListViewModellsts = this.oICommonServices.oGetAllAreas();
+            List<AreaInfoViewModel> oAreaListViewModellsts = this.oICommonServices.oGetAllAreas(nLanguageID);
 
             foreach (AreaInfoViewModel item in oAreaListViewModellsts)
             {
@@ -142,9 +142,6 @@ namespace Takamul.API.Controllers
                 oAreaInfolsts.Add(oAreaInfo);
 
             }
-
-
-
             return Request.CreateResponse(HttpStatusCode.OK, oAreaInfolsts);
         }
         #endregion
@@ -155,13 +152,14 @@ namespace Takamul.API.Controllers
         /// Get list of Wilayats
         /// </summary>
         /// <param name="sAreaCode"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         /// 
         [HttpGet]
-        public HttpResponseMessage GetAllWilayats(string sAreaCode)
+        public HttpResponseMessage GetAllWilayats(string sAreaCode, int nLanguageID)
         {
             List<WilayatInfo> oWilayatList = new List<WilayatInfo>();
-            List<WilayatInfoViewModel> oWilayatViewModellsts = this.oICommonServices.oGetAllWilayats(sAreaCode);
+            List<WilayatInfoViewModel> oWilayatViewModellsts = this.oICommonServices.oGetAllWilayats(sAreaCode, nLanguageID);
 
             foreach (WilayatInfoViewModel item in oWilayatViewModellsts)
             {
@@ -184,12 +182,13 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="sAreaCode"></param>
         /// <param name="sWilayatCode"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetAllVillages(string sAreaCode,string sWilayatCode)
+        public HttpResponseMessage GetAllVillages(string sAreaCode, string sWilayatCode, int nLanguageID)
         {
             List<VillageInfo> oVillageList = new List<VillageInfo>();
-            List<VillageInfoViewModel> oVillageViewModellsts = this.oICommonServices.oGetAllVillages(sAreaCode,sWilayatCode);
+            List<VillageInfoViewModel> oVillageViewModellsts = this.oICommonServices.oGetAllVillages(sAreaCode, sWilayatCode, nLanguageID);
 
             foreach (VillageInfoViewModel item in oVillageViewModellsts)
             {
@@ -197,7 +196,6 @@ namespace Takamul.API.Controllers
                 {
                     VILLAGECODE = item.VILLAGECODE,
                     VILLAGENAME = item.VILLAGENAME
-
                 };
                 oVillageList.Add(oVillage);
             }

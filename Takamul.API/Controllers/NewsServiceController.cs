@@ -54,9 +54,10 @@ namespace Takamul.API.Controllers
         /// Get all news 
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetAllNews(int nApplicationID)
+        public HttpResponseMessage GetAllNews(int nApplicationID, int nLanguageID)
         {
             List<TakamulNews> lstTakamulNews = null;
             var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID);
@@ -99,9 +100,10 @@ namespace Takamul.API.Controllers
         /// Get news details by news id 
         /// </summary>
         /// <param name="nNewsID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetNewsDetails(int nNewsID)
+        public HttpResponseMessage GetNewsDetails(int nNewsID, int nLanguageID)
         {
             TakamulNews oTakamulNews = null;
             NewsViewModel oNewsViewModel = this.oINewsServices.oGetNewsDetails(nNewsID);

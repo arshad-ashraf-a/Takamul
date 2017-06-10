@@ -91,6 +91,7 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oUpdateTicket(int nTicketID, int nTicketStatusID, bool nIsActive, string sRejectReason, int nDoneBy);
         #endregion
+
         #region Method :: Response :: oResolveTicket
         /// <summary>
         /// Udpate Ticket
@@ -99,6 +100,17 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oResolveTicket(int nTicketID, int nTicketStatusID, int nDoneBy);
         #endregion
-        
+
+        #region Method :: Response :: oDeleteTicket
+        /// <summary>
+        /// Delete a user ticket
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nDoneBy"></param>
+        /// <returns></returns>
+        Response oDeleteTicket(int nTicketID, int nDoneBy);
+        #endregion
+
+
     }
 }

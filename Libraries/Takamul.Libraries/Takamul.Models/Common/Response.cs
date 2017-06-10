@@ -12,6 +12,8 @@ namespace Takamul.Models
     {
         public enumOperationResult OperationResult { get; set; }
 
+        public int nOperationResult { get; set; }
+
         public string OperationResultMessage { get; set; }
 
         public string ResponseID { get; set; }
@@ -26,6 +28,7 @@ namespace Takamul.Models
             this.ResponseCode = string.Empty;
             this.ResponseID = "-99";
             this.ResponseChildID = "-99";
+            this.nOperationResult = -99;
         }
     }
 }

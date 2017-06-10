@@ -65,7 +65,7 @@ namespace LDC.eServices.Portal.Controllers
         [HttpPost]
         public JsonResult JGetAllAreas()
         {
-            var lstAreas = this.oICommonServices.oGetAllAreas();
+            var lstAreas = this.oICommonServices.oGetAllAreas(2);
             return Json(lstAreas, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -78,7 +78,7 @@ namespace LDC.eServices.Portal.Controllers
         [HttpPost]
         public JsonResult JGetAllWilayat(string sAreaCode)
         {
-            var lstWilayats = this.oICommonServices.oGetAllWilayats(sAreaCode);
+            var lstWilayats = this.oICommonServices.oGetAllWilayats(sAreaCode, 2);
             return Json(lstWilayats, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -89,9 +89,9 @@ namespace LDC.eServices.Portal.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetAllVillages(string sAreaCode,string sWilayatCode)
+        public JsonResult JGetAllVillages(string sAreaCode, string sWilayatCode)
         {
-            var lstVillages = this.oICommonServices.oGetAllVillages(sAreaCode,sWilayatCode);
+            var lstVillages = this.oICommonServices.oGetAllVillages(sAreaCode, sWilayatCode, 2);
             return Json(lstVillages, JsonRequestBehavior.AllowGet);
         }
         #endregion

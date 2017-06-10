@@ -23,6 +23,7 @@ namespace Takamul.Models.ApiViewModel
         public string ApplicationToken { get; set; }
         public string DefaultThemeColor { get; set; }
         public bool IsActive { get; set; }
+        public bool IsApplicationExpired { get; set; }
 
         #region :: Constructor ::
         public TakamulApplication()
@@ -33,6 +34,7 @@ namespace Takamul.Models.ApiViewModel
             this.ApplicationToken = string.Empty;
             this.DefaultThemeColor = string.Empty;
             this.IsActive = false;
+            this.IsApplicationExpired = false;
         } 
         #endregion
     }

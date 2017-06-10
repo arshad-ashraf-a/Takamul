@@ -16,12 +16,9 @@ using System.Threading.Tasks;
 
 namespace Takamul.Models.ViewModel
 {
-  public  class WilayatInfoViewModel
+    public class WilayatInfoViewModel
     {
-
-
         public string WILAYATCODE { get; set; }
-        public string WILLAYATNAMEAR { get; set; }
         public string WILLAYATNAME { get; set; }
 
 
@@ -29,7 +26,6 @@ namespace Takamul.Models.ViewModel
         public WilayatInfoViewModel()
         {
             this.WILAYATCODE = string.Empty;
-            this.WILLAYATNAMEAR = string.Empty;
             this.WILLAYATNAME = string.Empty;
         }
         #endregion

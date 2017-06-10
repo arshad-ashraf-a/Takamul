@@ -27,29 +27,32 @@ namespace Takamul.Services
 
         #region Method :: Response :: oGetAllAreas
         /// <summary>
-        /// Get area list
+        ///  Get area list
         /// </summary>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        List<AreaInfoViewModel> oGetAllAreas();
+        List<AreaInfoViewModel> oGetAllAreas(int nLanguageID);
         #endregion
 
         #region Method :: Response :: oGetAllWilayats
         /// <summary>
-        /// Get Wilayats list
+        ///  Get Wilayats list
         /// </summary>
-        /// <param name="oAreaCode"></param>
+        /// <param name="AreaCode"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        List<WilayatInfoViewModel> oGetAllWilayats(string AreaCode);
+        List<WilayatInfoViewModel> oGetAllWilayats(string AreaCode, int nLanguageID);
         #endregion
 
         #region Method :: Response :: oGetAllVillages
         /// <summary>
-        /// Get Villages
+        ///  Get Villages
         /// </summary>
         /// <param name="sAreaCode"></param>
         /// <param name="sWilayatCode"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        List<VillageInfoViewModel> oGetAllVillages(string sAreaCode, string sWilayatCode);
+        List<VillageInfoViewModel> oGetAllVillages(string sAreaCode, string sWilayatCode, int nLanguageID);
         #endregion
 
     }

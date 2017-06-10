@@ -492,23 +492,25 @@
             Authentication Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.RegisterUser(Takamul.Models.ApiViewModel.TakamulUser)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.RegisterUser(Takamul.Models.ApiViewModel.TakamulUser,System.Int32)">
             <summary>
             Register a mobile user
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</para>
             </summary>
             <param name="oTakamulUser"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String,System.Int32)">
             <summary>
             Resend user OTP Number by phone number
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
             </summary>
             <param name="sPhoneNumber"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.String,System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.String,System.Int32,System.Int32)">
             <summary>
             Validate user OTP Number by phone number
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</para>
@@ -516,6 +518,7 @@
             </summary>
             <param name="sPhoneNumber"></param>
             <param name="nOTPNumber"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
         <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetails(System.Int32)">
@@ -551,27 +554,29 @@
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllArea">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllArea(System.Int32)">
             <summary>
             Get list of areas
             </summary>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
-            
         </member>
-        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllWilayats(System.String)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllWilayats(System.String,System.Int32)">
             <summary>
             Get list of Wilayats
             </summary>
             <param name="sAreaCode"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
             
         </member>
-        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllVillages(System.String,System.String)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllVillages(System.String,System.String,System.Int32)">
             <summary>
             Get village detailed infomations
             </summary>
             <param name="sAreaCode"></param>
             <param name="sWilayatCode"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
         <member name="T:Takamul.API.Controllers.EventServiceController">
@@ -579,25 +584,28 @@
             Event Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.EventServiceController.GetAllEvents(System.Int32)">
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetAllEvents(System.Int32,System.Int32)">
             <summary>
             Get all events
             </summary>
             <param name="nApplicationID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventDetails(System.Int32,System.Int32)">
             <summary>
             Get event by event id
             </summary>
             <param name="nEventsID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventsByDate(System.DateTime,System.Int32)">
+        <member name="M:Takamul.API.Controllers.EventServiceController.GetEventsByDate(System.DateTime,System.Int32,System.Int32)">
             <summary>
             Get all events
             </summary>
             <param name="dEventDate"></param><param name="nApplicationID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
         <member name="T:Takamul.API.Controllers.TicketServiceController">
@@ -625,26 +633,36 @@
             Get ticket chats by ticket id
             </summary>
             <param name="nTicketID"></param>
-            <returns></returns>
+            <returns>TakamulTicketChatRepo</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TicketServiceController.CreateTicket(Takamul.Models.ApiViewModel.TakamulTicket,System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.CreateTicket(Takamul.Models.ApiViewModel.TakamulTicket,System.Int32,System.Int32)">
             <summary>
             Create a ticket
             </summary>
             <param name="oTakamulTicket"></param>
             <param name="nUserID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TicketServiceController.PostTicketChat(Takamul.Models.ApiViewModel.TakamulTicketChat)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.PostTicketChat(Takamul.Models.ApiViewModel.TakamulTicketChat,System.Int32)">
             <summary>
             Post a ticket chat
             </summary>
             <param name="oTakamulTicketChat"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
         <member name="M:Takamul.API.Controllers.TicketServiceController.ResolveTicket(System.Int32,System.Int32)">
             <summary>
-            Post a ticket chat
+            Resolve a ticket 
+            </summary>
+            <param name="oTicketId"></param>
+            /// <param name="oUserid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Takamul.API.Controllers.TicketServiceController.DeleteTicket(System.Int32,System.Int32)">
+            <summary>
+            Delete a ticket
             </summary>
             <param name="oTicketId"></param>
             /// <param name="oUserid"></param>
@@ -655,18 +673,20 @@
             News Service
             </summary>
         </member>
-        <member name="M:Takamul.API.Controllers.NewsServiceController.GetAllNews(System.Int32)">
+        <member name="M:Takamul.API.Controllers.NewsServiceController.GetAllNews(System.Int32,System.Int32)">
             <summary>
             Get all news 
             </summary>
             <param name="nApplicationID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.NewsServiceController.GetNewsDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.NewsServiceController.GetNewsDetails(System.Int32,System.Int32)">
             <summary>
             Get news details by news id 
             </summary>
             <param name="nNewsID"></param>
+            <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
     </members>

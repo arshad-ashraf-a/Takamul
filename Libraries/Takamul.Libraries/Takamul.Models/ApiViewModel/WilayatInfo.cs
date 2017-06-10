@@ -18,18 +18,13 @@ namespace Takamul.Models.ApiViewModel
 {
   public  class WilayatInfo
     {
-
-
         public string WILAYATCODE { get; set; }
-        public string WILLAYATNAMEAR { get; set; }
         public string WILLAYATNAME { get; set; }
-
 
         #region :: Constructor ::
         public WilayatInfo()
         {
             this.WILAYATCODE = string.Empty;
-            this.WILLAYATNAMEAR = string.Empty;
             this.WILLAYATNAME = string.Empty;
         }
         #endregion

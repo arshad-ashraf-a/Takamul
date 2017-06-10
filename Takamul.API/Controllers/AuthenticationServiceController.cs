@@ -51,9 +51,10 @@ namespace Takamul.API.Controllers
         /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</para>
         /// </summary>
         /// <param name="oTakamulUser"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         [HttpPost]
-        public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser)
+        public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
             if (ModelState.IsValid)
@@ -110,7 +111,7 @@ namespace Takamul.API.Controllers
             oApiResponse.OperationResultMessage = "Model validation failed";
             return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
-        #endregion 
+        #endregion
 
         #region Method :: HttpResponseMessage :: ResendOTPNumber
         //GET: api/Authentication/ResendOTPNumber?nPhoneNumber=
@@ -119,9 +120,10 @@ namespace Takamul.API.Controllers
         /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
         /// </summary>
         /// <param name="sPhoneNumber"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber)
+        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
@@ -163,9 +165,10 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber)
+        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber,int nLanguageID)
         {
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();

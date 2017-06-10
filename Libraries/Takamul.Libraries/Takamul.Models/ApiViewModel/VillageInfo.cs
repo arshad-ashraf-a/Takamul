@@ -19,7 +19,6 @@ namespace Takamul.Models.ApiViewModel
     {
 
         public string VILLAGECODE { get; set; }
-        public string VILLAGENAMEAR { get; set; }
         public string VILLAGENAME { get; set; }
 
 
@@ -27,7 +26,6 @@ namespace Takamul.Models.ApiViewModel
         public VillageInfo()
         {
             this.VILLAGECODE = string.Empty;
-            this.VILLAGENAMEAR = string.Empty;
             this.VILLAGENAME = string.Empty;
         }
         #endregion

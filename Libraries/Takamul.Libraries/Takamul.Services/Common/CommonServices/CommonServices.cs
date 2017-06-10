@@ -60,19 +60,20 @@ namespace Takamul.Services
             return lstMemberInfo;
             #endregion
         }
-        #endregion 
+        #endregion
 
         #region Method :: AreaInfo :: oGetAllAreas
         /// <summary>
-        ///  Get all areas
+        /// Get all areas
         /// </summary>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        public List<AreaInfoViewModel> oGetAllAreas()
+        public List<AreaInfoViewModel> oGetAllAreas(int nLanguageID)
         {
 
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, null, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -86,14 +87,17 @@ namespace Takamul.Services
 
         #region Method :: WilayatInfoViewModel :: oGetAllWilayats
         /// <summary>
-        ///  Get all wilayat
+        ///   Get all wilayat
         /// </summary>
+        /// <param name="sAreaCode"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        public List<WilayatInfoViewModel> oGetAllWilayats(string sAreaCode)
+        public List<WilayatInfoViewModel> oGetAllWilayats(string sAreaCode, int nLanguageID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -107,17 +111,21 @@ namespace Takamul.Services
 
         #region Method :: VillageInfoViewModel :: oGetAllVillages
         /// <summary>
-        ///  Get all villages
+        /// Get all villages
         /// </summary>
-        /// <param name="nUserID"></param>
+        /// <param name="sAreaCode"></param>
+        /// <param name="sWilayatCode"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        public List<VillageInfoViewModel> oGetAllVillages(string sAreaCode,string sWilayatCode)
+        public List<VillageInfoViewModel> oGetAllVillages(string sAreaCode,string sWilayatCode, int nLanguageID)
         {
 
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("AreaCode", SqlDbType.NVarChar, sAreaCode, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("WilayatCode", SqlDbType.NVarChar, sWilayatCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_AreaCode", SqlDbType.NVarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_WilayatCode", SqlDbType.NVarChar, sWilayatCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
+
             #endregion
 
             #region ":Get Sp Result:"

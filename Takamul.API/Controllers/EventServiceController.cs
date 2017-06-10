@@ -53,9 +53,10 @@ namespace Takamul.API.Controllers
         /// Get all events
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetAllEvents(int nApplicationID)
+        public HttpResponseMessage GetAllEvents(int nApplicationID, int nLanguageID)
         {
             List<TakamulEvents> lstTakamulEvents = null;
             var lstEvents = this.oIEventsServices.IlGetAllActiveEvents(nApplicationID);
@@ -82,7 +83,7 @@ namespace Takamul.API.Controllers
                         EVENTDESCRIPTION = oEvent.EVENT_DESCRIPTION,
                         EVENTNAME = oEvent.EVENT_NAME,
                         EVENTDATE = oEvent.EVENT_DATE,
-                        Latitude =  oEvent.EVENT_LATITUDE,
+                        Latitude = oEvent.EVENT_LATITUDE,
                         Longitude = oEvent.EVENT_LONGITUDE,
                         BASE64EVENTIMG = sBase64DefaultImage
                     };
@@ -99,9 +100,10 @@ namespace Takamul.API.Controllers
         /// Get event by event id
         /// </summary>
         /// <param name="nEventsID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetEventDetails(int nEventsID)
+        public HttpResponseMessage GetEventDetails(int nEventsID, int nLanguageID)
         {
             TakamulEvents oTakamulEvents = null;
             EventViewModel oEventsViewModel = this.oIEventsServices.oGetEventDetails(nEventsID);
@@ -132,7 +134,7 @@ namespace Takamul.API.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
         }
-        #endregion 
+        #endregion
 
         #region Method :: HttpResponseMessage :: GetEventsByDate
         // GET: api/TakamulEvents/GetEventsByDate
@@ -140,9 +142,10 @@ namespace Takamul.API.Controllers
         /// Get all events
         /// </summary>
         /// <param name="dEventDate"></param><param name="nApplicationID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetEventsByDate(DateTime dEventDate,int nApplicationID)
+        public HttpResponseMessage GetEventsByDate(DateTime dEventDate, int nApplicationID, int nLanguageID)
         {
             List<TakamulEvents> lstTakamulEvents = null;
             var lstEvents = this.oIEventsServices.oGetEventsbyDate(dEventDate, nApplicationID);

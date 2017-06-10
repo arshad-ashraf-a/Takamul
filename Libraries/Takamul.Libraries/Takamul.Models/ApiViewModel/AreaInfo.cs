@@ -20,7 +20,6 @@ namespace Takamul.Models.ApiViewModel
     {
 
         public String AREACODE { get; set; } 
-        public string AREA_NAMEAR { get; set; }
         public string AREA_NAME { get; set; }
 
 
@@ -28,7 +27,6 @@ namespace Takamul.Models.ApiViewModel
         public AreaInfo()
         {
             this.AREACODE = string.Empty;
-            this.AREA_NAMEAR = string.Empty;
             this.AREA_NAME = string.Empty;
         }
         #endregion

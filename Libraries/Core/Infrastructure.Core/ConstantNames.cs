@@ -151,5 +151,18 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region RemoteFileServerPath
+        /// <summary>
+        ///Remote File ServerPath
+        /// </summary>
+        public static string RemoteFileServerPath
+        {
+            get
+            {
+                return "RemoteFileServerPath";
+            }
+        }
+        #endregion
+
     }
 }
