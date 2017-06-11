@@ -80,7 +80,7 @@ namespace Takamul.API.Controllers
                     ApplicationToken = oApplicationViewModel.APPLICATION_TOKEN,
                     DefaultThemeColor = oApplicationViewModel.DEFAULT_THEME_COLOR,
                     IsActive = oApplicationViewModel.IS_ACTIVE,
-                    IsApplicationExpired = oApplicationViewModel.APPLICATION_EXPIRY_DATE > DateTime.Now
+                    IsApplicationExpired = oApplicationViewModel.APPLICATION_EXPIRY_DATE < DateTime.Now
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulApplication);

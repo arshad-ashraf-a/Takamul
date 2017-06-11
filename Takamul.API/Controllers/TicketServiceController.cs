@@ -192,7 +192,7 @@ namespace Takamul.API.Controllers
                         ApplicationID = oTicketChatItem.APPLICATION_ID,
                         TicketID = oTicketChatItem.TICKET_ID,
                         ReplyMessage = oTicketChatItem.REPLY_MESSAGE,
-                        ReplyDate = oTicketChatItem.REPLIED_DATE,
+                        ReplyDate = string.Format("{0} {1}", oTicketChatItem.REPLIED_DATE.ToShortDateString(), oTicketChatItem.REPLIED_DATE.ToShortTimeString()),
                         TicketChatID = oTicketChatItem.ID,
                         TicketChatTypeID = oTicketChatItem.TICKET_CHAT_TYPE_ID,
                         TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
@@ -226,7 +226,7 @@ namespace Takamul.API.Controllers
                     //TODO:: Replace with original code
                     if (oTicketViewModel.TICKET_STATUS_ID == 3) //Rejected
                     {
-                        oTakamulTicketChatRepo.RejectReason = "some reject reason from database";
+                        oTakamulTicketChatRepo.RejectReason = "reject reason from database";
                     }
                 }
             }

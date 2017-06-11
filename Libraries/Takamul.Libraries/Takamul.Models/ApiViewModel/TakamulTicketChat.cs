@@ -21,7 +21,7 @@ namespace Takamul.Models.ApiViewModel
         public int TicketID { get; set; }
         public int TicketChatID { get; set; }
         public string ReplyMessage { get; set; }
-        public DateTime ReplyDate { get; set; }
+        public string ReplyDate { get; set; }
         public string Base64ReplyImage { get; set; }
         public string RemoteFilePath { get; set; }
         public int UserID { get; set; }
@@ -38,7 +38,7 @@ namespace Takamul.Models.ApiViewModel
             this.TicketChatTypeID = -99;
             this.UserID = -99;
             this.ReplyMessage = string.Empty;
-            this.ReplyDate = DateTime.MinValue;
+            this.ReplyDate = string.Empty;
             this.Base64ReplyImage = string.Empty;
             this.RemoteFilePath = string.Empty;
             this.TicketChatTypeName = string.Empty;

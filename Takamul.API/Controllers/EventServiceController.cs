@@ -82,7 +82,7 @@ namespace Takamul.API.Controllers
                         APPLICATIONID = oEvent.APPLICATION_ID,
                         EVENTDESCRIPTION = oEvent.EVENT_DESCRIPTION,
                         EVENTNAME = oEvent.EVENT_NAME,
-                        EVENTDATE = oEvent.EVENT_DATE,
+                        EVENTDATE = string.Format("{0} {1}", oEvent.EVENT_DATE.ToShortDateString(), oEvent.EVENT_DATE.ToShortTimeString()),
                         Latitude = oEvent.EVENT_LATITUDE,
                         Longitude = oEvent.EVENT_LONGITUDE,
                         BASE64EVENTIMG = sBase64DefaultImage
@@ -126,7 +126,7 @@ namespace Takamul.API.Controllers
                     APPLICATIONID = oEventsViewModel.APPLICATION_ID,
                     EVENTDESCRIPTION = oEventsViewModel.EVENT_DESCRIPTION,
                     EVENTNAME = oEventsViewModel.EVENT_NAME,
-                    EVENTDATE = oEventsViewModel.EVENT_DATE,
+                    EVENTDATE = string.Format("{0} {1}", oEventsViewModel.EVENT_DATE.ToShortDateString(), oEventsViewModel.EVENT_DATE.ToShortTimeString()),
                     Latitude = oEventsViewModel.EVENT_LATITUDE,
                     Longitude = oEventsViewModel.EVENT_LONGITUDE,
                     BASE64EVENTIMG = sBase64DefaultImage
@@ -171,7 +171,7 @@ namespace Takamul.API.Controllers
                         APPLICATIONID = Events.APPLICATION_ID,
                         EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
                         EVENTNAME = Events.EVENT_NAME,
-                        EVENTDATE = Events.EVENT_DATE,
+                        EVENTDATE = string.Format("{0} {1}", Events.EVENT_DATE.ToShortDateString(), Events.EVENT_DATE.ToShortTimeString()),
                         Latitude = Events.EVENT_LATITUDE,
                         Longitude = Events.EVENT_LONGITUDE,
                         BASE64EVENTIMG = sBase64DefaultImage

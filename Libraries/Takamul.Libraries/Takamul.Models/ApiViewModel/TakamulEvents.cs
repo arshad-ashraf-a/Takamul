@@ -22,7 +22,7 @@ namespace Takamul.Models.ApiViewModel
         public string EVENTNAME { get; set; }
         public string EVENTDESCRIPTION { get; set; }
         public string BASE64EVENTIMG { get; set; }
-        public DateTime EVENTDATE { get; set; }
+        public string EVENTDATE { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
@@ -34,7 +34,7 @@ namespace Takamul.Models.ApiViewModel
             this.EVENTNAME = string.Empty;
             this.EVENTDESCRIPTION = string.Empty;
             this.BASE64EVENTIMG = string.Empty;
-            this.EVENTDATE = DateTime.MinValue;
+            this.EVENTDATE = string.Empty;
             this.Latitude = "-99";
             this.Longitude = "-99";
         } 

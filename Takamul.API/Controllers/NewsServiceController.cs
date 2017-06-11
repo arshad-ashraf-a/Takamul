@@ -83,7 +83,7 @@ namespace Takamul.API.Controllers
                         ApplicationID = news.APPLICATION_ID,
                         NewsContent = news.NEWS_CONTENT,
                         NewsTitle = news.NEWS_TITLE,
-                        PublishedDate = news.PUBLISHED_DATE,
+                        PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
                         Base64NewsImage = sBase64DefaultImage
 
                     };
@@ -126,7 +126,7 @@ namespace Takamul.API.Controllers
                     ApplicationID = oNewsViewModel.APPLICATION_ID,
                     NewsContent = oNewsViewModel.NEWS_CONTENT,
                     NewsTitle = oNewsViewModel.NEWS_TITLE,
-                    PublishedDate = oNewsViewModel.PUBLISHED_DATE,
+                    PublishedDate = string.Format("{0} {1}", oNewsViewModel.PUBLISHED_DATE.ToShortDateString(), oNewsViewModel.PUBLISHED_DATE.ToShortTimeString()),
                     Base64NewsImage = sBase64DefaultImage
                 };
             }
