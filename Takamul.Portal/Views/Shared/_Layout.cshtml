@@ -1,11 +1,12 @@
 ﻿@using Infrastructure.Utilities;
 @using System.Web.Optimization;
+@using Takamul.Portal.App_Code;
+@using Takamul.Portal.Resources.Common;
 @{
     BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
-
 }
 <!DOCTYPE html>
-<html>
+<html dir="@CommonResx.Direction">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,23 @@
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+
+    @if (oBaseController.CurrentApplicationLanguage == Data.Core.Languages.Arabic)
+    {
+        <link href='@Url.Content("~/assets/css/components-rtl.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/bootstrap-rtl.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/core-rtl.css")' rel="stylesheet" />
+    }
+    else
+    {
+        <link href='@Url.Content("~/assets/css/components.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/bootstrap.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/core.css")' rel="stylesheet" />
+    }
+
+
     @Styles.Render("~/bundles/CoreStyles")
+
     <!-- /global stylesheets -->
     <!-- Core CSS Utilities -->
     @Styles.Render("~/bundles/CoreStyleUtilities")
@@ -25,7 +42,13 @@
 </head>
 <body>
     <script type="text/javascript">
+        var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
+        var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
         var LoaderImagePath = '@Url.Content("~/assets/Images/Loader.png")';
+
+
+        var UlDir = '@CommonResx.LayoutDirectionOpposite';
+
     </script>
     <!-- Main navbar -->
     <div class="navbar navbar-inverse">
@@ -47,7 +70,19 @@
                         <span>@BaseController.CurrentUser.sUserName</span>
                         <i class="caret"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <ul class="dropdown-menu dropdown-menu-@CommonResx.LayoutDirectionOpposite">
+                        @if (oBaseController.CurrentApplicationLanguage == Data.Core.Languages.Arabic)
+                        {
+                            <li>
+                                <a href="#" onclick="fnSetLanguage(2); return false;"><i class="icon-switch2"></i> English</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" onclick="fnSetLanguage(1); return false;"><i class="icon-switch2"></i> Arabic</a>
+                            </li>
+                        }
                         <li>
                             <a href="@Url.Action("LogOut", "Account", new { area = "" })"><i class="icon-switch2"></i> Logout</a>
                         </li>
@@ -96,8 +131,8 @@
 
                                 @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
                                 {
-                                    <li class="active"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
-                                    <li ><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> All Members</a></li>
+                                    <li class="@Url.sMakeMenuActive("ApplicationsList", "Applications", "")"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
+                                    <li class="@Url.sMakeMenuActive("MembersList", "Member", "")"><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> All Members</a></li>
                                 }
                                 else
                                 {
@@ -250,6 +285,29 @@
         $(document).ajaxSuccess(function () {
             ShowLoader();
         });
+
+        $(function () {
+            $('#dvPopUpWindow').dialog({
+                autoOpen: false,
+                position: { my: "center", at: "top+150", of: window }
+            });
+
+            $("#dvPopUpWindow").on("dialogclose", function (event, ui) {
+                $("#dvPopUpWindow").dialog("destroy").dialog({
+                    autoOpen: false,
+                    position: { my: "center", at: "top+150", of: window }
+                });
+
+            });
+        });
+
+        function fnSetLanguage(nLanguageID) {
+            var LangPath = '@Url.Action("SetLanguage", "Base")?nLanguageID=' + Number(nLanguageID);
+            $.post(LangPath, function () {
+                debugger;
+                window.location.reload();
+            });
+        }
     </script>
 
 </body>

@@ -96,8 +96,8 @@ namespace Takamul.Services
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -122,9 +122,9 @@ namespace Takamul.Services
 
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_AreaCode", SqlDbType.NVarChar, sAreaCode, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_WilayatCode", SqlDbType.NVarChar, sWilayatCode, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("@Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_AreaCode", SqlDbType.VarChar, sAreaCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_WilayatCode", SqlDbType.VarChar, sWilayatCode, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
 
             #endregion
 

@@ -1,0 +1,187 @@
+﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddMember", @class = "form-horizontal" }))
+{
+    <div class="panel panel-flat">
+        <div class="panel-body">
+
+            @Html.AntiForgeryToken()
+
+            @* User Full Name  *@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">User Full Name&nbsp;<span class="text-danger">*</span></label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "user full name" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* User Name *@
+            <div class="form-group" id="dvUserName">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">UserName&nbsp;<span class="text-danger">*</span></label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id = "txtUserNamePopUp", @class = "form-control", placeholder = "user name" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Phone Number *@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Phone Number</label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", placeholder = "phone number" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Email *@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Email</label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = "email" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="sp-1" />
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-xs" onclick="fnSaveMember(); return false;">Save</button>
+                <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearControls(); return false;">Clear</button>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    function fnAddMemberValidateInitialization(sFormID) {
+        debugger;
+        var validator = $('#' + sFormID).validate({
+            errorElement: 'div',
+            errorClass: 'validation-error-label',
+            focusInvalid: true,
+            ignore: "",
+            rules: {
+                FULL_NAME: {
+                    required: true
+                },
+                USER_NAME: {
+                    required: true
+                },
+                PHONE_NUMBER: {
+                    required: true
+                },
+                EMAIL: {
+                    required: true
+                }
+            },
+            messages: {
+                FULL_NAME: "This field is required.",
+                USER_NAME: "This field is required.",
+                PHONE_NUMBER: "This field is required.",
+                EMAIL: "This field is required."
+            },
+            highlight: function (e) {
+                $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+            },
+            success: function (e) {
+                $(e).closest('.error-placement').removeClass('has-error');
+                $(e).remove();
+            },
+            errorPlacement: function (error, element) {
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                    if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent().parent().parent());
+                    }
+                    else {
+                        error.appendTo(element.parent().parent().parent().parent().parent());
+                    }
+                }
+
+                    // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo(element.parent().parent().parent());
+                }
+
+                    // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo(element.parent());
+                }
+
+                    // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo(element.parent().parent());
+                }
+
+                    // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo(element.parent().parent());
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+
+            }
+        });
+    }
+
+    function fnSaveMember() {
+        if (!$("#frmAddMember").valid()) {
+            return false;
+        }
+
+        var description;
+        var bAdmRights;
+        var rightparams;
+
+        var formData = $("#frmAddMember").serialize();
+        $.ajax({
+            url: '@Url.Action("JInsertMember", "Member")',
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                if (result.nResult == 1) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    fnBindAllMembers();
+                }
+                else {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function fnClearControls() {
+        $("#FULL_NAME").val("");
+        $("#USER_NAME").val("");
+        $("#PHONE_NUMBER").val("");
+        $("#EMAIL").val("");
+    }
+
+    //Entry Point
+    $(document).ready(function () {
+        fnAddMemberValidateInitialization("frmAddMember");
+    });
+</script>

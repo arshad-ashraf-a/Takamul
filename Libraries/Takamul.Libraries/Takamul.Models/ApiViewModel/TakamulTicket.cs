@@ -31,6 +31,7 @@ namespace Takamul.Models.ApiViewModel
         public string TicketStatusName { get; set; }
         public string TicketStatusRemark { get; set; }
         public string RemoteFilePath { get; set; }
+        public string CreatedDate { get; set; }
 
         #region :: Constructor ::
         public TakamulTicket()
@@ -45,6 +46,7 @@ namespace Takamul.Models.ApiViewModel
             this.TicketStatusName = string.Empty;
             this.TicketStatusRemark = string.Empty;
             this.RemoteFilePath = string.Empty;
+            this.CreatedDate = string.Empty;
         }
         #endregion
     }

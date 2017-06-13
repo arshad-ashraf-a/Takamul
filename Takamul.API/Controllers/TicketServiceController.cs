@@ -100,7 +100,8 @@ namespace Takamul.API.Controllers
                         TicketStatusID = ticket.TICKET_STATUS_ID,
                         TicketStatusRemark = ticket.TICKET_STATUS_REMARK,
                         TicketStatusName = ticket.TICKET_STATUS_NAME,
-                        RemoteFilePath = sRemoteFilePath
+                        RemoteFilePath = sRemoteFilePath,
+                        CreatedDate = string.Format("{0} {1}", ticket.CREATED_DATE.ToShortDateString(), ticket.CREATED_DATE.ToShortTimeString())
                     };
 
                     lstTakamulTicket.Add(oTakamulTicket);

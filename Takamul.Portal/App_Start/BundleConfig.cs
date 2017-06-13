@@ -24,9 +24,9 @@ namespace Takamul.Portal.App_Start
             #region Core CSS Files
 
             bundles.Add(new StyleBundle("~/bundles/CoreStyles").Include(
-                      "~/assets/css/bootstrap.css",
-                      "~/assets/css/core.css",
-                      "~/assets/css/components.css",
+                      //"~/assets/css/bootstrap.css",
+                      //"~/assets/css/core.css",
+                      //"~/assets/css/components.css",
                       "~/assets/css/colors.css",
                       "~/assets/css/custom.css",
                       //"~/assets/css/jquery-ui.min.css",

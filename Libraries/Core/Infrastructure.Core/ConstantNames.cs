@@ -164,5 +164,18 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region MemberUserTypeID
+        /// <summary>
+        ///MemberUserTypeID
+        /// </summary>
+        public static string MemberUserTypeID
+        {
+            get
+            {
+                return "MemberUserTypeID";
+            }
+        }
+        #endregion
+
     }
 }

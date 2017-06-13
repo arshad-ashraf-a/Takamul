@@ -92,3 +92,12 @@
 .icon-size-small-12px {
     font-size: 12px !important;
 }
+
+/* login page style*/
+.login-bg-logo {
+    background: url(../images/backgrounds/login_bg_3.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

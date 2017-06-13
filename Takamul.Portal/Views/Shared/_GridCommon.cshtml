@@ -1,29 +1,46 @@
 ﻿@using Takamul.Portal.Resources.Common;
 @using Takamul.Portal.Resources.Controls.GridView;
+@using Infrastructure.Utilities;
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    BaseController oBaseController = (BaseController)ViewContext.Controller;// Reference Base Controller
 }
 @section SpecificPluginStyles{
+
 
     <link rel="stylesheet" href='@Url.Content("~/assets/css/jqGrid/ui.jqgrid.css")' />
     <link href='@Url.Content("~/assets/css/jqGrid/GridContextMenu.css")' rel="stylesheet" />
     <link href='@Url.Content("~/assets/css/jqGrid/jqgrid.style.css")' rel="stylesheet" />
-
+    <script>
+        var UlDir = '@CommonResx.LayoutDirectionOpposite';
+    </script>
 
     @RenderSection("SpecificPluginStyles", false)
 }
 @RenderBody()
 @section SpecificPluginScripts
 {
-    <script>
-        var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
-        var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
+    @if (oBaseController.CurrentApplicationLanguage.Equals(Data.Core.Languages.Arabic))
+    {
+        <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-ar.js")'></script>
+        <style type="text/css">
+            .overgridDiv {
+                text-align: left;
+            }
+        </style>
+    }
+    else
+    {
+        <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+        <style type="text/css">
+            .overgridDiv {
+                text-align: right;
+            }
+        </style>
+    }
 
-        var UlDir = '@CommonResx.LayoutDirectionOpposite'; 
-
-    </script>
-    <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+    @*<script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>*@
     <script src='@Url.Content("~/assets/js/jqGrid/jquery.jqGrid.src.js")'></script>
     <script src='@Url.Content("~/assets/js/jqGrid/RenderGridView.js")'></script>
 
@@ -35,17 +52,253 @@
     @RenderSection("InlineScriptsRelated", false)
 
     <script>
+        var seekfirst = 'ace-icon fa fa-angle-double-left bigger-140';
+        var seekprev = 'ace-icon fa fa-angle-left bigger-140';
+        var seeknext = 'ace-icon fa fa-angle-right bigger-140';
+        var seekend = 'ace-icon fa fa-angle-double-right bigger-140';
+        var replacement = { 'ui-icon-seek-first': seekfirst, 'ui-icon-seek-prev': seekprev, 'ui-icon-seek-next': seeknext, 'ui-icon-seek-end': seekend };
         var GridViewId = "grid-table";
         var GridViewPagerId = "grid-pager";
 
-        var GridViewResources = {
-            Direction: '@GridView.Direction',
-            FloatingLeft: '@GridView.FloatingLeft',
-            FloatingRight: '@GridView.FloatingRight',
-            TextAlign: '@GridView.TextAlign',
-            SinglePagerArrowLeft: '@GridView.SinglePagerArrowLeft',
-            SinglePagerArrowRight: '@GridView.SinglePagerArrowRight'
+        function GridViewLoadComplete(table, GridViewId, GridViewPagerId) {
+            styleCheckbox(table);
+            updateActionIcons(table);
+            updatePagerIcons(table);
+            enableTooltips(table);
+            $("#gview_" + GridViewId).css("direction", "@GridView.Direction");// Set Table Direction
+            $(".ui-jqgrid-titlebar-close").css("left", "@GridView.FloatingLeft");
+            $(".ui-jqgrid-titlebar-close").css("right", "@GridView.FloatingRight");
+            $(".navtable").css("direction", "@GridView.Direction");
+            $("#TblGrid_" + GridViewId).css("direction", "@GridView.Direction");
+            $(".ui-paging-info").css('text-align', "@GridView.TextAlign");
+            $("#" + GridViewPagerId + "_center").width("80%");
+            $(".ui-pg-table").css("direction", "@GridView.Direction");
+            $("#next_" + GridViewPagerId + " span").removeClass("@GridView.SinglePagerArrowLeft");
+            $("#next_" + GridViewPagerId + " span").addClass("@GridView.SinglePagerArrowRight");
+            $("#prev_" + GridViewPagerId + " span").removeClass("@GridView.SinglePagerArrowRight");
+            $("#prev_" + GridViewPagerId + " span").addClass("@GridView.SinglePagerArrowLeft");
+            $("#last_" + GridViewPagerId + " span").attr("class", "");
+            $("#last_" + GridViewPagerId + " span").addClass("ui-icon ace-icon fa fa-angle-double-right bigger-140");
+            $("#first_" + GridViewPagerId + " span").attr("class", "");
+            $("#first_" + GridViewPagerId + " span").addClass("ui-icon ace-icon fa fa-angle-double-left bigger-140");
+            $("#ViewTbl_" + GridViewId).css("direction", "@GridView.Direction");
+            if (typeof CustomGridViewLoadComplete == "function" && CustomGridViewLoadComplete()) {
+                CustomGridViewLoadComplete();
+            }
         }
-    </script>
+        function aceSwitch(cellvalue, options, cell) {
+            setTimeout(function () {
+                $(cell).find('input[type=checkbox]')
+                    .addClass('ace ace-switch ace-switch-5')
+                    .after('<span class="lbl"></span>');
+            }, 0);
+        }
+        function style_edit_form(form) {
+            form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();
+            buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
+            buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>')
+            buttons = form.next().find('.navButton a');
+            buttons.find('.ui-icon').hide();
+            buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
+            buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
+        }
+
+        function style_delete_form(form) {
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();
+            buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+            buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+        }
+        function style_search_filters(form) {
+            form.find('.delete-rule').val('X');
+            form.find('.add-rule').addClass('btn btn-xs btn-primary');
+            form.find('.add-group').addClass('btn btn-xs btn-success');
+            form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+        function style_search_form(form) {
+            var dialog = form.closest('.ui-jqdialog');
+            var buttons = dialog.find('.EditTable')
+            buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
+            buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
+            buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
+        }
+        function beforeDeleteCallback(e) {
+            var form = $(e[0]);
+            if (form.data('styled')) return false;
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_delete_form(form);
+            form.data('styled', true);
+            $(".ui-jqdialog").center();
+        }
+        function beforeEditCallback(e) {
+            var form = $(e[0]);
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_edit_form(form);
+        }
+        function styleCheckbox(table) {
+        }
+        function updateActionIcons(table) {
+        }
+        function updatePagerIcons(table) {
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
+                var icon = $(this);
+                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
+            })
+        }
+        function enableTooltips(table) {
+            $('.navtable .ui-pg-button').tooltip({ container: 'body' });
+            $(table).find('.ui-pg-div').tooltip({ container: 'body' });
+        }
+        function beforeShowEditForm(form, TextArea) {
+            BeforeShowDialog();
+            if (typeof BeforeShowEditDialog == "function" && BeforeShowEditDialog(form)) {
+                BeforeShowEditDialog(form);
+            }
+        }
+
+        function afterSubmitEditForm(response) {
+            if (response.status == 200) {
+                if (typeof afterSubmitEditFormCustom == "function" && afterSubmitEditFormCustom()) {
+                    afterSubmitEditFormCustom();
+                }
+                RefreshGrid(response.responseText);
+            }
+        }
+
+        function beforeShowAddForm(form) {
+            BeforeShowDialog();
+            if (typeof BeforeShowAddDialog == "function" && BeforeShowAddDialog(form)) {
+                BeforeShowAddDialog(form);
+            }
+        }
+        function AfterSubmitAddForm(response, postdata) {
+            if (response.status == 200) {
+                RefreshGrid(response.responseText);
+            }
+        }
+        function beforeShowDeleteForm(e) {
+            BeforeShowDialog();
+            if (typeof BeforeShowDeleteDialog == "function" && BeforeShowDeleteDialog()) {
+                BeforeShowDeleteDialog();
+            }
+        }
+        function afterSubmitDelete(response) {
+            RefreshGrid(response.responseText);
+        }
+        function AddNewRow() {
+            $('.purple').click();
+        }
+        function RefreshGrid(Messages) {
+            HideLoader();
+            ShowStatusBarNotification(Messages, NotificationType.Success);
+            $("#" + GridViewId).trigger("reloadGrid");
+            if ($(".ui-icon-closethick").length > 0) {
+                $(".ui-icon-closethick").trigger('click');
+            }
+            if ($('.ui-jqdialog').length > 0) {
+                $('.ui-jqdialog').dialog('destroy').remove();
+            }
+        }
+        function BeforeShowDialog() {
+            $('.fm-button.ui-state-default:hover').css("background-color", "#245F9A !important")
+            $('.fm-button:not(.btn)').css("background-color", "#245F9A !important");
+            $('.ui-jqdialog-titlebar-close').css("color", "#ffffff !important");
+            $("#TblGrid_" + GridViewId).css("direction", "@GridView.Direction");
+            $(".CaptionTD").append("<span style='color:red;'>*</span>");
+            $(".EditButton").css("text-align", "right");
+            $("#editmod" + GridViewId).css({ "width": "37%" });
+            $(".EditButton").css("direction", "@GridView.Direction");
+            $(".DataTD").css("text-align", "@GridView.TextDirection");
+            $(".ui-jqdialog").center();
+        }
+        function Reload(GridId) {
+            if (GridId)
+                $("#" + GridId).trigger("reloadGrid");
+            else
+                $("#" + GridViewId).trigger("reloadGrid");
+        }
+        function ValidateRequiredTextInput(value, colname, message) {
+            if (value == "0")
+                return [false, message];
+            else
+                return [true, ""];
+        };
+        function OnClickSubmitEdit(options, postData) {
+            ShowLoader();
+            if (typeof CustomOnClickSubmitEdit == "function" && CustomOnClickSubmitEdit(options, postData)) {
+                CustomOnClickSubmitEdit(options, postData);
+            }
+        }
+        function OnClickSubmitAdd(options, postData) {
+            ShowLoader();
+            if (typeof CustomOnClickSubmitAdd == "function" && CustomOnClickSubmitAdd(options, postData)) {
+                CustomOnClickSubmitAdd(options, postData);
+            }
+        }
+        function OnClickSubmitDelete(options, postData) {
+            ShowLoader();
+            if (typeof CustomOnClickSubmitDelete == "function" && CustomOnClickSubmitDelete(options, postData)) {
+                CustomOnClickSubmitDelete(options, postData);
+            }
+        }
+        $(function () {
+            $("#" + GridViewId).bind("jqGridInlineSuccessSaveRow", function (e, Messages, rowid, options) {
+                Reload();
+                ShowStatusBarNotification(Messages.responseText, NotificationType.Success);
+                HideLoader();
+            });
+        });
+
+        function DeleteRow() {
+            $(".fa-trash-o").click();
+        }
+
+        function OpenEditPopUp() {
+            $(".ui-pg-div").find(".fa-pencil").click();
+        }
+
+        function CustomSerializeGridData(postData) {
+            var DataSource = [];
+            if (typeof CustomSerializeData == "function" && CustomSerializeData(postData)) {
+                DataSource = CustomSerializeData(postData);
+            }
+            else {
+                DataSource = JSON.stringify(postData);
+            }
+            return DataSource;
+        }
+        function GetColumnsValue(RowID, ColumnName, GridSelector) {
+            return $("#" + RowID).find("[aria-describedby='" + GridSelector + "_" + ColumnName + "']").text();
+        }
+        function SelectRowBuilder(ColumnName, ColumnCaption, SelectControl, IsMandatory) {
+            var sRow = "";
+            sRow += "<tr rowpos=\"1\" class=\"FormData\" id=\"tr_" + ColumnName + "\">";
+            sRow += "<td class=\"CaptionTD\">" + ColumnCaption + "<span style=\"color:red;\">*</span></td>";
+            sRow += "<td class=\"DataTD\" style=\"width: right;\">";
+            sRow += SelectControl;
+            sRow += "</td></tr>";
+            return sRow;
+        }
+        function TextBoxRowBuilder(ColumnName, ColumnCaption, Width, IsMandatory, Value) {
+            var sRow = "";
+            sRow += "<tr rowpos=\"1\" class=\"FormData\" id=\"tr_" + ColumnName + "\">";
+            sRow += "<td class=\"CaptionTD\">" + ColumnCaption + "<span style=\"color:red;\">*</span></td>";
+            sRow += "<td class=\"DataTD\" style=\"width: right;\">";
+            sRow += "<input type='text' name='" + ColumnName + "' = id='" + ColumnName + "'     style='width:" + Width + "px;' value='" + Value + "' />";
+            sRow += "</td></tr>";
+            return sRow;
+        }
+
+        function SubGridRowExpandedEvent(subgrid_id, row_id) {
+            ;
+            if (typeof CustomSubGridRowExpanded == "function" && CustomSubGridRowExpanded(subgrid_id, row_id)) {
+                CustomSubGridRowExpanded(subgrid_id, row_id);
+            }
+        }
+</script>
 }
 

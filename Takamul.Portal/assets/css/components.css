@@ -11057,6 +11057,7 @@ body.stop-scrolling {
     border: 1px solid transparent;
     outline: 0;
     overflow: hidden;
+    overflow-y:auto;
     -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
 }
@@ -11078,7 +11079,7 @@ body.stop-scrolling {
     background: #607D8B;
     color: white;
     vertical-align: middle;
-    height: 50px;
+    height: 40px;
 }
 
 .ui-dialog-title {
@@ -11089,7 +11090,7 @@ body.stop-scrolling {
     overflow: hidden;
     text-overflow: ellipsis;
     /*Modified*/
-    top: 30%;
+    top: 25%;
     position: absolute;
     padding: 0px 15px;
 }
@@ -11102,8 +11103,8 @@ body.stop-scrolling {
     padding: 0;
     margin-top: 2px;
     /*Modified top: 50%;*/
-    top: 30%;
-    color:#fff;
+    top: 25%;
+    color: #fff;
 }
 
     .ui-dialog-titlebar-close:after {
@@ -18512,7 +18513,7 @@ thead .htCollapseButton {
 }
 
 .login-container .page-container {
-    padding-top: 40px;
+    padding-top: 70px;
     position: static;
 }
 

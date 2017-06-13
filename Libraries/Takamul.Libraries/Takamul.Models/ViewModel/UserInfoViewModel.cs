@@ -19,7 +19,7 @@ namespace Takamul.Models.ViewModel
     public class UserInfoViewModel
     {
         public int ID { get; set; }
-        public int APPLICATION_ID { get; set; }
+        public int? APPLICATION_ID { get; set; }
         public int USER_TYPE_ID { get; set; }
         public int USER_ID { get; set; }
         public string USER_NAME { get; set; }
@@ -53,6 +53,7 @@ namespace Takamul.Models.ViewModel
         public Nullable<DateTime> CREATED_DATE { get; set; }
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
         public enumUserType UserType { get; set; }
+        public string APPLICATION_NAME { get; set; }
 
         #region :: Constructor ::
         public UserInfoViewModel()
@@ -92,6 +93,7 @@ namespace Takamul.Models.ViewModel
             this.CREATED_BY = -99;
             this.MODIFIED_BY = -99;
             this.UserType = enumUserType.Undefined;
+            this.APPLICATION_NAME = string.Empty;
         }
         #endregion
     }

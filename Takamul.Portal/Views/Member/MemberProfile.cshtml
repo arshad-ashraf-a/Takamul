@@ -3,8 +3,8 @@
 @using Infrastructure.Utilities
 
 @{
-    
-    Layout = "~/Views/Shared/_AppLayout.cshtml";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="col-md-12 has-detached-left  pace-done">
@@ -490,7 +490,7 @@
 
 
             $.ajax({
-                url: '@Url.Action("JUpdateProfileInformation", "Users")',
+                url: '@Url.Action("JUpdateProfileInformation", "Member")',
                 type: 'POST',
                 contentType: 'application/json',
                 data: dataToSend,
@@ -523,7 +523,7 @@
             });
 
             $.ajax({
-                url: '@Url.Action("JUpdateUserPassword", "Users")',
+                url: '@Url.Action("JUpdateUserPassword", "Member")',
                 type: 'POST',
                 contentType: 'application/json',
                 data: dataToSend,
@@ -561,14 +561,13 @@
             $("#dvPopUpWindow").dialog({
                 title: 'Update User Status',
                 autoOpen: true,
-                position: { my: "center", at: "top-50" },
                 width: '50%',
                 resizable: false,
                 modal: true,
                 open: function () {
 
                     $.ajax({
-                        url: '@Url.Action("PartialChangeUserStatus", "Users")',
+                        url: '@Url.Action("PartialChangeMemberStatus", "Member")',
                         type: 'POST',
                         contentType: 'application/json',
                         data: dataToSend,
@@ -606,7 +605,7 @@
         function fnUpdateUserStatus(){
             var formData = $("#frmUpdateUserStatus").serialize();
             $.ajax({
-                url: '@Url.Action("JUpdateUserStatus", "Users")',
+                url: '@Url.Action("JUpdateUserStatus", "Member")',
                 type: "POST",
                 data: formData,
                 dataType: "json",
@@ -637,7 +636,7 @@
             sVillageID = @(Model.VILLAGE_ID.HasValue ? Model.VILLAGE_ID.Value.ToString() : "-99");
 
             var promiseDeclarationBind =  fnFillAreas();
-            promiseDeclarationBind.done(function (bIsDataBinded) { 
+            promiseDeclarationBind.done(function (bIsDataBinded) {
 
                 if (sAreaID != "-99") {
                     $("#ddlAreaddlID").select2('val', String(sAreaID));

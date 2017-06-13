@@ -35,7 +35,7 @@ namespace Infrastructure.Utilities
                     return null;
                 }
             }
-        } 
+        }
         #endregion
 
         #region Property :: OperationResult
@@ -178,7 +178,7 @@ namespace Infrastructure.Utilities
             {
                 base.ViewData["PageTitle"] = value;
             }
-        } 
+        }
         #endregion
 
         #region Property :: PublicMenu
@@ -232,7 +232,7 @@ namespace Infrastructure.Utilities
         {
             get
             {
-                string sCurrentAppName = string.Empty ;
+                string sCurrentAppName = string.Empty;
                 if (base.Session["ApplicationName"] != null)
                 {
                     sCurrentAppName = base.Session["ApplicationName"].ToString();
@@ -246,7 +246,24 @@ namespace Infrastructure.Utilities
         }
         #endregion
 
-
+        #region Property :: CurrentApplicationLanguage
+        public Languages CurrentApplicationLanguage
+        {
+            get
+            {
+                Languages oLanguage = Languages.English;
+                if (base.Session["CurrentApplicationLanguage"] != null)
+                {
+                    oLanguage = (Languages)Enum.Parse(typeof(Languages), base.Session["CurrentApplicationLanguage"].ToString());
+                }
+                return oLanguage;
+            }
+            set
+            {
+                base.Session["CurrentApplicationLanguage"] = value;
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -266,7 +283,34 @@ namespace Infrastructure.Utilities
 
             //// Redirect on error:
             //filterContext.Result = RedirectToAction("Error", "Exceptions", new { area = "" });
-            
+
         }
+
+        #region Json Result :: SetLanguage
+        [HttpPost]
+        public JsonResult SetLanguage(int nLanguageID)
+        {
+            if (nLanguageID == 1)
+            {
+                this.CurrentApplicationLanguage = Data.Core.Languages.Arabic;
+                var langCookie = new HttpCookie("lang", "ar-SA")
+                {
+                    HttpOnly = true
+                };
+                Response.AppendCookie(langCookie);
+            }
+            else
+            {
+                this.CurrentApplicationLanguage = Data.Core.Languages.English;
+                var langCookie = new HttpCookie("lang", "en-US")
+                {
+                    HttpOnly = true
+                };
+                Response.AppendCookie(langCookie);
+            }
+
+            return Json("1", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

@@ -134,9 +134,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\bootstrap-rtl.css" />
     <Content Include="assets\css\bootstrap.css" />
     <Content Include="assets\css\colors.css" />
+    <Content Include="assets\css\components-rtl.css" />
     <Content Include="assets\css\components.css" />
+    <Content Include="assets\css\core-rtl.css" />
     <Content Include="assets\css\core.css" />
     <Content Include="assets\css\custom.css" />
     <Content Include="assets\css\icons\fontawesome\fonts\fontawesome-webfonte0a5.svg" />
@@ -954,14 +957,14 @@
     <Content Include="Views\ApplicationDashboard\AppDashboard.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicket.cshtml" />
     <Content Include="Views\Users\_AddApplicationUser.cshtml" />
-    <Content Include="Views\Users\_ChangeUserStatus.cshtml" />
+    <Content Include="Views\Shared\_ChangeUserStatus.cshtml" />
     <Content Include="Views\Tickets\_AddTicket.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicketDetails.cshtml" />
     <Content Include="Views\Applications\_AddApplication.cshtml" />
     <Content Include="Views\Applications\_EditApplication.cshtml" />
     <Content Include="Views\Member\MembersList.cshtml" />
     <Content Include="Views\Member\MemberProfile.cshtml" />
-    <Content Include="Views\Member\AddMember.cshtml" />
+    <Content Include="Views\Member\_AddMember.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

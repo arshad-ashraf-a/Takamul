@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "MembersList";
-    Layout = "~/Views/Shared/_AppLayout.cshtml";
+    Layout = "~/Views/Shared/_GridCommon.cshtml";
 }
 
  <div class="col-lg-12">
@@ -20,7 +20,7 @@
                                         <div class="input-group content-group">
 
                                             <div class="has-feedback has-feedback-left">
-                                                <input type="text" id="txtSearchUser" class="form-control input-xs" placeholder="search user">
+                                                <input type="text" id="txtSearchUser" class="form-control input-xs" placeholder="search member">
                                                 <div class="form-control-feedback">
                                                     <i class="icon-search4 text-muted text-size-base"></i>
                                                 </div>
@@ -28,12 +28,12 @@
                                             </div>
 
                                             <div class="input-group-btn">
-                                                <button type="submit" onclick="fnBindAllUsers(); return false;" class="btn btn-primary btn-xs">Search</button>
+                                                <button type="submit" onclick="fnBindAllMembers(); return false;" class="btn btn-primary btn-xs">Search</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 pull-right">
-                                        <a title="Add new user" href="#" onclick="fnLoadPartialAddUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New User</a>
+                                    <div class="col-md-4 pull-right">
+                                        <a title="Add new user" href="#" onclick="fnLoadPartialAddMember();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Member</a>
                                     </div>
                                 </div>
 
@@ -43,7 +43,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="fakeWidth col-md-12"></div>
-                            <div id="dvUsers">
+                            <div id="dvMembers">
                             </div>
                         </div>
                     </div>
@@ -60,17 +60,17 @@
         var enmUserType = { Staff: 3, MobileUser: 4 };
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
-        function fnBindAllUsers() {
+        function fnBindAllMembers() {
             ShowLoader();
-            $("#dvUsers").hide();
-            $("#dvUsers").empty();
+            $("#dvMembers").hide();
+            $("#dvMembers").empty();
             var table = document.createElement('table');
             table.id = sGridViewSelector;
             var pager = document.createElement('div');
             pager.id = sGridViewPagerSelector;
 
-            $('#dvUsers').append(table);
-            $('#dvUsers').append(pager);
+            $('#dvMembers').append(table);
+            $('#dvMembers').append(pager);
 
             var ConstantsNames =
                 {
@@ -78,22 +78,22 @@
                     UserFullName: 'FULL_NAME',                  
                     PhoneNumber: 'PHONE_NUMBER',
                     Email: 'EMAIL',
+                    Application: 'APPLICATION_NAME',
                     IsBlocked: 'IS_BLOCKED',
                     IsActive: 'IS_ACTIVE',
                     IsOTPVerified: 'IS_OTP_VALIDATED',
                     OTPNumber: 'OTP_NUMBER',
                     CreatedDate: 'CREATED_DATE'
                 };
-            var sCaption = 'All Users';
+            var sCaption = 'All Members';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value               
                 'Full Name',               
                 'Phone Number',
                 'Email',
+                'Application',
                 'Is Blocked',
                 'Is Active',
-                'OTP Verified',
-                'OTP Number',
                 'Created Date',
                 'Options' // Options
             ];
@@ -138,6 +138,11 @@
                         width: 100, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
+                     {
+                         name: ConstantsNames.Application,
+                         width: 100, editable: false,
+                         align: EnumColumnsAlignment.Center
+                     },
                     {
                         name: ConstantsNames.IsBlocked,
                         width: 50, editable: false,
@@ -170,32 +175,6 @@
                             return htmlString;
                         }
                     },
-                     {
-                         name: ConstantsNames.IsOTPVerified,
-                         width: 50, editable: false,
-                         align: EnumColumnsAlignment.Center,
-                         formatter: function (cellvalue, options, rowObject) {
-                             var htmlString = '';
-                             if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
-                                 var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
-                                 if (bIsOTPVerified != null) {
-
-                                     if (bIsOTPVerified) {
-                                         htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
-                                     }
-                                     else {
-                                         htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
-                                     }
-                                 }
-                             }
-                             return htmlString;
-                         }
-                     },
-                     {
-                         name: ConstantsNames.OTPNumber,
-                         width: 50, editable: false,
-                         align: EnumColumnsAlignment.Center
-                     },
                     {
                         name: ConstantsNames.CreatedDate,
                         width: 50, editable: false,
@@ -215,7 +194,7 @@
 
                 $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
 
-                $("#dvUsers").show();
+                $("#dvMembers").show();
                 HideLoader();
             });
         }
@@ -236,11 +215,10 @@
             window.location.href = link;
         }
 
-        function fnLoadPartialAddUser() {
+        function fnLoadPartialAddMember() {
             $("#dvPopUpWindow").dialog({
-                title: 'Add User',
+                title: 'Add Member',
                 autoOpen: true,
-                position: { my: "center", at: "top-50", of: $(".fakeWidth") },
                 width: '50%',
                 resizable: false,
                 modal: true,
@@ -254,135 +232,19 @@
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
-                            fnAddUserValidateInitialization("frmAddUserPartialPage");
                         },
                         error: function (response) {
                             $("#dvPopUpWindowContainer").html("");
                         }
                     });
-                },
-                buttons: [
-                     {
-                         text: "Save",
-                         "class": 'btn btn-sm bg-slate',
-                         click: function () {
-                             fnSaveUser();
-                         }
-                     },
-                     {
-                         text: 'Cancel',
-                         "class": 'btn btn-sm btn-default',
-                         click: function () {
-                             $(this).dialog("close");
-                         }
-                     }
-                ]
-            });
-        }
-
-        function fnAddUserValidateInitialization(sFormID) {
-            debugger;
-            var validator = $('#' + sFormID).validate({
-                errorElement: 'div',
-                errorClass: 'validation-error-label',
-                focusInvalid: true,
-                ignore: "",
-                rules: {
-                    FULL_NAME: {
-                        required: true
-                    },
-                    PHONE_NUMBER: {
-                        required: true
-                    }
-                },
-                messages: {
-                    FULL_NAME: "This field is required.",
-                    PHONE_NUMBER: "This field is required."
-                },
-                highlight: function (e) {
-                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
-                },
-                success: function (e) {
-                    $(e).closest('.error-placement').removeClass('has-error');
-                    $(e).remove();
-                },
-                errorPlacement: function (error, element) {
-                    // Styled checkboxes, radios, bootstrap switch
-                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
-                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
-                            error.appendTo(element.parent().parent().parent().parent());
-                        }
-                        else {
-                            error.appendTo(element.parent().parent().parent().parent().parent());
-                        }
-                    }
-
-                        // Unstyled checkboxes, radios
-                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
-                        error.appendTo(element.parent().parent().parent());
-                    }
-
-                        // Input with icons and Select2
-                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
-                        error.appendTo(element.parent());
-                    }
-
-                        // Inline checkboxes, radios
-                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
-                        error.appendTo(element.parent().parent());
-                    }
-
-                        // Input group, styled file input
-                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
-                        error.appendTo(element.parent().parent());
-                    }
-
-                    else {
-                        error.insertAfter(element);
-                    }
-                },
-                submitHandler: function (form) {
-                },
-                invalidHandler: function (form) {
-
                 }
             });
-        }
-        function fnSaveUser() {
-            if (!$("#frmAddUserPartialPage").valid()) {
-                return false;
-            }           
-
-            var description;
-            var bAdmRights;
-            var rightparams;
-
-            var formData = $("#frmAddUserPartialPage").serialize();
-            $.ajax({
-                url: '@Url.Action("JInsertUser", "Members")',
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                    if (result.nResult == 1) {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-                        $("#dvPopUpWindow").dialog("close");
-                        fnBindAllUsers();
-                    }
-                    else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                    }
-                },
-                error: function () {
-                    $(this).dialog("close");
-                }
-            })
         }
 
 
         //Entry Point
         $(document).ready(function () {
-            fnBindAllUsers();
+            fnBindAllMembers();
 
         });
     </script>

@@ -12,7 +12,7 @@ using Takamul.Services;
 
 namespace Takamul.Portal.Controllers
 {
-    public class MemberController : DomainController
+    public class MemberController : BaseController
     {
         #region ::  State ::
         #region Private Members
@@ -62,7 +62,7 @@ namespace Takamul.Portal.Controllers
         public PartialViewResult PartialAddMember()
         {
             UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
-            return PartialView("AddMember", oUserInfoViewModel);
+            return PartialView("_AddMember", oUserInfoViewModel);
         }
         #endregion
 
@@ -90,9 +90,9 @@ namespace Takamul.Portal.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetApplicationUsers(int nUserTypeID, string sUserSearch, int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JGetApplicationUsers(string sUserSearch, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstUsers = this.oIUserServicesService.lGetApplicationUsers(this.CurrentApplicationID, nUserTypeID, sUserSearch, nPage, nRows);
+            var lstUsers = this.oIUserServicesService.lGetApplicationUsers(-99, Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.MemberUserTypeID)), sUserSearch, nPage, nRows);
             return Json(lstUsers, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -180,23 +180,20 @@ namespace Takamul.Portal.Controllers
         }
         #endregion
 
-        #region Method :: JsonResult :: Insert User
+        #region Method :: JsonResult :: Insert Member
         /// <summary>
-        /// Insert user
+        /// Insert member
         /// </summary>
         /// <param name="oUserInfoViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JInsertUser(UserInfoViewModel oUserInfoViewModel)
+        public JsonResult JInsertMember(UserInfoViewModel oUserInfoViewModel)
         {
             Response oResponseResult = null;
 
-            oUserInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            enumUserType oUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUserInfoViewModel.USER_TYPE_ID.ToString());
-            if (oUserType == enumUserType.Staff)
-            {
-                oUserInfoViewModel.PASSWORD = CommonHelper.sGetConfigKeyValue(ConstantNames.DefaultUserAccountPassword);
-            }
+            oUserInfoViewModel.APPLICATION_ID = -99;
+            oUserInfoViewModel.PASSWORD = CommonHelper.sGetConfigKeyValue(ConstantNames.DefaultUserAccountPassword);
+            oUserInfoViewModel.USER_TYPE_ID = Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.MemberUserTypeID));
             oUserInfoViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
 
             oResponseResult = this.oIUserServicesService.oInsertUser(oUserInfoViewModel);

@@ -180,7 +180,7 @@ namespace Takamul.API.Controllers
                 TakamulUser oTakamulUser = new TakamulUser()
                 {
                     UserID = oUserInfoViewModel.ID,
-                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
+                    ApplicationID = Convert.ToInt32(oUserInfoViewModel.APPLICATION_ID),
                     PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
                     Email = oUserInfoViewModel.EMAIL,
                     Addresss = oUserInfoViewModel.ADDRESS,
@@ -231,7 +231,7 @@ namespace Takamul.API.Controllers
                 oTakamulUser = new TakamulUser()
                 {
                     UserID = oUserInfoViewModel.ID,
-                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
+                    ApplicationID = Convert.ToInt32(oUserInfoViewModel.APPLICATION_ID),
                     PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
                     Email = oUserInfoViewModel.EMAIL,
                     Addresss = oUserInfoViewModel.ADDRESS,
@@ -268,7 +268,7 @@ namespace Takamul.API.Controllers
                 oTakamulUser = new TakamulUser()
                 {
                     UserID = oUserInfoViewModel.ID,
-                    ApplicationID = oUserInfoViewModel.APPLICATION_ID,
+                    ApplicationID = Convert.ToInt32(oUserInfoViewModel.APPLICATION_ID),
                     PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
                     Email = oUserInfoViewModel.EMAIL,
                     Addresss = oUserInfoViewModel.ADDRESS,
