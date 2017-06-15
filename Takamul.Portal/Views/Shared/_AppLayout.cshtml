@@ -8,7 +8,7 @@
 
 }
 <!DOCTYPE html>
-<html dir="rtl">
+<html dir="@CommonResx.Direction">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,24 +18,37 @@
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href='@Url.Content("~/assets/css/components-rtl.css")' rel="stylesheet" />
-    <link href='@Url.Content("~/assets/css/bootstrap-rtl.css")' rel="stylesheet" />
-    <link href='@Url.Content("~/assets/css/core-rtl.css")' rel="stylesheet" />
+
+    @if (oBaseController.CurrentApplicationLanguage == Data.Core.Languages.Arabic)
+    {
+        <link href='@Url.Content("~/assets/css/components-rtl.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/bootstrap-rtl.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/core-rtl.css")' rel="stylesheet" />
+    }
+    else
+    {
+        <link href='@Url.Content("~/assets/css/components.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/bootstrap.css")' rel="stylesheet" />
+        <link href='@Url.Content("~/assets/css/core.css")' rel="stylesheet" />
+    }
+
     @Styles.Render("~/bundles/CoreStyles")
- 
+
 
     <!-- /global stylesheets -->
     <!-- Core CSS Utilities -->
     @Styles.Render("~/bundles/CoreStyleUtilities")
     <!-- core CSS Utilities -->
+
     <link rel="stylesheet" href='@Url.Content("~/assets/css/jqGrid/ui.jqgrid.css")' />
     <link href='@Url.Content("~/assets/css/jqGrid/GridContextMenu.css")' rel="stylesheet" />
     <link href='@Url.Content("~/assets/css/jqGrid/jqgrid.style.css")' rel="stylesheet" />
     @RenderSection("SpecificPluginStyles", false)
 </head>
-<body>
+<body class="@CommonResx.BodyClass">
     <script type="text/javascript">
         var LoaderImagePath = '@Url.Content("~/assets/Images/loader.png")';
+        var UlDir = '@CommonResx.LayoutDirectionOpposite';
     </script>
     <!-- Main navbar -->
     <div class="navbar navbar-inverse">
@@ -58,6 +71,18 @@
                         <i class="caret"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
+                        @if (oBaseController.CurrentApplicationLanguage == Data.Core.Languages.Arabic)
+                        {
+                            <li>
+                                <a href="#" onclick="fnSetLanguage(2); return false;"><i class="icon-switch2"></i> English</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" onclick="fnSetLanguage(1); return false;"><i class="icon-switch2"></i> Arabic</a>
+                            </li>
+                        }
                         <li>
                             <a href="@Url.Action("LogOut", "Account", new { area = "" })"><i class="icon-switch2"></i> Logout</a>
                         </li>
@@ -203,33 +228,7 @@
                     <div id="dvPopUpWindow" style="display:none">
                         <div id="dvPopUpWindowContainer"></div>
                     </div>
-                    @*<div class="col-md-12">
-                            <div class="table-responsive">
-                                <div class="panel panel-flat mb-5">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Application Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="success">
-                                                <td>Eugene</td>
-                                                <td>Kopyov</td>
-                                                <td>@@Kopyov</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>*@
-                    @*<div class="clearfix"></div>
-                        <hr class="bg-slate-300 no-margin mb-5" />
-                        <div class="clearfix"></div>*@
                     @RenderBody()
-
                 </div>
 
             </div>
@@ -267,7 +266,24 @@
     @Scripts.Render("~/bundles/CoreScriptUtilities")
     <!-- core JS Utilities -->
 
-    <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+    @if (oBaseController.CurrentApplicationLanguage.Equals(Data.Core.Languages.Arabic))
+    {
+        <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-ar.js")'></script>
+        <style type="text/css">
+            .overgridDiv {
+                text-align: left;
+            }
+        </style>
+    }
+    else
+    {
+        <script src='@Url.Content("~/assets/js/jqGrid/i18n/grid.locale-en.js")'></script>
+        <style type="text/css">
+            .overgridDiv {
+                text-align: right;
+            }
+        </style>
+    }
     <script src='@Url.Content("~/assets/js/jqGrid/jquery.jqGrid.src.js")'></script>
     <script src='@Url.Content("~/assets/js/jqGrid/RenderGridView.js")'></script>
 
@@ -318,6 +334,13 @@
         $(document).ajaxSuccess(function () {
             ShowLoader();
         });
+
+        function fnSetLanguage(nLanguageID) {
+            var LangPath = '@Url.Action("SetLanguage", "Base")?nLanguageID=' + Number(nLanguageID);
+            $.post(LangPath, function () {
+                window.location.reload();
+            });
+        }
     </script>
 
 </body>

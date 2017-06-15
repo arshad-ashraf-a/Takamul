@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Takamul.Portal.Resources.Portal.Applications;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@{
     Layout = "~/Views/Shared/_GridCommon.cshtml";
 }
 <div class="col-lg-12">
@@ -14,22 +17,21 @@
                                 <div class="content-group-sm">
                                     <div class="col-md-2 no-padding">
                                         <input type="text" class="form-control" id="txtSearchByApplicationID" name="txtSearchByApplicationID"
-                                               placeholder="App ID">
+                                               placeholder="@ApplicationResx.AppID">
                                     </div>
                                     <div class="col-md-6 no-padding">
                                         <div class="input-group content-group">
                                             <div class="has-feedback">
                                                 <input type="text" class="form-control" id="txtSearchByApplicationName" name="txtSearchByApplicationName"
-                                                       placeholder="App Name">
+                                                       placeholder="@ApplicationResx.AppName">
                                             </div>
                                             <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-primary btn-xs no-margin-top" onclick="fnBindAllApplications();">Seach<i class="fa fa-search position-right"></i></button>
-                                                @*<button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch();">Clear</button>*@
+                                                <button type="submit" class="btn btn-primary btn-xs no-margin-top" onclick="fnBindAllApplications();">@Buttons.Search<i class="fa fa-search position-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 mr-15 pull-right">
-                                        <a title="Add new application" href="#" onclick="fnLoadPartialAddApplication();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Application</a>
+                                        <a title="Add new application" href="#" onclick="fnLoadPartialAddApplication();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @ApplicationResx.AddNewApplication</a>
                                     </div>
                                 </div>
 
@@ -83,17 +85,17 @@
                 };
             var sCaption = 'All Applications';
             var oArrColumnNames = [
-                'Application Name',
-                'App ID',//Hidden Columns Represent ID Int Value
+                '@ApplicationResx.ApplicationName',
+                '@ApplicationResx.AppID',//Hidden Columns Represent ID Int Value
                 '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
                 '',//Hidden Columns Represent MemberUserID String Value
                 '',//Hidden Columns Represent APPLICATION_NAME String Value
                 '',//Hidden Columns Represent IS_ACTIVE String Value
-                'Member',
-                'Application Expiry Date',
-                'Is Active',
-                'Created Date',
-                'Options' // Options
+                '@ApplicationResx.Member',
+                '@ApplicationResx.ApplicationExpiryDate',
+                '@ApplicationResx.IsActive',
+                '@ApplicationResx.CreatedDate',
+                '@ApplicationResx.Options' // Options
             ];
 
 
@@ -110,9 +112,9 @@
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
-                                        { MenuTitle: "Options" },
-                                        { Caption: "Details", EventName: "fnGoToApplicationDetais(-99);", RowId: true },
-                                        { Caption: "Edit Application", EventName: "fnPartialLoadEditApplication();", RowId: true },
+                                        { MenuTitle: "@ApplicationResx.Options" },
+                                        { Caption: "@ApplicationResx.Details", EventName: "fnGoToApplicationDetais(-99);", RowId: true },
+                                        { Caption: "@ApplicationResx.EditApplication", EventName: "fnPartialLoadEditApplication();", RowId: true },
             ];
             var oArrColsModel = [
                 {
@@ -238,7 +240,7 @@
         function fnLoadPartialAddApplication() {
             var dialogWidth = 630;
             $("#dvPopUpWindow").dialog({
-                title: 'Add Application',
+                title: '@ApplicationResx.AddApplication',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -278,14 +280,14 @@
                 },
                 buttons: [
                      {
-                         text: "Save",
+                         text: "@Buttons.Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnSaveApplication();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -305,21 +307,21 @@
             var files = $("#fuAddApplicationLogo").get(0).files;
 
             if (files.length <= 0) {
-                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                ShowStatusBarNotification("@ApplicationResx.Pleaseselectfiletoupload", NotificationType.Warning);
                 return false;
             }
 
             var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
             var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
             if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                ShowStatusBarNotification("@ApplicationResx.AllowedFileSize", NotificationType.Warning);
                 return false;
             }
 
             var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
             var bIsInValidExt = fnIsValidFileExtension(extension);
             if (bIsInValidExt) {
-                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                ShowStatusBarNotification("@ApplicationResx.InvalidFileFormat", NotificationType.Warning);
                 return false;
             }
 
@@ -347,7 +349,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { }
@@ -380,7 +382,7 @@
         function fnAddApplicationValidateInitialization(sFormID) {
             jQuery.validator.addMethod("dropDownValidator", function (value, element, param) {
                 return this.optional(element) || value != param;
-            }, "Please choose a value!");
+            }, "");
 
             debugger;
             var validator = $('#' + sFormID).validate({
@@ -400,9 +402,9 @@
                     },
                 },
                 messages: {
-                    APPLICATION_NAME: "This field is required.",
-                    FORMATTED_EXPIRY_DATE: "This field is required.",
-                    MemberUserID: "This field is required."
+                    APPLICATION_NAME: "@CommonResx.ThisFieldIsRequired",
+                    FORMATTED_EXPIRY_DATE: "@CommonResx.ThisFieldIsRequired",
+                    MemberUserID: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -473,7 +475,7 @@
             });
             debugger;
             $("#dvPopUpWindow").dialog({
-                title: 'Edit Application',
+                title: '@ApplicationResx.EditApplication',
                 autoOpen: true,
                 //position: { my: "center", at: "top-50", of: $(".fakeWidth") },
                 width: '50%',
@@ -511,14 +513,14 @@
                 },
                 buttons: [
                      {
-                         text: "Update",
+                         text: "@Buttons.Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnEditApplication();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $("#dvPopUpWindow").dialog("close");
@@ -541,14 +543,14 @@
                 var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
                 var nUploadedSize = fnCheckFileSize('fuAddApplicationLogo');
                 if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    ShowStatusBarNotification("@ApplicationResx.AllowedFileSize", NotificationType.Warning);
                     return false;
                 }
 
                 var extension = $("#fuAddApplicationLogo").val().split('.').pop().toUpperCase();
                 var bIsInValidExt = fnIsValidFileExtension(extension);
                 if (bIsInValidExt) {
-                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    ShowStatusBarNotification("@ApplicationResx.InvalidFileFormat", NotificationType.Warning);
                     return false;
                 }
             }
@@ -577,7 +579,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { }

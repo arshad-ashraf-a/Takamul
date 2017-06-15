@@ -11057,7 +11057,7 @@ body.stop-scrolling {
     border: 1px solid transparent;
     outline: 0;
     overflow: hidden;
-    overflow-y:auto;
+    overflow-y: auto;
     -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
 }
@@ -19992,3 +19992,9 @@ thead .htCollapseButton {
         float: right;
         display: block;
     }
+
+.ui-jqgrid .ui-jqgrid-title {
+    float: left !important;
+    margin: 8px !important;
+}
+

@@ -849,6 +849,8 @@
     <Content Include="template-reference\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="template-reference\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="template-reference\js\plugins\visualization\sparkline.min.js" />
+    <Content Include="Views\Events\_AddNewEvent.cshtml" />
+    <Content Include="Views\Events\_EditEvent.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -941,7 +943,6 @@
     <Content Include="Views\Applications\ApplicationsList.cshtml" />
     <Content Include="Views\Shared\_AppLayout.cshtml" />
     <Content Include="Views\Events\EventsList.cshtml" />
-    <Content Include="Views\Events\AddNewEvent.cshtml" />
     <Content Include="Views\MemberInfo\MemberInfoList.cshtml" />
     <Content Include="Views\MemberInfo\_AddMemberInfo.cshtml" />
     <Content Include="Views\MemberInfo\_EditMemberInfo.cshtml" />
@@ -951,7 +952,6 @@
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\News\AddNewNews.cshtml" />
-    <Content Include="Views\Events\EditEvent.cshtml" />
     <Content Include="Views\News\NewsList.cshtml" />
     <Content Include="Views\News\EditNews.cshtml" />
     <Content Include="Views\ApplicationDashboard\AppDashboard.cshtml" />
@@ -1016,7 +1016,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19612</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Takamul.Portal</IISUrl>
+          <IISUrl>http://10.153.15.112/Takamul.Portal</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

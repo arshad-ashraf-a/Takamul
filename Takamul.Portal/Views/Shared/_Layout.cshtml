@@ -30,7 +30,6 @@
         <link href='@Url.Content("~/assets/css/core.css")' rel="stylesheet" />
     }
 
-
     @Styles.Render("~/bundles/CoreStyles")
 
     <!-- /global stylesheets -->
@@ -40,7 +39,7 @@
 
     @RenderSection("SpecificPluginStyles", false)
 </head>
-<body>
+<body class="@CommonResx.BodyClass">
     <script type="text/javascript">
         var EnumColumnsAlignment = { Center: "Center", Right: "Right", Left: "Left" };
         var EnumColumnsTypes = { TextArea: "textarea", CheckBox: "checkbox", Select: "select" };
@@ -70,17 +69,17 @@
                         <span>@BaseController.CurrentUser.sUserName</span>
                         <i class="caret"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-@CommonResx.LayoutDirectionOpposite">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         @if (oBaseController.CurrentApplicationLanguage == Data.Core.Languages.Arabic)
                         {
                             <li>
-                                <a href="#" onclick="fnSetLanguage(2); return false;"><i class="icon-switch2"></i> English</a>
+                                <a href="#" onclick="fnSetLanguage(2); return false;"><i class="icon-mirror"></i> English</a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="#" onclick="fnSetLanguage(1); return false;"><i class="icon-switch2"></i> Arabic</a>
+                                <a href="#" onclick="fnSetLanguage(1); return false;"><i class="icon-mirror"></i> Arabic</a>
                             </li>
                         }
                         <li>
@@ -138,32 +137,6 @@
                                 {
                                     <li><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
                                 }
-                                <!-- Appearance -->
-                                @*<li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
-                                    <li>
-                                        <a href="#"><i class="icon-list-unordered"></i> <span>Applications</span></a>
-                                        <ul>
-                                            <li><a href="#">Reports 1</a></li>
-                                            <li><a href="#">Reports 2</a></li>
-                                            <li><a href="#">Reports 3</a></li>
-                                        </ul>
-                                    </li>*@
-                                <!-- /appearance -->
-                                <!-- Appearance -->
-                                @*<li class="navigation-header"><span>Settings</span> <i class="icon-menu" title="Appearance"></i></li>
-                                    <li>
-                                        <a href="#"><i class="icon-list-unordered"></i> <span>User Management</span></a>
-                                        <ul>
-                                            <li><a href="#">Users</a></li>
-                                            <li><a href="#">Roles</a></li>
-                                            <li><a href="#">Role Privillages</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="icon-list-unordered"></i> <span>Master Data</span></a>
-                                        <ul></ul>
-                                    </li>*@
-                                <!-- /appearance -->
                             </ul>
                         </div>
                     </div>

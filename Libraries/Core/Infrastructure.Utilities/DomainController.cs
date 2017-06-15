@@ -61,13 +61,13 @@ namespace Infrastructure.Utilities
 
 
 
-        protected override void Initialize(RequestContext requestContext)
-        {
-            base.Initialize(requestContext);
-            System.Globalization.CultureInfo oCultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-GB");
-            System.Threading.Thread.CurrentThread.CurrentCulture = oCultureInfo;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = oCultureInfo;
+        //protected override void Initialize(RequestContext requestContext)
+        //{
+        //    base.Initialize(requestContext);
+        //    System.Globalization.CultureInfo oCultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-GB");
+        //    System.Threading.Thread.CurrentThread.CurrentCulture = oCultureInfo;
+        //    System.Threading.Thread.CurrentThread.CurrentUICulture = oCultureInfo;
 
-        }
+        //}
     }
 }

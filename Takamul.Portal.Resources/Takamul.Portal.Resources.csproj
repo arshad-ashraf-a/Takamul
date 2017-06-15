@@ -69,6 +69,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GridView.resx</DependentUpon>
     </Compile>
+    <Compile Include="Portal\ApplicationDashboard\AppDashboardResx.ar.Designer.cs">
+      <DependentUpon>AppDashboardResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\ApplicationDashboard\AppDashboardResx.Designer.cs">
+      <DependentUpon>AppDashboardResx.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\Applications\ApplicationResx.ar.Designer.cs">
+      <DependentUpon>ApplicationResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\Applications\ApplicationResx.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicationResx.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Portal\Events\EventResx.ar.Designer.cs">
+      <DependentUpon>EventResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\Events\EventResx.Designer.cs">
+      <DependentUpon>EventResx.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -93,6 +123,30 @@
     <EmbeddedResource Include="Controls\GridView\GridView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GridView.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationDashboard\AppDashboardResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppDashboardResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationDashboard\AppDashboardResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppDashboardResx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\Applications\ApplicationResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\Applications\ApplicationResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationResx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\Events\EventResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\Events\EventResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventResx.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

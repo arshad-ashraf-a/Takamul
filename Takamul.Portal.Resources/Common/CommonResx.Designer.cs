@@ -394,6 +394,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you wanted to delete this record ?.
+        /// </summary>
+        public static string DeleteConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department.
         /// </summary>
         public static string Department {
@@ -1155,6 +1164,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string TextAlign {
             get {
                 return ResourceManager.GetString("TextAlign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field is required..
+        /// </summary>
+        public static string ThisFieldIsRequired {
+            get {
+                return ResourceManager.GetString("ThisFieldIsRequired", resourceCulture);
             }
         }
         

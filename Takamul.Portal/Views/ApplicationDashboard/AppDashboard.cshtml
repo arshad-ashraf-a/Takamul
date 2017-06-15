@@ -1,4 +1,5 @@
-﻿@model Takamul.Models.ViewModel.ApplicationViewModel
+﻿@using Takamul.Portal.Resources.Portal.ApplicationDashboard;
+@model Takamul.Models.ViewModel.ApplicationViewModel
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -7,11 +8,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Application Name</th>
-                <th>Exipry Date</th>
-                <th>Member Name</th>
-                <th>Created Date</th>
-                <th>Status</th>
+                <th>@AppDashboardResx.ApplicationName</th>
+                <th>@AppDashboardResx.ExipryDate</th>
+                <th>@AppDashboardResx.MemberName</th>
+                <th>@AppDashboardResx.CreatedDate</th>
+                <th>@AppDashboardResx.Status</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +33,7 @@
             <div class="media no-margin">
                 <div class="media-body">
                     <h3 class="no-margin">@Model.TotalMobileUserCount</h3>
-                    <span class="text-uppercase text-size-mini">Mobile users</span>
+                    <span class="text-uppercase text-size-mini">@AppDashboardResx.MobileUsers</span>
                 </div>
 
                 <div class="media-right media-middle">
@@ -46,7 +47,7 @@
             <div class="media no-margin">
                 <div class="media-body">
                     <h3 class="no-margin">@Model.TotalTicketCount</h3>
-                    <span class="text-uppercase text-size-mini">total Tickets</span>
+                    <span class="text-uppercase text-size-mini">@AppDashboardResx.TotalTickets</span>
                 </div>
 
                 <div class="media-right media-middle">
@@ -60,7 +61,7 @@
             <div class="media no-margin">
                 <div class="media-body">
                     <h3 class="no-margin">@Model.TotalTicketChatCount</h3>
-                    <span class="text-uppercase text-size-mini">total messages</span>
+                    <span class="text-uppercase text-size-mini">@AppDashboardResx.totalmessages</span>
                 </div>
 
                 <div class="media-right media-middle">
@@ -69,21 +70,6 @@
             </div>
         </div>
     </div>
-
-    @*<div class="col-sm-6 col-md-3">
-            <div class="panel panel-body bg-blue-400 has-bg-image">
-                <div class="media no-margin">
-                    <div class="media-body">
-                        <h3 class="no-margin">54,390</h3>
-                        <span class="text-uppercase text-size-mini">total comments</span>
-                    </div>
-
-                    <div class="media-right media-middle">
-                        <i class="icon-bubbles4 icon-3x opacity-75"></i>
-                    </div>
-                </div>
-            </div>
-        </div>*@
 </div>
 
 
@@ -106,7 +92,7 @@
 
                         <div class="media-left">
                             <h5 class="text-semibold no-margin">@Model.TotalTicketOpenCount </h5>
-                            <span class="text-muted"><span class="status-mark border-success position-left"></span> Open Tickets </span>
+                            <span class="text-muted"><span class="status-mark border-success position-left"></span> @AppDashboardResx.OpenTickets </span>
                         </div>
                     </td>
 
@@ -117,25 +103,13 @@
 
                         <div class="media-left">
                             <h5 class="text-semibold no-margin">
-                                @Model.TotalTicketClosedCount <small class="display-block no-margin">total closed tickets</small>
+                                @Model.TotalTicketClosedCount <small class="display-block no-margin">@AppDashboardResx.totalclosedtickets</small>
                             </h5>
                         </div>
                     </td>
 
-                    @*<td class="col-md-3">
-                            <div class="media-left media-middle">
-                                <a href="#" class="btn border-indigo-400 text-indigo-400 btn-flat btn-rounded btn-xs btn-icon"><i class="icon-spinner11"></i></a>
-                            </div>
-
-                            <div class="media-left">
-                                <h5 class="text-semibold no-margin">
-                                    06:25:00 <small class="display-block no-margin">recent response time</small>
-                                </h5>
-                            </div>
-                        </td>*@
-
                     <td class="text-right col-md-2">
-                        <a href="@Url.Action("TicketsList", "Tickets")" class="btn bg-teal-400"><i class="icon-comment-discussion position-left"></i> Go To Tickets</a>
+                        <a href="@Url.Action("TicketsList", "Tickets")" class="btn bg-teal-400"><i class="icon-comment-discussion position-left"></i> @AppDashboardResx.GoToTickets</a>
                     </td>
                 </tr>
             </tbody>
@@ -146,15 +120,15 @@
         <table class="table text-nowrap">
             <thead>
                 <tr>
-                    <th style="width: 50px">Due</th>
-                    <th style="width: 300px;">User</th>
-                    <th>Description</th>
+                    <th style="width: 50px">@AppDashboardResx.Due</th>
+                    <th style="width: 300px;">@AppDashboardResx.User</th>
+                    <th>@AppDashboardResx.Description</th>
                     <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="active border-double">
-                    <td colspan="4">Active tickets</td>
+                    <td colspan="4">@AppDashboardResx.Activetickets</td>
                 </tr>
                 <!-- ko if: vmaActiveTickets().length > 0-->
                 <!-- ko foreach: vmaActiveTickets -->
@@ -185,10 +159,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> Quick Reply</a></li>
-                                    @*<li class="divider"></li>*@
-                                    @*<li><a href="#"><i class="icon-cross2 text-danger"></i> Reject ticket</a></li>
-                                        <li><a href="#"><i class="icon-checkmark3 text-success"></i> Close ticket</a></li>*@
+                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.Reply</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -199,13 +170,13 @@
                 <!-- ko ifnot: vmaActiveTickets().length > 0-->
                 <tr>
                     <td colspan="4" class="text-warning">
-                        No active tickets found.
+                        @AppDashboardResx.NoActiveTicketFound
                     </td>
                 </tr>
                 <!-- /ko -->​
 
                 <tr class="active border-double">
-                    <td colspan="4">Closed tickets</td>
+                    <td colspan="4">@AppDashboardResx.Closedtickets</td>
                 </tr>
 
                 <!-- ko if: vmaClosedTickets().length > 0-->
@@ -237,9 +208,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> Quick Reply</a></li>
-                                    @*<li class="divider"></li>*@
-                                    @*<li><a href="#"><i class="icon-spinner11 text-blue"></i> ReOpen Ticket</a></li>*@
+                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -250,7 +219,7 @@
                 <!-- ko ifnot: vmaClosedTickets().length > 0-->
                 <tr>
                     <td colspan="4" class="text-warning">
-                        No closed tickets found.
+                        @AppDashboardResx.NoClosedTicketsFound
                     </td>
                 </tr>
                 <!-- /ko -->​
@@ -288,9 +257,7 @@
                             <li class="dropup">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> Quick Reply</a></li>
-                                    @*<li class="divider"></li>*@
-                                    @*<li><a href="#"><i class="icon-spinner11 text-blue"></i> ReOpen Ticket</a></li>*@
+                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -301,7 +268,7 @@
                 <!-- ko ifnot: vmaRejectedTickets().length > 0-->
                 <tr>
                     <td colspan="4" class="text-warning">
-                        No rejected tickets found.
+                       @AppDashboardResx.NoRejectedTicketsFound
                     </td>
                 </tr>
                 <!-- /ko -->​
@@ -435,32 +402,32 @@
 
             if (elapsed < msPerMinute) {
                 nValue = Math.round(elapsed / 1000);
-                sText = "Seconds"
+                sText = "@AppDashboardResx.Seconds"
             }
 
             else if (elapsed < msPerHour) {
                 nValue = Math.round(elapsed / msPerMinute);
-                sText = "Minutes";
+                sText = "@AppDashboardResx.Minutes";
             }
 
             else if (elapsed < msPerDay) {
                 nValue = Math.round(elapsed / msPerHour);
-                sText = "Hours";
+                sText = "@AppDashboardResx.Hours";
             }
 
             else if (elapsed < msPerMonth) {
                 nValue = Math.round(elapsed / msPerDay);
-                sText = "Days";
+                sText = "@AppDashboardResx.Days";
             }
 
             else if (elapsed < msPerYear) {
                 nValue = Math.round(elapsed / msPerMonth);
-                sText = "Months";
+                sText = "@AppDashboardResx.Months";
             }
 
             else {
                 nValue = Math.round(elapsed / msPerYear);
-                sText = "Years";
+                sText = "@AppDashboardResx.Years";
             }
 
             return { Value: nValue, Text: sText };

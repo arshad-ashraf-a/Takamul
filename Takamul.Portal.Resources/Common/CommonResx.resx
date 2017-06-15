@@ -516,4 +516,10 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="DeleteConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you wanted to delete this record ?</value>
+  </data>
 </root>

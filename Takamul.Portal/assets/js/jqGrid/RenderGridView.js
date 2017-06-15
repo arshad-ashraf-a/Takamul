@@ -190,8 +190,8 @@ function BuildGridViewMenu(oArrColumnsModel, oArrGridContextMenu) {
             var bHasEdit = false;
             var MenuBuilder = "";
             MenuBuilder += "<div  class='btn-group' id='dvContextMenu_" + options.rowId + "'>";
-            MenuBuilder += "<button data-toggle='dropdown' style='padding:2px 6px;' class='btn btn-default btn-white dropdown-toggle' aria-expanded='false'>" + oArrGridContextMenu[0].MenuTitle + "<span class='ace-icon fa fa-caret-down icon-on-right'></span></button>"
-            MenuBuilder += "<ul class='dropdown-menu border-lg border-slate-700 no-border-radius active dropdown-menu-" + UlDir + "'>"
+            MenuBuilder += "<button data-toggle='dropdown' style='padding:2px 6px;' class='btn btn-primary btn-white dropdown-toggle' aria-expanded='false'>" + oArrGridContextMenu[0].MenuTitle + "<span class='ace-icon fa fa-caret-down icon-on-right'></span></button>"
+            MenuBuilder += "<ul class='dropdown-menu dropdown-menu-fix dropdown-info dropdown-menu-right'>"
             $.each(oArrGridContextMenu, function (MenuIndex, MenuValue) {
                 var isVisiable = true;
                 if (MenuValue.FlagsArray != undefined && MenuValue.FlagsArray != null && MenuValue.FlagsArray.length > 0) {
