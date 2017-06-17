@@ -4,14 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="730e63fc61a94b9c838c3303fa74a033" Name="Diagram1" ZoomLevel="83">
+      <Diagram DiagramId="730e63fc61a94b9c838c3303fa74a033" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="TakamulModel.APPLICATIONS" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="TakamulModel.TICKETS" Width="1.5" PointX="0.5" PointY="5.625" />
         <AssociationConnector Association="TakamulModel.FK_TICKETS_APPLICATIONS" />
-        <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="2.25" PointY="3.625" />
-        <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="2.25" PointY="0.5" />
-        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="3.875" PointY="0.5" />
+        <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="2.75" PointY="11.125" />
         <AssociationConnector Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" />
+        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TakamulModel.ABOUT_APP" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TakamulModel.ABOUTAPP_LINKS" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_ENTITIES" Width="1.5" PointX="7.375" PointY="9.375" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_PRIVILLAGES" Width="1.5" PointX="9.625" PointY="3.375" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_USERS" Width="1.5" PointX="5.375" PointY="11.875" />
+        <EntityTypeShape EntityType="TakamulModel.DB_LOGS" Width="1.5" PointX="12.375" PointY="0.875" />
+        <EntityTypeShape EntityType="TakamulModel.TICKET_CHAT_DETAILS" Width="1.5" PointX="2.75" PointY="15.25" />
+        <EntityTypeShape EntityType="TakamulModel.TICKET_CHAT_TYPES" Width="1.5" PointX="7.375" PointY="0.875" />
+        <EntityTypeShape EntityType="TakamulModel.TICKET_PARTICIPANTS" Width="1.5" PointX="9.375" PointY="0.875" />
+        <EntityTypeShape EntityType="TakamulModel.TICKET_STATUS" Width="1.5" PointX="12.375" PointY="3.875" />
+        <EntityTypeShape EntityType="TakamulModel.USER_DETAILS" Width="1.5" PointX="9.625" PointY="8.125" />
+        <EntityTypeShape EntityType="TakamulModel.USER_TYPES" Width="1.5" PointX="12.375" PointY="6.875" />
+        <EntityTypeShape EntityType="TakamulModel.USERS" Width="1.5" PointX="7.375" PointY="4.125" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_SETTINGS" Width="1.5" PointX="12.375" PointY="9.875" />
+        <AssociationConnector Association="TakamulModel.FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES" />
+        <AssociationConnector Association="TakamulModel.FK_ROLE_PRIVILLAGES_USERS" />
+        <AssociationConnector Association="TakamulModel.FK_TICKET_CHAT_DETAILS_TICKETS" />
+        <AssociationConnector Association="TakamulModel.FK_USER_DETAILS_USERS" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

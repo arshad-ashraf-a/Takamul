@@ -53,6 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABOUTAPP_LINKS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ABOUT_APP.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApiViewModel\About.cs" />
     <Compile Include="ApiViewModel\ApiResponse.cs" />
     <Compile Include="ApiViewModel\AreaInfo.cs" />
     <Compile Include="ApiViewModel\TakamulApplication.cs" />
@@ -69,11 +76,26 @@
     <Compile Include="APPLICATIONS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="APPLICATION_ENTITIES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APPLICATION_PRIVILLAGES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APPLICATION_SETTINGS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APPLICATION_USERS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\BaseModel.cs" />
     <Compile Include="Common\EnumHelpers.cs" />
     <Compile Include="Common\Login.cs" />
     <Compile Include="Common\LookUp.cs" />
     <Compile Include="Common\Response.cs" />
+    <Compile Include="DB_LOGS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EVENTS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
@@ -102,6 +124,28 @@
     <Compile Include="TICKETS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TICKET_CHAT_DETAILS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TICKET_CHAT_TYPES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TICKET_PARTICIPANTS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TICKET_STATUS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USERS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER_DETAILS.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER_TYPES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AboutAppViewModel.cs" />
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Compile Include="ViewModel\AreaInfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />

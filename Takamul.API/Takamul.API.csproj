@@ -215,7 +215,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\AboutPage\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Libraries\Core\Infrastructure.Core\Infrastructure.Core.csproj">
       <Project>{41979552-6E9D-48C7-AC90-BAF34CAA0786}</Project>
