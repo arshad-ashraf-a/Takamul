@@ -60,7 +60,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetAllNews(int nApplicationID, int nLanguageID)
         {
             List<TakamulNews> lstTakamulNews = null;
-            var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID);
+            var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID, nLanguageID);
             if (lstNews.Count() > 0)
             {
                 lstTakamulNews = new List<TakamulNews>();

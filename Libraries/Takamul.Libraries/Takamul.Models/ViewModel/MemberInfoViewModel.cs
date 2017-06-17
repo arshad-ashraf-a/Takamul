@@ -26,6 +26,7 @@ namespace Takamul.Models.ViewModel
         public DateTime CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
+        public int LANGUAGE_ID { get; set; }
 
         public int TotalCount { get; set; }
 
@@ -42,6 +43,7 @@ namespace Takamul.Models.ViewModel
             this.CREATED_DATE = DateTime.MinValue;
             this.MODIFIED_BY = -99;
             this.MODIFIED_DATE = DateTime.MinValue;
+            this.LANGUAGE_ID = -99;
         } 
         #endregion
     }

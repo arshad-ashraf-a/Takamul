@@ -57,6 +57,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage RegisterUser(TakamulUser oTakamulUser, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
+            string sResultMessage = string.Empty;
             if (ModelState.IsValid)
             {
                 try
@@ -81,7 +82,8 @@ namespace Takamul.API.Controllers
                     if (oResponse.OperationResult == enumOperationResult.Success)
                     {
                         oApiResponse.OperationResult = 1;
-                        oApiResponse.OperationResultMessage = "User registered successfully.";
+                        sResultMessage = nLanguageID == 2 ? "User registered successfully." : "تم تسجيل المستخدم بنجاح.";
+                        oApiResponse.OperationResultMessage = sResultMessage;
 
                         oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
                         oApiResponse.ResponseCode = nOTPNumber.ToString();
@@ -90,25 +92,29 @@ namespace Takamul.API.Controllers
                     else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
                     {
                         oApiResponse.OperationResult = -3;
-                        oApiResponse.OperationResultMessage = "The user already exists.Please contact app administrator";
+                        sResultMessage = nLanguageID == 2 ? "The user already exists.Please contact app administrator." : "لمستخدم موجود من قبل. الرجاء الاتصال بمشرف التطبيق.";
+                        oApiResponse.OperationResultMessage = sResultMessage;
 
                     }
                     else
                     {
                         oApiResponse.OperationResult = 0;
-                        oApiResponse.OperationResultMessage = "Please contact app administrator.";
+                        sResultMessage = nLanguageID == 2 ? "Error Occured.Please contact app administrator." : "حدث خطأ الرجاء الاتصال بمشرف التطبيق.";
+                        oApiResponse.OperationResultMessage = sResultMessage;
                     }
                     return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
                 }
                 catch (Exception)
                 {
                     oApiResponse.OperationResult = 0;
-                    oApiResponse.OperationResultMessage = "Internal sever error";
+                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
                 }
             }
             oApiResponse.OperationResult = 0;
-            oApiResponse.OperationResultMessage = "Model validation failed";
+            sResultMessage = nLanguageID == 2 ? "Validation failed." : "أخفقت عملية التحقق.";
+            oApiResponse.OperationResultMessage = sResultMessage;
             return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
         #endregion
@@ -127,12 +133,14 @@ namespace Takamul.API.Controllers
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+            string sResultMessage = string.Empty;
             Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
                 oApiResponse.OperationResult = 1;
-                oApiResponse.OperationResultMessage = "OTP has been successfully sent.";
+                sResultMessage = nLanguageID == 2 ? "OTP has been successfully sent." : "تم إرسال مكتب المدعي العام بنجاح.";
+                oApiResponse.OperationResultMessage = sResultMessage;
 
                 //TODO::integrate with sms service and update status to database
                 oApiResponse.ResponseCode = nOTPNumber.ToString();
@@ -140,17 +148,20 @@ namespace Takamul.API.Controllers
             else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
             {
                 oApiResponse.OperationResult = -2;
-                oApiResponse.OperationResultMessage = "You have exceeded the maximum number of attempt.Please contact app administrator.";
+                sResultMessage = nLanguageID == 2 ? "You have exceeded the maximum number of attempt.Please contact app administrator." : "لقد تجاوزت الحد الأقصى لعدد المحاولات. يرجى الاتصال بمشرف التطبيق.";
+                oApiResponse.OperationResultMessage = sResultMessage;
             }
             else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
             {
                 oApiResponse.OperationResult = -3;
-                oApiResponse.OperationResultMessage = "The user does not exist.Please contact app administrator";
+                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق";
+                oApiResponse.OperationResultMessage = sResultMessage;
             }
             else
             {
                 oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "An error occured.Please try again later.";
+                sResultMessage = nLanguageID == 2 ? "An error occured.Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                oApiResponse.OperationResultMessage = sResultMessage;
             }
             return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
         }
@@ -168,10 +179,11 @@ namespace Takamul.API.Controllers
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber,int nLanguageID)
+        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID)
         {
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
+            string sResultMessage = string.Empty;
             Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(sPhoneNumber, nOTPNumber);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
@@ -195,18 +207,21 @@ namespace Takamul.API.Controllers
                 };
                 oTakamulUserResponse.TakamulUser = oTakamulUser;
                 oApiResponse.OperationResult = 1;
-                oApiResponse.OperationResultMessage = "User verified successfully.";
+                sResultMessage = nLanguageID == 2 ? "User verified successfully." : "تم التحقق من المستخدم بنجاح.";
+                oApiResponse.OperationResultMessage = sResultMessage;
 
             }
             else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
             {
                 oApiResponse.OperationResult = -3;
-                oApiResponse.OperationResultMessage = "The user does not exist.Please contact app administrator";
+                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator": "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق.";
+                oApiResponse.OperationResultMessage = sResultMessage;
             }
             else
             {
                 oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "Please contact app administrator.";
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                oApiResponse.OperationResultMessage = sResultMessage;
             }
             oTakamulUserResponse.ApiResponse = oApiResponse;
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulUserResponse);

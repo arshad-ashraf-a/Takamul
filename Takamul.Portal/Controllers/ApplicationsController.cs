@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.Applications;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -41,8 +42,8 @@ namespace LDC.eServices.Portal.Controllers
         {
             if (BaseController.CurrentUser.UserType == enumUserType.Admin)
             {
-                this.PageTitle = "Applications List";
-                this.TitleHead = "Applications List";
+                this.PageTitle = ApplicationResx.ApplicationsList;
+                this.TitleHead = ApplicationResx.ApplicationsList;
 
                 return View();
             }
@@ -76,36 +77,7 @@ namespace LDC.eServices.Portal.Controllers
             return PartialView("_EditApplication", oApplicationViewModel);
         }
         #endregion
-        #region View :: MembersList
 
-        
-        public ActionResult MembersList()
-        {
-            if (BaseController.CurrentUser.UserType == enumUserType.Admin)
-            {
-                this.PageTitle = "Members List";
-                this.TitleHead = "Members List";
-
-                return View("~/Views/Member/MembersList.cshtml");
-            }
-            else
-            {
-                return RedirectToAction("Index", "AccessDenied");
-            }
-        }
-        #endregion
-
-        #region View :: PartialAddMember
-        /// <summary>
-        /// Add User
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult PartialAddMember()
-        {
-            UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
-            return PartialView("~/Views/Member/_AddMember", oUserInfoViewModel);
-        }
-        #endregion
         #endregion
 
         #region ::  Methods ::

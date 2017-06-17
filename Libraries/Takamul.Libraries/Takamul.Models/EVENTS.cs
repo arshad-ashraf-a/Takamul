@@ -24,6 +24,7 @@ namespace Takamul.Models
         public string EVENT_LONGITUDE { get; set; }
         public Nullable<bool> IS_ACTIVE { get; set; }
         public string EVENT_IMG_FILE_PATH { get; set; }
+        public Nullable<int> LANGUAGE_ID { get; set; }
         public Nullable<int> CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }

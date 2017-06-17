@@ -34,6 +34,7 @@ namespace Takamul.Models.ViewModel
         public Guid FileId { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
+        public int LANGUAGE_ID { get; set; }
 
         public virtual ICollection<FileDetail> FileDetails { get; set; }
 
@@ -55,6 +56,7 @@ namespace Takamul.Models.ViewModel
             this.PUBLISHED_DATE = DateTime.MinValue;
             //this.FileId = string.Empty;
             this.FORMATTED_PUBLISHED_DATE = string.Empty;
+            this.LANGUAGE_ID = -99;
         } 
         #endregion
     }

@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Portal.Events;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @{
-    Layout = "~/Views/Shared/_AppLayout.cshtml"; 
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 @model Takamul.Models.EventViewModel
 <style>
@@ -27,6 +29,11 @@
                 background-color: #9eeffe;
             }
 </style>
+@*<add key="GooglePlaceAPIUrl" value="https://maps.googleapis.com/maps/api/place/autocomplete/json?input={0}&amp;types=address&amp;language=en&amp;key={1}" />
+    <add key="GooglePlaceDetailsAPIUrl" value="https://maps.googleapis.com/maps/api/place/details/xml?placeid={0}&amp;key={1}" />*@
+
+
+<link href="~/assets/js/plugins/googlemap/MapStyleSheet.css" rel="stylesheet" />
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddEvent", @class = "form-horizontal" }))
 {
     <div class="col-md-12">
@@ -73,7 +80,7 @@
                             <div class="col-lg-5">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                    @Html.EditorFor(model => model.EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
+                                    @Html.EditorFor(model => model.FORMATTED_EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
                                 </div>
 
                             </div>
@@ -81,6 +88,19 @@
 
                     </div>
                 </div>
+                @* Event Location*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@EventResx.EventLocation&nbsp;<span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                <input id="txtsearch" class="apply" type="text" placeholder="Enter Search Place e.g C# Corner Noida">
+                                <div id="divloadMap" style="height:500px;width:500px"></div>                            </div>
+                        </div>
+
+                    </div>
+                </div>
+             
 
                 @* Event Location*@
                 <div class="form-group">
@@ -99,7 +119,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Latitude&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.Latitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
                                 @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " latitude" } })
                             </div>
@@ -112,7 +132,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Longitude&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.Longitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
                                 @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " longitude" } })
                             </div>
@@ -125,7 +145,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Is Active</label>
+                            <label class="col-lg-4 control-label">@EventResx.IsActive</label>
                             <div class="col-lg-5">
                                 @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
                             </div>
@@ -137,7 +157,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Image</label>
+                            <label class="col-lg-4 control-label">@EventResx.EventImage</label>
                             <div class="col-lg-8">
                                 <input type="file" id="fuEventImage" class="file-styled">
                             </div>
@@ -150,15 +170,18 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveEvent()">Save</button>
-            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveEvent()">@Buttons.Save</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
             <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
         </div>
     </div>
+
+
 }
 
 
-
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB12deZM0ibuAHFBFQk-1vEbLuzbqao64M&libraries=places"></script>
+<script src="~/assets/js/plugins/googlemap/GoogleAPIScript.js"></script>
 
 @section InlineScriptsRelated
 {
@@ -195,12 +218,12 @@
                     }
                 },
                 messages: {
-                    EVENT_NAME: "This field is required.",
-                    EVENT_DESCRIPTION: "This field is required.",
-                    EVENT_DATE: "This field is required.",
-                    EVENT_LOCATION_NAME: "This field is required.",
-                    EVENT_LATITUDE: "This field is required.",
-                    EVENT_LONGITUDE: "This field is required."
+                    EVENT_NAME: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_DESCRIPTION: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_DATE: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LOCATION_NAME: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LATITUDE: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LONGITUDE: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -266,14 +289,14 @@
                 var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
                 var nUploadedSize = fnCheckFileSize('fuEventImage');
                 if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    ShowStatusBarNotification("@EventResx.AllowedFileSize", NotificationType.Warning);
                     return false;
                 }
 
                 var extension = $("#fuEventImage").val().split('.').pop().toUpperCase();
                 var bIsInValidExt = fnIsValidFileExtension(extension);
                 if (bIsInValidExt) {
-                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    ShowStatusBarNotification("@EventResx.InvalidFileFormat", NotificationType.Warning);
                     return false;
                 }
             }
@@ -291,7 +314,7 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             fnClearControls();
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
@@ -301,7 +324,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { }

@@ -22,6 +22,7 @@ namespace Takamul.Models
         public Nullable<bool> IS_NOTIFY_USER { get; set; }
         public Nullable<bool> IS_ACTIVE { get; set; }
         public Nullable<System.DateTime> PUBLISHED_DATE { get; set; }
+        public Nullable<int> LANGUAGE_ID { get; set; }
         public Nullable<int> CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }

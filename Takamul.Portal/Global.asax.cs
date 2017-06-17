@@ -64,7 +64,6 @@ namespace Takamul.Portal
                 {
                     //Sets default culture to english invariant
                     string langName = "en";
-
                     //Try to get values from Accept lang HTTP header
                     if (HttpContext.Current.Request.UserLanguages != null && HttpContext.Current.Request.UserLanguages.Length != 0)
                     {
@@ -79,11 +78,12 @@ namespace Takamul.Portal
 
 
                     HttpContext.Current.Response.AppendCookie(langCookie);
+
                 }
 
                 //Finally setting culture for each request
                 Thread.CurrentThread.CurrentUICulture = ci;
-                Thread.CurrentThread.CurrentCulture = ci;
+                //Thread.CurrentThread.CurrentCulture = ci;
 
                 //The line below creates issue when using default culture values for other
                 //cultures for ex: NumericSepratore.
@@ -92,10 +92,9 @@ namespace Takamul.Portal
             else
             {
                 var ci = new CultureInfo("en-US");
-
                 //Finally setting culture for each request
                 Thread.CurrentThread.CurrentUICulture = ci;
-                Thread.CurrentThread.CurrentCulture = ci;
+                //Thread.CurrentThread.CurrentCulture = ci;
             }
         }
 

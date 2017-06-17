@@ -26,9 +26,10 @@ namespace Takamul.Services
         /// Get all member info
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns>List of Events</returns>
-        List<MemberInfoViewModel> lGetAllMemberInfo(int nApplicationID);
-        
+        List<MemberInfoViewModel> lGetAllMemberInfo(int nApplicationID, int nLanguageID);
+
         #endregion
 
         #region Method :: IPagedList<MemberInfoViewModel> :: IlGetAllMemberInfo
@@ -41,8 +42,9 @@ namespace Takamul.Services
         /// <param name="nPageSize"></param>
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
+        IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID);
         
         #endregion
 

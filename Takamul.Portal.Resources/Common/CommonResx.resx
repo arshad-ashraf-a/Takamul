@@ -522,4 +522,55 @@
   <data name="DeleteConfirmationMessage" xml:space="preserve">
     <value>Are you sure you wanted to delete this record ?</value>
   </data>
+  <data name="AllApplications" xml:space="preserve">
+    <value>All Applications</value>
+  </data>
+  <data name="AllMembers" xml:space="preserve">
+    <value>All Members</value>
+  </data>
+  <data name="AppDashBoard" xml:space="preserve">
+    <value>App DashBoard</value>
+  </data>
+  <data name="AppEvents" xml:space="preserve">
+    <value>App Events</value>
+  </data>
+  <data name="AppMemberInfo" xml:space="preserve">
+    <value>App Member Info</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>App Name</value>
+  </data>
+  <data name="AppNews" xml:space="preserve">
+    <value>App News</value>
+  </data>
+  <data name="AppTickets" xml:space="preserve">
+    <value>App Tickets</value>
+  </data>
+  <data name="AppUsers" xml:space="preserve">
+    <value>App Users</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Back To List</value>
+  </data>
+  <data name="GoBackToAllApplication" xml:space="preserve">
+    <value>Go Back To All Application</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MyApplication" xml:space="preserve">
+    <value>My Application</value>
+  </data>
+  <data name="TakamulServices" xml:space="preserve">
+    <value>Takamul Services</value>
+  </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="ErrorPage" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
 </root>

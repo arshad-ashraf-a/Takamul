@@ -66,12 +66,14 @@ namespace Takamul.Services
         /// Get all active news
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLaguageID"></param>
         /// <returns>List of News</returns>
-        public List<NewsViewModel> IlGetAllActiveNews(int nApplicationID)
+        public List<NewsViewModel> IlGetAllActiveNews(int nApplicationID,int nLaguageID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LaguageId", SqlDbType.Int, nLaguageID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_NewsId", SqlDbType.Int, -99, ParameterDirection.Input));
             #endregion
 
@@ -117,30 +119,32 @@ namespace Takamul.Services
         /// <param name="nPageSize"></param>
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
         public IPagedList<NewsViewModel> IlGetAllNews(int nApplicationID,
-            string sSearchByNewsName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+            string sSearchByNewsName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID)
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
             var lstNews = (from c in this.NewsDBSet
                            where sSearchByNewsName == null || c.NEWS_TITLE.Contains(sSearchByNewsName)
-                             where c.APPLICATION_ID == (int)nApplicationID
-                             orderby c.ID descending
-                             select new
-                             {
-                                 ID = c.ID,
-                                 NEWS_TITLE = c.NEWS_TITLE,
-                                 NEWS_CONTENT = c.NEWS_CONTENT,
-                                 PUBLISHED_DATE = c.PUBLISHED_DATE,
-                                 IS_NOTIFY_USER = c.IS_NOTIFY_USER,
-                                 IS_ACTIVE = c.IS_ACTIVE,
-                                 CREATED_DATE = c.CREATED_DATE,
-                             });
+                           where c.APPLICATION_ID == (int)nApplicationID
+                           where c.LANGUAGE_ID == nLanguageID
+                           orderby c.ID descending
+                           select new
+                           {
+                               ID = c.ID,
+                               NEWS_TITLE = c.NEWS_TITLE,
+                               NEWS_CONTENT = c.NEWS_CONTENT,
+                               PUBLISHED_DATE = c.PUBLISHED_DATE,
+                               IS_NOTIFY_USER = c.IS_NOTIFY_USER,
+                               IS_ACTIVE = c.IS_ACTIVE,
+                               CREATED_DATE = c.CREATED_DATE,
+                           });
             #endregion
 
             #region Execute The Query And Return Page Result
             var oTempNewsPagedResult = new PagedList<dynamic>(lstNews, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
-            int nTotal = oTempNewsPagedResult.TotalCount;   
+            int nTotal = oTempNewsPagedResult.TotalCount;
             PagedList<NewsViewModel> plstApplicaiton = new PagedList<NewsViewModel>(oTempNewsPagedResult.Select(oNewsPagedResult => new NewsViewModel
             {
                 ID = oNewsPagedResult.ID,
@@ -184,15 +188,16 @@ namespace Takamul.Services
                         NEWS_TITLE = oNewsViewModel.NEWS_TITLE,
                         NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT,
                         NEWS_IMG_FILE_PATH = oNewsViewModel.NEWS_IMG_FILE_PATH,
-                        PUBLISHED_DATE = oNewsViewModel.PUBLISHED_DATE,                       
+                        PUBLISHED_DATE = oNewsViewModel.PUBLISHED_DATE,
                         IS_ACTIVE = oNewsViewModel.IS_ACTIVE,
                         IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER,
+                        LANGUAGE_ID = oNewsViewModel.LANGUAGE_ID,
                         CREATED_BY = oNewsViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
-                     
+
                     };
                     this.oTakamulConnection.NEWS.Add(oNews);
-                    
+
                     if (this.intCommit() > 0)
                     {
                         oResponse.OperationResult = enumOperationResult.Success;
@@ -201,7 +206,7 @@ namespace Takamul.Services
                     {
                         oResponse.OperationResult = enumOperationResult.Faild;
                     }
-                   // insertedId = oNews.ID;
+                    // insertedId = oNews.ID;
 
                 }
             }
@@ -224,7 +229,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="oNewsViewModel"></param>
         /// <returns>Response</returns>
-        public Response oUpdateNews(NewsViewModel oNewsViewModel,FileDetail newsFile = null)
+        public Response oUpdateNews(NewsViewModel oNewsViewModel, FileDetail newsFile = null)
         {
             Response oResponse = new Response();
 
@@ -246,7 +251,7 @@ namespace Takamul.Services
                 #endregion
 
                 #region Update Default NEWS
-                
+
                 oNews.NEWS_TITLE = oNewsViewModel.NEWS_TITLE;
                 oNews.NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT;
                 oNews.PUBLISHED_DATE = oNewsViewModel.PUBLISHED_DATE;
@@ -293,7 +298,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="oGuid"></param>
         /// <returns></returns>
-       public NEWS oDeleteFile(string oGuid)
+        public NEWS oDeleteFile(string oGuid)
         {
             Response oResponse = new Response();
             NEWS fileDetail = new NEWS();
@@ -304,13 +309,13 @@ namespace Takamul.Services
                 if (fileDetail == null)
                 {
                     oResponse.OperationResult = enumOperationResult.Faild;
-                   // return Json(new { Result = "Error" });
+                    // return Json(new { Result = "Error" });
                 }
 
                 //Remove from database
                 this.oTakamulConnection.NEWS.Remove(fileDetail);
                 this.oTakamulConnection.SaveChanges();
-               
+
             }
             catch (Exception Ex)
             {
@@ -364,4 +369,3 @@ namespace Takamul.Services
     }
 }
 
- 

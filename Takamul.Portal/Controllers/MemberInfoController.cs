@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.MemberInfo;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -38,9 +39,8 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         public ActionResult MemberInfoList()
         {
-            this.ParentNode = "Incident Management";
-            this.CurrentPage = "Member Info";
-            this.TitleHead = "Member Info";
+            this.CurrentPage = MemberInfoResx.MemberInfo;
+            this.TitleHead = MemberInfoResx.MemberInfo;
 
             return View();
         }
@@ -55,7 +55,7 @@ namespace LDC.eServices.Portal.Controllers
         {
             MemberInfoViewModel oMemberInfoViewModel = new MemberInfoViewModel();
             oMemberInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("~/Views/MemberInfo/_AddMemberInfo.cshtml", oMemberInfoViewModel);
+            return PartialView("_AddMemberInfo.cshtml", oMemberInfoViewModel);
         }
         #endregion
 
@@ -68,7 +68,7 @@ namespace LDC.eServices.Portal.Controllers
         public PartialViewResult PartialEditMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
             oMemberInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("~/Views/MemberInfo/_EditMemberInfo.cshtml", oMemberInfoViewModel);
+            return PartialView("_EditMemberInfo.cshtml", oMemberInfoViewModel);
         }
         #endregion
 
@@ -89,7 +89,7 @@ namespace LDC.eServices.Portal.Controllers
         [HttpPost]
         public JsonResult JGetAllMemberInfo(int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var list = oIMemberInfoService.IlGetAllMemberInfo(this.CurrentApplicationID,nPage, nRows, sColumnName, sColumnOrder);
+            var list = oIMemberInfoService.IlGetAllMemberInfo(this.CurrentApplicationID, nPage, nRows, sColumnName, sColumnOrder, Convert.ToInt32(this.CurrentApplicationLanguage));
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -108,7 +108,8 @@ namespace LDC.eServices.Portal.Controllers
             Response oResponseResult = null;
 
             oMemberInfoViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
-           
+            oMemberInfoViewModel.LANGUAGE_ID = Convert.ToInt32(this.CurrentApplicationLanguage);
+
             oResponseResult = this.oIMemberInfoService.oInsertMemberInfo(oMemberInfoViewModel);
             this.OperationResult = oResponseResult.OperationResult;
 
@@ -118,7 +119,7 @@ namespace LDC.eServices.Portal.Controllers
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.RelatedRecordFaild:
-                    this.OperationResultMessages = "You have already added maximum number of list.";
+                    this.OperationResultMessages = MemberInfoResx.AlreadyAddedMaximumList;
                     break;
                 case enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageAddFailed;

@@ -1,4 +1,6 @@
-﻿@using Takamul.Portal.Resources.Controls.Buttons;
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -13,7 +15,7 @@
                         <fieldset>
                             <legend class="text-semibold no-padding-bottom">
                                 <i class="fa fa-search position-left"></i>
-                                Search Tickets
+                                @TicketsResx.SearchTickets
                                 <div class="content-group pull-right">
                                     <a class="control-arrow mt-10" data-toggle="collapse" data-target="#demo1" aria-expanded="true">
                                         <i class="icon-circle-down2"></i>
@@ -24,20 +26,20 @@
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Ticket Code</label>
+                                            <label class="col-lg-4 control-label">@TicketsResx.TicketCode</label>
                                             <div class="col-lg-5">
                                                 <input type="text" class="form-control col-xs-6" id="txtSearchByTicketCode" name="txtSearchByTicketCode"
-                                                       placeholder="Ticket Code">
+                                                       placeholder="@TicketsResx.TicketCode">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Ticket Name</label>
+                                            <label class="col-lg-4 control-label">@TicketsResx.TicketName</label>
                                             <div class="col-lg-8">
                                                 <input type="text" class="form-control col-xs-6" id="txtSearchByTicketName" name="txtSearchByTicketName"
-                                                       placeholder="Ticket Name">
+                                                       placeholder="@TicketsResx.TicketName">
                                             </div>
                                         </div>
                                     </div>
@@ -45,7 +47,7 @@
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Ticket Status</label>
+                                            <label class="col-lg-4 control-label">@TicketsResx.TicketStatus</label>
                                             <div class="col-lg-5">
                                                 <select class="form-control" id="ddlTicketStatus" name="ddlTicketStatus">
                                                     <option></option>
@@ -56,7 +58,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Participant User</label>
+                                            <label class="col-lg-4 control-label">@TicketsResx.ParticipantUser</label>
                                             <div class="col-lg-8">
                                                 <select class="form-control" id="ddlParticipantUser" name="ddlParticipantUser">
                                                     <option></option>
@@ -69,8 +71,8 @@
                         </fieldset>
                         <hr class="sp-1" />
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllTickets(); return false;">Seach<i class="fa fa-search position-right"></i></button>
-                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch(); return false;">Clear</button>
+                            <button type="submit" class="btn btn-primary btn-xs" onclick="fnBindAllTickets(); return false;">@Buttons.Search<i class="fa fa-search position-right"></i></button>
+                            <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearSearch(); return false;">@Buttons.Clear</button>
                         </div>
                         <div class="row search-option-buttons">
                             <div class="col-sm-6">
@@ -96,7 +98,7 @@
             <div class="heading-elements">
                 <div class="col-md-12">
                     <div class="content-group-sm">
-                        <a title="Add new ticket" href="#" onclick="fnLoadPartialAddTicket();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Ticket</a>
+                        <a title="@TicketsResx.AddNewTicket" href="#" onclick="fnLoadPartialAddTicket();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @TicketsResx.AddNewTicket</a>
 
                     </div>
 
@@ -160,13 +162,13 @@
                 '',//Hidden Columns Represent TICKET_STATUS_NAME Int Value
                 '',//Hidden Columns Represent TICKET_DESCRIPTION Int Value
                 '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
-                'Ticket Code',
-                'Ticket Name',
+                '@TicketsResx.TicketCode',
+                '@TicketsResx.TicketName',
                 //'Ticket Description',
-                'Ticket Status',
-                'Is Active',
-                'Created Date',
-                'Options' // Options
+                '@TicketsResx.TicketStatus',
+                '@TicketsResx.IsActive',
+                '@TicketsResx.CreatedDate',
+                '@Buttons.Options' // Options
             ];
 
             var vTicketCode = $("#txtSearchByTicketCode").val();
@@ -369,7 +371,7 @@
             });
 
             $("#dvPopUpWindow").dialog({
-                title: 'Update Ticket',
+                title: '@TicketsResx.UpdateTicket',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -392,7 +394,7 @@
                 },
                 buttons: [
                      {
-                         text: "Update",
+                         text: "@Buttons.Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              //Update Ticket
@@ -443,7 +445,7 @@
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -490,7 +492,7 @@
             });
 
             $("#dvPopUpWindow").dialog({
-                title: 'Ticket Info',
+                title: '@TicketsResx.TicketInfo',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -523,7 +525,7 @@
 
         function fnLoadPartialAddTicket() {
             $("#dvPopUpWindow").dialog({
-                title: 'Add Ticket',
+                title: '@TicketsResx.AddTicket',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -558,14 +560,14 @@
                 },
                 buttons: [
                      {
-                         text: "Save",
+                         text: "@Buttons.Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnSaveTicket();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -588,14 +590,14 @@
                 var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
                 var nUploadedSize = fnCheckFileSize('fuTicketImage');
                 if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    ShowStatusBarNotification("@TicketsResx.AllowedFileSize", NotificationType.Warning);
                     return false;
                 }
 
                 var extension = $("#fuTicketImage").val().split('.').pop().toUpperCase();
                 var bIsInValidExt = fnIsValidFileExtension(extension);
                 if (bIsInValidExt) {
-                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    ShowStatusBarNotification("@TicketsResx.InvalidFileFormat", NotificationType.Warning);
                     return false;
                 }
             }
@@ -613,7 +615,7 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             $("#dvPopUpWindow").dialog("close");
@@ -624,7 +626,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { $("#dvPopUpWindow").dialog("close"); }
@@ -676,9 +678,9 @@
                     },
                 },
                 messages: {
-                    TICKET_NAME: "This field is required.",
-                    TICKET_DESCRIPTION: "This field is required.",
-                    MobileParticipantId: "This field is required."
+                    TICKET_NAME: "@CommonResx.ThisFieldIsRequired",
+                    TICKET_DESCRIPTION: "@CommonResx.ThisFieldIsRequired",
+                    MobileParticipantId: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');

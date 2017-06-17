@@ -1,8 +1,10 @@
-﻿using Infrastructure.Core;
+﻿using ImageMagick;
+using Infrastructure.Core;
 using Infrastructure.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,6 +13,7 @@ using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.Events;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -39,8 +42,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: EventsList
         public ActionResult EventsList()
         {
-            this.PageTitle = "Events List";
-            this.TitleHead = "Events List";
+            this.PageTitle = EventResx.EventsList;
+            this.TitleHead = EventResx.EventsList;
 
             return View();
         }
@@ -49,12 +52,12 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: AddNewEvent
         public ActionResult AddNewEvent()
         {
-            this.PageTitle = "Add Event";
-            this.TitleHead = "Add Event";
+            this.PageTitle = EventResx.AddEvent;
+            this.TitleHead = EventResx.AddEvent;
 
             EventViewModel oEventViewModel = new EventViewModel();
             oEventViewModel.EVENT_DATE = DateTime.Now;
-            return View("_AddNewEvent",oEventViewModel);
+            return View("_AddNewEvent", oEventViewModel);
         }
         #endregion
 
@@ -62,8 +65,8 @@ namespace LDC.eServices.Portal.Controllers
         public ActionResult EditEvent(int nEventID)
         {
             EventViewModel oEventViewModel = this.oIEventService.oGetEventDetails(nEventID);
-            this.PageTitle = "Edit Event";
-            this.TitleHead = "Edit Event";
+            this.PageTitle = EventResx.EditEvent;
+            this.TitleHead = EventResx.EditEvent;
             return View("_EditEvent", oEventViewModel);
         }
         #endregion
@@ -84,7 +87,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         public JsonResult JBindAllEvents(string sSearchByEventName, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstEvents = this.oIEventService.IlGetAllEvents(CurrentApplicationID,sSearchByEventName, nPage, nRows, sColumnName, sColumnOrder);
+            var lstEvents = this.oIEventService.IlGetAllEvents(CurrentApplicationID, sSearchByEventName, nPage, nRows, sColumnName, sColumnOrder, Convert.ToInt32(this.CurrentApplicationLanguage));
             return Json(lstEvents, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -241,8 +244,10 @@ namespace LDC.eServices.Portal.Controllers
                 }
             }
 
+            oEventViewModel.EVENT_DATE = DateTime.ParseExact(oEventViewModel.FORMATTED_EVENT_DATE.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
+            oEventViewModel.LANGUAGE_ID = Convert.ToInt32(this.CurrentApplicationLanguage);
 
             oResponseResult = this.oIEventService.oInsertEvent(oEventViewModel);
             this.OperationResult = oResponseResult.OperationResult;
@@ -258,12 +263,12 @@ namespace LDC.eServices.Portal.Controllers
                         string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
                         string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
                         oFileAccessService.CreateDirectory(sDirectoryPath);
-                        byte[] fileData = null;
-                        using (var binaryReader = new BinaryReader(filebase.InputStream))
-                        {
-                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
-                        }
-                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+
+                        MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                        oMagickImage.Format = MagickFormat.Png;
+                        oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+
+                        oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                     }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
@@ -306,6 +311,8 @@ namespace LDC.eServices.Portal.Controllers
                     oEventViewModel.EVENT_IMG_FILE_PATH = Path.Combine(this.CurrentApplicationID.ToString(), "Events", sModifiedFileName).Replace('\\', '/');
                 }
             }
+
+            oEventViewModel.EVENT_DATE = DateTime.ParseExact(oEventViewModel.FORMATTED_EVENT_DATE.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
 
@@ -323,12 +330,12 @@ namespace LDC.eServices.Portal.Controllers
                         string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
                         string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
                         oFileAccessService.CreateDirectory(sDirectoryPath);
-                        byte[] fileData = null;
-                        using (var binaryReader = new BinaryReader(filebase.InputStream))
-                        {
-                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
-                        }
-                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+
+                        MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                        oMagickImage.Format = MagickFormat.Png;
+                        oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+
+                        oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                     }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;

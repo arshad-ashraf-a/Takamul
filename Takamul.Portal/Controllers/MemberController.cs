@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.Member;
 using Takamul.Services;
 
 namespace Takamul.Portal.Controllers
@@ -36,8 +37,8 @@ namespace Takamul.Portal.Controllers
         #region View :: MembersList
         public ActionResult MembersList()
         {
-            this.PageTitle = "Member List";
-            this.TitleHead = "Member List";
+            this.PageTitle = MemberResx.MemberList;
+            this.TitleHead = MemberResx.MemberList;
 
             return View();
         }
@@ -47,8 +48,8 @@ namespace Takamul.Portal.Controllers
         public ActionResult MemberProfile(int nUserID)
         {
             UserInfoViewModel oUserInfoViewModel = this.oIUserServicesService.oGetUserDetails(nUserID);
-            this.PageTitle = "User Profile";
-            this.TitleHead = "User Profile";
+            this.PageTitle = MemberResx.MemberProfile;
+            this.TitleHead = MemberResx.MemberProfile;
 
             return View(oUserInfoViewModel);
         }

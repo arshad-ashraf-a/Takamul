@@ -95,11 +95,11 @@ namespace Takamul.API.Controllers
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetMemberInfo(int nApplicationID)
+        public HttpResponseMessage GetMemberInfo(int nApplicationID,int nLanguageID)
         {
             TakamulMembeInfo oTakamulMembeInfo = null;
             List<TakamulMembeInfo> lstTakamulMembeInfo = null;
-            List<MemberInfoViewModel> lstMemberInfoViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID);
+            List<MemberInfoViewModel> lstMemberInfoViewModel = this.oICommonServices.oGetMemberInfo(nApplicationID, nLanguageID);
             if (lstMemberInfoViewModel.Count > 0)
             {
                 lstTakamulMembeInfo = new List<TakamulMembeInfo>();

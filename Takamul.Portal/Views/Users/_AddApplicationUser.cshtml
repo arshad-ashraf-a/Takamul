@@ -1,5 +1,7 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
-
+@using Takamul.Portal.Resources.Portal.Users;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddUserPartialPage", @class = "form-horizontal" }))
 {
     <div class="panel panel-flat">
@@ -11,11 +13,11 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">User Type</label>
+                        <label class="col-lg-4 control-label">@UsersResx.UserType</label>
                         <div class="col-lg-8">
                             <select id="ddlUserTypeID" onchange="fnDDLUserTypeOnChange();" name="USER_TYPE_ID" class="form-control col-md-12">
-                                <option value="3">Staff</option>
-                                <option value="4">Mobile User</option>
+                                <option value="3">@UsersResx.Staff</option>
+                                <option value="4">@UsersResx.MobileUser</option>
                             </select>
                         </div>
                     </div>
@@ -26,9 +28,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">User Full Name&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@UsersResx.FullName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "user full name" } })
+                            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = @UsersResx.FullName } })
                         </div>
                     </div>
                 </div>
@@ -38,9 +40,9 @@
             <div class="form-group" id="dvUserName">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">UserName&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@UsersResx.UserName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id="txtUserNamePopUp", @class = "form-control", placeholder = "user name" } })
+                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id="txtUserNamePopUp", @class = "form-control", placeholder = @UsersResx.UserName } })
                         </div>
                     </div>
                 </div>
@@ -50,9 +52,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Phone Number</label>
+                        <label class="col-lg-4 control-label">@UsersResx.PhoneNumber</label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", placeholder = "phone number" } })
+                            @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", placeholder = @UsersResx.PhoneNumber } })
                         </div>
                     </div>
                 </div>
@@ -62,9 +64,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Email</label>
+                        <label class="col-lg-4 control-label">@UsersResx.Email</label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = "email" } })
+                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = @UsersResx.Email } })
                         </div>
                     </div>
                 </div>

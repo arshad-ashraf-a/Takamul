@@ -59,7 +59,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetAllEvents(int nApplicationID, int nLanguageID)
         {
             List<TakamulEvents> lstTakamulEvents = null;
-            var lstEvents = this.oIEventsServices.IlGetAllActiveEvents(nApplicationID);
+            var lstEvents = this.oIEventsServices.IlGetAllActiveEvents(nApplicationID, nLanguageID);
             if (lstEvents.Count() > 0)
             {
                 lstTakamulEvents = new List<TakamulEvents>();

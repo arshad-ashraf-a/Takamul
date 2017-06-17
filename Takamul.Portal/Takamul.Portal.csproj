@@ -72,6 +72,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.6\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -220,6 +224,8 @@
     <Content Include="assets\js\plugins\forms\select2.min.js" />
     <Content Include="assets\js\plugins\forms\uniform.min.js" />
     <Content Include="assets\js\plugins\forms\validate.min.js" />
+    <Content Include="assets\js\plugins\googlemap\GoogleAPIScript.js" />
+    <Content Include="assets\js\plugins\googlemap\MapStyleSheet.css" />
     <Content Include="assets\js\plugins\loaders\fakeLoader.css" />
     <Content Include="assets\js\plugins\loaders\fakeLoader.js" />
     <Content Include="assets\js\plugins\loaders\fakeLoader.min.css" />
@@ -951,9 +957,7 @@
     <Content Include="Views\Users\UsersList.cshtml" />
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\News\AddNewNews.cshtml" />
     <Content Include="Views\News\NewsList.cshtml" />
-    <Content Include="Views\News\EditNews.cshtml" />
     <Content Include="Views\ApplicationDashboard\AppDashboard.cshtml" />
     <Content Include="Views\Tickets\_UpdateTicket.cshtml" />
     <Content Include="Views\Users\_AddApplicationUser.cshtml" />
@@ -965,6 +969,9 @@
     <Content Include="Views\Member\MembersList.cshtml" />
     <Content Include="Views\Member\MemberProfile.cshtml" />
     <Content Include="Views\Member\_AddMember.cshtml" />
+    <Content Include="Views\News\_AddNews.cshtml" />
+    <Content Include="Views\News\_EditNews.cshtml" />
+    <Content Include="Views\Tickets\_ViewTicketInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1016,7 +1023,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19612</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://10.153.15.112/Takamul.Portal</IISUrl>
+          <IISUrl>http://localhost/Takamul.Portal</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

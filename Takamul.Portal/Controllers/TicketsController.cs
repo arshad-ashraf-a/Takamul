@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.Tickets;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -39,8 +40,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: TicketsList
         public ActionResult TicketsList()
         {
-            this.PageTitle = "Tickets List";
-            this.TitleHead = "Tickets List";
+            this.PageTitle = TicketsResx.TicketsList;
+            this.TitleHead = TicketsResx.TicketsList;
 
             return View();
         }
@@ -50,8 +51,8 @@ namespace LDC.eServices.Portal.Controllers
         public ActionResult TicketDetails(int nTicketID)
         {
             TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
-            this.PageTitle = "Ticket Details";
-            this.TitleHead = "Ticket Details";
+            this.PageTitle = TicketsResx.TicketDetails;
+            this.TitleHead = TicketsResx.TicketDetails;
 
             return View(oTicketViewModel);
         }

@@ -47,12 +47,14 @@ namespace Takamul.Services
         /// Get member info
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLaguageID"></param>
         /// <returns>List of News</returns>
-        public List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID)
+        public List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID,int nLaguageID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLaguageID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"

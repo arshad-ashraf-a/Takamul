@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Takamul.Portal.Resources.Portal.Users;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
@@ -15,16 +18,16 @@
                                 <div class="pull-right content-group-sm">
                                     <div class="col-md-3">
                                         <select id="ddlUserSearchType" class="form-control col-md-12">
-                                            <option value="-99">All</option>
-                                            <option value="3">Staff</option>
-                                            <option value="4">Mobile User</option>
+                                            <option value="-99">@UsersResx.All</option>
+                                            <option value="3">@UsersResx.Staff</option>
+                                            <option value="4">@UsersResx.MobileUser</option>
                                         </select>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="input-group content-group">
 
                                             <div class="has-feedback has-feedback-left">
-                                                <input type="text" id="txtSearchUser" class="form-control input-xs" placeholder="search user">
+                                                <input type="text" id="txtSearchUser" class="form-control input-xs" placeholder="@UsersResx.SearchUser">
                                                 <div class="form-control-feedback">
                                                     <i class="icon-search4 text-muted text-size-base"></i>
                                                 </div>
@@ -32,12 +35,12 @@
                                             </div>
 
                                             <div class="input-group-btn">
-                                                <button type="submit" onclick="fnBindAllUsers(); return false;" class="btn btn-primary btn-xs">Search</button>
+                                                <button type="submit" onclick="fnBindAllUsers(); return false;" class="btn btn-primary btn-xs">@Buttons.Search</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 pull-right">
-                                        <a title="Add new user" href="#" onclick="fnLoadPartialAddUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New User</a>
+                                        <a title="@UsersResx.AddNewUser" href="#" onclick="fnLoadPartialAddUser();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @UsersResx.AddNewUser</a>
                                     </div>
                                 </div>
 
@@ -96,16 +99,16 @@
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
                 '',//Hidden Columns Represent USER_TYPE_ID Int Value
-                'Full Name',
-                'User Type',
-                'Phone Number',
-                'Email',
-                'Is Blocked',
-                'Is Active',
-                'OTP Verified',
-                'OTP Number',
-                'Created Date',
-                'Options' // Options
+                '@UsersResx.FullName',
+                '@UsersResx.UserType',
+                '@UsersResx.PhoneNumber',
+                '@UsersResx.Email',
+                '@UsersResx.IsBlocked',
+                '@UsersResx.IsActive',
+                '@UsersResx.OTPVerified',
+                '@UsersResx.OTPNumber',
+                '@UsersResx.CreatedDate',
+                '@Buttons.Options' // Options
             ];
 
             var vUserTypeID = $("#ddlUserSearchType").val();
@@ -123,8 +126,8 @@
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
-                                        { MenuTitle: "Options" },
-                                        { Caption: "Details", EventName: "fnGoToUserProfile();", RowId: true }
+                                        { MenuTitle: "@Buttons.Options" },
+                                        { Caption: "@Buttons.Details", EventName: "fnGoToUserProfile();", RowId: true }
             ];
             var oArrColsModel = [
                     {
@@ -258,7 +261,7 @@
 
         function fnLoadPartialAddUser() {
             $("#dvPopUpWindow").dialog({
-                title: 'Add User',
+                title: '@UsersResx.AddUser',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -282,14 +285,14 @@
                 },
                 buttons: [
                      {
-                         text: "Save",
+                         text: "@Buttons.Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnSaveUser();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -315,8 +318,8 @@
                     }
                 },
                 messages: {
-                    FULL_NAME: "This field is required.",
-                    PHONE_NUMBER: "This field is required."
+                    FULL_NAME: "@CommonResx.ThisFieldIsRequired",
+                    PHONE_NUMBER: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');

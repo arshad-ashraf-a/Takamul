@@ -1,13 +1,14 @@
-﻿@model Takamul.Models.ViewModel.TicketViewModel
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@model Takamul.Models.ViewModel.TicketViewModel
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 <div class="col-md-12">
     <div class="panel panel-flat">
         <div class="panel-heading">
-            <h6 class="panel-title">Ticket Chats <i class="icon-arrow-right14 position-left"></i><span class="text-primary">@Model.TICKET_NAME</span></h6>
+            <h6 class="panel-title">@TicketsResx.TicketChats <i class="icon-arrow-right14 position-left"></i><span class="text-primary">@Model.TICKET_NAME</span></h6>
             <div class="heading-elements">
-                <a title="Go Back To All Application" href="@Url.Action("TicketsList", "Tickets")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> All Tickets</a>
+                <a title="@TicketsResx.GoBackToTickets" href="@Url.Action("TicketsList", "Tickets")" class="btn bg-brown-300 btn-xs heading-btn"><i class="fa fa-mail-reply-all position-left"></i> @TicketsResx.AllTickets</a>
             </div>
         </div>
 
@@ -180,21 +181,21 @@
             var files = $("#fuChatFile").get(0).files;
 
             if (files.length <= 0) {
-                ShowStatusBarNotification("Please select file to upload.", NotificationType.Warning);
+                ShowStatusBarNotification("@TicketsResx.PleaseSelectFile", NotificationType.Warning);
                 return false;
             }
 
             var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
             var nUploadedSize = fnCheckFileSize('fuChatFile');
             if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                ShowStatusBarNotification("@TicketsResx.AllowedFileSize", NotificationType.Warning);
                 return false;
             }
 
             var extension = $("#fuChatFile").val().split('.').pop().toUpperCase();
             var bIsInValidExt = fnIsValidFileExtension(extension);
             if (bIsInValidExt) {
-                ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG,DOC,DOCX and PDF is allowed.", NotificationType.Warning);
+                ShowStatusBarNotification("@TicketsResx.InvalidFileFormat", NotificationType.Warning);
                 return false;
             }
             var vChatType = -99;

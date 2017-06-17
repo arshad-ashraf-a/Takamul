@@ -1,8 +1,9 @@
-﻿@model Takamul.Models.ViewModel.TicketViewModel
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@model Takamul.Models.ViewModel.TicketViewModel
 
 <div class="profile-user-info profile-user-info-striped">
     <div class="profile-info-row">
-        <div class="profile-info-name width-250"> Ticket Code </div>
+        <div class="profile-info-name width-250">@TicketsResx.TicketCode </div>
 
         <div class="profile-info-value">
             <span class="text-bold text-info"> @Model.TICKET_CODE</span>
@@ -10,7 +11,7 @@
     </div>
 
     <div class="profile-info-row">
-        <div class="profile-info-name"> Ticket Name </div>
+        <div class="profile-info-name"> @TicketsResx.TicketName </div>
 
         <div class="profile-info-value">
             @Model.TICKET_NAME
@@ -18,7 +19,7 @@
     </div>
 
     <div class="profile-info-row">
-        <div class="profile-info-name"> Ticket Description </div>
+        <div class="profile-info-name"> @TicketsResx.TicketDescription </div>
 
         <div class="profile-info-value">
             @Model.TICKET_DESCRIPTION
@@ -26,7 +27,7 @@
     </div>
 
     <div class="profile-info-row">
-        <div class="profile-info-name"> Ticket Status </div>
+        <div class="profile-info-name"> @TicketsResx.TicketStatus </div>
 
         <div class="profile-info-value">
             @Model.TICKET_STATUS_NAME
@@ -34,7 +35,7 @@
     </div>
 
     <div class="profile-info-row">
-        <div class="profile-info-name"> Is Active </div>
+        <div class="profile-info-name"> @TicketsResx.IsActive </div>
 
         <div class="profile-info-value">
             @if (Model.IS_ACTIVE)
@@ -52,7 +53,7 @@
     @if (!string.IsNullOrEmpty(Model.DEFAULT_IMAGE))
     {
         <div class="profile-info-row">
-            <div class="profile-info-name"> Uploaded Ticket Image </div>
+            <div class="profile-info-name"> @TicketsResx.UploadedTicketImage </div>
 
             <div class="profile-info-value">
                 <div class="panel panel-flat">

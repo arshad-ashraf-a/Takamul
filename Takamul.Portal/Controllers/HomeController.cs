@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Portal.Resources.Common;
 
 namespace LDC.eServices.Portal.Controllers
 {
@@ -12,8 +13,8 @@ namespace LDC.eServices.Portal.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            this.PageTitle = "Home";
-            this.TitleHead = "Home";
+            this.PageTitle = CommonResx.Home;
+            this.TitleHead = CommonResx.Home;
 
             var userId = CurrentUser.nUserID;
             return View();

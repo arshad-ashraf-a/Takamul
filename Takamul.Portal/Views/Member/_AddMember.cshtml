@@ -1,4 +1,7 @@
-﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+﻿@using Takamul.Portal.Resources.Portal.Member;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@model Takamul.Models.ViewModel.UserInfoViewModel
 
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddMember", @class = "form-horizontal" }))
 {
@@ -11,9 +14,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">User Full Name&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@MemberResx.UserFullName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "user full name" } })
+                            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = @MemberResx.UserFullName } })
                         </div>
                     </div>
                 </div>
@@ -23,9 +26,9 @@
             <div class="form-group" id="dvUserName">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">UserName&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@MemberResx.UserName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id = "txtUserNamePopUp", @class = "form-control", placeholder = "user name" } })
+                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id = "txtUserNamePopUp", @class = "form-control", placeholder = "@MemberResx.UserName" } })
                         </div>
                     </div>
                 </div>
@@ -35,9 +38,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Phone Number</label>
+                        <label class="col-lg-4 control-label">@MemberResx.PhoneNumber</label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", placeholder = "phone number" } })
+                            @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", placeholder = @MemberResx.PhoneNumber} })
                         </div>
                     </div>
                 </div>
@@ -47,9 +50,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Email</label>
+                        <label class="col-lg-4 control-label">@MemberResx.Email</label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = "email" } })
+                            @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = @MemberResx.Email } })
                         </div>
                     </div>
                 </div>
@@ -57,8 +60,8 @@
 
             <hr class="sp-1" />
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-xs" onclick="fnSaveMember(); return false;">Save</button>
-                <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearControls(); return false;">Clear</button>
+                <button type="submit" class="btn btn-primary btn-xs" onclick="fnSaveMember(); return false;">@Buttons.Save</button>
+                <button type="submit" class="btn bg-slate-300 btn-xs" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
             </div>
         </div>
     </div>
@@ -88,10 +91,10 @@
                 }
             },
             messages: {
-                FULL_NAME: "This field is required.",
-                USER_NAME: "This field is required.",
-                PHONE_NUMBER: "This field is required.",
-                EMAIL: "This field is required."
+                FULL_NAME: @CommonResx.ThisFieldIsRequired,
+                USER_NAME: @CommonResx.ThisFieldIsRequired,
+                PHONE_NUMBER: @CommonResx.ThisFieldIsRequired,
+                EMAIL: @CommonResx.ThisFieldIsRequired
             },
             highlight: function (e) {
                 $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');

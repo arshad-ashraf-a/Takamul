@@ -1,5 +1,7 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Takamul.Portal.Resources.Portal.Member;
 @using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @using Infrastructure.Utilities
 
 @{
@@ -32,7 +34,7 @@
                         <ul class="navigation">
                             <li>
                                 <a href="#messages" data-toggle="tab">
-                                    Active
+                                    @MemberResx.Active
                                     @if ((bool)Model.IS_ACTIVE)
                                     {
                                         <i class='icon-checkmark-circle text-success position-left'></i>
@@ -46,7 +48,7 @@
                             </li>
                             <li>
                                 <a href="#messages" data-toggle="tab">
-                                    Blocked
+                                    @MemberResx.Blocked
                                     @if ((bool)Model.IS_BLOCKED)
                                     {
                                         <span onclick="ShowAlertDialog('@Model.BLOCKED_REMARKS', '@Buttons.Close');" class="text-primary underlined clickable text-italic">[View Reason]</span>
@@ -66,7 +68,7 @@
                             {
                                 <li>
                                     <a href="#messages" data-toggle="tab">
-                                        OTP Verified
+                                        @MemberResx.OTPVerified
                                         @if ((bool)Model.IS_OTP_VALIDATED)
                                         {
                                             <i class='icon-checkmark-circle text-success position-left'></i>
@@ -101,21 +103,21 @@
                         <div class="category-content">
                             <ul class="progress-list">
                                 <li>
-                                    <label>User Name</label>
+                                    <label>@MemberResx.UserName</label>
                                     <input type="text" id="txtUserName" value="@Model.USER_NAME" class="form-control" disabled />
                                 </li>
 
                                 <li>
-                                    <label>New Password</label>
+                                    <label>@MemberResx.NewPassword</label>
                                     <input type="password" id="txtPassword" name="txtPassword" class="form-control" />
                                 </li>
 
                                 <li>
-                                    <label>Confirm Password</label>
+                                    <label>@MemberResx.ConfirmPassword</label>
                                     <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
                                 </li>
 
-                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> Change Password </button></li>
+                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> @MemberResx.ChangePassword </button></li>
                             </ul>
                         </div>
                     </div>
@@ -130,31 +132,10 @@
             <!-- Tab content -->
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="profile">
-
-                    <!-- Daily stats -->
-                    @*<div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <h6 class="panel-title">Ticket submission statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                                <div class="heading-elements">
-                                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
-
-                                    <ul class="icons-list">
-                                        <li><a data-action="reload"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="chart-container">
-                                    <div class="chart has-fixed-height" id="sales" _echarts_instance_="1494231080701" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 961px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1165px; height: 400px; user-select: none;"></div><canvas width="961" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="961" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 961px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 181px; top: 285.5px;">Mon<br>Profit : 200<br>Income : 320<br>Expenses : -120</div></div></div>
-                                </div>
-                            </div>
-                        </div>*@
-                    <!-- /daily stats -->
                     <!-- Profile info -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h6 class="panel-title">Profile information<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                            <h6 class="panel-title">@MemberResx.Profileinformation<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
                             <div class="heading-elements">
                                 <ul class="icons-list">
                                     <li><a data-action="collapse"></a></li>
@@ -169,15 +150,15 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Full name</label>
+                                            <label>@MemberResx.FullName</label>
                                             <input type="text" id="txtFullName" value="@Model.FULL_NAME" name="txtFullName" class="form-control">
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Civil ID</label>
+                                            <label>@MemberResx.CivilID</label>
                                             <input type="text" id="txtCivilID" name="txtCivilID" value="@Model.CIVIL_ID" class="form-control">
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Phone Number</label>
+                                            <label>@MemberResx.PhoneNumber</label>
                                             <input type="text" id="txtPhoneNumber" name="txtPhoneNumber" value="@Model.PHONE_NUMBER" class="form-control">
                                         </div>
                                     </div>
@@ -186,20 +167,20 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Area</label>
+                                            <label>@MemberResx.Area</label>
                                             <select id="ddlAreaddlID" name="ddlAreaddlID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
 
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Wilayat</label>
+                                            <label>@MemberResx.Wilayat</label>
                                             <select id="ddlWilayatddlID" name="ddlWilayatddlID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Village</label>
+                                            <label>@MemberResx.Village</label>
                                             <select id="ddlVillageID" name="ddlVillageID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
@@ -210,11 +191,11 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Email</label>
+                                            <label>@MemberResx.Email</label>
                                             <input type="text" id="txtEmail" name="txtEmail" value="@Model.EMAIL" class="form-control">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Address</label>
+                                            <label>@MemberResx.Address</label>
                                             <input type="text" id="txtAddress" name="txtAddress" value="@Model.ADDRESS" class="form-control">
                                         </div>
                                     </div>
@@ -223,12 +204,12 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Restrict Ticket Submission</label>
+                                            <label>@MemberResx.RestrictTicketSubmission</label>
                                             <br />
                                             <input type="checkbox" class="styled" id="chkRestrictTicketSubmission" checked="@Model.IS_TICKET_SUBMISSION_RESTRICTED">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Ticket Submission Interval Days</label>
+                                            <label>@MemberResx.TicketSubmissionIntervalDays</label>
                                             <input id="txtTicketSubmissionIntervalDays" value="@Model.TICKET_SUBMISSION_INTERVAL_DAYS" class="form-control">
                                         </div>
                                     </div>

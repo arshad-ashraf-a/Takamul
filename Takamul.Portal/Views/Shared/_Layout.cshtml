@@ -52,7 +52,7 @@
     <!-- Main navbar -->
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Takamul Services</a>
+            <a class="navbar-brand" href="#">@CommonResx.TakamulServices</a>
             <ul class="nav navbar-nav visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
                 <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
@@ -83,7 +83,7 @@
                             </li>
                         }
                         <li>
-                            <a href="@Url.Action("LogOut", "Account", new { area = "" })"><i class="icon-switch2"></i> Logout</a>
+                            <a href="@Url.Action("LogOut", "Account", new { area = "" })"><i class="icon-switch2"></i> @CommonResx.Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -130,12 +130,12 @@
 
                                 @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
                                 {
-                                    <li class="@Url.sMakeMenuActive("ApplicationsList", "Applications", "")"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> All Applications</a></li>
-                                    <li class="@Url.sMakeMenuActive("MembersList", "Member", "")"><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> All Members</a></li>
+                                    <li class="@Url.sMakeMenuActive("ApplicationsList", "Applications", "")"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> @CommonResx.AllApplications</a></li>
+                                    <li class="@Url.sMakeMenuActive("MembersList", "Member", "")"><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> @CommonResx.AllMembers</a></li>
                                 }
                                 else
                                 {
-                                    <li><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>My Application</span></a></li>
+                                    <li><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>@CommonResx.MyApplication</span></a></li>
                                 }
                             </ul>
                         </div>
@@ -277,7 +277,6 @@
         function fnSetLanguage(nLanguageID) {
             var LangPath = '@Url.Action("SetLanguage", "Base")?nLanguageID=' + Number(nLanguageID);
             $.post(LangPath, function () {
-                debugger;
                 window.location.reload();
             });
         }

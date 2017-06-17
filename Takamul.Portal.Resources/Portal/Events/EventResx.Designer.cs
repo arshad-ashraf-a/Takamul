@@ -61,11 +61,11 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Event.
+        ///   Looks up a localized string similar to Add Event.
         /// </summary>
-        public static string Add_New_Event {
+        public static string AddEvent {
             get {
-                return ResourceManager.GetString("Add New Event", resourceCulture);
+                return ResourceManager.GetString("AddEvent", resourceCulture);
             }
         }
         
@@ -88,11 +88,56 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only allowed file size upto 1 MB..
+        /// </summary>
+        public static string AllowedFileSize {
+            get {
+                return ResourceManager.GetString("AllowedFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created Date.
         /// </summary>
         public static string CreatedDate {
             get {
                 return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Event.
+        /// </summary>
+        public static string DeleteEvent {
+            get {
+                return ResourceManager.GetString("DeleteEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Event.
+        /// </summary>
+        public static string EditEvent {
+            get {
+                return ResourceManager.GetString("EditEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit New Event.
+        /// </summary>
+        public static string EditNewEvent {
+            get {
+                return ResourceManager.GetString("EditNewEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to enter a location to search....
+        /// </summary>
+        public static string EnterSearchLocation {
+            get {
+                return ResourceManager.GetString("EnterSearchLocation", resourceCulture);
             }
         }
         
@@ -111,6 +156,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         public static string EventDescription {
             get {
                 return ResourceManager.GetString("EventDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EventI mage.
+        /// </summary>
+        public static string EventImage {
+            get {
+                return ResourceManager.GetString("EventImage", resourceCulture);
             }
         }
         
@@ -138,6 +192,24 @@ namespace Takamul.Portal.Resources.Portal.Events {
         public static string Events {
             get {
                 return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events List.
+        /// </summary>
+        public static string EventsList {
+            get {
+                return ResourceManager.GetString("EventsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed..
+        /// </summary>
+        public static string InvalidFileFormat {
+            get {
+                return ResourceManager.GetString("InvalidFileFormat", resourceCulture);
             }
         }
         
@@ -174,6 +246,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         public static string SearchEvent {
             get {
                 return ResourceManager.GetString("SearchEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded Event Image.
+        /// </summary>
+        public static string UploadedEventImage {
+            get {
+                return ResourceManager.GetString("UploadedEventImage", resourceCulture);
             }
         }
     }

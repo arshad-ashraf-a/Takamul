@@ -1,5 +1,8 @@
-﻿@{
-    Layout = "~/Views/Shared/_AppLayout.cshtml"; 
+﻿@using Takamul.Portal.Resources.Portal.Events;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 @model Takamul.Models.EventViewModel
 <style>
@@ -32,7 +35,7 @@
 
         <div class="panel panel-white">
             <div class="panel-heading">
-                <h6 class="panel-title"> Edit New Event</h6>
+                <h6 class="panel-title"> @EventResx.EditNewEvent</h6>
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
@@ -41,9 +44,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Name&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.EventName&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "event name" } })
+                                @Html.EditorFor(model => model.EVENT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.EventName } })
                             </div>
                         </div>
 
@@ -54,9 +57,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Description&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.EventDescription&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                <textarea class="form-control" rows="4" placeholder="event description" cols="5" id="EVENT_DESCRIPTION" name="EVENT_DESCRIPTION">@Model.EVENT_DESCRIPTION</textarea>
+                                <textarea class="form-control" rows="4" placeholder="@EventResx.EventDescription" cols="5" id="EVENT_DESCRIPTION" name="EVENT_DESCRIPTION">@Model.EVENT_DESCRIPTION</textarea>
                             </div>
                         </div>
 
@@ -67,11 +70,11 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Date&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.EventDate&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                    @Html.EditorFor(model => model.EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
+                                    @Html.EditorFor(model => model.FORMATTED_EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = @EventResx.EventDate } })
                                 </div>
 
                             </div>
@@ -84,9 +87,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Location&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.EventLocation&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LOCATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "enter a location to search..." } })
+                                @Html.EditorFor(model => model.EVENT_LOCATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.EnterSearchLocation } })
                             </div>
                         </div>
 
@@ -97,9 +100,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Latitude&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.Latitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " latitude" } })
+                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Latitude } })
                             </div>
                         </div>
 
@@ -110,9 +113,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Longitude&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.Longitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " longitude" } })
+                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Longitude } })
                             </div>
                         </div>
 
@@ -123,7 +126,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Is Active</label>
+                            <label class="col-lg-4 control-label">@EventResx.IsActive</label>
                             <div class="col-lg-5">
                                 @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
                             </div>
@@ -138,7 +141,7 @@
                 {
                     <div class="form-group no-margin-bottom">
                         <div class="col-md-12">
-                            <label class="col-lg-4 control-label">Uploaded Event Image</label>
+                            <label class="col-lg-4 control-label">@EventResx.UploadedEventImage</label>
                             <div class="col-md-8">
                                 <div class="panel panel-flat">
                                     <div class="panel-body p-5">
@@ -168,7 +171,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Event Image</label>
+                            <label class="col-lg-4 control-label">@EventResx.EventImage</label>
                             <div class="col-lg-8">
                                 <input type="file" id="fuEventImage" class="file-styled">
                             </div>
@@ -179,9 +182,9 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditEvent()">Update</button>
-            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
-            <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditEvent()">@Buttons.Update</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
+            <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
         </div>
     </div>
 }
@@ -223,12 +226,12 @@
                     }
                 },
                 messages: {
-                    EVENT_NAME: "This field is required.",
-                    EVENT_DESCRIPTION: "This field is required.",
-                    EVENT_DATE: "This field is required.",
-                    EVENT_LOCATION_NAME: "This field is required.",
-                    EVENT_LATITUDE: "This field is required.",
-                    EVENT_LONGITUDE: "This field is required."
+                    EVENT_NAME: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_DESCRIPTION: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_DATE: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LOCATION_NAME: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LATITUDE: "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LONGITUDE:  "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -294,14 +297,14 @@
                 var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
                 var nUploadedSize = fnCheckFileSize('fuEventImage');
                 if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    ShowStatusBarNotification("@EventResx.AllowedFileSize", NotificationType.Warning);
                     return false;
                 }
 
                 var extension = $("#fuEventImage").val().split('.').pop().toUpperCase();
                 var bIsInValidExt = fnIsValidFileExtension(extension);
                 if (bIsInValidExt) {
-                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    ShowStatusBarNotification("@EventResx.InvalidFileFormat", NotificationType.Warning);
                     return false;
                 }
             }
@@ -319,7 +322,7 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             window.location.reload();
@@ -329,7 +332,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { }

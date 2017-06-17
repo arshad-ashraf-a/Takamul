@@ -8,10 +8,10 @@
         <EntityTypeShape EntityType="TakamulModel.APPLICATIONS" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="TakamulModel.TICKETS" Width="1.5" PointX="0.5" PointY="5.625" />
         <AssociationConnector Association="TakamulModel.FK_TICKETS_APPLICATIONS" />
-        <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="2.75" PointY="11.125" />
+        <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="2.25" PointY="3.625" />
+        <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="2.25" PointY="0.5" />
+        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="3.875" PointY="0.5" />
         <AssociationConnector Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" />
-        <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

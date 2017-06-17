@@ -338,7 +338,7 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             $("#dvPopUpWindow").dialog("close");
@@ -568,7 +568,7 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             $("#dvPopUpWindow").dialog("close");

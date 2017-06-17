@@ -177,4 +177,7 @@
   <data name="UploadedLogo" xml:space="preserve">
     <value>Uploaded Logo</value>
   </data>
+  <data name="ApplicationsList" xml:space="preserve">
+    <value>Applications List</value>
+  </data>
 </root>

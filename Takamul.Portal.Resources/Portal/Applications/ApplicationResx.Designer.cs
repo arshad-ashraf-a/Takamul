@@ -133,6 +133,15 @@ namespace Takamul.Portal.Resources.Portal.Applications {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applications List.
+        /// </summary>
+        public static string ApplicationsList {
+            get {
+                return ResourceManager.GetString("ApplicationsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App Name.
         /// </summary>
         public static string AppName {

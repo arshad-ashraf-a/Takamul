@@ -1,4 +1,7 @@
-﻿@model Takamul.Models.ViewModel.TicketViewModel
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common
+@model Takamul.Models.ViewModel.TicketViewModel
 
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmAddTicket", @class = "form-horizontal" }))
 {
@@ -11,9 +14,9 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Ticket Name&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@TicketsResx.TicketName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.TICKET_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "ticket name" } })
+                            @Html.EditorFor(model => model.TICKET_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = @TicketsResx.TicketName } })
                         </div>
                     </div>
                 </div>
@@ -23,10 +26,9 @@
             <div class="form-group" id="dvUserName">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Ticket Descirption&nbsp;<span class="text-danger">*</span></label>
+                        <label class="col-lg-4 control-label">@TicketsResx.TicketDescirption&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            <textarea class="form-control" rows="3" placeholder="ticket description" cols="5" name="TICKET_DESCRIPTION"></textarea>
-                            @*@Html.EditorFor(model => model.TICKET_DESCRIPTION, new { htmlAttributes = new { @class = "form-control", placeholder = "ticket description" } })*@
+                            <textarea class="form-control" rows="3" placeholder="@TicketsResx.TicketDescirption" cols="5" name="TICKET_DESCRIPTION"></textarea>
                         </div>
                     </div>
                 </div>
@@ -36,7 +38,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Ticket Participant User</label>
+                        <label class="col-lg-4 control-label">@TicketsResx.TicketParticipantUser</label>
                         <div class="col-lg-8">
                             <select id="ddlTicketParticipant" name="MobileParticipantId" class="form-control col-md-12">
                             </select>
@@ -49,7 +51,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Ticket Image</label>
+                        <label class="col-lg-4 control-label">@TicketsResx.TicketImage</label>
                         <div class="col-lg-8">
                             <input type="file" id="fuTicketImage" class="file-styled">
                         </div>
@@ -69,7 +71,7 @@
 
     function fnFillTicketParticipantUsers() {
         //TODO:: option add 'ALL'
-        FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlTicketParticipant', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
+        FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlTicketParticipant', 'ID', 'FULL_NAME', '@TicketsResx.SelectUser ', ' ', [],
             function () {
                 //Success Function
                 $("#ddlTicketParticipant").select2({ width: '100%' });

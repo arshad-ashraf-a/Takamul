@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Takamul.Portal.Resources.Common;
 
 namespace LDC.eServices.Portal.Controllers
 {
@@ -11,8 +12,8 @@ namespace LDC.eServices.Portal.Controllers
     {
         public ActionResult Index()
         {
-            this.PageTitle = "Access Denied";
-            this.TitleHead = "Access Denied";
+            this.PageTitle = CommonResx.AccessDenied;
+            this.TitleHead = CommonResx.AccessDenied;
             return View();
         }
     }

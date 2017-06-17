@@ -1,4 +1,7 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Takamul.Portal.Resources.Portal.Users;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmUpdateUserStatus", @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +16,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-lg-6">
-                                        @Html.CheckBox("IS_ACTIVE", (bool)Model.IS_ACTIVE, new { @class = "styled" }) Is Active
+                                        @Html.CheckBox("IS_ACTIVE", (bool)Model.IS_ACTIVE, new { @class = "styled" }) @UsersResx.IsActive
                                     </div>
 
                                 </div>
@@ -22,7 +25,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-lg-8">
-                                        @Html.CheckBox("IS_BLOCKED", (bool)Model.IS_BLOCKED, new { @class = "styled", onchange = "fnBlockedStatusOnChange();" }) Is Blocked
+                                        @Html.CheckBox("IS_BLOCKED", (bool)Model.IS_BLOCKED, new { @class = "styled", onchange = "fnBlockedStatusOnChange();" }) @UsersResx.IsBlocked
                                     </div>
                                 </div>
                             </div>
@@ -32,7 +35,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-lg-8">
-                                    @Html.CheckBox("IS_OTP_VALIDATED", (bool)Model.IS_OTP_VALIDATED, new { @class = "styled" })Is OPT Verified
+                                    @Html.CheckBox("IS_OTP_VALIDATED", (bool)Model.IS_OTP_VALIDATED, new { @class = "styled" })@UsersResx.IsOPTVerified
                                 </div>
                             </div>
                         </div>
@@ -46,9 +49,9 @@
                                 <div class="col-md-12">
                                     @* Blocked Reason*@
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">Blocked Reason</label>
+                                        <label class="col-lg-2 control-label">@UsersResx.BlockedReason</label>
                                         <div class="col-lg-10">
-                                            <textarea id="txtBlockedReason" name="BLOCKED_REMARKS" value="@Model.BLOCKED_REMARKS" class="form-control" placeholder="enter blocked reason&hellip;&hellip;"
+                                            <textarea id="txtBlockedReason" name="BLOCKED_REMARKS" value="@Model.BLOCKED_REMARKS" class="form-control" placeholder="@UsersResx.EnterBlockedReason"
                                                       cols="5" rows="5"></textarea>
                                         </div>
                                     </div>

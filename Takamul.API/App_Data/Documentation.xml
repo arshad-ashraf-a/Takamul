@@ -547,7 +547,7 @@
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.CommonServiceController.GetMemberInfo(System.Int32)">
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetMemberInfo(System.Int32,System.Int32)">
             <summary>
             Member information
             </summary>
@@ -652,20 +652,22 @@
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TicketServiceController.ResolveTicket(System.Int32,System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.ResolveTicket(System.Int32,System.Int32,System.Int32)">
             <summary>
             Resolve a ticket 
             </summary>
             <param name="oTicketId"></param>
             /// <param name="oUserid"></param>
+            /// <param name="nLanguageID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.TicketServiceController.DeleteTicket(System.Int32,System.Int32)">
+        <member name="M:Takamul.API.Controllers.TicketServiceController.DeleteTicket(System.Int32,System.Int32,System.Int32)">
             <summary>
             Delete a ticket
             </summary>
             <param name="oTicketId"></param>
             /// <param name="oUserid"></param>
+            /// <param name="nLanguageID"></param>
             <returns></returns>
         </member>
         <member name="T:Takamul.API.Controllers.NewsServiceController">

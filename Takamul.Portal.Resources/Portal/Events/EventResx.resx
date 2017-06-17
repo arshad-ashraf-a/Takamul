@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add New Event" xml:space="preserve">
-    <value>Add New Event</value>
+  <data name="AddEvent" xml:space="preserve">
+    <value>Add Event</value>
   </data>
   <data name="AddNewEvent" xml:space="preserve">
     <value>Add New Event</value>
@@ -126,14 +126,32 @@
   <data name="AllEvents" xml:space="preserve">
     <value>All Events</value>
   </data>
+  <data name="AllowedFileSize" xml:space="preserve">
+    <value>Only allowed file size upto 1 MB.</value>
+  </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Created Date</value>
+  </data>
+  <data name="DeleteEvent" xml:space="preserve">
+    <value>Delete Event</value>
+  </data>
+  <data name="EditEvent" xml:space="preserve">
+    <value>Edit Event</value>
+  </data>
+  <data name="EditNewEvent" xml:space="preserve">
+    <value>Edit New Event</value>
+  </data>
+  <data name="EnterSearchLocation" xml:space="preserve">
+    <value>enter a location to search...</value>
   </data>
   <data name="EventDate" xml:space="preserve">
     <value>Event Date</value>
   </data>
   <data name="EventDescription" xml:space="preserve">
     <value>EventDescription</value>
+  </data>
+  <data name="EventImage" xml:space="preserve">
+    <value>EventI mage</value>
   </data>
   <data name="EventLocation" xml:space="preserve">
     <value>Event Location</value>
@@ -143,6 +161,12 @@
   </data>
   <data name="Events" xml:space="preserve">
     <value>Events</value>
+  </data>
+  <data name="EventsList" xml:space="preserve">
+    <value>Events List</value>
+  </data>
+  <data name="InvalidFileFormat" xml:space="preserve">
+    <value>Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>Is Active</value>
@@ -155,5 +179,8 @@
   </data>
   <data name="SearchEvent" xml:space="preserve">
     <value>search event</value>
+  </data>
+  <data name="UploadedEventImage" xml:space="preserve">
+    <value>Uploaded Event Image</value>
   </data>
 </root>

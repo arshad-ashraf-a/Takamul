@@ -31,7 +31,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <a title="Add new event" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @EventResx.AddNewEvent</a>
+                                        <a title="@EventResx.AddNewEvent" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @EventResx.AddNewEvent</a>
                                     </div>
                                 </div>
 
@@ -200,7 +200,7 @@
             var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
 
             $("#dvPopUpWindow").dialog({
-                title: 'Delete Event',
+                title: '@EventResx.DeleteEvent',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,

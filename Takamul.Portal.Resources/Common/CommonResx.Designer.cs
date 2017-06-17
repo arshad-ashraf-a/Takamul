@@ -61,6 +61,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access Denied.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accessibility.
         /// </summary>
         public static string Accessibility {
@@ -106,6 +115,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Applications.
+        /// </summary>
+        public static string AllApplications {
+            get {
+                return ResourceManager.GetString("AllApplications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Departments.
         /// </summary>
         public static string AllDepartments {
@@ -120,6 +138,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string AllDirectorates {
             get {
                 return ResourceManager.GetString("AllDirectorates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Members.
+        /// </summary>
+        public static string AllMembers {
+            get {
+                return ResourceManager.GetString("AllMembers", resourceCulture);
             }
         }
         
@@ -169,11 +196,83 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App DashBoard.
+        /// </summary>
+        public static string AppDashBoard {
+            get {
+                return ResourceManager.GetString("AppDashBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Events.
+        /// </summary>
+        public static string AppEvents {
+            get {
+                return ResourceManager.GetString("AppEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Member Info.
+        /// </summary>
+        public static string AppMemberInfo {
+            get {
+                return ResourceManager.GetString("AppMemberInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Name.
+        /// </summary>
+        public static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App News.
+        /// </summary>
+        public static string AppNews {
+            get {
+                return ResourceManager.GetString("AppNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approved.
         /// </summary>
         public static string Approved {
             get {
                 return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Tickets.
+        /// </summary>
+        public static string AppTickets {
+            get {
+                return ResourceManager.GetString("AppTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Users.
+        /// </summary>
+        public static string AppUsers {
+            get {
+                return ResourceManager.GetString("AppUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back To List.
+        /// </summary>
+        public static string BackToList {
+            get {
+                return ResourceManager.GetString("BackToList", resourceCulture);
             }
         }
         
@@ -511,6 +610,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ErrorPage {
+            get {
+                return ResourceManager.GetString("ErrorPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eServices.
         /// </summary>
         public static string EServices {
@@ -556,6 +664,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go Back To All Application.
+        /// </summary>
+        public static string GoBackToAllApplication {
+            get {
+                return ResourceManager.GetString("GoBackToAllApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         public static string Help {
@@ -588,6 +705,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string HideInLineEdit {
             get {
                 return ResourceManager.GetString("HideInLineEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
         
@@ -633,6 +759,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string Logo {
             get {
                 return ResourceManager.GetString("Logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
         
@@ -750,6 +885,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string MobileApplication {
             get {
                 return ResourceManager.GetString("MobileApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Application.
+        /// </summary>
+        public static string MyApplication {
+            get {
+                return ResourceManager.GetString("MyApplication", resourceCulture);
             }
         }
         
@@ -1146,6 +1290,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takamul Services.
+        /// </summary>
+        public static string TakamulServices {
+            get {
+                return ResourceManager.GetString("TakamulServices", resourceCulture);
             }
         }
         

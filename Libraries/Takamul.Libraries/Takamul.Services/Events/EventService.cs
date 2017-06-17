@@ -64,12 +64,14 @@ namespace Takamul.Services
         /// Get all active Events
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns>List of Events</returns>
-        public List<EventViewModel> IlGetAllActiveEvents(int nApplicationID)
+        public List<EventViewModel> IlGetAllActiveEvents(int nApplicationID, int nLanguageID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_EventsId", SqlDbType.Int, -99, ParameterDirection.Input));
             #endregion
 
@@ -91,19 +93,20 @@ namespace Takamul.Services
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public IPagedList<EventViewModel> IlGetAllEvents(int nApplicationID, string sSearchByEventName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+        public IPagedList<EventViewModel> IlGetAllEvents(int nApplicationID, string sSearchByEventName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID)
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
             var lstEvents = (from c in this.EventsDBSet
                              where sSearchByEventName == null || c.EVENT_NAME.Contains(sSearchByEventName)
                              where c.APPLICATION_ID == (int)nApplicationID
+                             where c.LANGUAGE_ID == nLanguageID
                              orderby c.ID descending
                              select new
                              {
                                  ID = c.ID,
                                  EVENT_NAME = c.EVENT_NAME,
                                  EVENT_DESCRIPTION = c.EVENT_DESCRIPTION,
-                                 EVENT_DATE  = c.EVENT_DATE,
+                                 EVENT_DATE = c.EVENT_DATE,
                                  EVENT_LOCATION_NAME = c.EVENT_LOCATION_NAME,
                                  EVENT_LATITUDE = c.EVENT_LATITUDE,
                                  EVENT_LONGITUDE = c.EVENT_LONGITUDE,
@@ -191,6 +194,7 @@ namespace Takamul.Services
                         EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE,
                         EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE,
                         IS_ACTIVE = oEventViewModel.IS_ACTIVE,
+                        LANGUAGE_ID = oEventViewModel.LANGUAGE_ID,
                         CREATED_BY = oEventViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
                     };

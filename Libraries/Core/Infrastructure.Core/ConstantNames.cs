@@ -177,5 +177,31 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region ImageHeight
+        /// <summary>
+        /// ImageHeight
+        /// </summary>
+        public static string ImageHeight
+        {
+            get
+            {
+                return "ImageHeight";
+            }
+        }
+        #endregion
+
+        #region ImageWidth
+        /// <summary>
+        /// ImageWidth
+        /// </summary>
+        public static string ImageWidth
+        {
+            get
+            {
+                return "ImageWidth";
+            }
+        }
+        #endregion
+
     }
 }

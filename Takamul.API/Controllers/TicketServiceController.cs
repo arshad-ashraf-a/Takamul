@@ -8,6 +8,7 @@
 /* Description          : Manage ticket operations                                                 */
 /*************************************************************************************************/
 
+using ImageMagick;
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using Newtonsoft.Json.Serialization;
@@ -248,6 +249,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage CreateTicket(TakamulTicket oTakamulTicket, int nUserID, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
+            string sResultMessage = string.Empty;
             if (ModelState.IsValid)
             {
                 try
@@ -287,14 +289,21 @@ namespace Takamul.API.Controllers
                             if (!oResponse.ResponseID.Equals("-99"))
                             {
                                 Byte[] oArrImage = Convert.FromBase64String(oTakamulTicket.Base64DefaultImage);
+
+                                MagickImage oMagickImage = new MagickImage(oArrImage);
+                                oMagickImage.Format = MagickFormat.Png;
+                                oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+
+
                                 string sDirectoyPath = Path.Combine(oTakamulTicket.ApplicationID.ToString(), oResponse.ResponseID);
                                 oFileAccessService.CreateDirectory(sDirectoyPath);
-                                oFileAccessService.WirteFileByte(Path.Combine(sDirectoyPath, sDefaultImagePath), oArrImage);
+                                oFileAccessService.WirteFileByte(Path.Combine(sDirectoyPath, sDefaultImagePath), oMagickImage.ToByteArray());
                             }
                         }
                         oApiResponse.OperationResult = 1;
                         oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
-                        oApiResponse.OperationResultMessage = "Ticket has been successfully created.";
+                        sResultMessage = nLanguageID == 2 ? "Ticket has been successfully created." : "تم إنشاء تذكرة بنجاح.";
+                        oApiResponse.OperationResultMessage = sResultMessage;
                     }
                     else
                     {
@@ -302,27 +311,32 @@ namespace Takamul.API.Controllers
                         {
                             case -5:
                                 oApiResponse.OperationResult = -5;
-                                oApiResponse.OperationResultMessage = "The Application is expired";
+                                sResultMessage = nLanguageID == 2 ? "The Application is expired." : "انتهت صلاحية الطلب.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -6:
                                 oApiResponse.OperationResult = -6;
-                                oApiResponse.OperationResultMessage = "OTP is not verified.";
-                                break;
+                                sResultMessage = nLanguageID == 2 ? "OTP is not verified." : "لم يتم التحقق من مكتب المدعي العام.";
+                                oApiResponse.OperationResultMessage = sResultMessage; break;
                             case -7:
                                 oApiResponse.OperationResult = -7;
-                                oApiResponse.OperationResultMessage = "User is blocked.";
+                                sResultMessage = nLanguageID == 2 ? "User is blocked." : "تم حظر المستخدم.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -8:
                                 oApiResponse.OperationResult = -8;
-                                oApiResponse.OperationResultMessage = "Ticket submission is restricted.";
+                                sResultMessage = nLanguageID == 2 ? "Ticket submission is restricted." : "يتم تقييد تقديم التذاكر.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -9:
                                 oApiResponse.OperationResult = -9;
-                                oApiResponse.OperationResultMessage = "Ticket Submission Interval Days reached.";
+                                sResultMessage = nLanguageID == 2 ? "Ticket Submission Interval Days reached." : "وصلت الفترات الزمنية لتقديم التذاكر.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             default:
                                 oApiResponse.OperationResult = 0;
-                                oApiResponse.OperationResultMessage = "Ticket insert failed.";
+                                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                         }
                     }
@@ -353,6 +367,7 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage PostTicketChat(TakamulTicketChat oTakamulTicketChat, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
+            string sResultMessage = string.Empty;
             if (ModelState.IsValid)
             {
                 try
@@ -405,7 +420,21 @@ namespace Takamul.API.Controllers
                             FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
                             Byte[] oArrImage = Convert.FromBase64String(oTakamulTicketChat.Base64ReplyImage);
                             oFileAccessService.CreateDirectory(sReplyImageDirectory);
-                            oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
+
+                            enumFileTypes oEnumFileTypes = (enumFileTypes)Enum.Parse(typeof(enumFileTypes), oTakamulTicketChat.TicketChatTypeID.ToString());
+                            if (oEnumFileTypes == enumFileTypes.jpeg || oEnumFileTypes == enumFileTypes.jpg ||
+                                oEnumFileTypes == enumFileTypes.png)
+                            {
+                                MagickImage oMagickImage = new MagickImage(oArrImage);
+                                oMagickImage.Format = MagickFormat.Png;
+                                oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+                                oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oMagickImage.ToByteArray());
+                            }
+                            else
+                            {
+                                oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
+                            }
+                            
                         }
                         oApiResponse.OperationResult = 1;
                         oApiResponse.OperationResultMessage = "Success.";
@@ -416,27 +445,32 @@ namespace Takamul.API.Controllers
                         {
                             case -5:
                                 oApiResponse.OperationResult = -5;
-                                oApiResponse.OperationResultMessage = "The Application is expired";
+                                sResultMessage = nLanguageID == 2 ? "The Application is expired." : "انتهت صلاحية الطلب.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -6:
                                 oApiResponse.OperationResult = -6;
-                                oApiResponse.OperationResultMessage = "OTP is not verified.";
-                                break;
+                                sResultMessage = nLanguageID == 2 ? "OTP is not verified." : "لم يتم التحقق من مكتب المدعي العام.";
+                                oApiResponse.OperationResultMessage = sResultMessage; break;
                             case -7:
                                 oApiResponse.OperationResult = -7;
-                                oApiResponse.OperationResultMessage = "User is blocked.";
+                                sResultMessage = nLanguageID == 2 ? "User is blocked." : "تم حظر المستخدم.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -8:
                                 oApiResponse.OperationResult = -8;
-                                oApiResponse.OperationResultMessage = "Ticket submission is restricted.";
+                                sResultMessage = nLanguageID == 2 ? "Ticket submission is restricted." : "يتم تقييد تقديم التذاكر.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             case -9:
                                 oApiResponse.OperationResult = -9;
-                                oApiResponse.OperationResultMessage = "Ticket Submission Interval Days reached.";
+                                sResultMessage = nLanguageID == 2 ? "Ticket Submission Interval Days reached." : "وصلت الفترات الزمنية لتقديم التذاكر.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                             default:
                                 oApiResponse.OperationResult = 0;
-                                oApiResponse.OperationResultMessage = "chat post failed.";
+                                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                                oApiResponse.OperationResultMessage = sResultMessage;
                                 break;
                         }
                     }
@@ -445,12 +479,14 @@ namespace Takamul.API.Controllers
                 catch (Exception Ex)
                 {
                     oApiResponse.OperationResult = 0;
-                    oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
                 }
             }
             oApiResponse.OperationResult = 0;
-            oApiResponse.OperationResultMessage = "Model validation failed";
+            sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+            oApiResponse.OperationResultMessage = sResultMessage;
             return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
         #endregion
@@ -462,11 +498,13 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="oTicketId"></param>
         /// /// <param name="oUserid"></param>
+        /// /// <param name="nLanguageID"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage ResolveTicket(int oTicketId, int oUserid)
+        public HttpResponseMessage ResolveTicket(int oTicketId, int oUserid, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
+            string sResultMessage = string.Empty;
 
             try
             {
@@ -475,19 +513,22 @@ namespace Takamul.API.Controllers
                 {
 
                     oApiResponse.OperationResult = 1;
-                    oApiResponse.OperationResultMessage = "Ticket has been resolved.";
+                    sResultMessage = nLanguageID == 2 ? "Ticket has been resolved." : "تم حل التذكرة.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 else
                 {
                     oApiResponse.OperationResult = 0;
-                    oApiResponse.OperationResultMessage = "Ticket resolve failed.";
+                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
             }
             catch (Exception Ex)
             {
                 oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                oApiResponse.OperationResultMessage = sResultMessage;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
             }
         }
@@ -500,12 +541,13 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="oTicketId"></param>
         /// /// <param name="oUserid"></param>
+        /// /// <param name="nLanguageID"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage DeleteTicket(int oTicketId, int oUserid)
+        public HttpResponseMessage DeleteTicket(int oTicketId, int oUserid, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
-
+            string sResultMessage = string.Empty;
             try
             {
                 Response oResponse = this.oITicketServices.oDeleteTicket(oTicketId, oUserid);
@@ -513,19 +555,22 @@ namespace Takamul.API.Controllers
                 {
 
                     oApiResponse.OperationResult = 1;
-                    oApiResponse.OperationResultMessage = "Ticket has been deleted.";
+                    sResultMessage = nLanguageID == 2 ? "Ticket has been deleted." : "تم حذف التذكرة.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 else
                 {
                     oApiResponse.OperationResult = 0;
-                    oApiResponse.OperationResultMessage = "Ticket deletion failed.";
+                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
             }
             catch (Exception Ex)
             {
                 oApiResponse.OperationResult = 0;
-                oApiResponse.OperationResultMessage = "Internal sever error :: " + Ex.Message.ToString();
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                oApiResponse.OperationResultMessage = sResultMessage;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
             }
         }

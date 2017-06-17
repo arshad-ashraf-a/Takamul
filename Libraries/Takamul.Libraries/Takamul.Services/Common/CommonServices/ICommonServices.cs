@@ -21,8 +21,9 @@ namespace Takamul.Services
         /// Get member info
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLaguageID"></param>
         /// <returns>List of News</returns>
-        List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID);
+        List<MemberInfoViewModel> oGetMemberInfo(int nApplicationID, int nLaguageID);
         #endregion
 
         #region Method :: Response :: oGetAllAreas

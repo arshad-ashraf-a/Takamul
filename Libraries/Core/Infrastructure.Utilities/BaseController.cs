@@ -252,6 +252,17 @@ namespace Infrastructure.Utilities
             get
             {
                 Languages oLanguage = Languages.English;
+
+                if (base.Session["CurrentApplicationLanguage"] == null)
+                {
+                    var langCookie = Request.Cookies["lang"];
+                    if (langCookie != null)
+                    {
+                        oLanguage = Request.Cookies["lang"].Value.ToString().Contains("ar") ? Languages.Arabic : Languages.English;
+                    }
+                    base.Session["CurrentApplicationLanguage"] = oLanguage;
+                }
+
                 if (base.Session["CurrentApplicationLanguage"] != null)
                 {
                     oLanguage = (Languages)Enum.Parse(typeof(Languages), base.Session["CurrentApplicationLanguage"].ToString());

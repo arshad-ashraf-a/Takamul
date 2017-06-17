@@ -35,6 +35,8 @@ namespace Takamul.Models
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public string BASE64EVENTIMG { set; get; }
+        public int LANGUAGE_ID { get; set; }
+        public string FORMATTED_EVENT_DATE { get; set; }
 
 
         #region :: Constructor ::
@@ -55,6 +57,8 @@ namespace Takamul.Models
             this.IS_ACTIVE = false;
             this.TotalCount = 0;
             this.EVENT_IMG_FILE_PATH = string.Empty;
+            this.LANGUAGE_ID = -99;
+            this.FORMATTED_EVENT_DATE = string.Empty;
         }
         #endregion
     }

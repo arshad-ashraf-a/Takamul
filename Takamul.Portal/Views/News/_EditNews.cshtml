@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Takamul.Portal.Resources.Portal.News;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 @model Takamul.Models.ViewModel.NewsViewModel
@@ -8,7 +11,7 @@
     <div class="col-md-12">
         <div class="panel panel-white">
             <div class="panel-heading">
-                <h6 class="panel-title"> Edit News</h6>
+                <h6 class="panel-title"> @NewsResx.EditNews</h6>
 
             </div>
             <div class="panel-body">
@@ -19,9 +22,9 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">News Title&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@NewsResx.NewsTitle&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-8">
-                                @Html.EditorFor(model => model.NEWS_TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = "news title" } })
+                                @Html.EditorFor(model => model.NEWS_TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = @NewsResx.NewsTitle } })
                             </div>
                         </div>
                     </div>
@@ -31,7 +34,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">News Content&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@NewsResx.NewsContent&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-8">
                                 <textarea class="form-control" rows="10" placeholder="news content" cols="5" id="NEWS_CONTENT" name="NEWS_CONTENT">@Model.NEWS_CONTENT</textarea>
                             </div>
@@ -43,7 +46,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Is Active</label>
+                            <label class="col-lg-4 control-label">@NewsResx.IsActive</label>
                             <div class="col-lg-5">
                                 @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
                             </div>
@@ -55,7 +58,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Is Notify User</label>
+                            <label class="col-lg-4 control-label">@NewsResx.IsNotifyUser</label>
                             <div class="col-lg-5">
                                 @Html.CheckBox("IS_NOTIFY_USER", Model.IS_NOTIFY_USER, new { @class = "styled" })
                             </div>
@@ -67,11 +70,11 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">Published Date</label>
+                            <label class="col-lg-4 control-label">@NewsResx.PublishedDate</label>
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                    @Html.EditorFor(model => model.FORMATTED_PUBLISHED_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.PUBLISHED_DATE.AddYears(1)).ToString("dd/MM/yyyy"), placeholder = "published date" } })
+                                    @Html.EditorFor(model => model.FORMATTED_PUBLISHED_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.PUBLISHED_DATE).ToString("dd/MM/yyyy"), placeholder = @NewsResx.PublishedDate } })
                                 </div>
                             </div>
                         </div>
@@ -81,7 +84,7 @@
                 @* News Image View *@
                 <div class="form-group no-margin-bottom">
                     <div class="col-md-12">
-                        <label class="col-lg-4 control-label">Uploaded News Image</label>
+                        <label class="col-lg-4 control-label">@NewsResx.UploadedNewsImage</label>
                         <div class="col-md-8">
                             <div class="panel panel-flat">
                                 <div class="panel-body p-5">
@@ -111,7 +114,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">News Image</label>
+                            <label class="col-lg-4 control-label">@NewsResx.NewsImage</label>
                             <div class="col-lg-8">
                                 <input type="file" id="fuNewsImage" class="file-styled">
                             </div>
@@ -124,9 +127,9 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditNews()">Update</button>
-            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">Clear</button>
-            <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>Back</a>
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditNews()">@Buttons.Update</button>
+            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
+            <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
         </div>
     </div>
 }
@@ -165,9 +168,9 @@
                     }
                 },
                 messages: {
-                    NEWS_TITLE: "This field is required.",
-                    NEWS_CONTENT: "This field is required.",
-                    FORMATTED_PUBLISHED_DATE: "This field is required."
+                    NEWS_TITLE: "@CommonResx.ThisFieldIsRequired",
+                    NEWS_CONTENT: "@CommonResx.ThisFieldIsRequired",
+                    FORMATTED_PUBLISHED_DATE: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -253,14 +256,14 @@
                 var sizeAllowed = '@System.Configuration.ConfigurationManager.AppSettings["DefaultFileSize"]'; // 1024 kb
                 var nUploadedSize = fnCheckFileSize('fuNewsImage');
                 if (Number(nUploadedSize) > Number(sizeAllowed)) {
-                    ShowStatusBarNotification("Only allowed file size upto 1 MB.", NotificationType.Warning);
+                    ShowStatusBarNotification("@NewsResx.AllowedFileSize", NotificationType.Warning);
                     return false;
                 }
 
                 var extension = $("#fuNewsImage").val().split('.').pop().toUpperCase();
                 var bIsInValidExt = fnIsValidFileExtension(extension);
                 if (bIsInValidExt) {
-                    ShowStatusBarNotification("Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.", NotificationType.Warning);
+                    ShowStatusBarNotification("@NewsResx.InvalidFileFormats", NotificationType.Warning);
                     return false;
                 }
             }
@@ -279,7 +282,8 @@
                 data: data,
                 contentType: false,
                 success: function (result, response) {
-                    if (response != null || response != '') {
+                    debugger;
+                    if (result != null || result != '') {
                         if (result.nResult == 1) {
                             ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                             window.location.reload();
@@ -289,7 +293,7 @@
                         }
                     }
                     else {
-                        ShowStatusBarNotification("General error occured.", NotificationType.Error);
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
                     }
                 },
                 error: function (er) { }

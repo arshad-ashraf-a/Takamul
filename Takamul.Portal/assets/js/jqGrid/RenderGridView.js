@@ -313,9 +313,9 @@ function GridViewLoadComplete(table, GridViewIdDefault, GridViewPagerIdDefault) 
     $("#prev_" + GridViewPagerIdDefault + " span").removeClass(GridViewResources.SinglePagerArrowRight);
     $("#prev_" + GridViewPagerIdDefault + " span").addClass(GridViewResources.SinglePagerArrowLeft);
     $("#last_" + GridViewPagerIdDefault + " span").attr("class", "");
-    $("#last_" + GridViewPagerIdDefault + " span").addClass("ui-icon ace-icon fa fa-angle-double-right bigger-140");
+    $("#last_" + GridViewPagerIdDefault + " span").addClass("ui-icon ace-icon fa fa-angle-double-" + GridViewResources.LayoutDirectionOpposite + " bigger-140");
     $("#first_" + GridViewPagerIdDefault + " span").attr("class", "");
-    $("#first_" + GridViewPagerIdDefault + " span").addClass("ui-icon ace-icon fa fa-angle-double-left bigger-140");
+    $("#first_" + GridViewPagerIdDefault + " span").addClass("ui-icon ace-icon fa fa-angle-double-" + GridViewResources.LayoutDirection + " bigger-140");
     $("#ViewTbl_" + GridViewIdDefault).css("direction", GridViewResources.Direction);
     if (typeof CustomGridViewLoadComplete == "function" && CustomGridViewLoadComplete()) {
         CustomGridViewLoadComplete();

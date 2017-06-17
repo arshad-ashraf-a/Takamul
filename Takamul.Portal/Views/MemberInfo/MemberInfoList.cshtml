@@ -1,4 +1,6 @@
-﻿@using Takamul.Portal.Resources.Controls.Buttons;
+﻿@using Takamul.Portal.Resources.Portal.MemberInfo;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
@@ -11,13 +13,13 @@
             <form id="frmDeclaration" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
                 <div class="panel panel-white">
                     <div class="panel-heading">
-                        <h6 class="panel-title"> Member Info</h6>
+                        <h6 class="panel-title">@MemberInfoResx.MemberInfo</h6>
                         <div class="heading-elements">
                             <div class="col-md-12">
                                 <div class="pull-right content-group-sm">
 
                                     <div class="col-md-3">
-                                        <a title="Add new member" href="#" onclick="fnLoadPartialAddMemberInfo(); return false;" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> Add New Member Info</a>
+                                        <a title="@MemberInfoResx.AddNewMember" href="#" onclick="fnLoadPartialAddMemberInfo(); return false;" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @MemberInfoResx.AddNewMemberInfo</a>
                                     </div>
                                 </div>
 
@@ -72,8 +74,8 @@
             var sCaption = 'Member Info Lists';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
-                'Member Info Title',
-                'Member Info Description',
+                '@MemberInfoResx.MemberInfoTitle',
+                '@MemberInfoResx.MemberInfoDescription',
                 '' // Options
             ];
 
@@ -83,9 +85,9 @@
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
-                                        { MenuTitle: "Options" },
-                                        { Caption: "Edit", EventName: "fnLoadPartialEditMemberInfo();", RowId: true },
-                                        { Caption: "Delete", EventName: "fnDeleteMemberInfo();", RowId: true },
+                                        { MenuTitle: "@Buttons.Options" },
+                                        { Caption: "@Buttons.Edit", EventName: "fnLoadPartialEditMemberInfo();", RowId: true },
+                                        { Caption: "@Buttons.Delete", EventName: "fnDeleteMemberInfo();", RowId: true },
             ];
 
             var oArrColsModel = [
@@ -124,7 +126,7 @@
 
         function fnLoadPartialAddMemberInfo() {
             $("#dvPopUpWindow").dialog({
-                title: 'Add Member Info',
+                title: '@MemberInfoResx.AddMemberInfo',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
@@ -150,14 +152,14 @@
                 },
                 buttons: [
                      {
-                         text: "Save",
+                         text: "@Buttons.Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnSaveMemberInfo();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -182,8 +184,8 @@
                     }
                 },
                 messages: {
-                    MEMBER_INFO_TITLE: "This field is required.",
-                    MEMBER_INFO_DESCRIPTION: "This field is required."
+                    MEMBER_INFO_TITLE: "@CommonResx.ThisFieldIsRequired",
+                    MEMBER_INFO_DESCRIPTION: "@CommonResx.ThisFieldIsRequired"
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -284,7 +286,7 @@
             });
 
             $("#dvPopUpWindow").dialog({
-                title: 'Edit Member Info',
+                title: '@MemberInfoResx.EditMemberInfo',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
@@ -309,14 +311,14 @@
                 },
                 buttons: [
                      {
-                         text: "Update",
+                         text: "@Buttons.Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              fnEditMemberInfo();
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");
@@ -361,19 +363,19 @@
             var vMemberInfoID = gdMemberInfo.jqGrid('getGridParam', 'selrow');
 
             $("#dvPopUpWindow").dialog({
-                title: 'Delete Member Info',
+                title: '@MemberInfoResx.DeleteMemberInfo',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
                 modal: true,
                 open: function () {
-                    var htmlToShow = "<label>Are you sure you wanted to delete this record ?</label>"
+                    var htmlToShow = "<label>@CommonResx.DeleteConfirmationMessage</label>"
                     $("#dvPopUpWindowContainer").html(htmlToShow);
 
                 },
                 buttons: [
                      {
-                         text: "Delete",
+                         text: "@Buttons.Delete",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              $.ajax({
@@ -398,7 +400,7 @@
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");

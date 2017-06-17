@@ -35,9 +35,9 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: AppDashboard
         public ActionResult AppDashboard()
         {
-            this.TitleHead = "Application DashBoard";
-           
-          
+            this.TitleHead = CommonResx.AppDashBoard;
+
+
             ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
             this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
             return View(oApplicationViewModel);

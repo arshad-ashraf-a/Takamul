@@ -26,8 +26,9 @@ namespace Takamul.Services
         /// Get all active events
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns>List of Events</returns>
-        List<EventViewModel> IlGetAllActiveEvents(int nApplicationID);
+        List<EventViewModel> IlGetAllActiveEvents(int nApplicationID, int nLanguageID);
         #endregion
 
         #region Method :: IPagedList<EventViewModel> :: IlGetAllEvents
@@ -41,7 +42,7 @@ namespace Takamul.Services
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        IPagedList<EventViewModel> IlGetAllEvents(int nApplicationID, string sSearchByEventName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
+        IPagedList<EventViewModel> IlGetAllEvents(int nApplicationID, string sSearchByEventName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID);
 
         #endregion
 

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.Users;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -36,8 +37,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: UsersList
         public ActionResult UsersList()
         {
-            this.PageTitle = "Users List";
-            this.TitleHead = "Users List";
+            this.PageTitle = UsersResx.UsersList;
+            this.TitleHead = UsersResx.UsersList;
 
             return View();
         }
@@ -47,8 +48,8 @@ namespace LDC.eServices.Portal.Controllers
         public ActionResult UserProfile(int nUserID)
         {
             UserInfoViewModel oUserInfoViewModel = this.oIUserServicesService.oGetUserDetails(nUserID);
-            this.PageTitle = "User Profile";
-            this.TitleHead = "User Profile";
+            this.PageTitle = UsersResx.UserProfile;
+            this.TitleHead = UsersResx.UserProfile;
 
             return View(oUserInfoViewModel);
         }
@@ -77,8 +78,6 @@ namespace LDC.eServices.Portal.Controllers
             return PartialView("_ChangeUserStatus", oUserInfoViewModel);
         }
         #endregion
-
-        
 
         #endregion
 

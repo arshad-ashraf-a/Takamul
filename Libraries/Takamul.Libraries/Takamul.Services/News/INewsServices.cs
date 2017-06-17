@@ -22,8 +22,9 @@ namespace Takamul.Services
         /// Get all active news
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLaguageID"></param>
         /// <returns>List of News</returns>
-        List<NewsViewModel> IlGetAllActiveNews(int nApplicationID);
+        List<NewsViewModel> IlGetAllActiveNews(int nApplicationID, int nLaguageID);
         #endregion
 
         #region Method :: IPagedList<NewsViewModel> :: IlGetAllNews
@@ -36,9 +37,10 @@ namespace Takamul.Services
         /// <param name="nPageSize"></param>
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
         IPagedList<NewsViewModel> IlGetAllNews(int nApplicationID,
-            string sSearchByNewsName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder);
+            string sSearchByNewsName, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID);
 
         #endregion
 

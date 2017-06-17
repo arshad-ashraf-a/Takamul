@@ -64,12 +64,14 @@ namespace Takamul.Services
         /// Get all member info
         /// </summary>
         /// <param name="nApplicationID"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns>List of Events</returns>
-        public List<MemberInfoViewModel> lGetAllMemberInfo(int nApplicationID)
+        public List<MemberInfoViewModel> lGetAllMemberInfo(int nApplicationID, int nLanguageID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
             #endregion
 
             #region ":Get Sp Result:"
@@ -89,12 +91,14 @@ namespace Takamul.Services
         /// <param name="nPageSize"></param>
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
+        /// <param name="nLanguageID"></param>
         /// <returns></returns>
-        public IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder)
+        public IPagedList<MemberInfoViewModel> IlGetAllMemberInfo(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder,int nLanguageID)
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
             var lstMemberInfo = (from c in this.MemberInfoDBSet
                              where c.APPLICATION_ID == (int)nApplicationID
+                             where c.LANGUAGE_ID == nLanguageID
                              orderby c.ID descending
                              select new
                              {
@@ -145,6 +149,7 @@ namespace Takamul.Services
                 {
                     var lstMemberInfo = (from c in this.MemberInfoDBSet
                                          where c.APPLICATION_ID == oMemberInfoViewModel.APPLICATION_ID
+                                         where c.LANGUAGE_ID == oMemberInfoViewModel.LANGUAGE_ID
                                          orderby c.ID descending
                                          select new
                                          {
@@ -162,6 +167,7 @@ namespace Takamul.Services
                     MEMBER_INFO oMEMBER_INFO = new MEMBER_INFO()
                     {
                         APPLICATION_ID = oMemberInfoViewModel.APPLICATION_ID,
+                        LANGUAGE_ID = oMemberInfoViewModel.LANGUAGE_ID,
                         MEMBER_INFO_TITLE = oMemberInfoViewModel.MEMBER_INFO_TITLE,
                         MEMBER_INFO_DESCRIPTION = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION,
                         CREATED_BY = oMemberInfoViewModel.CREATED_BY,

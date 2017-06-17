@@ -1,5 +1,7 @@
 ﻿@model Takamul.Models.ViewModel.UserInfoViewModel
+@using Takamul.Portal.Resources.Portal.Users;
 @using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
 @using Infrastructure.Utilities
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
@@ -29,7 +31,7 @@
                         <ul class="navigation">
                             <li>
                                 <a href="#messages" data-toggle="tab">
-                                    Active
+                                    @UsersResx.Active
                                     @if ((bool)Model.IS_ACTIVE)
                                     {
                                         <i class='icon-checkmark-circle text-success position-left'></i>
@@ -43,7 +45,7 @@
                             </li>
                             <li>
                                 <a href="#messages" data-toggle="tab">
-                                    Blocked
+                                    @UsersResx.Blocked
                                     @if ((bool)Model.IS_BLOCKED)
                                     {
                                         <span onclick="ShowAlertDialog('@Model.BLOCKED_REMARKS', '@Buttons.Close');" class="text-primary underlined clickable text-italic">[View Reason]</span>
@@ -63,7 +65,7 @@
                             {
                                 <li>
                                     <a href="#messages" data-toggle="tab">
-                                        OTP Verified
+                                        @UsersResx.OTPVerified
                                         @if ((bool)Model.IS_OTP_VALIDATED)
                                         {
                                             <i class='icon-checkmark-circle text-success position-left'></i>
@@ -77,7 +79,7 @@
                             }
                             <li class="navigation-divider"></li>
                             <li class="text-center">
-                                <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> Change Status </button>
+                                <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> @UsersResx.ChangeStatus </button>
                             </li>
                         </ul>
                     </div>
@@ -89,7 +91,7 @@
                     <!-- Account Settings -->
                     <div class="sidebar-category">
                         <div class="category-title">
-                            <span>Account Settings</span>
+                            <span>@UsersResx.AccountSettings</span>
                             <ul class="icons-list">
                                 <li><a href="#" data-action="collapse"></a></li>
                             </ul>
@@ -98,21 +100,21 @@
                         <div class="category-content">
                             <ul class="progress-list">
                                 <li>
-                                    <label>User Name</label>
+                                    <label>@UsersResx.UserName</label>
                                     <input type="text" id="txtUserName" value="@Model.USER_NAME" class="form-control" disabled />
                                 </li>
 
                                 <li>
-                                    <label>New Password</label>
+                                    <label>@UsersResx.NewPassword</label>
                                     <input type="password" id="txtPassword" name="txtPassword" class="form-control" />
                                 </li>
 
                                 <li>
-                                    <label>Confirm Password</label>
+                                    <label>@UsersResx.ConfirmPassword</label>
                                     <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
                                 </li>
 
-                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> Change Password </button></li>
+                                <li class="text-center"><button class="btn bg-grey" onclick="fnUpdateUserPassword();"><i class="icon-pencil7"></i> @UsersResx.ChangePassword </button></li>
                             </ul>
                         </div>
                     </div>
@@ -151,7 +153,7 @@
                     <!-- Profile info -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h6 class="panel-title">Profile information<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                            <h6 class="panel-title">@UsersResx.ProfileInformation<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
                             <div class="heading-elements">
                                 <ul class="icons-list">
                                     <li><a data-action="collapse"></a></li>
@@ -166,15 +168,15 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Full name</label>
+                                            <label>@UsersResx.FullName</label>
                                             <input type="text" id="txtFullName" value="@Model.FULL_NAME" name="txtFullName" class="form-control">
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Civil ID</label>
+                                            <label>@UsersResx.CivilID</label>
                                             <input type="text" id="txtCivilID" name="txtCivilID" value="@Model.CIVIL_ID" class="form-control">
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Phone Number</label>
+                                            <label>@UsersResx.PhoneNumber</label>
                                             <input type="text" id="txtPhoneNumber" name="txtPhoneNumber" value="@Model.PHONE_NUMBER" class="form-control">
                                         </div>
                                     </div>
@@ -183,20 +185,20 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Area</label>
+                                            <label>@UsersResx.Area</label>
                                             <select id="ddlAreaddlID" name="ddlAreaddlID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
 
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Wilayat</label>
+                                            <label>@UsersResx.Wilayat</label>
                                             <select id="ddlWilayatddlID" name="ddlWilayatddlID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label>Village</label>
+                                            <label>@UsersResx.Village</label>
                                             <select id="ddlVillageID" name="ddlVillageID"
                                                     class="form-control col-xs-12 col-sm-9"
                                                     style="padding:0;"></select>
@@ -207,11 +209,11 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Email</label>
+                                            <label>@UsersResx.Email</label>
                                             <input type="text" id="txtEmail" name="txtEmail" value="@Model.EMAIL" class="form-control">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Address</label>
+                                            <label@UsersResx.>Address</label@UsersResx.>
                                             <input type="text" id="txtAddress" name="txtAddress" value="@Model.ADDRESS" class="form-control">
                                         </div>
                                     </div>
@@ -220,19 +222,19 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Restrict Ticket Submission</label>
+                                            <label>@UsersResx.RestrictTicketSubmission</label>
                                             <br />
                                             <input type="checkbox" class="styled" id="chkRestrictTicketSubmission" checked="@Model.IS_TICKET_SUBMISSION_RESTRICTED">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Ticket Submission Interval Days</label>
+                                            <label>@UsersResx.TicketSubmissionIntervalDays</label>
                                             <input id="txtTicketSubmissionIntervalDays" value="@Model.TICKET_SUBMISSION_INTERVAL_DAYS" class="form-control">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="button" class="btn bg-grey" id="btnUpdateProfileInformation" onclick="fnUpdateProfileInformation();">Update <i class="icon-arrow-right14 position-right"></i></button>
+                                    <button type="button" class="btn bg-grey" id="btnUpdateProfileInformation" onclick="fnUpdateProfileInformation();">@Buttons.Update <i class="icon-arrow-right14 position-right"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -314,7 +316,7 @@
             $.when
                (
 
-            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', false, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '- Select Area - ', '- No data found -', [],
+            FillDropDownRoot('@Url.Action("JGetAllAreas", "Common")', 'POST', false, "ddlAreaddlID", 'AREACODE', 'AREA_NAME', '@UsersResx.SelectArea', '@UsersResx.NoDataFound', [],
                 function () {
                     //Success Function
                     $("#ddlAreaddlID").select2({
@@ -352,8 +354,8 @@
                                             'Post', false,
                                             "ddlAreaddlID", "ddlWilayatddlID",
                                             "WILAYATCODE", "WILLAYATNAME",
-                                            "- Select Wilayat -",
-                                            "- No data found -",
+                                            "@UsersResx.SelectWilayat",
+                                            "@UsersResx.NoDataFound",
                                             oParameters, true);
 
 
@@ -370,7 +372,7 @@
             var oParameters = {};
             oParameters['sAreaCode'] = sAreaCode;
             oParameters['sWilayatCode'] = sWilayatCode;
-            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', false, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '- Select Village - ', '- No data found -', oParameters,
+            FillDropDownRoot('@Url.Action("JGetAllVillages", "Common")', 'POST', false, "ddlVillageID", 'VILLAGECODE', 'VILLAGENAME', '@UsersResx.SelectVillage', '@UsersResx.NoDataFound', oParameters,
                 function () {
                     //Success Function
                     $("#ddlVillageID").select2({
@@ -404,9 +406,9 @@
                     }
                 },
                 messages: {
-                    txtFullName: "This field is required.",
-                    txtCivilID: "This field is required.",
-                    txtPhoneNumber: "This field is required."
+                    txtFullName: "@CommonResx.ThisFieldIsRequired",
+                    txtCivilID: "@CommonResx.ThisFieldIsRequired",
+                    txtPhoneNumber: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -501,7 +503,7 @@
                     }
                 },
                 error: function (response) {
-                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                    ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error)
                 }
             })
         }
@@ -509,7 +511,7 @@
         function fnUpdateUserPassword(){
             var bIsEnteredSamePassword =  $("#txtPassword").val() ===  $("#txtConfirmPassword").val();
             if (!bIsEnteredSamePassword) {
-                ShowStatusBarNotification("Password and confirm password do not match.Please enter it again.", NotificationType.Warning)
+                ShowStatusBarNotification("@UsersResx.PasswordDoNotMatch", NotificationType.Warning)
                 return false;
             }
 
@@ -535,7 +537,7 @@
                     }
                 },
                 error: function (response) {
-                    ShowStatusBarNotification("Error Occured.Please try again later.", NotificationType.Error)
+                    ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error)
                 }
             })
         }
@@ -556,7 +558,7 @@
 
 
             $("#dvPopUpWindow").dialog({
-                title: 'Update User Status',
+                title: '@UsersResx.UpdateUserStatus',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -579,7 +581,7 @@
                 },
                 buttons: [
                      {
-                         text: "Update",
+                         text: "@Buttons.Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              //Update user status
@@ -588,7 +590,7 @@
                          }
                      },
                      {
-                         text: 'Cancel',
+                         text: '@Buttons.Cancel',
                          "class": 'btn btn-sm btn-default',
                          click: function () {
                              $(this).dialog("close");

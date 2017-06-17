@@ -1,4 +1,5 @@
-﻿using Infrastructure.Core;
+﻿using ImageMagick;
+using Infrastructure.Core;
 using Infrastructure.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,7 @@ using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
 using Takamul.Portal.Resources.Common;
+using Takamul.Portal.Resources.Portal.News;
 using Takamul.Services;
 
 namespace LDC.eServices.Portal.Controllers
@@ -42,8 +44,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: NewsList
         public ActionResult NewsList()
         {
-            this.PageTitle = "News List";
-            this.TitleHead = "News List";
+            this.PageTitle = NewsResx.NewsList;
+            this.TitleHead = NewsResx.NewsList;
 
             return View();
         }
@@ -52,8 +54,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: PartialAddNews
         public ActionResult PartialAddNews()
         {
-            this.PageTitle = "Add News";
-            this.TitleHead = "Add News";
+            this.PageTitle = NewsResx.AddNews;
+            this.TitleHead = NewsResx.AddNews;
 
             NewsViewModel oNewsViewModel = new NewsViewModel();
             oNewsViewModel.PUBLISHED_DATE = DateTime.Now;
@@ -64,8 +66,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: PartialEditNews
         public ActionResult PartialEditNews(int nNewsID)
         {
-            this.PageTitle = "Edit New News";
-            this.TitleHead = "Edit New News";
+            this.PageTitle = NewsResx.EditNews;
+            this.TitleHead = NewsResx.EditNews;
             NewsViewModel oNewsViewModel = this.oINewsService.oGetNewsDetails(nNewsID);
             return View("_EditNews", oNewsViewModel);
         }
@@ -87,7 +89,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         public JsonResult JBindAllNews(string sSearchByNewsName, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstNews = this.oINewsService.IlGetAllNews(CurrentApplicationID, sSearchByNewsName, nPage, nRows, sColumnName, sColumnOrder);
+            var lstNews = this.oINewsService.IlGetAllNews(CurrentApplicationID, sSearchByNewsName, nPage, nRows, sColumnName, sColumnOrder,Convert.ToInt32(this.CurrentApplicationLanguage));
             return Json(lstNews, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -111,6 +113,7 @@ namespace LDC.eServices.Portal.Controllers
             string sRealFileName = filebase.FileName;
             string sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
             oNewsViewModel.APPLICATION_ID = this.CurrentApplicationID;
+            oNewsViewModel.LANGUAGE_ID = Convert.ToInt32(this.CurrentApplicationLanguage);
             oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(oNewsViewModel.FORMATTED_PUBLISHED_DATE, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             oNewsViewModel.NEWS_IMG_FILE_PATH = Path.Combine(CurrentApplicationID.ToString(), "News", sModifiedFileName).Replace('\\', '/');
             oNewsViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
@@ -129,12 +132,12 @@ namespace LDC.eServices.Portal.Controllers
                         string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
                         string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
                         oFileAccessService.CreateDirectory(sDirectoryPath);
-                        byte[] fileData = null;
-                        using (var binaryReader = new BinaryReader(filebase.InputStream))
-                        {
-                            fileData = binaryReader.ReadBytes(filebase.ContentLength);
-                        }
-                        oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+
+                        MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                        oMagickImage.Format = MagickFormat.Png;
+                        oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+                        
+                        oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                         this.OperationResult = enumOperationResult.Success;
                     }
                     break;
@@ -198,12 +201,12 @@ namespace LDC.eServices.Portal.Controllers
                             string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
                             string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
                             oFileAccessService.CreateDirectory(sDirectoryPath);
-                            byte[] fileData = null;
-                            using (var binaryReader = new BinaryReader(filebase.InputStream))
-                            {
-                                fileData = binaryReader.ReadBytes(filebase.ContentLength);
-                            }
-                            oFileAccessService.WirteFileByte(sFullFilePath, fileData);
+
+                            MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                            oMagickImage.Format = MagickFormat.Png;
+                            oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+
+                            oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                         }
                         this.OperationResult = enumOperationResult.Success;
                     }

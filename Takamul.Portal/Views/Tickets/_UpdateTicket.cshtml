@@ -1,14 +1,17 @@
-﻿@model Takamul.Models.ViewModel.TicketViewModel
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@model Takamul.Models.ViewModel.TicketViewModel
 <div class="row">
     <div class="panel panel-white">
         <div class="panel-heading">
             <table class="table table-bordered table-framed">
                 <thead>
                     <tr>
-                        <th class="text-center">Ticket Code</th>
-                        <th>Ticket Name</th>
-                        <th class="text-center">Ticket Status</th>
-                        <th class="text-center">Is Active</th>
+                        <th class="text-center">@TicketsResx.TicketCode</th>
+                        <th>@TicketsResx.TicketName</th>
+                        <th class="text-center">@TicketsResx.TicketStatus</th>
+                        <th class="text-center">@TicketsResx.IsActive</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +40,7 @@
                         @* Ticket Status*@
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Ticket Status</label>
+                                <label class="col-lg-4 control-label">@TicketsResx.TicketStatus</label>
                                 <div class="col-lg-8">
                                     <select id="ddlUpdateTicketStatus" name="ddlUpdateTicketStatus" onchange="fnTicketStatusDDLOnChange()"
                                             class="select2 col-xs-12 col-sm-9"
@@ -50,7 +53,7 @@
                         @* Is Active*@
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Is Active</label>
+                                <label class="col-lg-4 control-label">@TicketsResx.IsActive</label>
                                 <div class="col-lg-8">
                                     @Html.CheckBox("IS_ACTIVE", Model.IS_ACTIVE, new { @class = "styled" })
                                 </div>
@@ -65,9 +68,9 @@
                             <div class="col-md-12">
                                 @* Reject Reason*@
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Reject Reason</label>
+                                    <label class="col-lg-2 control-label">@TicketsResx.RejectReason</label>
                                     <div class="col-lg-10">
-                                        <textarea id="txtRejectReason" class="form-control" placeholder="enter reject reason&hellip;&hellip;"
+                                        <textarea id="txtRejectReason" class="form-control" placeholder="@TicketsResx.EnterRejectReason"
                                                   cols="5" rows="5"></textarea>
                                     </div>
                                 </div>
@@ -93,7 +96,7 @@
     function fnFillTicketStatus() {
         //TODO:: option add 'ALL'
         debugger;
-        FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlUpdateTicketStatus', 'ID', 'Name', '- Select Status - ', ' ', [],
+        FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlUpdateTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
             function () {
                 //Success Function
                 $("#ddlUpdateTicketStatus").select2({ width: '100%' });
