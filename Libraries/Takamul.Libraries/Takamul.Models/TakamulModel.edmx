@@ -5,6 +5,52 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TakamulModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLICATION_ENTITIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ENTITY_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="ENTITY_CONTROLLER" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="APPLICATION_PRIVILLAGES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" />
+          <Property Name="APPLICATION_ENTITY_ID" Type="int" />
+          <Property Name="IS_ADD_PERMISSION" Type="bit" />
+          <Property Name="IS_EDIT_PERMISSION" Type="bit" />
+          <Property Name="IS_DELETE_PERMISSION" Type="bit" />
+          <Property Name="IS_VIEW_PERMISSION" Type="bit" />
+          <Property Name="IS_REPORT_VIEW_PERMISSION" Type="bit" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'nanocomp_production.dbo.APPLICATION_SETTINGS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="APPLICATION_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="SETTINGS_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="SETTINGS_VALUE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="APPLICATION_USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="USER_ID" Type="int" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+        </EntityType>
         <EntityType Name="APPLICATIONS">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,6 +67,15 @@
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
         </EntityType>
+        <EntityType Name="DB_LOGS">
+          <Key>
+            <PropertyRef Name="ERROR_ID" />
+          </Key>
+          <Property Name="ERROR_ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SP_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="ERROR_DESC" Type="nvarchar(max)" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+        </EntityType>
         <EntityType Name="EVENTS">
           <Key>
             <PropertyRef Name="ID" />
@@ -34,11 +89,11 @@
           <Property Name="EVENT_LATITUDE" Type="varchar" MaxLength="50" />
           <Property Name="EVENT_LONGITUDE" Type="varchar" MaxLength="50" />
           <Property Name="IS_ACTIVE" Type="bit" />
-          <Property Name="EVENT_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="EVENT_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="MEMBER_INFO">
           <Key>
@@ -70,13 +125,48 @@
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
         </EntityType>
+        <EntityType Name="TICKET_CHAT_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TICKET_ID" Type="int" Nullable="false" />
+          <Property Name="REPLY_MESSAGE" Type="nvarchar(max)" />
+          <Property Name="REPLIED_DATE" Type="smalldatetime" />
+          <Property Name="REPLY_FILE_PATH" Type="varchar" MaxLength="500" />
+          <Property Name="TICKET_PARTICIPANT_ID" Type="int" />
+          <Property Name="TICKET_CHAT_TYPE_ID" Type="int" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="TICKET_CHAT_TYPES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CHAT_TYPE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TICKET_PARTICIPANTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TICKET_ID" Type="int" />
+          <Property Name="USER_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="TICKET_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TICKETS">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="APPLICATION_ID" Type="int" />
-          <Property Name="TICKET_CODE" Type="varchar" MaxLength="10" />
           <Property Name="TICKET_NAME" Type="nvarchar" MaxLength="300" />
           <Property Name="TICKET_DESCRIPTION" Type="nvarchar" MaxLength="1000" />
           <Property Name="DEFAULT_IMAGE" Type="varchar" MaxLength="500" />
@@ -87,6 +177,82 @@
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="TICKET_CODE" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="USER_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" />
+          <Property Name="FULL_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="CIVIL_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="300" />
+          <Property Name="AREA_ID" Type="int" />
+          <Property Name="WILAYAT_ID" Type="int" />
+          <Property Name="VILLAGE_ID" Type="int" />
+          <Property Name="OTP_NUMBER" Type="int" />
+          <Property Name="IS_OTP_VALIDATED" Type="bit" />
+          <Property Name="SMS_SENT_STATUS" Type="bit" />
+          <Property Name="LAST_LOGGED_IN_DATE" Type="smalldatetime" />
+          <Property Name="IS_TICKET_SUBMISSION_RESTRICTED" Type="bit" />
+          <Property Name="TICKET_SUBMISSION_INTERVAL_DAYS" Type="int" />
+          <Property Name="NO_OF_TIMES_OTP_SEND" Type="int" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="LAST_TICKET_SUBMISSION_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="USER_TYPES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TYPE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="USER_TYPE_ID" Type="int" />
+          <Property Name="PHONE_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="IS_ACTIVE" Type="bit" />
+          <Property Name="IS_BLOCKED" Type="bit" />
+          <Property Name="BLOCKED_REMARKS" Type="varchar" MaxLength="1000" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'nanocomp_production.nanocomp_production.ABOUT_APP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ABOUT_APP">
+          <Key>
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'nanocomp_production.nanocomp_production.ABOUTAPP_LINKS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ABOUTAPP_LINKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Howitworks" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallationInstruction" Type="nvarchar" MaxLength="50" />
+          <Property Name="FAQ" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppGuide" Type="nvarchar" MaxLength="50" />
+          <Property Name="Privacyandpolicies" Type="nvarchar" MaxLength="50" />
+          <Property Name="Termsandcondition" Type="nvarchar" MaxLength="50" />
+          <Property Name="InformationSecurity" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_MEMBER_INFO_APPLICATIONS">
           <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="0..1" />
@@ -100,15 +266,116 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES">
+          <End Role="APPLICATION_ENTITIES" Type="Self.APPLICATION_ENTITIES" Multiplicity="0..1" />
+          <End Role="APPLICATION_PRIVILLAGES" Type="Self.APPLICATION_PRIVILLAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_ENTITIES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PRIVILLAGES">
+              <PropertyRef Name="APPLICATION_ENTITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PRIVILLAGES_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="APPLICATION_PRIVILLAGES" Type="Self.APPLICATION_PRIVILLAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PRIVILLAGES">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_CHAT_DETAILS_TICKETS">
+          <End Role="TICKETS" Type="Self.TICKETS" Multiplicity="1" />
+          <End Role="TICKET_CHAT_DETAILS" Type="Self.TICKET_CHAT_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TICKETS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TICKET_CHAT_DETAILS">
+              <PropertyRef Name="TICKET_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_DETAILS_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="USER_DETAILS" Type="Self.USER_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USER_DETAILS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TakamulModelStoreContainer">
+          <EntitySet Name="APPLICATION_ENTITIES" EntityType="Self.APPLICATION_ENTITIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_PRIVILLAGES" EntityType="Self.APPLICATION_PRIVILLAGES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_USERS" EntityType="Self.APPLICATION_USERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APPLICATIONS" EntityType="Self.APPLICATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DB_LOGS" EntityType="Self.DB_LOGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EVENTS" EntityType="Self.EVENTS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_INFO" EntityType="Self.MEMBER_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET_CHAT_DETAILS" EntityType="Self.TICKET_CHAT_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET_CHAT_TYPES" EntityType="Self.TICKET_CHAT_TYPES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET_PARTICIPANTS" EntityType="Self.TICKET_PARTICIPANTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET_STATUS" EntityType="Self.TICKET_STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TICKETS" EntityType="Self.TICKETS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_DETAILS" EntityType="Self.USER_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_TYPES" EntityType="Self.USER_TYPES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_SETTINGS" EntityType="Self.APPLICATION_SETTINGS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [APPLICATION_SETTINGS].[ID] AS [ID], 
+    [APPLICATION_SETTINGS].[APPLICATION_ID] AS [APPLICATION_ID], 
+    [APPLICATION_SETTINGS].[SETTINGS_NAME] AS [SETTINGS_NAME], 
+    [APPLICATION_SETTINGS].[SETTINGS_VALUE] AS [SETTINGS_VALUE]
+    FROM [dbo].[APPLICATION_SETTINGS] AS [APPLICATION_SETTINGS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ABOUT_APP" EntityType="Self.ABOUT_APP" store:Type="Tables" store:Schema="nanocomp_production">
+            <DefiningQuery>SELECT 
+    [ABOUT_APP].[Title] AS [Title], 
+    [ABOUT_APP].[Description] AS [Description]
+    FROM [nanocomp_production].[ABOUT_APP] AS [ABOUT_APP]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ABOUTAPP_LINKS" EntityType="Self.ABOUTAPP_LINKS" store:Type="Tables" store:Schema="nanocomp_production">
+            <DefiningQuery>SELECT 
+    [ABOUTAPP_LINKS].[ID] AS [ID], 
+    [ABOUTAPP_LINKS].[Howitworks] AS [Howitworks], 
+    [ABOUTAPP_LINKS].[InstallationInstruction] AS [InstallationInstruction], 
+    [ABOUTAPP_LINKS].[FAQ] AS [FAQ], 
+    [ABOUTAPP_LINKS].[AppGuide] AS [AppGuide], 
+    [ABOUTAPP_LINKS].[Privacyandpolicies] AS [Privacyandpolicies], 
+    [ABOUTAPP_LINKS].[Termsandcondition] AS [Termsandcondition], 
+    [ABOUTAPP_LINKS].[InformationSecurity] AS [InformationSecurity]
+    FROM [nanocomp_production].[ABOUTAPP_LINKS] AS [ABOUTAPP_LINKS]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_MEMBER_INFO_APPLICATIONS" Association="Self.FK_MEMBER_INFO_APPLICATIONS">
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="MEMBER_INFO" EntitySet="MEMBER_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES" Association="Self.FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES">
+            <End Role="APPLICATION_ENTITIES" EntitySet="APPLICATION_ENTITIES" />
+            <End Role="APPLICATION_PRIVILLAGES" EntitySet="APPLICATION_PRIVILLAGES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PRIVILLAGES_USERS" Association="Self.FK_ROLE_PRIVILLAGES_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="APPLICATION_PRIVILLAGES" EntitySet="APPLICATION_PRIVILLAGES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_CHAT_DETAILS_TICKETS" Association="Self.FK_TICKET_CHAT_DETAILS_TICKETS">
+            <End Role="TICKETS" EntitySet="TICKETS" />
+            <End Role="TICKET_CHAT_DETAILS" EntitySet="TICKET_CHAT_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_DETAILS_USERS" Association="Self.FK_USER_DETAILS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_DETAILS" EntitySet="USER_DETAILS" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -129,6 +396,36 @@
           </AssociationSet>
           <EntitySet Name="NEWS" EntityType="TakamulModel.NEWS" />
           <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
+          <EntitySet Name="ABOUT_APP" EntityType="TakamulModel.ABOUT_APP" />
+          <EntitySet Name="ABOUTAPP_LINKS" EntityType="TakamulModel.ABOUTAPP_LINKS" />
+          <EntitySet Name="APPLICATION_ENTITIES" EntityType="TakamulModel.APPLICATION_ENTITIES" />
+          <EntitySet Name="APPLICATION_PRIVILLAGES" EntityType="TakamulModel.APPLICATION_PRIVILLAGES" />
+          <EntitySet Name="APPLICATION_USERS" EntityType="TakamulModel.APPLICATION_USERS" />
+          <EntitySet Name="DB_LOGS" EntityType="TakamulModel.DB_LOGS" />
+          <EntitySet Name="TICKET_CHAT_DETAILS" EntityType="TakamulModel.TICKET_CHAT_DETAILS" />
+          <EntitySet Name="TICKET_CHAT_TYPES" EntityType="TakamulModel.TICKET_CHAT_TYPES" />
+          <EntitySet Name="TICKET_PARTICIPANTS" EntityType="TakamulModel.TICKET_PARTICIPANTS" />
+          <EntitySet Name="TICKET_STATUS" EntityType="TakamulModel.TICKET_STATUS" />
+          <EntitySet Name="USER_DETAILS" EntityType="TakamulModel.USER_DETAILS" />
+          <EntitySet Name="USER_TYPES" EntityType="TakamulModel.USER_TYPES" />
+          <EntitySet Name="USERS" EntityType="TakamulModel.USERS" />
+          <EntitySet Name="APPLICATION_SETTINGS" EntityType="TakamulModel.APPLICATION_SETTINGS" />
+          <AssociationSet Name="FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES" Association="TakamulModel.FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES">
+            <End Role="APPLICATION_ENTITIES" EntitySet="APPLICATION_ENTITIES" />
+            <End Role="APPLICATION_PRIVILLAGES" EntitySet="APPLICATION_PRIVILLAGES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_PRIVILLAGES_USERS" Association="TakamulModel.FK_ROLE_PRIVILLAGES_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="APPLICATION_PRIVILLAGES" EntitySet="APPLICATION_PRIVILLAGES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_CHAT_DETAILS_TICKETS" Association="TakamulModel.FK_TICKET_CHAT_DETAILS_TICKETS">
+            <End Role="TICKETS" EntitySet="TICKETS" />
+            <End Role="TICKET_CHAT_DETAILS" EntitySet="TICKET_CHAT_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_DETAILS_USERS" Association="TakamulModel.FK_USER_DETAILS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_DETAILS" EntitySet="USER_DETAILS" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
           <Key>
@@ -166,6 +463,7 @@
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="APPLICATIONS" Relationship="TakamulModel.FK_TICKETS_APPLICATIONS" FromRole="TICKETS" ToRole="APPLICATIONS" />
           <Property Name="TICKET_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TICKET_CHAT_DETAILS" Relationship="TakamulModel.FK_TICKET_CHAT_DETAILS_TICKETS" FromRole="TICKETS" ToRole="TICKET_CHAT_DETAILS" />
         </EntityType>
         <Association Name="FK_TICKETS_APPLICATIONS">
           <End Type="TakamulModel.APPLICATIONS" Role="APPLICATIONS" Multiplicity="0..1" />
@@ -241,6 +539,221 @@
           <Property Name="MODIFIED_BY" Type="Int32" />
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="ABOUT_APP">
+          <Key>
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ABOUTAPP_LINKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Howitworks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallationInstruction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FAQ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppGuide" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Privacyandpolicies" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Termsandcondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InformationSecurity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="APPLICATION_ENTITIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ENTITY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ENTITY_CONTROLLER" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="APPLICATION_PRIVILLAGES" Relationship="TakamulModel.FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES" FromRole="APPLICATION_ENTITIES" ToRole="APPLICATION_PRIVILLAGES" />
+        </EntityType>
+        <EntityType Name="APPLICATION_PRIVILLAGES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" />
+          <Property Name="APPLICATION_ENTITY_ID" Type="Int32" />
+          <Property Name="IS_ADD_PERMISSION" Type="Boolean" />
+          <Property Name="IS_EDIT_PERMISSION" Type="Boolean" />
+          <Property Name="IS_DELETE_PERMISSION" Type="Boolean" />
+          <Property Name="IS_VIEW_PERMISSION" Type="Boolean" />
+          <Property Name="IS_REPORT_VIEW_PERMISSION" Type="Boolean" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="APPLICATION_ENTITIES" Relationship="TakamulModel.FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES" FromRole="APPLICATION_PRIVILLAGES" ToRole="APPLICATION_ENTITIES" />
+          <NavigationProperty Name="USERS" Relationship="TakamulModel.FK_ROLE_PRIVILLAGES_USERS" FromRole="APPLICATION_PRIVILLAGES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="APPLICATION_USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="USER_ID" Type="Int32" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="DB_LOGS">
+          <Key>
+            <PropertyRef Name="ERROR_ID" />
+          </Key>
+          <Property Name="ERROR_ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SP_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ERROR_DESC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TICKET_CHAT_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TICKET_ID" Type="Int32" Nullable="false" />
+          <Property Name="REPLY_MESSAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="REPLIED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="REPLY_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TICKET_PARTICIPANT_ID" Type="Int32" />
+          <Property Name="TICKET_CHAT_TYPE_ID" Type="Int32" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="TICKETS" Relationship="TakamulModel.FK_TICKET_CHAT_DETAILS_TICKETS" FromRole="TICKET_CHAT_DETAILS" ToRole="TICKETS" />
+        </EntityType>
+        <EntityType Name="TICKET_CHAT_TYPES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CHAT_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TICKET_PARTICIPANTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TICKET_ID" Type="Int32" />
+          <Property Name="USER_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TICKET_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="USER_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" />
+          <Property Name="FULL_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CIVIL_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AREA_ID" Type="Int32" />
+          <Property Name="WILAYAT_ID" Type="Int32" />
+          <Property Name="VILLAGE_ID" Type="Int32" />
+          <Property Name="OTP_NUMBER" Type="Int32" />
+          <Property Name="IS_OTP_VALIDATED" Type="Boolean" />
+          <Property Name="SMS_SENT_STATUS" Type="Boolean" />
+          <Property Name="LAST_LOGGED_IN_DATE" Type="DateTime" Precision="0" />
+          <Property Name="IS_TICKET_SUBMISSION_RESTRICTED" Type="Boolean" />
+          <Property Name="TICKET_SUBMISSION_INTERVAL_DAYS" Type="Int32" />
+          <Property Name="NO_OF_TIMES_OTP_SEND" Type="Int32" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="LAST_TICKET_SUBMISSION_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USERS" Relationship="TakamulModel.FK_USER_DETAILS_USERS" FromRole="USER_DETAILS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="USER_TYPES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USER_TYPE_ID" Type="Int32" />
+          <Property Name="PHONE_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="IS_ACTIVE" Type="Boolean" />
+          <Property Name="IS_BLOCKED" Type="Boolean" />
+          <Property Name="BLOCKED_REMARKS" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="APPLICATION_PRIVILLAGES" Relationship="TakamulModel.FK_ROLE_PRIVILLAGES_USERS" FromRole="USERS" ToRole="APPLICATION_PRIVILLAGES" />
+          <NavigationProperty Name="USER_DETAILS" Relationship="TakamulModel.FK_USER_DETAILS_USERS" FromRole="USERS" ToRole="USER_DETAILS" />
+        </EntityType>
+        <EntityType Name="APPLICATION_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="SETTINGS_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SETTINGS_VALUE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_ROLE_PRIVILLAGES_ROLE_PRIVILLAGES">
+          <End Type="TakamulModel.APPLICATION_ENTITIES" Role="APPLICATION_ENTITIES" Multiplicity="0..1" />
+          <End Type="TakamulModel.APPLICATION_PRIVILLAGES" Role="APPLICATION_PRIVILLAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPLICATION_ENTITIES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PRIVILLAGES">
+              <PropertyRef Name="APPLICATION_ENTITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLE_PRIVILLAGES_USERS">
+          <End Type="TakamulModel.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="TakamulModel.APPLICATION_PRIVILLAGES" Role="APPLICATION_PRIVILLAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="APPLICATION_PRIVILLAGES">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_CHAT_DETAILS_TICKETS">
+          <End Type="TakamulModel.TICKETS" Role="TICKETS" Multiplicity="1" />
+          <End Type="TakamulModel.TICKET_CHAT_DETAILS" Role="TICKET_CHAT_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TICKETS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TICKET_CHAT_DETAILS">
+              <PropertyRef Name="TICKET_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_DETAILS_USERS">
+          <End Type="TakamulModel.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="TakamulModel.USER_DETAILS" Role="USER_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USER_DETAILS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -330,6 +843,180 @@
                 <ScalarProperty Name="EVENT_DATE" ColumnName="EVENT_DATE" />
                 <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
                 <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ABOUT_APP">
+            <EntityTypeMapping TypeName="TakamulModel.ABOUT_APP">
+              <MappingFragment StoreEntitySet="ABOUT_APP">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ABOUTAPP_LINKS">
+            <EntityTypeMapping TypeName="TakamulModel.ABOUTAPP_LINKS">
+              <MappingFragment StoreEntitySet="ABOUTAPP_LINKS">
+                <ScalarProperty Name="InformationSecurity" ColumnName="InformationSecurity" />
+                <ScalarProperty Name="Termsandcondition" ColumnName="Termsandcondition" />
+                <ScalarProperty Name="Privacyandpolicies" ColumnName="Privacyandpolicies" />
+                <ScalarProperty Name="AppGuide" ColumnName="AppGuide" />
+                <ScalarProperty Name="FAQ" ColumnName="FAQ" />
+                <ScalarProperty Name="InstallationInstruction" ColumnName="InstallationInstruction" />
+                <ScalarProperty Name="Howitworks" ColumnName="Howitworks" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_ENTITIES">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_ENTITIES">
+              <MappingFragment StoreEntitySet="APPLICATION_ENTITIES">
+                <ScalarProperty Name="ENTITY_CONTROLLER" ColumnName="ENTITY_CONTROLLER" />
+                <ScalarProperty Name="ENTITY_NAME" ColumnName="ENTITY_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_PRIVILLAGES">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_PRIVILLAGES">
+              <MappingFragment StoreEntitySet="APPLICATION_PRIVILLAGES">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="IS_REPORT_VIEW_PERMISSION" ColumnName="IS_REPORT_VIEW_PERMISSION" />
+                <ScalarProperty Name="IS_VIEW_PERMISSION" ColumnName="IS_VIEW_PERMISSION" />
+                <ScalarProperty Name="IS_DELETE_PERMISSION" ColumnName="IS_DELETE_PERMISSION" />
+                <ScalarProperty Name="IS_EDIT_PERMISSION" ColumnName="IS_EDIT_PERMISSION" />
+                <ScalarProperty Name="IS_ADD_PERMISSION" ColumnName="IS_ADD_PERMISSION" />
+                <ScalarProperty Name="APPLICATION_ENTITY_ID" ColumnName="APPLICATION_ENTITY_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_USERS">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_USERS">
+              <MappingFragment StoreEntitySet="APPLICATION_USERS">
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DB_LOGS">
+            <EntityTypeMapping TypeName="TakamulModel.DB_LOGS">
+              <MappingFragment StoreEntitySet="DB_LOGS">
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="ERROR_DESC" ColumnName="ERROR_DESC" />
+                <ScalarProperty Name="SP_NAME" ColumnName="SP_NAME" />
+                <ScalarProperty Name="ERROR_ID" ColumnName="ERROR_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKET_CHAT_DETAILS">
+            <EntityTypeMapping TypeName="TakamulModel.TICKET_CHAT_DETAILS">
+              <MappingFragment StoreEntitySet="TICKET_CHAT_DETAILS">
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="TICKET_CHAT_TYPE_ID" ColumnName="TICKET_CHAT_TYPE_ID" />
+                <ScalarProperty Name="TICKET_PARTICIPANT_ID" ColumnName="TICKET_PARTICIPANT_ID" />
+                <ScalarProperty Name="REPLY_FILE_PATH" ColumnName="REPLY_FILE_PATH" />
+                <ScalarProperty Name="REPLIED_DATE" ColumnName="REPLIED_DATE" />
+                <ScalarProperty Name="REPLY_MESSAGE" ColumnName="REPLY_MESSAGE" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKET_CHAT_TYPES">
+            <EntityTypeMapping TypeName="TakamulModel.TICKET_CHAT_TYPES">
+              <MappingFragment StoreEntitySet="TICKET_CHAT_TYPES">
+                <ScalarProperty Name="CHAT_TYPE" ColumnName="CHAT_TYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKET_PARTICIPANTS">
+            <EntityTypeMapping TypeName="TakamulModel.TICKET_PARTICIPANTS">
+              <MappingFragment StoreEntitySet="TICKET_PARTICIPANTS">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKET_STATUS">
+            <EntityTypeMapping TypeName="TakamulModel.TICKET_STATUS">
+              <MappingFragment StoreEntitySet="TICKET_STATUS">
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_DETAILS">
+            <EntityTypeMapping TypeName="TakamulModel.USER_DETAILS">
+              <MappingFragment StoreEntitySet="USER_DETAILS">
+                <ScalarProperty Name="LAST_TICKET_SUBMISSION_DATE" ColumnName="LAST_TICKET_SUBMISSION_DATE" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="NO_OF_TIMES_OTP_SEND" ColumnName="NO_OF_TIMES_OTP_SEND" />
+                <ScalarProperty Name="TICKET_SUBMISSION_INTERVAL_DAYS" ColumnName="TICKET_SUBMISSION_INTERVAL_DAYS" />
+                <ScalarProperty Name="IS_TICKET_SUBMISSION_RESTRICTED" ColumnName="IS_TICKET_SUBMISSION_RESTRICTED" />
+                <ScalarProperty Name="LAST_LOGGED_IN_DATE" ColumnName="LAST_LOGGED_IN_DATE" />
+                <ScalarProperty Name="SMS_SENT_STATUS" ColumnName="SMS_SENT_STATUS" />
+                <ScalarProperty Name="IS_OTP_VALIDATED" ColumnName="IS_OTP_VALIDATED" />
+                <ScalarProperty Name="OTP_NUMBER" ColumnName="OTP_NUMBER" />
+                <ScalarProperty Name="VILLAGE_ID" ColumnName="VILLAGE_ID" />
+                <ScalarProperty Name="WILAYAT_ID" ColumnName="WILAYAT_ID" />
+                <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="CIVIL_ID" ColumnName="CIVIL_ID" />
+                <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_TYPES">
+            <EntityTypeMapping TypeName="TakamulModel.USER_TYPES">
+              <MappingFragment StoreEntitySet="USER_TYPES">
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="TakamulModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="BLOCKED_REMARKS" ColumnName="BLOCKED_REMARKS" />
+                <ScalarProperty Name="IS_BLOCKED" ColumnName="IS_BLOCKED" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+                <ScalarProperty Name="USER_TYPE_ID" ColumnName="USER_TYPE_ID" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_SETTINGS">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_SETTINGS">
+              <MappingFragment StoreEntitySet="APPLICATION_SETTINGS">
+                <ScalarProperty Name="SETTINGS_VALUE" ColumnName="SETTINGS_VALUE" />
+                <ScalarProperty Name="SETTINGS_NAME" ColumnName="SETTINGS_NAME" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

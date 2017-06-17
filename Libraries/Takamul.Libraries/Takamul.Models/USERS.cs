@@ -12,30 +12,33 @@ namespace Takamul.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TICKETS
+    public partial class USERS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TICKETS()
+        public USERS()
         {
-            this.TICKET_CHAT_DETAILS = new HashSet<TICKET_CHAT_DETAILS>();
+            this.APPLICATION_PRIVILLAGES = new HashSet<APPLICATION_PRIVILLAGES>();
+            this.USER_DETAILS = new HashSet<USER_DETAILS>();
         }
     
         public int ID { get; set; }
+        public string USER_NAME { get; set; }
+        public string PASSWORD { get; set; }
+        public Nullable<int> USER_TYPE_ID { get; set; }
+        public string PHONE_NUMBER { get; set; }
+        public string EMAIL { get; set; }
         public Nullable<int> APPLICATION_ID { get; set; }
-        public string TICKET_NAME { get; set; }
-        public string TICKET_DESCRIPTION { get; set; }
-        public string DEFAULT_IMAGE { get; set; }
         public Nullable<bool> IS_ACTIVE { get; set; }
-        public Nullable<int> TICKET_STATUS_ID { get; set; }
-        public string TICKET_STATUS_REMARK { get; set; }
+        public Nullable<bool> IS_BLOCKED { get; set; }
+        public string BLOCKED_REMARKS { get; set; }
         public Nullable<int> CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
-        public string TICKET_CODE { get; set; }
     
-        public virtual APPLICATIONS APPLICATIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TICKET_CHAT_DETAILS> TICKET_CHAT_DETAILS { get; set; }
+        public virtual ICollection<APPLICATION_PRIVILLAGES> APPLICATION_PRIVILLAGES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USER_DETAILS> USER_DETAILS { get; set; }
     }
 }
