@@ -31,20 +31,17 @@ namespace Takamul.API.Controllers
         #region Private Members
         private readonly ICommonServices oICommonServices;
         private readonly IApplicationService oIApplicationService;
-        private readonly IAboutServices oIAboutServices;
         #endregion
         #endregion
 
         #region :: Constructor ::
         public CommonServiceController(
                                         ICommonServices ICommonServicesInitializer,
-                                        IApplicationService IApplicationServiceInitializer,
-                                        IAboutServices oIAboutServiceInitializer
+                                        IApplicationService IApplicationServiceInitializer
                                     )
         {
             oICommonServices = ICommonServicesInitializer;
             oIApplicationService = IApplicationServiceInitializer;
-            oIAboutServices = oIAboutServiceInitializer;
         }
         #endregion
 
@@ -205,65 +202,6 @@ namespace Takamul.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, oVillageList);
         }
         #endregion
-
-
-        #region Method :: HttpResponseMessage :: GetAboutAppDetails
-        // GET: api/AboutPage/GetAboutAppDetails
-        /// <summary>
-        /// Get about app details
-        /// <param name="nLanguageID"></param>
-        /// </summary> 
-        /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage GetAboutAppDetails(int nLanguageID)
-        {
-            About oAboutTakamul = null;
-            AboutAppViewModel oAboutViewModel = this.oIAboutServices.oGetAppDetails(nLanguageID);
-
-
-            oAboutTakamul = new About()
-            {
-
-                Title = oAboutViewModel.Title,
-                Content = oAboutViewModel.Content
-
-            };
-
-            return Request.CreateResponse(HttpStatusCode.OK, oAboutTakamul);
-        }
-        #endregion 
-
-        #region Method :: HttpResponseMessage :: GetHelpLinks
-        // GET: api/AboutPage/GetHelpLinks
-        /// <summary>
-        /// Get Help menu links
-        /// <param name="nLanguageID"></param>
-        /// </summary> 
-        /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage GetHelpLinks(int nLanguageID)
-        {
-            About oAboutTakamul = null;
-            AboutAppViewModel oAboutViewModel = this.oIAboutServices.oGetAppDetails(nLanguageID);
-
-
-            oAboutTakamul = new About()
-            {
-
-                AppGuide = oAboutViewModel.AppGuide,
-                FAQ = oAboutViewModel.FAQ,
-                Howitworks = oAboutTakamul.Howitworks,
-                InformationSecurity = oAboutTakamul.InformationSecurity,
-                InstallationInstruction = oAboutTakamul.InstallationInstruction,
-                Privacyandpolicies = oAboutTakamul.Privacyandpolicies,
-                Termsandcondition = oAboutTakamul.Termsandcondition
-
-            };
-
-            return Request.CreateResponse(HttpStatusCode.OK, oAboutTakamul);
-        }
-        #endregion 
-
 
         #endregion
     }

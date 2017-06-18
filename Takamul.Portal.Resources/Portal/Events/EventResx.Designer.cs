@@ -178,6 +178,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event Map.
+        /// </summary>
+        public static string EventMap {
+            get {
+                return ResourceManager.GetString("EventMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Name.
         /// </summary>
         public static string EventName {

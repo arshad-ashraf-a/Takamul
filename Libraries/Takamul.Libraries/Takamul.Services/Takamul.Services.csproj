@@ -64,8 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutApp\IAboutServices.cs" />
-    <Compile Include="AboutApp\AboutServices.cs" />
     <Compile Include="Application\ApplicationService.cs" />
     <Compile Include="Application\IApplicationService.cs" />
     <Compile Include="Authentication\AuthenticationService.cs" />

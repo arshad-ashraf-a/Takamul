@@ -88,19 +88,23 @@
 
                     </div>
                 </div>
-                @* Event Location*@
+                @* Event Map*@
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">@EventResx.EventLocation&nbsp;<span class="text-danger">*</span></label>
+                            <label class="col-lg-4 control-label">@EventResx.EventMap</label>
                             <div class="col-lg-5">
+                                <div class="alert alert-info alert-styled-left alert-bordered">
+                                    <span class="text-semibold">Either search by text or double click to choose a location from map.</span>
+                                </div>
                                 <input id="txtsearch" class="apply" type="text" placeholder="Enter Search Place e.g C# Corner Noida">
-                                <div id="divloadMap" style="height:500px;width:500px"></div>                            </div>
+                                <div id="divloadMap" style="height:420px;width:420px"></div>
+                            </div>
                         </div>
 
                     </div>
                 </div>
-             
+               
 
                 @* Event Location*@
                 <div class="form-group">
@@ -108,7 +112,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.EventLocation&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LOCATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "enter a location to search..." } })
+                                @Html.EditorFor(model => model.EVENT_LOCATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "enter event location..." } })
                             </div>
                         </div>
 
@@ -120,8 +124,8 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.Latitude&nbsp;<span class="text-danger">*</span></label>
-                            <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " latitude" } })
+                            <div class="col-lg-2">
+                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " latitude", disabled = "disabled" } })
                             </div>
                         </div>
 
@@ -133,8 +137,8 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.Longitude&nbsp;<span class="text-danger">*</span></label>
-                            <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " longitude" } })
+                            <div class="col-lg-2">
+                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = " longitude", disabled = "disabled" } })
                             </div>
                         </div>
 
@@ -158,7 +162,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.EventImage</label>
-                            <div class="col-lg-8">
+                            <div class="col-lg-5">
                                 <input type="file" id="fuEventImage" class="file-styled">
                             </div>
                         </div>
@@ -365,72 +369,6 @@
         //Entry Point
         $(document).ready(function () {
             fnEventValidateInitialization();
-        });
-
-        $(function () {
-            $("#EVENT_LOCATION_NAME").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "@Url.Action("JGetEventVenuesList", "Events")",
-                        data: { SearchText: request.term },
-                        dataType: "json",
-                        type: "GET",
-                        success: function (data) {
-                            $('#EVENT_LATITUDE').val("");
-                            $('#EVENT_LONGITUDE').val("");
-
-                            if (data.length == 0) {
-                                return false;
-                            }
-                            else {
-                                response($.map(data, function (item) {
-                                    return {
-                                        label: item.description,
-                                        value: item.description,
-                                        placeid: item.place_id
-                                    }
-                                }));
-                            }
-                        },
-                        error: function (x, y, z) {
-                            alert('error');
-                        }
-                    });
-                },
-                select: function (event, ui) {
-                    $('#EVENT_LOCATION_NAME').val(ui.item.label);
-                    GetVenueDetailsByPlaceId(ui.item.placeid);
-                    return false;
-                }
-            }).autocomplete("widget").addClass("CitiesAutocomplete");
-        });
-
-        function GetVenueDetailsByPlaceId(PlaceId) {
-            $.ajax({
-                url: '@Url.Action("GetVenueDetailsByPlace", "Events")',
-                dataType: "json",
-                data: {
-                    placeId: PlaceId
-                },
-                type: "GET",
-                async: false,
-                error: function (xhr, status, error) {
-
-                },
-                success: function (data) {
-                    $('#EVENT_LATITUDE').val(data.Latitude);
-                    $('#EVENT_LONGITUDE').val(data.Longitude);
-                },
-                beforeSend: function () {
-                    ShowLoader();
-                }
-            });
-        }
-
-        $("#EVENT_LOCATION_NAME").on('change', function () {
-            $(this).closest('form').validate().element($(this));
-            $(this).closest('form').find($('#EVENT_LATITUDE')).validate();
-            $(this).closest('form').find($('#EVENT_LONGITUDE')).validate();
         });
     </script>
 }

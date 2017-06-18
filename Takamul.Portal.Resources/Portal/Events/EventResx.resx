@@ -156,6 +156,9 @@
   <data name="EventLocation" xml:space="preserve">
     <value>Event Location</value>
   </data>
+  <data name="EventMap" xml:space="preserve">
+    <value>Event Map</value>
+  </data>
   <data name="EventName" xml:space="preserve">
     <value>Event Name</value>
   </data>

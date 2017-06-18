@@ -14,7 +14,7 @@ function LoadGoogleMAP() {
 
     // Create the search box and link it to the UI element.
     var input = (document.getElementById('txtsearch'));
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var searchBox = new google.maps.places.SearchBox((input));
 
@@ -46,14 +46,19 @@ function LoadGoogleMAP() {
             // Create a marker for each place.
             var marker = new google.maps.Marker({
                 map: map,
-                icon: image,
                 title: place.name,
                 position: place.geometry.location
             });
 
             markers.push(marker);
 
+            $("#EVENT_LATITUDE").val(place.geometry.location.lat().toFixed(4));
+            $("#EVENT_LONGITUDE").val(place.geometry.location.lng().toFixed(4));
+
+            map.setZoom(5);
+
             bounds.extend(place.geometry.location);
+
         }
 
         map.fitBounds(bounds);
