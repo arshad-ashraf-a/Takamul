@@ -117,4 +117,109 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewTicket" xml:space="preserve">
+    <value>إضافة تذكرة جديدة</value>
+  </data>
+  <data name="AddTicket" xml:space="preserve">
+    <value>إضافة تذكرة</value>
+  </data>
+  <data name="AllowedFileSize" xml:space="preserve">
+    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+  </data>
+  <data name="AllTickets" xml:space="preserve">
+    <value>جميع التذاكر</value>
+  </data>
+  <data name="ChangeTicketStatus" xml:space="preserve">
+    <value>تغيير حالة التذكرة</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="EnterRejectReason" xml:space="preserve">
+    <value>أدخل رفض السبب &amp;hellip;&amp;hellip;</value>
+  </data>
+  <data name="EnterYourMessage" xml:space="preserve">
+    <value>أدخل رسالتك...</value>
+  </data>
+  <data name="GoBackToTickets" xml:space="preserve">
+    <value>العودة إلى التذاكر</value>
+  </data>
+  <data name="GoToChats" xml:space="preserve">
+    <value>انتقل إلى دردشات</value>
+  </data>
+  <data name="InvalidFileFormat" xml:space="preserve">
+    <value>الملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="ParticipantUser" xml:space="preserve">
+    <value>مستخدم مشارك</value>
+  </data>
+  <data name="PleaseSelectFile" xml:space="preserve">
+    <value>الرجاء تحديد ملف لتحميله.</value>
+  </data>
+  <data name="RejectReason" xml:space="preserve">
+    <value>رفض السبب</value>
+  </data>
+  <data name="SearchTickets" xml:space="preserve">
+    <value>بحث تذاكر</value>
+  </data>
+  <data name="SelectStatus" xml:space="preserve">
+    <value>- اختر الحالة -</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>- اختر المستخدم -</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="SendIcon" xml:space="preserve">
+    <value>icon-circle-left2</value>
+  </data>
+  <data name="TicketChats" xml:space="preserve">
+    <value>دردشات التذاكر</value>
+  </data>
+  <data name="TicketCode" xml:space="preserve">
+    <value>رمز التذكرة</value>
+  </data>
+  <data name="TicketDescirption" xml:space="preserve">
+    <value>تذكرة ديسيربتيون</value>
+  </data>
+  <data name="TicketDescription" xml:space="preserve">
+    <value>وصف التذاكر</value>
+  </data>
+  <data name="TicketDetails" xml:space="preserve">
+    <value>تفاصيل التذاكر</value>
+  </data>
+  <data name="TicketImage" xml:space="preserve">
+    <value>صورة تذكرة</value>
+  </data>
+  <data name="TicketInfo" xml:space="preserve">
+    <value>معلومات التذاكر</value>
+  </data>
+  <data name="TicketName" xml:space="preserve">
+    <value>اسم التذكرة</value>
+  </data>
+  <data name="TicketParticipantUser" xml:space="preserve">
+    <value>تذكرة المشارك المشارك</value>
+  </data>
+  <data name="TicketsList" xml:space="preserve">
+    <value>قائمة تذاكر</value>
+  </data>
+  <data name="TicketStatus" xml:space="preserve">
+    <value>حالة التذكرة</value>
+  </data>
+  <data name="UpdateTicket" xml:space="preserve">
+    <value>تحديث تذكرة</value>
+  </data>
+  <data name="UploadedTicketImage" xml:space="preserve">
+    <value>تم تحميل صورة التذكرة</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>رفع ملف</value>
+  </data>
+  <data name="ViewTicketInfo" xml:space="preserve">
+    <value>عرض معلومات التذاكر</value>
+  </data>
 </root>

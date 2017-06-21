@@ -5,30 +5,7 @@
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 @model Takamul.Models.EventViewModel
-<style>
-    .CitiesAutocomplete {
-        list-style: none;
-        background: #fbfbfb;
-        border: 1px solid #5f5f5f !important;
-        width: 350px !important;
-        position: absolute;
-        z-index: 10000;
-        border-top: none;
-        min-height: 25px;
-        max-height: 250px;
-        overflow: auto;
-        cursor: pointer;
-        padding: 4px 0;
-    }
-
-        .CitiesAutocomplete li {
-            padding: 2px 6px;
-        }
-
-            .CitiesAutocomplete li:hover {
-                background-color: #9eeffe;
-            }
-</style>
+<link href="~/assets/js/plugins/googlemap/MapStyleSheet.css" rel="stylesheet" />
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmEditEvent", @class = "form-horizontal" }))
 {
     <div class="col-md-12">
@@ -83,6 +60,23 @@
                     </div>
                 </div>
 
+                @* Event Map*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@EventResx.EventMap</label>
+                            <div class="col-lg-5">
+                                <div class="alert alert-info alert-styled-left alert-bordered">
+                                    <span class="text-semibold">@EventResx.MapInfo</span>
+                                </div>
+                                <input id="txtsearch" class="apply" type="text" placeholder="Enter Search Place e.g Muscat Grand Mall">
+                                <div id="divloadMap" style="height:420px;width:420px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 @* Event Location*@
                 <div class="form-group">
                     <div class="col-md-12">
@@ -102,7 +96,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.Latitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Latitude } })
+                                @Html.EditorFor(model => model.EVENT_LATITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Latitude, @readonly = "readonly" } })
                             </div>
                         </div>
 
@@ -115,7 +109,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.Longitude&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Longitude } })
+                                @Html.EditorFor(model => model.EVENT_LONGITUDE, new { htmlAttributes = new { @class = "form-control", placeholder = @EventResx.Longitude, @readonly = "readonly" } })
                             </div>
                         </div>
 
@@ -188,9 +182,8 @@
         </div>
     </div>
 }
-
-
-
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB12deZM0ibuAHFBFQk-1vEbLuzbqao64M&libraries=places"></script>
+<script src="~/assets/js/plugins/googlemap/GoogleAPIScript.js"></script>
 
 @section InlineScriptsRelated
 {
@@ -441,13 +434,12 @@
             return false;
         }
 
-        $("#EVENT_LOCATION_NAME").on('change', function () {
-            $(this).closest('form').validate().element($(this));
-            $(this).closest('form').find($('#EVENT_LATITUDE')).validate();
-            $(this).closest('form').find($('#EVENT_LONGITUDE')).validate();
+        //Entry Point
+        $(document).ready(function () {
+            fnEventValidateInitialization();
+
+            google.maps.event.addDomListener(window, 'load', LoadGoogleMAP('@Model.EVENT_LATITUDE', '@Model.EVENT_LONGITUDE'));
         });
-
-
 
     </script>
 }

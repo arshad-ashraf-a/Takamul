@@ -79,7 +79,7 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only allowed file size upto 1 MB..
+        ///   Looks up a localized string similar to Only allowed file size upto 10 MB..
         /// </summary>
         public static string AllowedFileSize {
             get {
@@ -93,6 +93,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string AllTickets {
             get {
                 return ResourceManager.GetString("AllTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Ticket Status.
+        /// </summary>
+        public static string ChangeTicketStatus {
+            get {
+                return ResourceManager.GetString("ChangeTicketStatus", resourceCulture);
             }
         }
         
@@ -115,11 +124,29 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your message....
+        /// </summary>
+        public static string EnterYourMessage {
+            get {
+                return ResourceManager.GetString("EnterYourMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go Back To Tickets.
         /// </summary>
         public static string GoBackToTickets {
             get {
                 return ResourceManager.GetString("GoBackToTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go To Chats.
+        /// </summary>
+        public static string GoToChats {
+            get {
+                return ResourceManager.GetString("GoToChats", resourceCulture);
             }
         }
         
@@ -192,6 +219,24 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string SelectUser {
             get {
                 return ResourceManager.GetString("SelectUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to icon-circle-right2.
+        /// </summary>
+        public static string SendIcon {
+            get {
+                return ResourceManager.GetString("SendIcon", resourceCulture);
             }
         }
         
@@ -309,6 +354,24 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string UploadedTicketImage {
             get {
                 return ResourceManager.GetString("UploadedTicketImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UploadFile.
+        /// </summary>
+        public static string UploadFile {
+            get {
+                return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Ticket Info.
+        /// </summary>
+        public static string ViewTicketInfo {
+            get {
+                return ResourceManager.GetString("ViewTicketInfo", resourceCulture);
             }
         }
     }

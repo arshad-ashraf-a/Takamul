@@ -12,6 +12,7 @@ using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -19,6 +20,7 @@ using Takamul.Models;
 using Takamul.Models.ApiViewModel;
 using Takamul.Models.ViewModel;
 using Takamul.Services;
+using System.Linq;
 
 namespace Takamul.API.Controllers
 {
@@ -31,17 +33,26 @@ namespace Takamul.API.Controllers
         #region Private Members
         private readonly ICommonServices oICommonServices;
         private readonly IApplicationService oIApplicationService;
+        private readonly ITicketServices oITicketServices;
+        private readonly INewsServices oINewsServices;
+        private readonly IEventService oIEventsServices;
         #endregion
         #endregion
 
         #region :: Constructor ::
         public CommonServiceController(
                                         ICommonServices ICommonServicesInitializer,
-                                        IApplicationService IApplicationServiceInitializer
+                                        IApplicationService IApplicationServiceInitializer,
+                                         ITicketServices ITicketServicesInitializer,
+                                         INewsServices INewsServicesInitializer,
+                                         IEventService IEventsServicesInitializer
                                     )
         {
             oICommonServices = ICommonServicesInitializer;
             oIApplicationService = IApplicationServiceInitializer;
+            oITicketServices = ITicketServicesInitializer;
+            oINewsServices = INewsServicesInitializer;
+            oIEventsServices = IEventsServicesInitializer;
         }
         #endregion
 
@@ -95,7 +106,7 @@ namespace Takamul.API.Controllers
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetMemberInfo(int nApplicationID,int nLanguageID)
+        public HttpResponseMessage GetMemberInfo(int nApplicationID, int nLanguageID)
         {
             TakamulMembeInfo oTakamulMembeInfo = null;
             List<TakamulMembeInfo> lstTakamulMembeInfo = null;
@@ -200,6 +211,142 @@ namespace Takamul.API.Controllers
                 oVillageList.Add(oVillage);
             }
             return Request.CreateResponse(HttpStatusCode.OK, oVillageList);
+        }
+        #endregion
+
+        #region Method :: HttpResponseMessage :: GetHomePageData
+        // GET: CommonService/GetHomePageData
+        /// <summary>
+        /// Get Home Page Data
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="nUserID"></param>
+        /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetHomePageData(int nApplicationID, int nUserID, int nLanguageID)
+        {
+            HomePageRepo oHomePageRepo = new HomePageRepo();
+            List<TakamulTicket> lstTakamulTicket = null;
+            if (nUserID != -99)
+            {
+                var lstTickets = this.oITicketServices.IlGetAllActiveTickets(nApplicationID, nUserID);
+                if (lstTickets.Count > 0)
+                {
+                    lstTakamulTicket = new List<TakamulTicket>();
+                    foreach (var ticket in lstTickets.OrderByDescending(x => x.ID).Take(5))
+                    {
+                        string sBase64DefaultImage = string.Empty;
+                        string sRemoteFilePath = string.Empty;
+                        if (!string.IsNullOrEmpty(ticket.DEFAULT_IMAGE))
+                        {
+                            try
+                            {
+                                FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                                byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
+                                if (oByteFile.Length > 0)
+                                {
+                                    sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                                }
+
+                                sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
+                            }
+                            catch (Exception Ex)
+                            {
+                                sBase64DefaultImage = Ex.Message.ToString();
+                            }
+                        }
+
+                        TakamulTicket oTakamulTicket = new TakamulTicket()
+                        {
+                            TicketID = ticket.ID,
+                            TicketCode = ticket.TICKET_CODE,
+                            ApplicationID = ticket.APPLICATION_ID,
+                            Base64DefaultImage = sBase64DefaultImage,
+                            TicketName = ticket.TICKET_NAME,
+                            TicketDescription = ticket.TICKET_DESCRIPTION,
+                            TicketStatusID = ticket.TICKET_STATUS_ID,
+                            TicketStatusRemark = ticket.TICKET_STATUS_REMARK,
+                            TicketStatusName = ticket.TICKET_STATUS_NAME,
+                            RemoteFilePath = sRemoteFilePath,
+                            CreatedDate = string.Format("{0} {1}", ticket.CREATED_DATE.ToShortDateString(), ticket.CREATED_DATE.ToShortTimeString())
+                        };
+
+                        lstTakamulTicket.Add(oTakamulTicket);
+                    }
+
+                    oHomePageRepo.TakamulTicketList = lstTakamulTicket;
+                }
+            }
+
+            List<TakamulNews> lstTakamulNews = null;
+            var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID, nLanguageID);
+            if (lstNews.Count() > 0)
+            {
+                lstTakamulNews = new List<TakamulNews>();
+                foreach (var news in lstNews.OrderByDescending(x => x.ID).Take(5))
+                {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(news.NEWS_IMG_FILE_PATH))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(news.NEWS_IMG_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
+                    TakamulNews oTakamulNews = new TakamulNews()
+                    {
+                        NewsID = news.ID,
+                        ApplicationID = news.APPLICATION_ID,
+                        NewsContent = news.NEWS_CONTENT,
+                        NewsTitle = news.NEWS_TITLE,
+                        PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
+                        Base64NewsImage = sBase64DefaultImage
+
+                    };
+                    lstTakamulNews.Add(oTakamulNews);
+                }
+                oHomePageRepo.TakamulNewsList = lstTakamulNews;
+            }
+
+            List<TakamulEvents> lstTakamulEvents = null;
+            var lstEvents = this.oIEventsServices.IlGetAllActiveEvents(nApplicationID, nLanguageID);
+            if (lstEvents.Count() > 0)
+            {
+                lstTakamulEvents = new List<TakamulEvents>();
+                foreach (var oEvent in lstEvents.OrderByDescending(x => x.ID).Take(5))
+                {
+                    string sBase64DefaultImage = string.Empty;
+                    if (!string.IsNullOrEmpty(oEvent.EVENT_IMG_FILE_PATH))
+                    {
+                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        byte[] oByteFile = oFileAccessService.ReadFile(oEvent.EVENT_IMG_FILE_PATH);
+                        if (oByteFile.Length > 0)
+                        {
+                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
+                        }
+                    }
+
+                    TakamulEvents oTakamulEvents = new TakamulEvents()
+                    {
+                        EventID = oEvent.ID,
+                        APPLICATIONID = oEvent.APPLICATION_ID,
+                        EVENTDESCRIPTION = oEvent.EVENT_DESCRIPTION,
+                        EVENTNAME = oEvent.EVENT_NAME,
+                        EVENTDATE = string.Format("{0} {1}", oEvent.EVENT_DATE.ToShortDateString(), oEvent.EVENT_DATE.ToShortTimeString()),
+                        Latitude = oEvent.EVENT_LATITUDE,
+                        Longitude = oEvent.EVENT_LONGITUDE,
+                        BASE64EVENTIMG = sBase64DefaultImage
+                    };
+                    lstTakamulEvents.Add(oTakamulEvents);
+                }
+                oHomePageRepo.TakamulEventList= lstTakamulEvents;
+            }
+            
+            return Request.CreateResponse(HttpStatusCode.OK, oHomePageRepo);
         }
         #endregion
 

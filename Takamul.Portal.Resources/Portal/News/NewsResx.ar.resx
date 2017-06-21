@@ -117,4 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewNews" xml:space="preserve">
+    <value>إضافة أخبار جديدة</value>
+  </data>
+  <data name="AddNews" xml:space="preserve">
+    <value>إضافة أخبار</value>
+  </data>
+  <data name="AllNews" xml:space="preserve">
+    <value>جميع الأخبار</value>
+  </data>
+  <data name="AllowedFileSize" xml:space="preserve">
+    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="DeleteNews" xml:space="preserve">
+    <value>حذف الأخبار</value>
+  </data>
+  <data name="EditNews" xml:space="preserve">
+    <value>تحرير الأخبار</value>
+  </data>
+  <data name="InvalidFileFormats" xml:space="preserve">
+    <value>الملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="IsNotifyUser" xml:space="preserve">
+    <value>هو إعلام المستخدم</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>أخبار</value>
+  </data>
+  <data name="NewsContent" xml:space="preserve">
+    <value>أخبار المحتوى</value>
+  </data>
+  <data name="NewsImage" xml:space="preserve">
+    <value>أخبار صورة</value>
+  </data>
+  <data name="NewsList" xml:space="preserve">
+    <value>قائمة الأخبار</value>
+  </data>
+  <data name="NewsTitle" xml:space="preserve">
+    <value>عنوان الخبر</value>
+  </data>
+  <data name="NotifyUser" xml:space="preserve">
+    <value>إعلام المستخدم</value>
+  </data>
+  <data name="PleaseChooseFile" xml:space="preserve">
+    <value>الرجاء تحديد ملف لتحميله.</value>
+  </data>
+  <data name="PublishedDate" xml:space="preserve">
+    <value>تاريخ النشر</value>
+  </data>
+  <data name="SearchNews" xml:space="preserve">
+    <value>بحث أخبار</value>
+  </data>
+  <data name="UploadedNewsImage" xml:space="preserve">
+    <value>تم تحميل صورة الأخبار</value>
+  </data>
 </root>

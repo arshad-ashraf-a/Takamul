@@ -1,4 +1,5 @@
 ﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@using Takamul.Portal.Resources.Common;
 @model Takamul.Models.ViewModel.TicketViewModel
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
@@ -29,16 +30,16 @@
             </ul>
             @if (Model.TICKET_STATUS_ID == 1) //Open Status
             {
-                <textarea name="enter-message" id="txtChatMessage" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+                <textarea name="enter-message" id="txtChatMessage" class="form-control content-group" rows="3" cols="1" placeholder="@TicketsResx.EnterYourMessage"></textarea>
 
                 <div class="row">
                     <div class="col-xs-6">
                         <input type="file" onchange="fnSaveChatFile();" id="fuChatFile" name="fuChatFile" style="visibility: hidden; width: 1px; height: 1px" multiple />
-                        <button onclick="fnSendChat();" type="button" id="btnSend" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+                        <button onclick="fnSendChat();" type="button" id="btnSend" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="@TicketsResx.SendIcon"></i></b> @TicketsResx.Send</button>
                     </div>
 
                     <div class="col-xs-6 text-right">
-                        <a href="#" id="btnUploadFile" onclick="document.getElementById('fuChatFile').click(); return false" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-file-plus"></i></b> Upload File</a>
+                        <a href="#" id="btnUploadFile" onclick="document.getElementById('fuChatFile').click(); return false" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-file-plus"></i></b> @TicketsResx.UploadFile</a>
                     </div>
                 </div>
             }

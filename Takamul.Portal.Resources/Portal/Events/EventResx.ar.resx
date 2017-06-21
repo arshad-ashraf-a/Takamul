@@ -117,85 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Activetickets" xml:space="preserve">
-    <value>Active tickets</value>
+  <data name="AddEvent" xml:space="preserve">
+    <value>إضافة حدث</value>
   </data>
-  <data name="ApplicationName" xml:space="preserve">
-    <value>Application Name</value>
+  <data name="AddNewEvent" xml:space="preserve">
+    <value>إضافة حدث جديد</value>
   </data>
-  <data name="Closedtickets" xml:space="preserve">
-    <value>Closed tickets</value>
+  <data name="AllEvents" xml:space="preserve">
+    <value>كل الأحداث</value>
+  </data>
+  <data name="AllowedFileSize" xml:space="preserve">
+    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
-    <value>CreatedDate</value>
+    <value>تاريخ الإنشاء</value>
   </data>
-  <data name="Days" xml:space="preserve">
-    <value>Days</value>
+  <data name="DeleteEvent" xml:space="preserve">
+    <value>حذف الحدث</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="EditEvent" xml:space="preserve">
+    <value>تعديل الحدث</value>
   </data>
-  <data name="Due" xml:space="preserve">
-    <value>Due</value>
+  <data name="EditNewEvent" xml:space="preserve">
+    <value>تعديل حدث جديد</value>
   </data>
-  <data name="ExipryDate" xml:space="preserve">
-    <value>Exipry Date</value>
+  <data name="EnterEventDescription" xml:space="preserve">
+    <value>إدخال وصف الحدث ...</value>
   </data>
-  <data name="GoToTickets" xml:space="preserve">
-    <value>Go To Tickets</value>
+  <data name="EnterEventLocation" xml:space="preserve">
+    <value>إدخال موقع الحدث ...</value>
   </data>
-  <data name="Hours" xml:space="preserve">
-    <value>Hours</value>
+  <data name="EnterSearchLocation" xml:space="preserve">
+    <value>أدخل موقعا للبحث ...</value>
   </data>
-  <data name="MemberName" xml:space="preserve">
-    <value>Member Name</value>
+  <data name="EnterSearchPlace" xml:space="preserve">
+    <value>أدخل مكان البحث مثل مسقط جراند مول</value>
   </data>
-  <data name="Minutes" xml:space="preserve">
-    <value>Minutes</value>
+  <data name="EventDate" xml:space="preserve">
+    <value>تاريخ الحدث</value>
   </data>
-  <data name="MobileUsers" xml:space="preserve">
-    <value>mobile users</value>
+  <data name="EventDescription" xml:space="preserve">
+    <value>وصف الحدث</value>
   </data>
-  <data name="Months" xml:space="preserve">
-    <value>Months</value>
+  <data name="EventImage" xml:space="preserve">
+    <value>صورة الحدث</value>
   </data>
-  <data name="NoActiveTicketFound" xml:space="preserve">
-    <value>No active tickets found.</value>
+  <data name="EventLocation" xml:space="preserve">
+    <value>موقع الحدث</value>
   </data>
-  <data name="NoClosedTicketsFound" xml:space="preserve">
-    <value>No closed tickets found.</value>
+  <data name="EventMap" xml:space="preserve">
+    <value>خريطة الحدث</value>
   </data>
-  <data name="NoRejectedTicketsFound" xml:space="preserve">
-    <value>No rejected tickets found.</value>
+  <data name="EventName" xml:space="preserve">
+    <value>اسم الحدث</value>
   </data>
-  <data name="OpenTickets" xml:space="preserve">
-    <value>Open Tickets</value>
+  <data name="Events" xml:space="preserve">
+    <value>أحداث</value>
   </data>
-  <data name="Reply" xml:space="preserve">
-    <value>Reply</value>
+  <data name="EventsList" xml:space="preserve">
+    <value>قائمة الأحداث</value>
   </data>
-  <data name="Seconds" xml:space="preserve">
-    <value>Seconds</value>
+  <data name="InvalidFileFormat" xml:space="preserve">
+    <value>لملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
+  <data name="IsActive" xml:space="preserve">
+    <value>نشط</value>
   </data>
-  <data name="totalclosedtickets" xml:space="preserve">
-    <value>total closed tickets</value>
+  <data name="Latitude" xml:space="preserve">
+    <value>خط العرض</value>
   </data>
-  <data name="totalmessages" xml:space="preserve">
-    <value>total messages</value>
+  <data name="Longitude" xml:space="preserve">
+    <value>خط الطول</value>
   </data>
-  <data name="TotalTickets" xml:space="preserve">
-    <value>total tickets</value>
+  <data name="MapInfo" xml:space="preserve">
+    <value>انقر نقرا مزدوجا على منطقة من الخريطة لتحديد موقع الحدث.</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
+  <data name="SearchEvent" xml:space="preserve">
+    <value>حدث البحث</value>
   </data>
-  <data name="ViewChats" xml:space="preserve">
-    <value>View Chats</value>
-  </data>
-  <data name="Years" xml:space="preserve">
-    <value>Years</value>
+  <data name="UploadedEventImage" xml:space="preserve">
+    <value>تم تحميل صورة الحدث</value>
   </data>
 </root>

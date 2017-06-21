@@ -97,6 +97,15 @@ namespace Takamul.Portal.Resources.Portal.Member {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Members.
+        /// </summary>
+        public static string AllMembers {
+            get {
+                return ResourceManager.GetString("AllMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application.
         /// </summary>
         public static string Application {

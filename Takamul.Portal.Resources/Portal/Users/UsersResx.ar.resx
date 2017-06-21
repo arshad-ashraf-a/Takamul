@@ -117,4 +117,137 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>إعدادت الحساب</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>نشيط</value>
+  </data>
+  <data name="AddNewUser" xml:space="preserve">
+    <value>إضافة مستخدم جديد</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>إضافة مستخدم</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>منطقة</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>مسدود</value>
+  </data>
+  <data name="BlockedReason" xml:space="preserve">
+    <value>سبب الحظر</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة السر</value>
+  </data>
+  <data name="ChangeStatus" xml:space="preserve">
+    <value>تغيير الوضع</value>
+  </data>
+  <data name="CivilID" xml:space="preserve">
+    <value>رقم الهوية المدنية</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="EnterBlockedReason" xml:space="preserve">
+    <value>أدخل السبب المحظور
+&amp;hellip;&amp;hellip;</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>الاسم الكامل</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="IsBlocked" xml:space="preserve">
+    <value>تم حظره</value>
+  </data>
+  <data name="IsOPTVerified" xml:space="preserve">
+    <value>أيضا التحقق OTP</value>
+  </data>
+  <data name="MobileUser" xml:space="preserve">
+    <value>مستخدم الجوال</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة السر الجديدة</value>
+  </data>
+  <data name="NoDataFound" xml:space="preserve">
+    <value>- لاتوجد بيانات -</value>
+  </data>
+  <data name="OTPNumber" xml:space="preserve">
+    <value>عدد OTP</value>
+  </data>
+  <data name="OTPVerified" xml:space="preserve">
+    <value>مكتب المدعي العام التحقق</value>
+  </data>
+  <data name="PasswordDoNotMatch" xml:space="preserve">
+    <value>كلمة المرور وتأكيد كلمة المرور لا تطابق. الرجاء إدخاله مرة أخرى.</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="ProfileInformation" xml:space="preserve">
+    <value>معلومات الملف الشخصي</value>
+  </data>
+  <data name="RestrictTicketSubmission" xml:space="preserve">
+    <value>تقييد إرسال التذاكر</value>
+  </data>
+  <data name="SearchUser" xml:space="preserve">
+    <value>البحث عن المستخدم</value>
+  </data>
+  <data name="SelectArea" xml:space="preserve">
+    <value>- اختر المنطقة -</value>
+  </data>
+  <data name="SelectVillage" xml:space="preserve">
+    <value>- اختر قرية -</value>
+  </data>
+  <data name="SelectWilayat" xml:space="preserve">
+    <value>- اختر ولاية -</value>
+  </data>
+  <data name="Staff" xml:space="preserve">
+    <value>العاملين</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>الاسم الكامل</value>
+  </data>
+  <data name="TicketSubmissionIntervalDays" xml:space="preserve">
+    <value>أيام الفاصل الزمني لتقديم التذاكر</value>
+  </data>
+  <data name="UpdateUserStatus" xml:space="preserve">
+    <value>تحديث حالة المستخدم</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>ملف تعريفي للمستخدم</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>قائمة المستخدمين</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>نوع المستخدم</value>
+  </data>
+  <data name="Village" xml:space="preserve">
+    <value>قرية</value>
+  </data>
+  <data name="Wilayat" xml:space="preserve">
+    <value>ولاية</value>
+  </data>
+  <data name="AllUsers" xml:space="preserve">
+    <value>جميع المستخدمين</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>أدخل كلمة المرور.</value>
+  </data>
 </root>

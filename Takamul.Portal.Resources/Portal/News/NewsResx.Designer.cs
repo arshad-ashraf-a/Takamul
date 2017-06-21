@@ -79,7 +79,16 @@ namespace Takamul.Portal.Resources.Portal.News {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only allowed file size upto 1 MB..
+        ///   Looks up a localized string similar to All News.
+        /// </summary>
+        public static string AllNews {
+            get {
+                return ResourceManager.GetString("AllNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only allowed file size upto 10 MB..
         /// </summary>
         public static string AllowedFileSize {
             get {

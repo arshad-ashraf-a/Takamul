@@ -117,4 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>نشيط</value>
+  </data>
+  <data name="AddMember" xml:space="preserve">
+    <value>إضافة عضو</value>
+  </data>
+  <data name="AddNewMember" xml:space="preserve">
+    <value>إضافة عضو جديد</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="AllMembers" xml:space="preserve">
+    <value>أفراد</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>الوضعية</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>منطقة</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>مسدود</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة السر</value>
+  </data>
+  <data name="CivilID" xml:space="preserve">
+    <value>رقم الهوية المدنية</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>الاسم الكامل</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="IsBlocked" xml:space="preserve">
+    <value>تم حظره</value>
+  </data>
+  <data name="MemberList" xml:space="preserve">
+    <value>قائمة الأعضاء</value>
+  </data>
+  <data name="MemberProfile" xml:space="preserve">
+    <value>الملف الشخصي للعضو</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة السر الجديدة</value>
+  </data>
+  <data name="OTPVerified" xml:space="preserve">
+    <value>مكتب المدعي العام التحقق</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Profileinformation" xml:space="preserve">
+    <value>معلومات الملف الشخصي</value>
+  </data>
+  <data name="RestrictTicketSubmission" xml:space="preserve">
+    <value>تقييد إرسال التذاكر</value>
+  </data>
+  <data name="SearchMember" xml:space="preserve">
+    <value>عضو البحث</value>
+  </data>
+  <data name="TicketSubmissionIntervalDays" xml:space="preserve">
+    <value>أيام الفاصل الزمني لتقديم التذاكر</value>
+  </data>
+  <data name="UserFullName" xml:space="preserve">
+    <value>اسم المستخدم بالكامل</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Village" xml:space="preserve">
+    <value>قرية</value>
+  </data>
+  <data name="Wilayat" xml:space="preserve">
+    <value>ولاية</value>
+  </data>
 </root>

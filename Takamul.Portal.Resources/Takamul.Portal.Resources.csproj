@@ -39,16 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\APIResx.Designer.cs">
-      <DependentUpon>APIResx.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="API\APIResx.ar.Designer.cs">
-      <DependentUpon>APIResx.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Common\CommonResx.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,15 +129,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Portal\Tickets\TicketsResx.ar.Designer.cs">
-      <DependentUpon>TicketsResx.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Portal\Tickets\TicketsResx.Designer.cs">
-      <DependentUpon>TicketsResx.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>TicketsResx.resx</DependentUpon>
     </Compile>
     <Compile Include="Portal\Users\UsersResx.Designer.cs">
       <DependentUpon>UsersResx.resx</DependentUpon>
@@ -163,14 +148,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="API\APIResx.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>APIResx.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="API\APIResx.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>APIResx.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Common\CommonResx.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResx.ar.Designer.cs</LastGenOutput>
@@ -240,10 +217,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsResx.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Portal\Tickets\TicketsResx.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>TicketsResx.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\Tickets\TicketsResx.ar.resx" />
     <EmbeddedResource Include="Portal\Tickets\TicketsResx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TicketsResx.Designer.cs</LastGenOutput>

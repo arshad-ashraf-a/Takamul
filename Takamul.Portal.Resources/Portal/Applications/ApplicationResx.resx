@@ -121,7 +121,7 @@
     <value>Add New Application</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>Only allowed file size upto 1 MB.</value>
+    <value>Only allowed file size upto 10 MB.</value>
   </data>
   <data name="AppID" xml:space="preserve">
     <value>App ID</value>
@@ -179,5 +179,8 @@
   </data>
   <data name="ApplicationsList" xml:space="preserve">
     <value>Applications List</value>
+  </data>
+  <data name="AllApplications" xml:space="preserve">
+    <value>All Applications</value>
   </data>
 </root>

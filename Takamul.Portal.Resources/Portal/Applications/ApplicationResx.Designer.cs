@@ -79,7 +79,16 @@ namespace Takamul.Portal.Resources.Portal.Applications {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only allowed file size upto 1 MB..
+        ///   Looks up a localized string similar to All Applications.
+        /// </summary>
+        public static string AllApplications {
+            get {
+                return ResourceManager.GetString("AllApplications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only allowed file size upto 10 MB..
         /// </summary>
         public static string AllowedFileSize {
             get {

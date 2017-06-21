@@ -124,10 +124,13 @@
     <value>Add Ticket</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>Only allowed file size upto 1 MB.</value>
+    <value>Only allowed file size upto 10 MB.</value>
   </data>
   <data name="AllTickets" xml:space="preserve">
     <value>All Tickets</value>
+  </data>
+  <data name="ChangeTicketStatus" xml:space="preserve">
+    <value>Change Ticket Status</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Created Date</value>
@@ -135,8 +138,14 @@
   <data name="EnterRejectReason" xml:space="preserve">
     <value>enterreject reason&amp;hellip;&amp;hellip;</value>
   </data>
+  <data name="EnterYourMessage" xml:space="preserve">
+    <value>Enter your message...</value>
+  </data>
   <data name="GoBackToTickets" xml:space="preserve">
     <value>Go Back To Tickets</value>
+  </data>
+  <data name="GoToChats" xml:space="preserve">
+    <value>Go To Chats</value>
   </data>
   <data name="InvalidFileFormat" xml:space="preserve">
     <value>Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed.</value>
@@ -162,6 +171,12 @@
   <data name="SelectUser" xml:space="preserve">
     <value>- Select User -</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SendIcon" xml:space="preserve">
+    <value>icon-circle-right2</value>
+  </data>
   <data name="TicketChats" xml:space="preserve">
     <value>Ticket Chats</value>
   </data>
@@ -173,6 +188,9 @@
   </data>
   <data name="TicketDescription" xml:space="preserve">
     <value>Ticket Description</value>
+  </data>
+  <data name="TicketDetails" xml:space="preserve">
+    <value>Ticket Details</value>
   </data>
   <data name="TicketImage" xml:space="preserve">
     <value>Ticket Image</value>
@@ -186,6 +204,9 @@
   <data name="TicketParticipantUser" xml:space="preserve">
     <value>Ticket Participant User</value>
   </data>
+  <data name="TicketsList" xml:space="preserve">
+    <value>Tickets List</value>
+  </data>
   <data name="TicketStatus" xml:space="preserve">
     <value>Ticket Status</value>
   </data>
@@ -195,10 +216,10 @@
   <data name="UploadedTicketImage" xml:space="preserve">
     <value>Uploaded Ticket Image</value>
   </data>
-  <data name="TicketDetails" xml:space="preserve">
-    <value>Ticket Details</value>
+  <data name="UploadFile" xml:space="preserve">
+    <value>UploadFile</value>
   </data>
-  <data name="TicketsList" xml:space="preserve">
-    <value>Tickets List</value>
+  <data name="ViewTicketInfo" xml:space="preserve">
+    <value>View Ticket Info</value>
   </data>
 </root>

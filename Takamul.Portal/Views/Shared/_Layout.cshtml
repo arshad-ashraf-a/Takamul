@@ -162,28 +162,28 @@
 
                         </div>
                     </div>
-                    <div class="breadcrumb-line">
-                        <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="@Url.Action("Index", "home", new { area = "" })">
-                                    <i class="icon-home2 position-left"></i>Home
-                                </a>
-                            </li>
-                            @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
-                            {
-                                <li>
-                                    <a href="#">
-                                        @oBaseController.ParentNode
-                                    </a>
-                                </li>
-                            }
-                            @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
-                            {
-                                <li class="active">@oBaseController.CurrentPage</li>
-                            }
-                        </ul>
-                    </div>
+                    @if (!String.IsNullOrEmpty(oBaseController.ParentNode) || !String.IsNullOrEmpty(oBaseController.CurrentPage))
+                    {
+                        <div class="breadcrumb-line">
+                            <a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+                            <ul class="breadcrumb">
+
+                                @if (!String.IsNullOrEmpty(oBaseController.ParentNode))
+                                {
+                                    <li>
+                                        <a href="#">
+                                            @oBaseController.ParentNode
+                                        </a>
+                                    </li>
+                                }
+                                @if (!String.IsNullOrEmpty(oBaseController.CurrentPage))
+                                {
+                                    <li class="active">@oBaseController.CurrentPage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                   
 
                 </div>
                 <div class="content">

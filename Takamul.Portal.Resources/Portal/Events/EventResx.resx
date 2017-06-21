@@ -127,7 +127,7 @@
     <value>All Events</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>Only allowed file size upto 1 MB.</value>
+    <value>Only allowed file size upto 10 MB.</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Created Date</value>
@@ -141,14 +141,23 @@
   <data name="EditNewEvent" xml:space="preserve">
     <value>Edit New Event</value>
   </data>
+  <data name="EnterEventDescription" xml:space="preserve">
+    <value>enter event description...</value>
+  </data>
+  <data name="EnterEventLocation" xml:space="preserve">
+    <value>enter event location...</value>
+  </data>
   <data name="EnterSearchLocation" xml:space="preserve">
     <value>enter a location to search...</value>
+  </data>
+  <data name="EnterSearchPlace" xml:space="preserve">
+    <value>Enter Search Place e.g Muscat Grand Mall</value>
   </data>
   <data name="EventDate" xml:space="preserve">
     <value>Event Date</value>
   </data>
   <data name="EventDescription" xml:space="preserve">
-    <value>EventDescription</value>
+    <value>Event Description</value>
   </data>
   <data name="EventImage" xml:space="preserve">
     <value>EventI mage</value>
@@ -179,6 +188,9 @@
   </data>
   <data name="Longitude" xml:space="preserve">
     <value>Longitude</value>
+  </data>
+  <data name="MapInfo" xml:space="preserve">
+    <value>Double-click on an area of the map to select the event location.</value>
   </data>
   <data name="SearchEvent" xml:space="preserve">
     <value>search event</value>

@@ -1,7 +1,7 @@
 ﻿
 
 //creating function to load initial MAP when page loading 
-function LoadGoogleMAP() {
+function LoadGoogleMAP(sSelectedLat,sSelectedLong) {
     var markers = [];
     var map = new google.maps.Map(document.getElementById('divloadMap'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -55,10 +55,10 @@ function LoadGoogleMAP() {
             $("#EVENT_LATITUDE").val(place.geometry.location.lat().toFixed(4));
             $("#EVENT_LONGITUDE").val(place.geometry.location.lng().toFixed(4));
 
-            map.setZoom(5);
+            map.setZoom(15);
+            map.panTo(marker.position);
 
             bounds.extend(place.geometry.location);
-
         }
 
         map.fitBounds(bounds);
@@ -84,9 +84,29 @@ function LoadGoogleMAP() {
         $("#EVENT_LATITUDE").val(lat.toFixed(4));
         $("#EVENT_LONGITUDE").val(lng.toFixed(4));
 
+        map.setZoom(15);
+        map.panTo(marker.position);
+
         // if you don't do this, the map will zoom in
         //e.stopPropagation();
     });
+
+    debugger;
+    if (typeof sSelectedLat != "undefined" && typeof sSelectedLong != "undefined") {
+        clearOverlays();
+        var myLatLng = new google.maps.LatLng(sSelectedLat, sSelectedLong);
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+
+        marker.setPosition(myLatLng);
+
+        markers.push(marker);
+
+        map.setZoom(15);
+        map.panTo(marker.position);
+    }
 
     // current map's viewport.
     google.maps.event.addListener(map, 'bounds_changed', function () {
@@ -101,5 +121,3 @@ function LoadGoogleMAP() {
         markers.length = 0;
     }
 }
-
-google.maps.event.addDomListener(window, 'load', LoadGoogleMAP);

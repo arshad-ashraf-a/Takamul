@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">@MemberResx.UserName&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id = "txtUserNamePopUp", @class = "form-control", placeholder = "@MemberResx.UserName" } })
+                            @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { id = "txtUserNamePopUp", @class = "form-control", placeholder = @MemberResx.UserName } })
                         </div>
                     </div>
                 </div>
@@ -91,10 +91,10 @@
                 }
             },
             messages: {
-                FULL_NAME: @CommonResx.ThisFieldIsRequired,
-                USER_NAME: @CommonResx.ThisFieldIsRequired,
-                PHONE_NUMBER: @CommonResx.ThisFieldIsRequired,
-                EMAIL: @CommonResx.ThisFieldIsRequired
+                FULL_NAME: "@CommonResx.ThisFieldIsRequired",
+                USER_NAME: "@CommonResx.ThisFieldIsRequired",
+                PHONE_NUMBER: "@CommonResx.ThisFieldIsRequired",
+                EMAIL:  "@CommonResx.ThisFieldIsRequired",
             },
             highlight: function (e) {
                 $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');

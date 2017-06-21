@@ -61,6 +61,7 @@
     <Compile Include="ApiViewModel\TakamulMembeInfo.cs" />
     <Compile Include="ApiViewModel\TakamulTicketChat.cs" />
     <Compile Include="ApiViewModel\TakamulTicket.cs" />
+    <Compile Include="ApiViewModel\HomePageRepo.cs" />
     <Compile Include="ApiViewModel\TakamulTicketChatRepo.cs" />
     <Compile Include="ApiViewModel\TakamulUserResponse.cs" />
     <Compile Include="ApiViewModel\TakamulUser.cs" />

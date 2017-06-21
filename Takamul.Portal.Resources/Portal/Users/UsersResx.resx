@@ -172,7 +172,7 @@
     <value>Is Blocked</value>
   </data>
   <data name="IsOPTVerified" xml:space="preserve">
-    <value>Is OPT Verified</value>
+    <value>Is OTP Verified</value>
   </data>
   <data name="MobileUser" xml:space="preserve">
     <value>Mobile User</value>
@@ -196,7 +196,7 @@
     <value>Phone Number</value>
   </data>
   <data name="ProfileInformation" xml:space="preserve">
-    <value>ProfileI nformation</value>
+    <value>Profile Information</value>
   </data>
   <data name="RestrictTicketSubmission" xml:space="preserve">
     <value>Restrict Ticket Submission</value>
@@ -242,5 +242,11 @@
   </data>
   <data name="Wilayat" xml:space="preserve">
     <value>Wilayat</value>
+  </data>
+  <data name="AllUsers" xml:space="preserve">
+    <value>All Users</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter password.</value>
   </data>
 </root>

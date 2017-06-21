@@ -80,7 +80,7 @@
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE'
                 };
-            var sCaption = 'All News';
+            var sCaption = '@NewsResx.AllNews';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
                 '@NewsResx.NewsTitle',
@@ -105,9 +105,9 @@
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
-                                        { MenuTitle: "Options" },
-                                        { Caption: "Update", EventName: "fnEditNews();", RowId: true },
-                                        { Caption: "Delete", EventName: "fnDeleteNews();", RowId: true },
+                                        { MenuTitle: "@Buttons.Options" },
+                                        { Caption: "@Buttons.Update", EventName: "fnEditNews();", RowId: true },
+                                        { Caption: "@Buttons.Delete", EventName: "fnDeleteNews();", RowId: true },
             ];
             var oArrColsModel = [
                     {

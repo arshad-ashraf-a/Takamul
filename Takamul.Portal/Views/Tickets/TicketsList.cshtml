@@ -152,7 +152,7 @@
                     DefaultImage: 'DEFAULT_IMAGE',
                     CreatedDate: 'CREATED_DATE'
                 };
-            var sCaption = 'All Tickets';
+            var sCaption = '@TicketsResx.AllTickets';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
                 '',//Hidden Columns Represent TICKET_STATUS_ID Int Value
@@ -188,10 +188,10 @@
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
-                                        { MenuTitle: "Options" },
-                                        { Caption: "Go To Chats", EventName: "fnGoToTicketDetails();", RowId: true },
-                                        { Caption: "Change Ticket Status", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
-                                        { Caption: "View Ticket Info", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
+                                        { MenuTitle: "@Buttons.Options" },
+                                        { Caption: "@TicketsResx.GoToChats", EventName: "fnGoToTicketDetails();", RowId: true },
+                                        { Caption: "@TicketsResx.ChangeTicketStatus", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
+                                        { Caption: "@TicketsResx.ViewTicketInfo", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
             ];
             var oArrColsModel = [
                     {
@@ -319,7 +319,7 @@
         function fnFillTicketStatus() {
             //TODO:: option add 'ALL'
 
-            FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '- Select Status - ', ' ', [],
+            FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
                 function () {
                     //Success Function
                     $("#ddlTicketStatus").select2({ width: '100%' });
@@ -331,7 +331,7 @@
 
         function fnFillApplicationUsers() {
             //TODO:: option add 'ALL'
-            FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlParticipantUser', 'ID', 'FULL_NAME', '- Select User - ', ' ', [],
+            FillDropDownRoot('@Url.Action("JGetAllApplicationUsers", "Users")', 'POST', false, 'ddlParticipantUser', 'ID', 'FULL_NAME', '@TicketsResx.SelectUser', ' ', [],
                 function () {
                     //Success Function
                     $("#ddlParticipantUser").select2({ width: '100%' });

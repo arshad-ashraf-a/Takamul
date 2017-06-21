@@ -88,7 +88,7 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only allowed file size upto 1 MB..
+        ///   Looks up a localized string similar to Only allowed file size upto 10 MB..
         /// </summary>
         public static string AllowedFileSize {
             get {
@@ -133,11 +133,38 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to enter event description....
+        /// </summary>
+        public static string EnterEventDescription {
+            get {
+                return ResourceManager.GetString("EnterEventDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to enter event location....
+        /// </summary>
+        public static string EnterEventLocation {
+            get {
+                return ResourceManager.GetString("EnterEventLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to enter a location to search....
         /// </summary>
         public static string EnterSearchLocation {
             get {
                 return ResourceManager.GetString("EnterSearchLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Search Place e.g Muscat Grand Mall.
+        /// </summary>
+        public static string EnterSearchPlace {
+            get {
+                return ResourceManager.GetString("EnterSearchPlace", resourceCulture);
             }
         }
         
@@ -151,7 +178,7 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EventDescription.
+        ///   Looks up a localized string similar to Event Description.
         /// </summary>
         public static string EventDescription {
             get {
@@ -246,6 +273,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         public static string Longitude {
             get {
                 return ResourceManager.GetString("Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double-click on an area of the map to select the event location..
+        /// </summary>
+        public static string MapInfo {
+            get {
+                return ResourceManager.GetString("MapInfo", resourceCulture);
             }
         }
         

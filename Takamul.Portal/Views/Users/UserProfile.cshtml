@@ -124,7 +124,7 @@
         </div>
     </div>
     <div class="container-detached">
-        <div class="content-detached" style="margin-left:230px;">
+        <div class="content-detached" style="margin-@CommonResx.LayoutDirection:230px;">
 
             <!-- Tab content -->
             <div class="tab-content">
@@ -243,59 +243,59 @@
                     @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
                     {
                     <!-- Permissions settings -->
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <h6 class="panel-title">Permissions settings<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                                <div class="heading-elements">
-                                    <ul class="icons-list">
-                                        <li><a data-action="collapse"></a></li>
+                        @*<div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Permissions settings<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
 
-                                        <li><a data-action="close"></a></li>
-                                    </ul>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Eugene</td>
-                                                <td>Kopyov</td>
-                                                <td>@@Kopyov</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Victoria</td>
-                                                <td>Baker</td>
-                                                <td>@@Vicky</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>James</td>
-                                                <td>Alexander</td>
-                                                <td>@@Alex</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Franklin</td>
-                                                <td>Morrison</td>
-                                                <td>@@Frank</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Username</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Eugene</td>
+                                                    <td>Kopyov</td>
+                                                    <td>@@Kopyov</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Victoria</td>
+                                                    <td>Baker</td>
+                                                    <td>@@Vicky</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>James</td>
+                                                    <td>Alexander</td>
+                                                    <td>@@Alex</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Franklin</td>
+                                                    <td>Morrison</td>
+                                                    <td>@@Frank</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
                     <!-- /Permissions settings -->
                     }
                 </div>
@@ -509,7 +509,11 @@
         }
 
         function fnUpdateUserPassword(){
-            var bIsEnteredSamePassword =  $("#txtPassword").val() ===  $("#txtConfirmPassword").val();
+            var bIsEnteredSamePassword =  ($("#txtPassword").val() ===  $("#txtConfirmPassword").val());
+            if ($("#txtPassword").val() == "" ||  $("#txtConfirmPassword").val() == "") {
+                ShowStatusBarNotification("@UsersResx.EnterPassword", NotificationType.Warning)
+                return false;
+            }
             if (!bIsEnteredSamePassword) {
                 ShowStatusBarNotification("@UsersResx.PasswordDoNotMatch", NotificationType.Warning)
                 return false;

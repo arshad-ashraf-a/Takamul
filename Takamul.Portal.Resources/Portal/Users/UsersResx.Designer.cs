@@ -106,6 +106,15 @@ namespace Takamul.Portal.Resources.Portal.Users {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Users.
+        /// </summary>
+        public static string AllUsers {
+            get {
+                return ResourceManager.GetString("AllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Area {
@@ -196,6 +205,15 @@ namespace Takamul.Portal.Resources.Portal.Users {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter password..
+        /// </summary>
+        public static string EnterPassword {
+            get {
+                return ResourceManager.GetString("EnterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full Name.
         /// </summary>
         public static string FullName {
@@ -223,7 +241,7 @@ namespace Takamul.Portal.Resources.Portal.Users {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is OPT Verified.
+        ///   Looks up a localized string similar to Is OTP Verified.
         /// </summary>
         public static string IsOPTVerified {
             get {
@@ -295,7 +313,7 @@ namespace Takamul.Portal.Resources.Portal.Users {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileI nformation.
+        ///   Looks up a localized string similar to Profile Information.
         /// </summary>
         public static string ProfileInformation {
             get {

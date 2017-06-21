@@ -973,6 +973,7 @@
     <Content Include="Views\News\_AddNews.cshtml" />
     <Content Include="Views\News\_EditNews.cshtml" />
     <Content Include="Views\Tickets\_ViewTicketInfo.cshtml" />
+    <Content Include="Views\AccessDenied\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

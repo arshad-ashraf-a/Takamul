@@ -55,7 +55,7 @@ namespace LDC.eServices.Portal.Controllers
         {
             MemberInfoViewModel oMemberInfoViewModel = new MemberInfoViewModel();
             oMemberInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("_AddMemberInfo.cshtml", oMemberInfoViewModel);
+            return PartialView("_AddMemberInfo", oMemberInfoViewModel);
         }
         #endregion
 
@@ -68,7 +68,7 @@ namespace LDC.eServices.Portal.Controllers
         public PartialViewResult PartialEditMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
             oMemberInfoViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("_EditMemberInfo.cshtml", oMemberInfoViewModel);
+            return PartialView("_EditMemberInfo", oMemberInfoViewModel);
         }
         #endregion
 

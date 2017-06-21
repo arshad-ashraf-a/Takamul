@@ -250,6 +250,15 @@ namespace Takamul.Portal.Resources.Portal.ApplicationDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Support tickets.
+        /// </summary>
+        public static string SupportTickets {
+            get {
+                return ResourceManager.GetString("SupportTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to total closed tickets.
         /// </summary>
         public static string totalclosedtickets {

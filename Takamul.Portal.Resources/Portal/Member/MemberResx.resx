@@ -129,6 +129,9 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="AllMembers" xml:space="preserve">
+    <value>All Members</value>
+  </data>
   <data name="Application" xml:space="preserve">
     <value>Application</value>
   </data>

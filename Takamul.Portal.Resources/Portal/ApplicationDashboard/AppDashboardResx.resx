@@ -198,4 +198,7 @@
   <data name="Years" xml:space="preserve">
     <value>Years</value>
   </data>
+  <data name="SupportTickets" xml:space="preserve">
+    <value>Support tickets</value>
+  </data>
 </root>

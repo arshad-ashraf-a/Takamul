@@ -123,8 +123,11 @@
   <data name="AddNews" xml:space="preserve">
     <value>Add News</value>
   </data>
+  <data name="AllNews" xml:space="preserve">
+    <value>All News</value>
+  </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>Only allowed file size upto 1 MB.</value>
+    <value>Only allowed file size upto 10 MB.</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Created Date</value>
