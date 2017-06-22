@@ -18,6 +18,7 @@ using System.Data;
 using System.Linq;
 using System;
 using Infrastructure.Core;
+using Infrastructure.Utilities;
 
 namespace Takamul.Services
 {
@@ -26,7 +27,7 @@ namespace Takamul.Services
         #region Members
         private readonly TakamulConnection oTakamulConnection;
         private IDbSet<EVENTS> oEventsDBSet;// Represent DB Set Table For EVENTS
-
+        private CommonHelper oCommonHelper;
         #endregion
 
         #region Properties
@@ -53,7 +54,7 @@ namespace Takamul.Services
             base(oDataBaseContextIntialization)
         {
             oTakamulConnection = (oTakamulConnection ?? (TakamulConnection)oDataBaseContextIntialization);
-
+            oCommonHelper = new CommonHelper();
         }
         #endregion
 
@@ -203,6 +204,7 @@ namespace Takamul.Services
                         oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;
                     }
                     this.oTakamulConnection.EVENTS.Add(oEvent);
+
                     if (this.intCommit() > 0)
                     {
                         oResponse.OperationResult = enumOperationResult.Success;
@@ -210,6 +212,10 @@ namespace Takamul.Services
                     else
                     {
                         oResponse.OperationResult = enumOperationResult.Faild;
+                    }
+                    if (this.oCommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME, oEventViewModel.EVENT_DESCRIPTION))
+                    {
+
                     }
 
                 }
