@@ -6,12 +6,15 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.Script.Serialization;
 using System.Web.UI;
+
 
 namespace Infrastructure.Utilities
 {
@@ -408,7 +411,61 @@ namespace Infrastructure.Utilities
                 }
             }
             return convertedChars.ToString();
-        } 
+        }
+        #endregion
+
+        #region Push Notification
+
+        public Boolean SendPushNotification(string _headings,string _content,string _data="")
+        {
+            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+            bool flg = false;
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            request.Headers.Add("authorization", "Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx");
+
+            var serializer = new JavaScriptSerializer();
+            var obj = new
+            {
+                app_id = "b585b63f-8254-46e5-93db-b450f87fed09",
+                headings = new { en = _headings },
+                contents = new { en = _content },
+                data = _data,
+                included_segments = new string[] { "All" }
+            };
+            var param = serializer.Serialize(obj);
+            byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
+            string responseContent = null;
+
+            try
+            {
+                using (var writer = request.GetRequestStream())
+                {
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        responseContent = reader.ReadToEnd();
+                        flg = true;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+                
+            }
+           
+            System.Diagnostics.Debug.WriteLine(responseContent);
+            return flg;
+        }
         #endregion
     }
 }
