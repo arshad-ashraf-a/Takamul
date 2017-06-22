@@ -508,7 +508,7 @@ namespace Takamul.API.Controllers
 
             try
             {
-                Response oResponse = this.oITicketServices.oResolveTicket(oTicketId, Convert.ToInt32(ConstantNames.TicketStatusClosedID), oUserid);
+                Response oResponse = this.oITicketServices.oResolveTicket(oTicketId, Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.TicketStatusClosedID)), oUserid);
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
 

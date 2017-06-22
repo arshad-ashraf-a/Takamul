@@ -257,6 +257,8 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
+    <Content Include="bin\Takamul.Portal.dll" />
+    <Content Include="bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\Takamul_script_19-06-2017.sql" />
     <Content Include="DBScript\Takamul_script_21-05-2017.sql" />

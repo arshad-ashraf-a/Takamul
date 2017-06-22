@@ -42,7 +42,7 @@ namespace Takamul.Services
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber);
+        Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber, string sDeviceID);
         #endregion
 
         #region Method :: Response :: oResendOTPNumber

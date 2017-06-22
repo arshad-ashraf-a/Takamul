@@ -355,8 +355,8 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("DeleteTicket", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
-                oResponse.OperationResultMessage = "Ticket has been resolved";
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
+                oResponse.OperationResultMessage = "Ticket has been deleted";
             }
             catch (Exception Ex)
             {

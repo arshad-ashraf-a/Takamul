@@ -27,6 +27,9 @@ namespace Takamul.Models.ApiViewModel
         public string Email { get; set; }
         [Required]
         public string FullName { get; set; }
+        [Required]
+        public string DeviceID { get; set; }
+
         public string CivilID { get; set; }
         public string Addresss { get; set; }
         public string AreaName { get; set; }
@@ -68,6 +71,7 @@ namespace Takamul.Models.ApiViewModel
             this.IsTicketSubmissionRestricted = false;
             this.TicketSubmissionIntervalDays = 0;
             this.LastTicketSubmissionDate = string.Empty;
+            this.DeviceID = string.Empty;
         }
         #endregion
     }

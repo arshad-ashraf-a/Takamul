@@ -49,7 +49,7 @@ namespace Takamul.Services
         /// <param name="nUserID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
-        public UserInfoViewModel oGetUserDetails(int nUserID,string sPhoneNumber)
+        public UserInfoViewModel oGetUserDetails(int nUserID, string sPhoneNumber)
         {
             UserInfoViewModel oUserInfoViewModel = null;
             #region ":DBParamters:"
@@ -98,6 +98,7 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_WilayatId", SqlDbType.Int, oUserInfoViewModel.WILAYAT_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_VillageId", SqlDbType.Int, oUserInfoViewModel.VILLAGE_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, oUserInfoViewModel.OTP_NUMBER, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DeviceID", SqlDbType.VarChar, oUserInfoViewModel.DEVICE_ID, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_UserID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
@@ -127,8 +128,9 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
+        /// <param name="sDeviceID"></param>
         /// <returns></returns>
-        public Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber)
+        public Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber,string sDeviceID)
         {
             #region ": Sp Result:"
 
@@ -140,6 +142,7 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DeviceID", SqlDbType.VarChar, sDeviceID, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("ValidateOPTNumber", arrParameters.ToArray());

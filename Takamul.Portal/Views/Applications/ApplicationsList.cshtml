@@ -326,6 +326,7 @@
             }
 
             var formData = $("#frmAddApplication").serializeArray();
+            formData.push({ name: "MemberUserID", value: Number($("#ddlMemberUser").val()) });
             data.append("ApplicationLogoFile", files[0]);
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
@@ -397,14 +398,14 @@
                     FORMATTED_EXPIRY_DATE: {
                         required: true
                     },
-                    MemberUserID: {
+                    ddlMemberUser: {
                         dropDownValidator: "-99"
                     },
                 },
                 messages: {
                     APPLICATION_NAME: "@CommonResx.ThisFieldIsRequired",
                     FORMATTED_EXPIRY_DATE: "@CommonResx.ThisFieldIsRequired",
-                    MemberUserID: "@CommonResx.ThisFieldIsRequired",
+                    ddlMemberUser: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -465,6 +466,7 @@
             var bIsActive = rowData.IS_ACTIVE;
             var sApplicationLogoPath = rowData.APPLICATION_LOGO_PATH;
             var sMemberUserID = rowData.MemberUserID;
+            debugger;
             var dataToSend = JSON.stringify({
                 ID: vAppplicationId,
                 APPLICATION_NAME: sApplicationName,
@@ -556,6 +558,8 @@
             }
 
             var formData = $("#frmEditApplication").serializeArray();
+            debugger;
+            formData.push({ name: "MemberUserID", value: Number($("#ddlMemberUser").val()) });
             data.append("ApplicationLogoFile", files[0]);
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);

@@ -71,13 +71,13 @@
     </Compile>
     <Compile Include="Portal\ApplicationDashboard\AppDashboardResx.ar.Designer.cs">
       <DependentUpon>AppDashboardResx.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Portal\ApplicationDashboard\AppDashboardResx.Designer.cs">
       <DependentUpon>AppDashboardResx.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Portal\Applications\ApplicationResx.ar.Designer.cs">
       <DependentUpon>ApplicationResx.ar.resx</DependentUpon>
@@ -146,7 +146,16 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bin\Debug\ar\Takamul.Portal.Resources.resources.dll" />
+    <Content Include="bin\Debug\Takamul.Portal.Resources.dll" />
+    <Content Include="bin\Debug\Takamul.Portal.Resources.pdb" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Release\ar\Takamul.Portal.Resources.resources.dll" />
+    <Content Include="bin\Release\Takamul.Portal.Resources.dll" />
+    <Content Include="bin\Release\Takamul.Portal.Resources.pdb" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\CommonResx.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

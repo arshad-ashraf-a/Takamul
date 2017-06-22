@@ -75,7 +75,8 @@ namespace Takamul.API.Controllers
                         AREA_ID = oTakamulUser.AreaID,
                         WILAYAT_ID = oTakamulUser.WilayatID,
                         VILLAGE_ID = oTakamulUser.VillageID,
-                        OTP_NUMBER = nOTPNumber
+                        OTP_NUMBER = nOTPNumber,
+                        DEVICE_ID = oTakamulUser.DeviceID
                     };
 
                     Response oResponse = this.oIAuthenticationService.oInsertMobileUser(oUserInfoViewModel);
@@ -176,15 +177,16 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
+        /// <param name="sDeviceID"></param>
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID)
+        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID,string sDeviceID)
         {
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
             string sResultMessage = string.Empty;
-            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(sPhoneNumber, nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(sPhoneNumber, nOTPNumber, sDeviceID);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {

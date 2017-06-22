@@ -1,4 +1,5 @@
 ﻿using Data.Core;
+using ImageMagick;
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
@@ -288,17 +289,24 @@ namespace LDC.eServices.Portal.Controllers
                         this.OperationResultMessages = CommonResx.MessageAddSuccess;
                         if (oFile != null)
                         {
+                            byte[] fileData = null;
+                            using (var binaryReader = new BinaryReader(filebase.InputStream))
+                            {
+                                fileData = binaryReader.ReadBytes(filebase.ContentLength);
+                            }
+
+                            //MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                            //oMagickImage.Format = MagickFormat.Icon;
+                            //oMagickImage.Resize(72, 0);
+
+
                             FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
                             //DirectoryPath = Saved Application ID
                             string sDirectoryPath = oApplicationViewModel.ID.ToString();
                             string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
                             oFileAccessService.CreateDirectory(sDirectoryPath);
-                            byte[] fileData = null;
-                            using (var binaryReader = new BinaryReader(filebase.InputStream))
-                            {
-                                fileData = binaryReader.ReadBytes(filebase.ContentLength);
-                            }
+                            
                             oFileAccessService.WirteFileByte(sFullFilePath, fileData);
                         }
                         this.OperationResult = enumOperationResult.Success;
