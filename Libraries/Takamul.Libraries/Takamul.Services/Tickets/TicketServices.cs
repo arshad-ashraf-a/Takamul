@@ -203,6 +203,8 @@ namespace Takamul.Services
 
                     //User Device ID
                     oResponse.ResponseCode = arrParameters[5].Value.ToString();
+
+                    oResponse.OperationResult = enumOperationResult.Success;
                 }
                 //oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[6].Value.ToString());
                 //if (oResponse.OperationResult == enumOperationResult.Success)
@@ -253,6 +255,7 @@ namespace Takamul.Services
                 {
                     //User Device ID
                     oResponse.ResponseCode = arrParameters[5].Value.ToString();
+                    oResponse.OperationResult = enumOperationResult.Success;
                 }
 
                 //oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());

@@ -379,10 +379,9 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    string sUserDeviceID = oResponseResult.ResponseCode;
                     if (oFile != null)
                     {
-                        string sUserDeviceID = oResponseResult.ResponseCode;
-
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
                         //DirectoryPath = Saved Application ID + Inserted Ticket ID 
@@ -396,10 +395,10 @@ namespace LDC.eServices.Portal.Controllers
                         }
                         oFileAccessService.WirteFileByte(sFullFilePath, fileData);
                     }
-                    this.OperationResultMessages = CommonResx.MessageEditSuccess;
+                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.Faild:
-                    this.OperationResultMessages = CommonResx.MessageEditFailed;
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
                     break;
             }
             return Json(
