@@ -269,6 +269,13 @@ namespace LDC.eServices.Portal.Controllers
                         oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
 
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+
+                        if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME, oEventViewModel.EVENT_DESCRIPTION))
+                        {
+
+                        }
+
+
                     }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;

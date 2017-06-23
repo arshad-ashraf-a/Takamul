@@ -126,6 +126,7 @@ namespace LDC.eServices.Portal.Controllers
                 case enumOperationResult.Success:
                     {
                         this.OperationResultMessages = CommonResx.MessageAddSuccess;
+
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
                         //DirectoryPath = Application ID + News Folder
@@ -139,6 +140,12 @@ namespace LDC.eServices.Portal.Controllers
                         
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                         this.OperationResult = enumOperationResult.Success;
+
+                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oNewsViewModel.NEWS_CONTENT))
+                        {
+
+                        }
+
                     }
                     break;
                 case enumOperationResult.Faild:

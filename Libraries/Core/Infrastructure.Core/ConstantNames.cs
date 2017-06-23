@@ -203,5 +203,44 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region OneSignalServiceURL
+        /// <summary>
+        /// OneSignalServiceURL
+        /// </summary>
+        public static string OneSignalServiceURL
+        {
+            get
+            {
+                return "OneSignalServiceURL";
+            }
+        }
+        #endregion
+
+        #region OneSignalAuthKey
+        /// <summary>
+        /// OneSignalAuthKey
+        /// </summary>
+        public static string OneSignalAuthKey
+        {
+            get
+            {
+                return "OneSignalAuthKey";
+            }
+        }
+        #endregion
+
+        #region MobileAppID
+        /// <summary>
+        /// MobileAppID
+        /// </summary>
+        public static string MobileAppID
+        {
+            get
+            {
+                return "MobileAppID";
+            }
+        }
+        #endregion
+
     }
 }

@@ -190,15 +190,19 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.NVarChar, oTicketViewModel.TICKET_NAME, 300, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketDesciption", SqlDbType.NVarChar, oTicketViewModel.TICKET_DESCRIPTION, 5000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DefaultImagePath", SqlDbType.VarChar, oTicketViewModel.DEFAULT_IMAGE, 500, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar,50, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertTicket", arrParameters.ToArray());
-                oResponse.nOperationResult = Convert.ToInt32(arrParameters[6].Value.ToString());
+                oResponse.nOperationResult = Convert.ToInt32(arrParameters[7].Value.ToString());
                 if (oResponse.nOperationResult == 1)
                 {
                     //Inserted Ticket ID
-                    oResponse.ResponseID = arrParameters[5].Value.ToString();
+                    oResponse.ResponseID = arrParameters[6].Value.ToString();
+
+                    //User Device ID
+                    oResponse.ResponseCode = arrParameters[5].Value.ToString();
                 }
                 //oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[6].Value.ToString());
                 //if (oResponse.OperationResult == enumOperationResult.Success)
@@ -240,10 +244,17 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.NVarChar, oTicketChatViewModel.REPLY_MESSAGE, 4000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyFilePath", SqlDbType.VarChar, oTicketChatViewModel.REPLY_FILE_PATH, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketChatTypeId", SqlDbType.Int, oTicketChatViewModel.TICKET_CHAT_TYPE_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar, 50, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertTicketChat", arrParameters.ToArray());
-                oResponse.nOperationResult = Convert.ToInt32(arrParameters[5].Value.ToString());
+                oResponse.nOperationResult = Convert.ToInt32(arrParameters[6].Value.ToString());
+                if (oResponse.nOperationResult == 1)
+                {
+                    //User Device ID
+                    oResponse.ResponseCode = arrParameters[5].Value.ToString();
+                }
+
                 //oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());
             }
             catch (Exception Ex)

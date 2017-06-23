@@ -151,6 +151,7 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    string sUserDeviceID = oResponse.ResponseCode;
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.Faild:
@@ -229,6 +230,8 @@ namespace LDC.eServices.Portal.Controllers
                     Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
                     if (oResponse.OperationResult == enumOperationResult.Success)
                     {
+                        string sUserDeviceID = oResponse.ResponseCode;
+
                         if (!string.IsNullOrEmpty(sFullFilePath))
                         {
                             FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
@@ -378,6 +381,8 @@ namespace LDC.eServices.Portal.Controllers
                 case enumOperationResult.Success:
                     if (oFile != null)
                     {
+                        string sUserDeviceID = oResponseResult.ResponseCode;
+
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
                         //DirectoryPath = Saved Application ID + Inserted Ticket ID 

@@ -1,4 +1,5 @@
 ﻿using Data.Core;
+using Infrastructure.Core;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -416,20 +417,22 @@ namespace Infrastructure.Utilities
 
         #region Push Notification
 
-        public Boolean SendPushNotification(string _headings,string _content,string _data="")
+        public static bool SendPushNotification(string _headings,string _content,string _data="")
         {
-            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+            var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
             request.KeepAlive = true;
             request.Method = "POST";
             request.ContentType = "application/json; charset=utf-8";
 
-            request.Headers.Add("authorization", "Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx");
+            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+
+            request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
             var obj = new
             {
-                app_id = "b585b63f-8254-46e5-93db-b450f87fed09",
+                app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                 headings = new { en = _headings },
                 contents = new { en = _content },
                 data = _data,

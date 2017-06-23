@@ -30,7 +30,6 @@ namespace Takamul.Services
         #region Members
         private readonly TakamulConnection oTakamulConnection;
         private IDbSet<NEWS> oNewsDBSet;// Represent DB Set Table For EVENTS
-        private CommonHelper oCommonHelper;
         #endregion
 
         #region Properties
@@ -57,7 +56,6 @@ namespace Takamul.Services
             base(oDataBaseContextIntialization)
         {
             oTakamulConnection = (oTakamulConnection ?? (TakamulConnection)oDataBaseContextIntialization);
-            oCommonHelper = new CommonHelper();
         }
         #endregion
 
@@ -208,10 +206,7 @@ namespace Takamul.Services
                     {
                         oResponse.OperationResult = enumOperationResult.Faild;
                     }
-                    if (this.oCommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oNewsViewModel.NEWS_CONTENT))
-                    {
-
-                    }
+                   
                     // insertedId = oNews.ID;
 
                 }
