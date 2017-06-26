@@ -270,7 +270,7 @@ namespace LDC.eServices.Portal.Controllers
 
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
 
-                        if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME, oEventViewModel.EVENT_DESCRIPTION))
+                        if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME,oResponseResult.ResponseCode))
                         {
 
                         }

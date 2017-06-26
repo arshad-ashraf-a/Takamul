@@ -417,7 +417,7 @@ namespace Infrastructure.Utilities
 
         #region Push Notification
 
-        public static bool SendPushNotification(string _headings,string _content,string _data="")
+        public static bool SendPushNotification(string _headings, string _content, string _data = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
@@ -430,43 +430,78 @@ namespace Infrastructure.Utilities
             request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
-            var obj = new
-            {
-                app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
-                headings = new { en = _headings },
-                contents = new { en = _content },
-                data = _data,
-                included_segments = new string[] { "All" }
-            };
-            var param = serializer.Serialize(obj);
-            byte[] byteArray = Encoding.UTF8.GetBytes(param);
-
-            string responseContent = null;
 
             try
             {
-                using (var writer = request.GetRequestStream())
+                if (_deviceID != "")
                 {
-                    writer.Write(byteArray, 0, byteArray.Length);
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = _data,
+                        include_player_ids = new string[] { _deviceID }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+                else
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = _data,
+                        included_segments = new string[] { "All" }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
                 }
 
-                using (var response = request.GetResponse() as HttpWebResponse)
-                {
-                    using (var reader = new StreamReader(response.GetResponseStream()))
-                    {
-                        responseContent = reader.ReadToEnd();
-                        flg = true;
-                    }
-                }
             }
             catch (WebException ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
-                
+
             }
-           
-            System.Diagnostics.Debug.WriteLine(responseContent);
+
             return flg;
         }
         #endregion
