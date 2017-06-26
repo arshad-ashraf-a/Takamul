@@ -558,4 +558,7 @@
   <data name="Logout" xml:space="preserve">
     <value>الخروج</value>
   </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>الرجوع للقائمة</value>
+  </data>
 </root>
