@@ -206,10 +206,12 @@ namespace Takamul.Services
                     if (this.intCommit() > 0)
                     {
                         oResponse.OperationResult = enumOperationResult.Success;
+                        oResponse.ResponseCode = Convert.ToString(oEvent.ID);
                     }
                     else
                     {
                         oResponse.OperationResult = enumOperationResult.Faild;
+                        oResponse.ResponseCode = "";
                     }
                 }
             }

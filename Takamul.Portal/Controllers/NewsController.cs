@@ -141,7 +141,7 @@ namespace LDC.eServices.Portal.Controllers
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                         this.OperationResult = enumOperationResult.Success;
 
-                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oNewsViewModel.NEWS_CONTENT))
+                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
                         {
 
                         }

@@ -147,6 +147,11 @@ namespace LDC.eServices.Portal.Controllers
             };
 
             Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+
+            if (CommonHelper.SendPushNotification("New Chat Reply", "", oTicketChatViewModel.REPLY_MESSAGE,oResponse.ResponseCode)) ;
+            {
+
+            }
             this.OperationResult = oResponse.OperationResult;
             switch (this.OperationResult)
             {
