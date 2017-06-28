@@ -28,6 +28,7 @@ namespace Takamul.Models.ApiViewModel
         public int TicketChatTypeID { get; set; }
         public string TicketChatTypeName { get; set; }
         public string UserFullName { get; set; }
+        public byte[] ByteReplyImage { get; set; }
 
         #region :: Constructor ::
         public TakamulTicketChat()
@@ -43,6 +44,7 @@ namespace Takamul.Models.ApiViewModel
             this.RemoteFilePath = string.Empty;
             this.TicketChatTypeName = string.Empty;
             this.UserFullName = string.Empty;
+            this.ByteReplyImage = new byte[0];
         }
         #endregion
     }
