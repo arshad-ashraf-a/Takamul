@@ -127,6 +127,10 @@ namespace LDC.eServices.Portal.Controllers
                     {
                         this.OperationResultMessages = CommonResx.MessageAddSuccess;
 
+                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
+                        {
+
+                        }
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
                         //DirectoryPath = Application ID + News Folder
@@ -141,10 +145,7 @@ namespace LDC.eServices.Portal.Controllers
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                         this.OperationResult = enumOperationResult.Success;
 
-                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
-                        {
-
-                        }
+                       
 
                     }
                     break;

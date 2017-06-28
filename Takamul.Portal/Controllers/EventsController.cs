@@ -255,6 +255,10 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
+                    if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode))
+                    {
+
+                    }
                     if (oFile != null)
                     {
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
@@ -270,10 +274,7 @@ namespace LDC.eServices.Portal.Controllers
 
                         oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
 
-                        if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME,oResponseResult.ResponseCode))
-                        {
-
-                        }
+                        
 
 
                     }

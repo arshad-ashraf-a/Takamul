@@ -148,7 +148,7 @@ namespace LDC.eServices.Portal.Controllers
 
             Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
 
-            if (CommonHelper.SendPushNotification("New Chat Reply", "", oTicketChatViewModel.REPLY_MESSAGE,oResponse.ResponseCode)) ;
+            if (CommonHelper.SendPushNotification("New Chat Reply", "", oTicketChatViewModel.REPLY_MESSAGE, "f950a97a-e600-474f-82cd-29fef908cb76")) ;
             {
 
             }
@@ -379,6 +379,11 @@ namespace LDC.eServices.Portal.Controllers
             oTicketViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
 
             oResponseResult = this.oITicketServices.oInsertTicket(oTicketViewModel, oTicketViewModel.MobileParticipantId);
+
+            if (CommonHelper.SendPushNotification("New Ticket", oTicketViewModel.TICKET_NAME, oTicketViewModel.TICKET_DESCRIPTION, oResponseResult.ResponseCode)) ;
+            {
+
+            }
             this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)
