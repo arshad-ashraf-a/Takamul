@@ -89,6 +89,10 @@
     <Compile Include="SecurityFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Takamul.Libraries\Takamul.Models\Takamul.Models.csproj">
+      <Project>{255fbaac-4774-4ed2-a6c2-0fd4d9232722}</Project>
+      <Name>Takamul.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Core\Infrastructure.Core.csproj">
       <Project>{41979552-6e9d-48c7-ac90-baf34caa0786}</Project>
       <Name>Infrastructure.Core</Name>

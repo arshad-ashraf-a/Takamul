@@ -144,14 +144,12 @@ namespace LDC.eServices.Portal.Controllers
                 REPLY_MESSAGE = sChatMessage,
                 TICKET_CHAT_TYPE_ID = 1,
                 TICKET_PARTICIPANT_ID = CurrentUser.nUserID
+                
             };
 
-            Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+            Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel); 
 
-            if (CommonHelper.SendPushNotification("New Chat Reply", "", oTicketChatViewModel.REPLY_MESSAGE, "f950a97a-e600-474f-82cd-29fef908cb76")) ;
-            {
-
-            }
+            CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, "f950a97a-e600-474f-82cd-29fef908cb76");
             this.OperationResult = oResponse.OperationResult;
             switch (this.OperationResult)
             {

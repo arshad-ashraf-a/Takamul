@@ -15,7 +15,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Script.Serialization;
 using System.Web.UI;
-
+using Takamul.Models.ViewModel;
 
 namespace Infrastructure.Utilities
 {
@@ -504,6 +504,71 @@ namespace Infrastructure.Utilities
 
             return flg;
         }
+        public static bool SendRealtimeChat(string _headings, string _content, TicketChatViewModel oTicketChatViewModel,string ChatID, string _deviceID ="")
+        {
+            bool flg = false;
+
+            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            request.Headers.Add("authorization", "Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx");
+
+            var serializer = new JavaScriptSerializer();
+            var obj = new
+            {
+                app_id = "b585b63f-8254-46e5-93db-b450f87fed09",
+                contents = new { en = "English Message" },
+                data = new {
+                    applID ="",
+                    TicketID= oTicketChatViewModel.TICKET_ID,
+                    TicketChatID = ChatID,
+                    ReplyMsg = oTicketChatViewModel.REPLY_MESSAGE,
+                    ReplyDate = oTicketChatViewModel.REPLIED_DATE,
+                    RemoteFilePath = oTicketChatViewModel.REPLY_FILE_PATH,
+                    TicketChatType = oTicketChatViewModel.TICKET_CHAT_TYPE_ID,
+                    UserId = 1,
+                    Username = "Admin",
+                    Typename= oTicketChatViewModel.CHAT_TYPE
+                },
+                include_player_ids = new string[] { _deviceID }
+            };
+
+
+
+            var param = serializer.Serialize(obj);
+            byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
+            string responseContent = null;
+
+            try
+            {
+                using (var writer = request.GetRequestStream())
+                {
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        responseContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+            }
+
+            System.Diagnostics.Debug.WriteLine(responseContent);
+
+            return flg;
+        }
+
         #endregion
     }
 }
