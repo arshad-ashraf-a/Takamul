@@ -127,25 +127,30 @@ namespace LDC.eServices.Portal.Controllers
                     {
                         this.OperationResultMessages = CommonResx.MessageAddSuccess;
 
-                        if (CommonHelper.SendPushNotification("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
+                        try
+                        {
+                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+
+                            //DirectoryPath = Application ID + News Folder
+                            string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
+                            string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                            oFileAccessService.CreateDirectory(sDirectoryPath);
+
+                            MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                            oMagickImage.Format = MagickFormat.Png;
+                            oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+
+                            oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+                            this.OperationResult = enumOperationResult.Success;
+                        }
+                        catch(Exception ex)
                         {
 
                         }
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                        if (CommonHelper.SendPushNotificationNews("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
+                        {
 
-                        //DirectoryPath = Application ID + News Folder
-                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
-                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
-                        oFileAccessService.CreateDirectory(sDirectoryPath);
-
-                        MagickImage oMagickImage = new MagickImage(filebase.InputStream);
-                        oMagickImage.Format = MagickFormat.Png;
-                        oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
-                        
-                        oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
-                        this.OperationResult = enumOperationResult.Success;
-
-                       
+                        }
 
                     }
                     break;

@@ -149,7 +149,7 @@ namespace LDC.eServices.Portal.Controllers
 
             Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel); 
 
-            CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, "f950a97a-e600-474f-82cd-29fef908cb76");
+            CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, oResponse.ResponseCode);
             this.OperationResult = oResponse.OperationResult;
             switch (this.OperationResult)
             {

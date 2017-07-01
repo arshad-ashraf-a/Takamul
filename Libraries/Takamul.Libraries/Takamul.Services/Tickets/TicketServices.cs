@@ -246,20 +246,21 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyMessage", SqlDbType.NVarChar, oTicketChatViewModel.REPLY_MESSAGE, 4000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ReplyFilePath", SqlDbType.VarChar, oTicketChatViewModel.REPLY_FILE_PATH, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketChatTypeId", SqlDbType.Int, oTicketChatViewModel.TICKET_CHAT_TYPE_ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar, ParameterDirection.Output));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar, ParameterDirection.Output, 4000));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_ChatID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketChatID", SqlDbType.Int, ParameterDirection.Output));
+                
 
                 this.ExecuteStoredProcedureCommand("InsertTicketChat", arrParameters.ToArray());
-                oResponse.nOperationResult = Convert.ToInt32(arrParameters[6].Value.ToString());
-                oResponse.ResponseID = arrParameters[7].Value.ToString();
+                oResponse.nOperationResult = Convert.ToInt32(arrParameters[7].Value.ToString());
+                
 
                 if (oResponse.nOperationResult == 1)
                 {
                     //User Device ID
                     oResponse.ResponseCode = arrParameters[5].Value.ToString();
                     oResponse.OperationResult = enumOperationResult.Success;
-                    oResponse.ResponseID = arrParameters[7].Value.ToString();
+                    oResponse.ResponseID = arrParameters[6].Value.ToString();
                 }
 
                 //oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());

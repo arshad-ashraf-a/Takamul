@@ -417,7 +417,7 @@ namespace Infrastructure.Utilities
 
         #region Push Notification
 
-        public static bool SendPushNotification(string _headings, string _content, string _data = "", string _deviceID = "")
+        public static bool SendPushNotification(string _headings, string _content, string _id = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
@@ -426,7 +426,7 @@ namespace Infrastructure.Utilities
             request.ContentType = "application/json; charset=utf-8";
 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
-
+           // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
             request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
@@ -440,7 +440,7 @@ namespace Infrastructure.Utilities
                         app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                         headings = new { en = _headings },
                         contents = new { en = _content },
-                        data = _data,
+                        data = new { VariableID = _id },
                         include_player_ids = new string[] { _deviceID }
                     };
                     var param = serializer.Serialize(obj);
@@ -470,7 +470,182 @@ namespace Infrastructure.Utilities
                         app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                         headings = new { en = _headings },
                         contents = new { en = _content },
-                        data = _data,
+                        data = new { VariableID = _id },
+                        included_segments = new string[] { "All" }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+
+            }
+
+            return flg;
+        }
+
+        public static bool SendPushNotificationNews(string _headings, string _content, string _id = "", string _deviceID = "")
+        {
+            var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
+            bool flg = false;
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+            // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
+            request.Headers.Add("authorization", sAutherizationKey);
+
+            var serializer = new JavaScriptSerializer();
+
+            try
+            {
+                if (_deviceID != "")
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = new { NewsID = _id },
+                        include_player_ids = new string[] { _deviceID }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+                else
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = new { NewsID = _id },
+                        included_segments = new string[] { "All" }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+
+            }
+
+            return flg;
+        }
+        public static bool SendPushNotificationEvents(string _headings, string _content, string _id = "", string _deviceID = "")
+        {
+            var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
+            bool flg = false;
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+            // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
+            request.Headers.Add("authorization", sAutherizationKey);
+
+            var serializer = new JavaScriptSerializer();
+
+            try
+            {
+                if (_deviceID != "")
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = new { EventID = _id },
+                        include_player_ids = new string[] { _deviceID }
+                    };
+                    var param = serializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+                else
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = _headings },
+                        contents = new { en = _content },
+                        data = new { EventID = _id },
                         included_segments = new string[] { "All" }
                     };
                     var param = serializer.Serialize(obj);
@@ -514,12 +689,13 @@ namespace Infrastructure.Utilities
             request.Method = "POST";
             request.ContentType = "application/json; charset=utf-8";
 
-            request.Headers.Add("authorization", "Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx");
-
+            // 
+            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+            request.Headers.Add("authorization", sAutherizationKey);
             var serializer = new JavaScriptSerializer();
             var obj = new
             {
-                app_id = "b585b63f-8254-46e5-93db-b450f87fed09",
+                app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                 contents = new { en = "English Message" },
                 data = new {
                     applID ="",

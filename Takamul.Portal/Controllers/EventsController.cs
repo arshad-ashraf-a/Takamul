@@ -255,26 +255,31 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
-                    if (CommonHelper.SendPushNotification("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode))
-                    {
-
-                    }
+                   
                     if (oFile != null)
                     {
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
-                        //DirectoryPath = Saved Application ID + Evemts Folder
-                        string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
-                        string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
-                        oFileAccessService.CreateDirectory(sDirectoryPath);
+                        try
+                        {
+                            //DirectoryPath = Saved Application ID + Evemts Folder
+                            string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "Events");
+                            string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                            oFileAccessService.CreateDirectory(sDirectoryPath);
 
-                        MagickImage oMagickImage = new MagickImage(filebase.InputStream);
-                        oMagickImage.Format = MagickFormat.Png;
-                        oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+                            MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                            oMagickImage.Format = MagickFormat.Png;
+                            oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
 
-                        oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+                            oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                        if (CommonHelper.SendPushNotificationEvents("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode))
+                        {
 
-                        
+                        }
 
 
                     }
