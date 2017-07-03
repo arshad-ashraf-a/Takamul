@@ -648,6 +648,7 @@ namespace Infrastructure.Utilities
                         data = new { EventID = _id, LanguageID = _lang },
                         included_segments = new string[] { "All" }
                     };
+
                     var param = serializer.Serialize(obj);
                     byte[] byteArray = Encoding.UTF8.GetBytes(param);
                     string responseContent = null;
@@ -688,6 +689,16 @@ namespace Infrastructure.Utilities
             request.KeepAlive = true;
             request.Method = "POST";
             request.ContentType = "application/json; charset=utf-8";
+            string messageTitle = "";
+
+            if (oTicketChatViewModel.TICKET_CHAT_TYPE_ID != 1)
+            {
+                messageTitle = "File uploaded";
+            }
+            else
+            {
+                messageTitle = oTicketChatViewModel.REPLY_MESSAGE.Length > 100 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
+            }          
 
             // 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
@@ -696,7 +707,7 @@ namespace Infrastructure.Utilities
             var obj = new
             {
                 app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
-                contents = new { en = "English Message" },
+                contents = new { en = messageTitle },
                 data = new {
                     applID ="",
                     TicketID= oTicketChatViewModel.TICKET_ID,
