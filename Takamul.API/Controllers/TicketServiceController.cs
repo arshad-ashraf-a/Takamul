@@ -177,37 +177,40 @@ namespace Takamul.API.Controllers
                     oTakamulTicketChatRepo.TakamulTicketChatList = lstTakamulTicket;
                 }
 
-                TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
-                TakamulTicket oTakamulTicket = null;
-                if (oTicketViewModel != null)
+
+            }
+
+            TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
+            TakamulTicket oTakamulTicket = null;
+            if (oTicketViewModel != null)
+            {
+                string sRemoteFilePath = string.Empty;
+                if (!string.IsNullOrEmpty(oTicketViewModel.DEFAULT_IMAGE))
                 {
-                    string sRemoteFilePath = string.Empty;
-                    if (!string.IsNullOrEmpty(oTicketViewModel.DEFAULT_IMAGE))
-                    {
-                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketViewModel.DEFAULT_IMAGE);
-                    }
+                    sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketViewModel.DEFAULT_IMAGE);
+                }
 
-                    oTakamulTicket = new TakamulTicket()
-                    {
-                        TicketID = oTicketViewModel.ID,
-                        ApplicationID = oTicketViewModel.APPLICATION_ID,
-                        TicketCode = oTicketViewModel.TICKET_CODE,
-                        TicketName = oTicketViewModel.TICKET_NAME,
-                        TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
-                        TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
-                        TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
-                        TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME,
-                        RemoteFilePath = sRemoteFilePath
-                    };
-                    oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;
+                oTakamulTicket = new TakamulTicket()
+                {
+                    TicketID = oTicketViewModel.ID,
+                    ApplicationID = oTicketViewModel.APPLICATION_ID,
+                    TicketCode = oTicketViewModel.TICKET_CODE,
+                    TicketName = oTicketViewModel.TICKET_NAME,
+                    TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
+                    TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
+                    TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
+                    TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME,
+                    RemoteFilePath = sRemoteFilePath
+                };
+                oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;
 
-                    //TODO:: Replace with original code
-                    if (oTicketViewModel.TICKET_STATUS_ID == 3) //Rejected
-                    {
-                        oTakamulTicketChatRepo.RejectReason = "reject reason from database";
-                    }
+                //TODO:: Replace with original code
+                if (oTicketViewModel.TICKET_STATUS_ID == 3) //Rejected
+                {
+                    oTakamulTicketChatRepo.RejectReason = "reject reason from database";
                 }
             }
+
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulTicketChatRepo);
         }
         #endregion

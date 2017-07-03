@@ -276,7 +276,7 @@ namespace LDC.eServices.Portal.Controllers
                         catch (Exception ex)
                         {
                         }
-                        if (CommonHelper.SendPushNotificationEvents("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode, Convert.ToString(this.CurrentApplicationLanguage)))
+                        if (CommonHelper.SendPushNotificationEvents("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString()))
                         {
 
                         }
