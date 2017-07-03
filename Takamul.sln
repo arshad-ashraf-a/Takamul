@@ -33,7 +33,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Takamul.FileService", "Takamul.FileService\", "{17B33FFF-BB71-4F9C-95F8-F40A722B94E3}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{41979552-6e9d-48c7-ac90-baf34caa0786}|Infrastructure.Core.dll;{38036158-36e0-4c7b-83fc-1eb35d371994}|Infrastructure.Utilities.dll;{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}|Takamul.Models.dll;"
+		ProjectReferences = "{41979552-6e9d-48c7-ac90-baf34caa0786}|Infrastructure.Core.dll;{255FBAAC-4774-4ED2-A6C2-0FD4D9232722}|Takamul.Models.dll;{38036158-36e0-4c7b-83fc-1eb35d371994}|Infrastructure.Utilities.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_60322"
 		Debug.AspNetCompiler.PhysicalPath = "Takamul.FileService\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60322\"
