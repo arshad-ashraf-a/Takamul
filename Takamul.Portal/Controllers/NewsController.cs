@@ -147,7 +147,7 @@ namespace LDC.eServices.Portal.Controllers
                         {
 
                         }
-                        if (CommonHelper.SendPushNotificationNews("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode))
+                        if (CommonHelper.SendPushNotificationNews("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode, Convert.ToString( this.CurrentApplicationLanguage)))
                         {
 
                         }

@@ -505,7 +505,7 @@ namespace Infrastructure.Utilities
             return flg;
         }
 
-        public static bool SendPushNotificationNews(string _headings, string _content, string _id = "", string _deviceID = "")
+        public static bool SendPushNotificationNews(string _headings, string _content, string _id = "",string _lang = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
@@ -558,7 +558,7 @@ namespace Infrastructure.Utilities
                         app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                         headings = new { en = _headings },
                         contents = new { en = _content },
-                        data = new { NewsID = _id },
+                        data = new { NewsID = _id,LanguageID = _lang },
                         included_segments = new string[] { "All" }
                     };
                     var param = serializer.Serialize(obj);
@@ -592,7 +592,7 @@ namespace Infrastructure.Utilities
 
             return flg;
         }
-        public static bool SendPushNotificationEvents(string _headings, string _content, string _id = "", string _deviceID = "")
+        public static bool SendPushNotificationEvents(string _headings, string _content, string _id = "", string _lang = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
@@ -645,7 +645,7 @@ namespace Infrastructure.Utilities
                         app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                         headings = new { en = _headings },
                         contents = new { en = _content },
-                        data = new { EventID = _id },
+                        data = new { EventID = _id, LanguageID = _lang },
                         included_segments = new string[] { "All" }
                     };
                     var param = serializer.Serialize(obj);
