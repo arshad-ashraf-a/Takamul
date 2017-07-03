@@ -72,22 +72,18 @@ namespace Takamul.API.Controllers
             ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationDetails(nApplicationID);
             if (oApplicationViewModel != null)
             {
-                string sBase64AppLogo = string.Empty;
-                if (oApplicationViewModel.APPLICATION_LOGO_PATH != null)
+                string sRemoteFilePath = string.Empty;
+                if (!string.IsNullOrEmpty(oApplicationViewModel.APPLICATION_LOGO_PATH))
                 {
-                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                    byte[] oByteFile = oFileAccessService.ReadFile(oApplicationViewModel.APPLICATION_LOGO_PATH);
-                    if (oByteFile.Length > 0)
-                    {
-                        sBase64AppLogo = Convert.ToBase64String(oByteFile);
-                    }
+                    sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oApplicationViewModel.APPLICATION_LOGO_PATH);
                 }
+                
 
                 oTakamulApplication = new TakamulApplication()
                 {
                     ApplicationID = oApplicationViewModel.ID,
                     ApplicationName = oApplicationViewModel.APPLICATION_NAME,
-                    Base64ApplicationLogo = sBase64AppLogo,
+                    RemoteFilePath = sRemoteFilePath,
                     ApplicationToken = oApplicationViewModel.APPLICATION_TOKEN,
                     DefaultThemeColor = oApplicationViewModel.DEFAULT_THEME_COLOR,
                     IsActive = oApplicationViewModel.IS_ACTIVE,

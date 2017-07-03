@@ -69,25 +69,10 @@ namespace Takamul.API.Controllers
                 lstTakamulTicket = new List<TakamulTicket>();
                 foreach (var ticket in lstTickets)
                 {
-                    string sBase64DefaultImage = string.Empty;
                     string sRemoteFilePath = string.Empty;
                     if (!string.IsNullOrEmpty(ticket.DEFAULT_IMAGE))
                     {
-                        try
-                        {
-                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                            byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
-                            if (oByteFile.Length > 0)
-                            {
-                                sBase64DefaultImage = Convert.ToBase64String(oByteFile);
-                            }
-
-                            sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
-                        }
-                        catch (Exception Ex)
-                        {
-                            sBase64DefaultImage = Ex.Message.ToString();
-                        }
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
                     }
 
                     TakamulTicket oTakamulTicket = new TakamulTicket()
@@ -95,7 +80,6 @@ namespace Takamul.API.Controllers
                         TicketID = ticket.ID,
                         TicketCode = ticket.TICKET_CODE,
                         ApplicationID = ticket.APPLICATION_ID,
-                        Base64DefaultImage = sBase64DefaultImage,
                         TicketName = ticket.TICKET_NAME,
                         TicketDescription = ticket.TICKET_DESCRIPTION,
                         TicketStatusID = ticket.TICKET_STATUS_ID,
@@ -127,14 +111,10 @@ namespace Takamul.API.Controllers
             if (oTicketViewModel != null)
             {
                 string sBase64DefaultImage = string.Empty;
+                string sRemoteFilePath = string.Empty;
                 if (!string.IsNullOrEmpty(oTicketViewModel.DEFAULT_IMAGE))
                 {
-                    FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                    byte[] oByteFile = oFileAccessService.ReadFile(oTicketViewModel.DEFAULT_IMAGE);
-                    if (oByteFile.Length > 0)
-                    {
-                        sBase64DefaultImage = Convert.ToBase64String(oByteFile);
-                    }
+                    sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketViewModel.DEFAULT_IMAGE);
                 }
 
                 oTakamulTicket = new TakamulTicket()
@@ -147,7 +127,8 @@ namespace Takamul.API.Controllers
                     TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
                     TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
                     TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
-                    TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
+                    TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME,
+                    RemoteFilePath = sRemoteFilePath
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulTicket);
@@ -173,21 +154,10 @@ namespace Takamul.API.Controllers
                 foreach (var oTicketChatItem in lstTicketViewModel)
                 {
                     string sReplyMessage = string.Empty;
-                    string sBase64ReplyImage = string.Empty;
-                    string sRemoteFilePath = string.Empty;
-                    //ticket chat type 2:png , 3:jpg, 4:jpeg
-                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID == 2 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 3 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 4)
-                    {
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                        byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
-                        if (oByteFile.Length > 0)
-                        {
-                            sBase64ReplyImage = Convert.ToBase64String(oByteFile);
-                        }
-                    }
+                    string sTicketChatItemRemoteFilePath = string.Empty;
                     if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
                     {
-                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketChatItem.REPLY_FILE_PATH);
+                        sTicketChatItemRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketChatItem.REPLY_FILE_PATH);
                     }
                     TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
                     {
@@ -200,8 +170,7 @@ namespace Takamul.API.Controllers
                         TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
                         UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
                         UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
-                        RemoteFilePath = sRemoteFilePath,
-                        Base64ReplyImage = sBase64ReplyImage
+                        RemoteFilePath = sTicketChatItemRemoteFilePath
                     };
 
                     lstTakamulTicket.Add(oTakamulTicketChat);
@@ -212,88 +181,12 @@ namespace Takamul.API.Controllers
                 TakamulTicket oTakamulTicket = null;
                 if (oTicketViewModel != null)
                 {
-                    oTakamulTicket = new TakamulTicket()
-                    {
-                        TicketID = oTicketViewModel.ID,
-                        ApplicationID = oTicketViewModel.APPLICATION_ID,
-                        TicketCode = oTicketViewModel.TICKET_CODE,
-                        TicketName = oTicketViewModel.TICKET_NAME,
-                        TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
-                        TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
-                        TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
-                        TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
-                    };
-                    oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;
-
-                    //TODO:: Replace with original code
-                    if (oTicketViewModel.TICKET_STATUS_ID == 3) //Rejected
-                    {
-                        oTakamulTicketChatRepo.RejectReason = "reject reason from database";
-                    }
-                }
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, oTakamulTicketChatRepo);
-        }
-        #endregion
-
-        #region Method :: HttpResponseMessage :: GetTicketChats
-        // GET: api/TakamulTicket/GetTicketChats
-        /// <summary>
-        /// Get ticket chats by ticket id
-        /// </summary>
-        /// <param name="nTicketID"></param>
-        /// <returns>TakamulTicketChatRepo</returns>
-        [HttpGet]
-        public HttpResponseMessage GetTicketChatsByte(int nTicketID)
-        {
-            TakamulTicketChatRepo oTakamulTicketChatRepo = new TakamulTicketChatRepo();
-            List<TakamulTicketChat> lstTakamulTicket = null;
-            List<TicketChatViewModel> lstTicketViewModel = this.oITicketServices.IlGetTicketChats(nTicketID);
-            if (lstTicketViewModel.Count > 0)
-            {
-                lstTakamulTicket = new List<TakamulTicketChat>();
-                foreach (var oTicketChatItem in lstTicketViewModel)
-                {
-                    string sReplyMessage = string.Empty;
-                    byte[] bByteReplyImage = null;
                     string sRemoteFilePath = string.Empty;
-                    //ticket chat type 2:png , 3:jpg, 4:jpeg
-                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID == 2 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 3 || oTicketChatItem.TICKET_CHAT_TYPE_ID == 4)
+                    if (!string.IsNullOrEmpty(oTicketViewModel.DEFAULT_IMAGE))
                     {
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                        byte[] oByteFile = oFileAccessService.ReadFile(oTicketChatItem.REPLY_FILE_PATH);
-                        if (oByteFile.Length > 0)
-                        {
-                            bByteReplyImage = oByteFile;
-                        }
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketViewModel.DEFAULT_IMAGE);
                     }
-                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
-                    {
-                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketChatItem.REPLY_FILE_PATH);
-                    }
-                    TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat()
-                    {
-                        ApplicationID = oTicketChatItem.APPLICATION_ID,
-                        TicketID = oTicketChatItem.TICKET_ID,
-                        ReplyMessage = oTicketChatItem.REPLY_MESSAGE,
-                        ReplyDate = string.Format("{0} {1}", oTicketChatItem.REPLIED_DATE.ToShortDateString(), oTicketChatItem.REPLIED_DATE.ToShortTimeString()),
-                        TicketChatID = oTicketChatItem.ID,
-                        TicketChatTypeID = oTicketChatItem.TICKET_CHAT_TYPE_ID,
-                        TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
-                        UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
-                        UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
-                        RemoteFilePath = sRemoteFilePath,
-                        ByteReplyImage = bByteReplyImage
-                    };
 
-                    lstTakamulTicket.Add(oTakamulTicketChat);
-                    oTakamulTicketChatRepo.TakamulTicketChatList = lstTakamulTicket;
-                }
-
-                TicketViewModel oTicketViewModel = this.oITicketServices.oGetTicketDetails(nTicketID);
-                TakamulTicket oTakamulTicket = null;
-                if (oTicketViewModel != null)
-                {
                     oTakamulTicket = new TakamulTicket()
                     {
                         TicketID = oTicketViewModel.ID,
@@ -303,7 +196,8 @@ namespace Takamul.API.Controllers
                         TicketDescription = oTicketViewModel.TICKET_DESCRIPTION,
                         TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
                         TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
-                        TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME
+                        TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME,
+                        RemoteFilePath = sRemoteFilePath
                     };
                     oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;
 
@@ -516,7 +410,7 @@ namespace Takamul.API.Controllers
                             {
                                 oFileAccessService.WirteFileByte(Path.Combine(sReplyImageDirectory, sReplyImagePath), oArrImage);
                             }
-                            
+
                         }
                         oApiResponse.OperationResult = 1;
                         oApiResponse.OperationResultMessage = "Success.";

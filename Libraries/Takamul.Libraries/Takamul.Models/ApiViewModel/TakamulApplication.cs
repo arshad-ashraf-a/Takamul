@@ -22,6 +22,7 @@ namespace Takamul.Models.ApiViewModel
         public string Base64ApplicationLogo { get; set; }
         public string ApplicationToken { get; set; }
         public string DefaultThemeColor { get; set; }
+        public string RemoteFilePath { get; set; }
         public bool IsActive { get; set; }
         public bool IsApplicationExpired { get; set; }
 
@@ -35,6 +36,7 @@ namespace Takamul.Models.ApiViewModel
             this.DefaultThemeColor = string.Empty;
             this.IsActive = false;
             this.IsApplicationExpired = false;
+            this.RemoteFilePath = string.Empty;
         } 
         #endregion
     }

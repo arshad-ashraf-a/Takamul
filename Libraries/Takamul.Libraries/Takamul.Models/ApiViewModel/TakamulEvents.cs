@@ -25,6 +25,7 @@ namespace Takamul.Models.ApiViewModel
         public string EVENTDATE { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public string RemoteFilePath { get; set; }
 
         #region :: Constructor ::
         public TakamulEvents()
@@ -35,8 +36,9 @@ namespace Takamul.Models.ApiViewModel
             this.EVENTDESCRIPTION = string.Empty;
             this.BASE64EVENTIMG = string.Empty;
             this.EVENTDATE = string.Empty;
-            this.Latitude = "-99";
-            this.Longitude = "-99";
+            this.Latitude = string.Empty;
+            this.Longitude = string.Empty;
+            this.RemoteFilePath = string.Empty;
         } 
         #endregion
     }

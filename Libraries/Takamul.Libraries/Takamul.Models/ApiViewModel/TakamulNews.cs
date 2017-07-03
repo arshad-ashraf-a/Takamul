@@ -23,6 +23,7 @@ namespace Takamul.Models.ApiViewModel
         public string NewsContent { get; set; }
         public string Base64NewsImage { get; set; }
         public string PublishedDate { get; set; }
+        public string RemoteFilePath { get; set; }
 
         #region :: Constructor ::
         public TakamulNews()
@@ -33,6 +34,7 @@ namespace Takamul.Models.ApiViewModel
             this.NewsContent = string.Empty;
             this.Base64NewsImage = string.Empty;
             this.PublishedDate = string.Empty;
+            this.RemoteFilePath = string.Empty;
         } 
         #endregion
     }
