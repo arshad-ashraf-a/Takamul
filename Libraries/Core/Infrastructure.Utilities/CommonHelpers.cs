@@ -690,17 +690,15 @@ namespace Infrastructure.Utilities
             request.Method = "POST";
             request.ContentType = "application/json; charset=utf-8";
             string messageTitle = "";
-
             if (oTicketChatViewModel.TICKET_CHAT_TYPE_ID != 1)
             {
                 messageTitle = "File uploaded";
             }
             else
             {
-                messageTitle = oTicketChatViewModel.REPLY_MESSAGE.Length > 100 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
-            }          
+                messageTitle = oTicketChatViewModel.REPLY_MESSAGE.Length > 25 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
+            }
 
-            // 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
             request.Headers.Add("authorization", sAutherizationKey);
             var serializer = new JavaScriptSerializer();
@@ -708,9 +706,10 @@ namespace Infrastructure.Utilities
             {
                 app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                 contents = new { en = messageTitle },
-                data = new {
-                    applID ="",
-                    TicketID= oTicketChatViewModel.TICKET_ID,
+                data = new
+                {
+                    applID = "",
+                    TicketID = oTicketChatViewModel.TICKET_ID,
                     TicketChatID = ChatID,
                     ReplyMsg = oTicketChatViewModel.REPLY_MESSAGE,
                     ReplyDate = oTicketChatViewModel.REPLIED_DATE,
@@ -718,7 +717,7 @@ namespace Infrastructure.Utilities
                     TicketChatType = oTicketChatViewModel.TICKET_CHAT_TYPE_ID,
                     UserId = 1,
                     Username = "Admin",
-                    Typename= oTicketChatViewModel.CHAT_TYPE
+                    Typename = oTicketChatViewModel.CHAT_TYPE
                 },
                 include_player_ids = new string[] { _deviceID }
             };
