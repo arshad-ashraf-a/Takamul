@@ -36,6 +36,7 @@ namespace Takamul.API.Controllers
         private readonly ITicketServices oITicketServices;
         private readonly INewsServices oINewsServices;
         private readonly IEventService oIEventsServices;
+        private readonly IUserServices oIUserServices;
         #endregion
         #endregion
 
@@ -45,7 +46,8 @@ namespace Takamul.API.Controllers
                                         IApplicationService IApplicationServiceInitializer,
                                          ITicketServices ITicketServicesInitializer,
                                          INewsServices INewsServicesInitializer,
-                                         IEventService IEventsServicesInitializer
+                                         IEventService IEventsServicesInitializer,
+                                         IUserServices IUserServicesInitializer
                                     )
         {
             oICommonServices = ICommonServicesInitializer;
@@ -53,6 +55,7 @@ namespace Takamul.API.Controllers
             oITicketServices = ITicketServicesInitializer;
             oINewsServices = INewsServicesInitializer;
             oIEventsServices = IEventsServicesInitializer;
+            oIUserServices = IUserServicesInitializer;
         }
         #endregion
 
@@ -77,7 +80,7 @@ namespace Takamul.API.Controllers
                 {
                     sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oApplicationViewModel.APPLICATION_LOGO_PATH);
                 }
-                
+
 
                 oTakamulApplication = new TakamulApplication()
                 {
@@ -122,6 +125,37 @@ namespace Takamul.API.Controllers
                 }
             }
             return Request.CreateResponse(HttpStatusCode.OK, lstTakamulMembeInfo);
+        }
+        #endregion
+
+        #region Method :: HttpResponseMessage :: GetUserDetails
+        // GET: api/TakamulCommon/GetUserDetails
+        /// <summary>
+        /// Member information
+        /// </summary>
+        /// <param name="nUserID"></param>
+        /// <param name="nLanguageID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetUserDetails(int nUserID, int nLanguageID)
+        {
+            TakamulUser oTakamulUser = null;
+            UserInfoViewModel oUserInfoViewModel = this.oIUserServices.oGetUserDetails(nUserID,nLanguageID);
+            if (oUserInfoViewModel != null)
+            {
+                oTakamulUser = new TakamulUser()
+                {
+                    UserID = oUserInfoViewModel.USER_ID,
+                    FullName = oUserInfoViewModel.FULL_NAME,
+                    CivilID = oUserInfoViewModel.CIVIL_ID,
+                    AreaName= oUserInfoViewModel.AREA_NAME,
+                    WilayatName= oUserInfoViewModel.WILLAYAT_NAME,
+                    VillageName = oUserInfoViewModel.VILLAGE_NAME,
+                    PhoneNumber = oUserInfoViewModel.PHONE_NUMBER,
+                    Email = oUserInfoViewModel.EMAIL,
+                };
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, oTakamulUser);
         }
         #endregion
 
@@ -339,9 +373,9 @@ namespace Takamul.API.Controllers
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
-                oHomePageRepo.TakamulEventList= lstTakamulEvents;
+                oHomePageRepo.TakamulEventList = lstTakamulEvents;
             }
-            
+
             return Request.CreateResponse(HttpStatusCode.OK, oHomePageRepo);
         }
         #endregion

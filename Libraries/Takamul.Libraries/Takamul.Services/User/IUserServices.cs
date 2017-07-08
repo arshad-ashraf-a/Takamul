@@ -33,6 +33,14 @@ namespace Takamul.Services
         UserInfoViewModel oGetUserDetails(int nUserID);
         #endregion
 
+        #region Method :: UserInfoViewModel :: oGetUserDetails
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <returns></returns>
+        UserInfoViewModel oGetUserDetails(int nUserID, int nLanguageID);
+        #endregion
+
         #region Method :: Response :: oInsertUser
         /// <summary>
         /// Insert Mobile User

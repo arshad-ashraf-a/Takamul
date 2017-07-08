@@ -125,6 +125,35 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: UserInfoViewModel :: oGetUserDetails
+        /// <summary>
+        ///  Get user details
+        /// </summary>
+        /// <returns></returns>
+        public UserInfoViewModel oGetUserDetails(int nUserID,int nLanguageID)
+        {
+            UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel();
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LanguageId", SqlDbType.Int, nLanguageID, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetUserDetails", arrParameters.ToArray());
+            if (lstUsers.Count == 1)
+            {
+                oUserInfoViewModel = lstUsers[0];
+                enumUserType oEnmUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUserInfoViewModel.USER_TYPE_ID.ToString(), true);
+                oUserInfoViewModel.UserType = oEnmUserType;
+            }
+            return oUserInfoViewModel;
+
+            #endregion
+
+        }
+        #endregion
+
         #region Method :: Response :: oInsertUser
         /// <summary>
         /// Insert Mobile User

@@ -55,6 +55,10 @@ namespace Takamul.Models.ViewModel
         public enumUserType UserType { get; set; }
         public string APPLICATION_NAME { get; set; }
         public string DEVICE_ID { get; set; }
+        public string AREA_NAME { get; set; }
+        public string WILLAYAT_NAME { get; set; }
+        public string VILLAGE_NAME { get; set; }
+
 
         #region :: Constructor ::
         public UserInfoViewModel()
@@ -96,6 +100,9 @@ namespace Takamul.Models.ViewModel
             this.UserType = enumUserType.Undefined;
             this.APPLICATION_NAME = string.Empty;
             this.DEVICE_ID = string.Empty;
+            this.AREA_NAME = string.Empty;
+            this.WILLAYAT_NAME = string.Empty;
+            this.VILLAGE_NAME = string.Empty;
         }
         #endregion
     }

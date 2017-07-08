@@ -555,6 +555,14 @@
             <param name="nApplicationID"></param>
             <returns></returns>
         </member>
+        <member name="M:Takamul.API.Controllers.CommonServiceController.GetUserDetails(System.Int32,System.Int32)">
+            <summary>
+            Member information
+            </summary>
+            <param name="nUserID"></param>
+            <param name="nLanguageID"></param>
+            <returns></returns>
+        </member>
         <member name="M:Takamul.API.Controllers.CommonServiceController.GetAllArea(System.Int32)">
             <summary>
             Get list of areas
