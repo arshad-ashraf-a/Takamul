@@ -45,6 +45,7 @@ namespace Takamul.Portal.App_Start
             builder.RegisterType<TicketServices>().As<ITicketServices>().InstancePerLifetimeScope();
             builder.RegisterType<CommonServices>().As<ICommonServices>().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationService>().As<IApplicationService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserServices>().As<IUserServices>().InstancePerLifetimeScope();
             #endregion
 
             #region Register Service Controllers

@@ -168,6 +168,28 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<TicketChatViewModel> :: IlGetMoreTicketChats
+        /// <summary>
+        /// Get more ticket chats
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nLastTicketChatID"></param>
+        /// <returns></returns>
+        public List<TicketChatViewModel> IlGetMoreTicketChats(int nTicketID,int nLastTicketChatID)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_LastTicketChatId", SqlDbType.Int, nLastTicketChatID, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<TicketChatViewModel> lstTickets = this.ExecuteStoredProcedureList<TicketChatViewModel>("GetMoreTicketChats", arrParameters.ToArray());
+            return lstTickets;
+            #endregion
+        }
+        #endregion
+
         #region Method :: Response :: oInsertTicket
         /// <summary>
         /// Insert Ticket

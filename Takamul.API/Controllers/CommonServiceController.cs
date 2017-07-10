@@ -131,7 +131,7 @@ namespace Takamul.API.Controllers
         #region Method :: HttpResponseMessage :: GetUserDetails
         // GET: api/TakamulCommon/GetUserDetails
         /// <summary>
-        /// Member information
+        /// Get User Details information
         /// </summary>
         /// <param name="nUserID"></param>
         /// <param name="nLanguageID"></param>

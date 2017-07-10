@@ -64,6 +64,16 @@ namespace Takamul.Services
         List<TicketChatViewModel> IlGetTicketChats(int nTicketID);
         #endregion
 
+        #region Method :: List<TicketChatViewModel> :: IlGetMoreTicketChats
+        /// <summary>
+        /// Get more ticket chats
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nLastTicketChatID"></param>
+        /// <returns></returns>
+        List<TicketChatViewModel> IlGetMoreTicketChats(int nTicketID, int nLastTicketChatID);
+        #endregion
+
         #region Method :: Response :: oInsertTicket
         /// <summary>
         /// Insert Ticket

@@ -215,6 +215,53 @@ namespace Takamul.API.Controllers
         }
         #endregion
 
+        #region Method :: HttpResponseMessage :: GetMoreTicketChats
+        // GET: api/TakamulTicket/GetMoreTicketChats
+        /// <summary>
+        /// Get more ticket chats
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nLastTicketChatID"></param>
+        /// <returns>TakamulTicketChatRepo</returns>
+        [HttpGet]
+        public HttpResponseMessage GetMoreTicketChats(int nTicketID, int nLastTicketChatID)
+        {
+            TakamulTicketChat oTakamulTicketChat = new TakamulTicketChat();
+            List<TakamulTicketChat> lstTakamulTicket = null;
+            List<TicketChatViewModel> lstTicketViewModel = this.oITicketServices.IlGetMoreTicketChats(nTicketID, nLastTicketChatID);
+            if (lstTicketViewModel.Count > 0)
+            {
+                lstTakamulTicket = new List<TakamulTicketChat>();
+                foreach (var oTicketChatItem in lstTicketViewModel)
+                {
+                    string sReplyMessage = string.Empty;
+                    string sTicketChatItemRemoteFilePath = string.Empty;
+                    if (oTicketChatItem.TICKET_CHAT_TYPE_ID != 1)
+                    {
+                        sTicketChatItemRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oTicketChatItem.REPLY_FILE_PATH);
+                    }
+                    oTakamulTicketChat = new TakamulTicketChat()
+                    {
+                        ApplicationID = oTicketChatItem.APPLICATION_ID,
+                        TicketID = oTicketChatItem.TICKET_ID,
+                        ReplyMessage = oTicketChatItem.REPLY_MESSAGE,
+                        ReplyDate = string.Format("{0} {1}", oTicketChatItem.REPLIED_DATE.ToShortDateString(), oTicketChatItem.REPLIED_DATE.ToShortTimeString()),
+                        TicketChatID = oTicketChatItem.ID,
+                        TicketChatTypeID = oTicketChatItem.TICKET_CHAT_TYPE_ID,
+                        TicketChatTypeName = oTicketChatItem.CHAT_TYPE,
+                        UserFullName = oTicketChatItem.PARTICIPANT_FULL_NAME,
+                        UserID = oTicketChatItem.TICKET_PARTICIPANT_ID,
+                        RemoteFilePath = sTicketChatItemRemoteFilePath
+                    };
+
+                    lstTakamulTicket.Add(oTakamulTicketChat);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, lstTakamulTicket);
+        }
+        #endregion
+
         #region Method :: HttpResponseMessage :: CreateTicket
         // POST: api/TakamulTicket/CreateTicket
         /// <summary>

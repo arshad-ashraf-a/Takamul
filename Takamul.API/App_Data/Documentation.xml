@@ -557,7 +557,7 @@
         </member>
         <member name="M:Takamul.API.Controllers.CommonServiceController.GetUserDetails(System.Int32,System.Int32)">
             <summary>
-            Member information
+            Get User Details information
             </summary>
             <param name="nUserID"></param>
             <param name="nLanguageID"></param>
@@ -651,6 +651,14 @@
             Get ticket chats by ticket id
             </summary>
             <param name="nTicketID"></param>
+            <returns>TakamulTicketChatRepo</returns>
+        </member>
+        <member name="M:Takamul.API.Controllers.TicketServiceController.GetMoreTicketChats(System.Int32,System.Int32)">
+            <summary>
+            Get more ticket chats
+            </summary>
+            <param name="nTicketID"></param>
+            <param name="nLastTicketChatID"></param>
             <returns>TakamulTicketChatRepo</returns>
         </member>
         <member name="M:Takamul.API.Controllers.TicketServiceController.CreateTicket(Takamul.Models.ApiViewModel.TakamulTicket,System.Int32,System.Int32)">
