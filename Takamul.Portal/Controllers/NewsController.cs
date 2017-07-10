@@ -145,11 +145,18 @@ namespace LDC.eServices.Portal.Controllers
                         }
                         catch(Exception ex)
                         {
-
+                            throw;
+                            //TODO :: Log this
                         }
-                        if (CommonHelper.SendPushNotificationNews("New News Added", oNewsViewModel.NEWS_TITLE, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString()))
+                        if (oNewsViewModel.IS_NOTIFY_USER && oNewsViewModel.IS_ACTIVE)
                         {
-
+                            string sNewsTitle = oNewsViewModel.NEWS_TITLE;
+                            string sNewsDesc = oNewsViewModel.NEWS_CONTENT.Substring(0, Math.Min(oNewsViewModel.NEWS_CONTENT.Length, 150)) + "...";
+                            bool bIsSendNotification = CommonHelper.SendPushNotificationNews(sNewsTitle, sNewsDesc, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString());
+                            if (!bIsSendNotification)
+                            {
+                                //TODO :: Log this
+                            }
                         }
 
                     }

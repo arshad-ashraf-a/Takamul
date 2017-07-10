@@ -275,11 +275,21 @@ namespace LDC.eServices.Portal.Controllers
                         }
                         catch (Exception ex)
                         {
+                            throw;
+                            //TODO:: Log This
                         }
-                        if (CommonHelper.SendPushNotificationEvents("New Event Added", oEventViewModel.EVENT_NAME, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString()))
+                        if (oEventViewModel.IS_ACTIVE)
                         {
+                            string sEventName = oEventViewModel.EVENT_NAME;
+                            string sEventDesc = oEventViewModel.EVENT_DESCRIPTION.Substring(0, Math.Min(oEventViewModel.EVENT_DESCRIPTION.Length, 150)) + "...";
 
+                            bool bIsSendNotify = CommonHelper.SendPushNotificationEvents(sEventName, sEventDesc, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString());
+                            if (!bIsSendNotify)
+                            {
+                                //TODO:: Log This
+                            }
                         }
+                       
 
 
                     }

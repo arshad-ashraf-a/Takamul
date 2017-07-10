@@ -266,25 +266,10 @@ namespace Takamul.API.Controllers
                     lstTakamulTicket = new List<TakamulTicket>();
                     foreach (var ticket in lstTickets.OrderByDescending(x => x.ID).Take(5))
                     {
-                        string sBase64DefaultImage = string.Empty;
                         string sRemoteFilePath = string.Empty;
                         if (!string.IsNullOrEmpty(ticket.DEFAULT_IMAGE))
                         {
-                            try
-                            {
-                                FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                                byte[] oByteFile = oFileAccessService.ReadFile(ticket.DEFAULT_IMAGE);
-                                if (oByteFile.Length > 0)
-                                {
-                                    sBase64DefaultImage = Convert.ToBase64String(oByteFile);
-                                }
-
-                                sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
-                            }
-                            catch (Exception Ex)
-                            {
-                                sBase64DefaultImage = Ex.Message.ToString();
-                            }
+                            sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), ticket.DEFAULT_IMAGE);
                         }
 
                         TakamulTicket oTakamulTicket = new TakamulTicket()
@@ -292,7 +277,6 @@ namespace Takamul.API.Controllers
                             TicketID = ticket.ID,
                             TicketCode = ticket.TICKET_CODE,
                             ApplicationID = ticket.APPLICATION_ID,
-                            Base64DefaultImage = sBase64DefaultImage,
                             TicketName = ticket.TICKET_NAME,
                             TicketDescription = ticket.TICKET_DESCRIPTION,
                             TicketStatusID = ticket.TICKET_STATUS_ID,
@@ -316,17 +300,11 @@ namespace Takamul.API.Controllers
                 lstTakamulNews = new List<TakamulNews>();
                 foreach (var news in lstNews.OrderByDescending(x => x.ID).Take(5))
                 {
-                    string sBase64DefaultImage = string.Empty;
+                    string sRemoteFilePath = string.Empty;
                     if (!string.IsNullOrEmpty(news.NEWS_IMG_FILE_PATH))
                     {
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                        byte[] oByteFile = oFileAccessService.ReadFile(news.NEWS_IMG_FILE_PATH);
-                        if (oByteFile.Length > 0)
-                        {
-                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
-                        }
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), news.NEWS_IMG_FILE_PATH);
                     }
-
                     TakamulNews oTakamulNews = new TakamulNews()
                     {
                         NewsID = news.ID,
@@ -334,7 +312,7 @@ namespace Takamul.API.Controllers
                         NewsContent = news.NEWS_CONTENT,
                         NewsTitle = news.NEWS_TITLE,
                         PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
-                        Base64NewsImage = sBase64DefaultImage
+                        RemoteFilePath = sRemoteFilePath
 
                     };
                     lstTakamulNews.Add(oTakamulNews);
@@ -349,15 +327,10 @@ namespace Takamul.API.Controllers
                 lstTakamulEvents = new List<TakamulEvents>();
                 foreach (var oEvent in lstEvents.OrderByDescending(x => x.ID).Take(5))
                 {
-                    string sBase64DefaultImage = string.Empty;
+                    string sRemoteFilePath = string.Empty;
                     if (!string.IsNullOrEmpty(oEvent.EVENT_IMG_FILE_PATH))
                     {
-                        FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
-                        byte[] oByteFile = oFileAccessService.ReadFile(oEvent.EVENT_IMG_FILE_PATH);
-                        if (oByteFile.Length > 0)
-                        {
-                            sBase64DefaultImage = Convert.ToBase64String(oByteFile);
-                        }
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oEvent.EVENT_IMG_FILE_PATH);
                     }
 
                     TakamulEvents oTakamulEvents = new TakamulEvents()
@@ -369,7 +342,7 @@ namespace Takamul.API.Controllers
                         EVENTDATE = string.Format("{0} {1}", oEvent.EVENT_DATE.ToShortDateString(), oEvent.EVENT_DATE.ToShortTimeString()),
                         Latitude = oEvent.EVENT_LATITUDE,
                         Longitude = oEvent.EVENT_LONGITUDE,
-                        BASE64EVENTIMG = sBase64DefaultImage
+                        RemoteFilePath = sRemoteFilePath
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
