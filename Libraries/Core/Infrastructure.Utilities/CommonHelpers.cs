@@ -706,6 +706,7 @@ namespace Infrastructure.Utilities
             {
                 app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                 contents = new { en = messageTitle },
+                content_available = true,
                 data = new
                 {
                     applID = "",
