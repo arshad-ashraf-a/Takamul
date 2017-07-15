@@ -1,0 +1,89 @@
+﻿@using Takamul.Portal.Resources.Portal.Tickets;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+@model Takamul.Models.ViewModel.TicketViewModel
+<div class="row">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <table class="table table-bordered table-framed">
+                <thead>
+                    <tr>
+                        <th class="text-center">@TicketsResx.TicketCode</th>
+                        <th>@TicketsResx.TicketName</th>
+                        <th class="text-center">@TicketsResx.TicketStatus</th>
+                        <th class="text-center">@TicketsResx.IsActive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">@Model.TICKET_CODE</td>
+                        <td>@Model.TICKET_NAME</td>
+                        <td class="text-center">@Model.TICKET_STATUS_NAME</td>
+                        <td class="text-center">
+                            @if (@Model.IS_ACTIVE)
+                            {
+                                <i class='icon-checkmark-circle text-success position-left'></i>
+                            }
+                            else
+                            {
+                                <i class='icon-cancel-circle2 text-warning position-left'></i>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @* Ticket Participant*@
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Ticket Participant</label>
+                                <div class="col-lg-8">
+                                    <select id="ddlTicketParticipants" name="ddlTicketParticipants" onchange="fnTicketStatusDDLOnChange()"
+                                            class="select2 col-xs-12 col-sm-9"
+                                            style="padding:0;">
+                                        <option value="">&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <hr class="sp-1" />
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-xs" onclick="IncidentManagement.PageFunctions.UpdateTRMStatus(); return false;">Add</button>
+                <button type="submit" class="btn bg-slate-300 btn-xs" onclick="IncidentManagement.PageFunctions.CancelUpdateTRMStatus(); return false;">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".styled").uniform({
+        radioClass: 'choice'
+    });
+
+    function fnFillTicketUsers() {
+        //TODO:: option add 'ALL'
+        debugger;
+        FillDropDownRoot('@Url.Action("JGetTicketUsers", "Tickets")', 'POST', false, 'ddlTicketParticipants', 'ID', 'Name', 'Select Participant', ' ', [],
+            function () {
+                //Success Function
+                $("#ddlTicketUser").select2({ width: '100%' });
+            },
+            function () {
+                //Error
+            })
+    }
+
+    //Entry Point
+    $(document).ready(function () {
+
+    });
+</script>

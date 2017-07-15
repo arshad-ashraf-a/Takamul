@@ -259,6 +259,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created Platform.
+        /// </summary>
+        public static string TicketCreatedPlatform {
+            get {
+                return ResourceManager.GetString("TicketCreatedPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticket Descirption.
         /// </summary>
         public static string TicketDescirption {
@@ -309,6 +318,24 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string TicketName {
             get {
                 return ResourceManager.GetString("TicketName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticket Owner.
+        /// </summary>
+        public static string TicketOwnerUserFullName {
+            get {
+                return ResourceManager.GetString("TicketOwnerUserFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Participants .
+        /// </summary>
+        public static string TicketParticipantNos {
+            get {
+                return ResourceManager.GetString("TicketParticipantNos", resourceCulture);
             }
         }
         

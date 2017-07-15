@@ -39,6 +39,10 @@ namespace Takamul.Models.ViewModel
         public String LastTicketChatMessage { get; set; }
         public Nullable<DateTime> LastTicketChatCreatedDate { get; set; }
 
+        public int? TICKET_OWNER_USER_ID { get; set; }
+        public string TicketOwnerUserFullName { get; set; }
+        public Nullable<int> TICKET_CREATED_PLATFORM { get; set; }
+        public int TicketParticipantNos { get; set; }
 
         #region :: Constructor ::
         public TicketViewModel()
@@ -62,6 +66,11 @@ namespace Takamul.Models.ViewModel
             this.LastTicketChatMessage = string.Empty;
             this.MobileParticipantName = string.Empty;
             this.LastTicketChatCreatedDate = DateTime.MinValue;
+
+            this.TICKET_OWNER_USER_ID = -99;
+            this.TicketOwnerUserFullName = string.Empty;
+            this.TICKET_CREATED_PLATFORM = -99;
+            this.TicketParticipantNos = 0;
         } 
         #endregion
     }

@@ -58,7 +58,7 @@ namespace Takamul.Models.ViewModel
         public string AREA_NAME { get; set; }
         public string WILLAYAT_NAME { get; set; }
         public string VILLAGE_NAME { get; set; }
-
+        
 
         #region :: Constructor ::
         public UserInfoViewModel()

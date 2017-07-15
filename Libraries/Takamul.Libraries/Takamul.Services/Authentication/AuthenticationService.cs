@@ -103,11 +103,11 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertMobileUser", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[12].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[13].Value.ToString());
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
                     //Inserted UserID
-                    oResponse.ResponseID = arrParameters[11].Value.ToString();
+                    oResponse.ResponseID = arrParameters[12].Value.ToString();
                 }
             }
             catch (Exception Ex)

@@ -121,6 +121,14 @@ namespace Takamul.Services
         Response oDeleteTicket(int nTicketID, int nDoneBy);
         #endregion
 
-
+        #region Method :: List<UserInfoViewModel> :: IlGetAllTicketUsers
+        /// <summary>
+        /// Get ticket users
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nUserTypeIDs"></param>
+        /// <returns></returns>
+        List<UserInfoViewModel> IlGetTicketUsers(int nTicketID, string nUserTypeIDs);
+        #endregion
     }
 }

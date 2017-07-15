@@ -89,7 +89,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         public JsonResult JBindAllNews(string sSearchByNewsName, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstNews = this.oINewsService.IlGetAllNews(CurrentApplicationID, sSearchByNewsName, nPage, nRows, sColumnName, sColumnOrder,Convert.ToInt32(this.CurrentApplicationLanguage));
+            var lstNews = this.oINewsService.IlGetAllNews(CurrentApplicationID, sSearchByNewsName, nPage, nRows, sColumnName, sColumnOrder, Convert.ToInt32(this.CurrentApplicationLanguage));
             return Json(lstNews, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -137,15 +137,15 @@ namespace LDC.eServices.Portal.Controllers
                             oFileAccessService.CreateDirectory(sDirectoryPath);
 
                             MagickImage oMagickImage = new MagickImage(filebase.InputStream);
-                            oMagickImage.Format = MagickFormat.Png;
+                            oMagickImage.Format = MagickFormat.Jpg;
                             oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
 
                             oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
                             this.OperationResult = enumOperationResult.Success;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            throw;
+                            this.OperationResultMessages = ex.Message.ToString();
                             //TODO :: Log this
                         }
                         if (oNewsViewModel.IS_NOTIFY_USER && oNewsViewModel.IS_ACTIVE)
@@ -202,7 +202,7 @@ namespace LDC.eServices.Portal.Controllers
             }
 
             oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(oNewsViewModel.FORMATTED_PUBLISHED_DATE, "d/M/yyyy", CultureInfo.InvariantCulture);
-            
+
             oNewsViewModel.MODIFIED_BY = Convert.ToInt32(CurrentUser.nUserID);
 
             oResponseResult = this.oINewsService.oUpdateNews(oNewsViewModel);
@@ -215,18 +215,26 @@ namespace LDC.eServices.Portal.Controllers
                         this.OperationResultMessages = CommonResx.MessageAddSuccess;
                         if (oFile != null)
                         {
-                            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
+                            try
+                            {
+                                FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
-                            //DirectoryPath = Saved Application ID + News Folder
-                            string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
-                            string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
-                            oFileAccessService.CreateDirectory(sDirectoryPath);
+                                //DirectoryPath = Saved Application ID + News Folder
+                                string sDirectoryPath = Path.Combine(this.CurrentApplicationID.ToString(), "News");
+                                string sFullFilePath = Path.Combine(sDirectoryPath, sModifiedFileName);
+                                oFileAccessService.CreateDirectory(sDirectoryPath);
 
-                            MagickImage oMagickImage = new MagickImage(filebase.InputStream);
-                            oMagickImage.Format = MagickFormat.Png;
-                            oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
+                                MagickImage oMagickImage = new MagickImage(filebase.InputStream);
+                                oMagickImage.Format = MagickFormat.Png;
+                                oMagickImage.Resize(Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageWidth)), Convert.ToInt32(CommonHelper.sGetConfigKeyValue(ConstantNames.ImageHeight)));
 
-                            oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+                                oFileAccessService.WirteFileByte(sFullFilePath, oMagickImage.ToByteArray());
+
+                            }
+                            catch (Exception ex)
+                            {
+                                this.OperationResultMessages = ex.Message.ToString();
+                            }
                         }
                         this.OperationResult = enumOperationResult.Success;
                     }

@@ -94,6 +94,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialAddTicketParticipants
+        /// <summary>
+        ///  Add ticket participants
+        /// </summary>
+        /// <param name="oTicketViewModel"></param>
+        /// <returns></returns>
+        public PartialViewResult PartialAddTicketParticipants(TicketViewModel oTicketViewModel)
+        {
+            return PartialView("_AddTicketParticipants", oTicketViewModel);
+        }
+        #endregion
+
         #endregion
 
         #region ::  Methods ::
@@ -374,6 +386,7 @@ namespace LDC.eServices.Portal.Controllers
             }
 
             oTicketViewModel.APPLICATION_ID = CurrentApplicationID;
+            oTicketViewModel.TICKET_CREATED_PLATFORM = (int)Infrastructure.Core.enmTicketPlatForm.Web;
             oTicketViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
 
             oResponseResult = this.oITicketServices.oInsertTicket(oTicketViewModel, oTicketViewModel.MobileParticipantId);
@@ -416,6 +429,21 @@ namespace LDC.eServices.Portal.Controllers
                     sResultMessages = this.OperationResultMessages
                 },
                 JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetTicketUsers
+        /// <summary>
+        /// Get ticket users
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetTicketUsers(int nTicketID)
+        {
+            
+            var lstTicketChats = this.oITicketServices.IlGetTicketUsers(nTicketID,string.Concat(enumUserType.Member.ToString(), enumUserType.Staff.ToString(), enumUserType.MobileUser.ToString()));
+            return Json(lstTicketChats, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

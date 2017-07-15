@@ -122,8 +122,16 @@
         var enmTicketStatus = {
             Open: 1,
             Closed: 2,
-            Rejected: 3
+            Rejected: 3,
+            Deleted:4
         }
+
+        //Ticket status
+        var enmTicketCreatedPlatform = {
+            Mobile: 1,
+            Web: 2
+        }
+
 
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
@@ -150,7 +158,11 @@
                     TicketStatusRemark: 'TICKET_STATUS_REMARK',
                     IsActive: 'IS_ACTIVE',
                     DefaultImage: 'DEFAULT_IMAGE',
-                    CreatedDate: 'CREATED_DATE'
+                    CreatedDate: 'CREATED_DATE',
+                    TicketOwnerUserFullName: 'TicketOwnerUserFullName',
+                    TicketCreatedPlatform: 'TICKET_CREATED_PLATFORM',
+                    TicketParticipantNos: 'TicketParticipantNos'
+
                 };
             var sCaption = '@TicketsResx.AllTickets';
             var oArrColumnNames = [
@@ -164,9 +176,11 @@
                 '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
                 '@TicketsResx.TicketCode',
                 '@TicketsResx.TicketName',
-                //'Ticket Description',
+                '@TicketsResx.TicketOwnerUserFullName',
                 '@TicketsResx.TicketStatus',
+                '@TicketsResx.TicketParticipantNos',
                 '@TicketsResx.IsActive',
+                '@TicketsResx.TicketCreatedPlatform',
                 '@TicketsResx.CreatedDate',
                 '@Buttons.Options' // Options
             ];
@@ -192,6 +206,7 @@
                                         { Caption: "@TicketsResx.GoToChats", EventName: "fnGoToTicketDetails();", RowId: true },
                                         { Caption: "@TicketsResx.ChangeTicketStatus", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
                                         { Caption: "@TicketsResx.ViewTicketInfo", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
+                                        { Caption: "Add Participants", EventName: "fnLoadPartialAddTicketParticipants();", RowId: true }
             ];
             var oArrColsModel = [
                     {
@@ -238,13 +253,13 @@
                         width: 100, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
-                    //{
-                    //    name: ConstantsNames.TicketDescription,
-                    //    width: 150, editable: false,
-                    //    align: EnumColumnsAlignment.Center
-                    //},
                     {
+                        name: ConstantsNames.TicketOwnerUserFullName,
                         width: 80, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        width: 70, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var htmlString = '';
@@ -252,7 +267,19 @@
                                 htmlString += cellvalue;
                             }
                             htmlString += "<div class='media-body'>";
-                            htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>" + rowObject.TICKET_STATUS_NAME + "</a>";
+                            if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Open) {
+                                htmlString += "<span class='label bg-blue'>Open</span>";
+                            }
+                            else if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Closed) {
+                                htmlString += "<span class='label bg-success-400'>Closed</span>";
+                            }
+                            else if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Rejected) {
+                                htmlString += "<span class='label bg-danger'>Rejected</span>";
+                            }
+                            else
+                            {
+                                htmlString += "<span class='label bg-grey-400'>Deleted</span>";
+                            }
                             if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Rejected) {
                                 htmlString += '<div class="text-semibold"><a onclick="fnShowRejectReasonDesc(\'' + rowObject.ID + '\');return false;" href="#">[ View Reject Reason ]</a></div>';
                             }
@@ -261,6 +288,17 @@
                             return htmlString;
                         }
                     },
+                     {
+                         width: 60, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             var nTicketParticipantNos = Number(rowObject.TicketParticipantNos);
+                             var htmlString = '';
+                             htmlString += "<span class='badge badge-primary'>" + nTicketParticipantNos + "</span>";
+
+                             return htmlString;
+                         }
+                     },
                     {
                         width: 50, editable: false,
                         align: EnumColumnsAlignment.Center,
@@ -277,10 +315,25 @@
                         }
                     },
                     {
-                        name: ConstantsNames.CreatedDate,
-                        width: 50, editable: false,
+                        width: 60, editable: false,
                         align: EnumColumnsAlignment.Center,
-                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y' }
+                        formatter: function (cellvalue, options, rowObject) {
+                            var htmlString = '';
+                            debugger;
+                            if (Number(rowObject.TICKET_CREATED_PLATFORM) == enmTicketCreatedPlatform.Mobile) {
+                                htmlString += "<span class='label label-flat border-primary text-primary-600'>Mobile</span>";
+                            }
+                            else {
+                                htmlString += "<span class='label label-flat border-primary text-primary-600'>Web</span>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.CreatedDate,
+                        width: 80, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: 'date', formatoptions: { srcformat: "ISO8601Long", newformat: 'd/m/Y h:i A' }
                     }
             ];
 
@@ -731,6 +784,54 @@
                 }
             });
         }
+
+
+        function fnLoadPartialAddTicketParticipants() {
+
+            var gdTicketList = $('#' + sGridViewSelector);
+            var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
+            var rowData = gdTicketList.getRowData(vTicketID);
+
+            var sTicketCode = rowData.TICKET_CODE;
+            var sTicketName = rowData.TICKET_NAME;
+            var sTicketStatusName = rowData.TICKET_STATUS_NAME;
+            var nTicketStatusID = rowData.TICKET_STATUS_ID;
+            var bIsTicketActive = rowData.IS_ACTIVE;
+
+            var dataToSend = JSON.stringify({
+                ID: vTicketID,
+                TICKET_CODE: sTicketCode,
+                TICKET_NAME: sTicketName,
+                TICKET_STATUS_NAME: sTicketStatusName,
+                TICKET_STATUS_ID: nTicketStatusID,
+                IS_ACTIVE: bIsTicketActive
+            });
+
+            $("#dvPopUpWindow").dialog({
+                title: 'Add Ticket Participants',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAddTicketParticipants", "Tickets")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                }
+            });
+        }
+
 
         //Entry Point
         $(document).ready(function () {

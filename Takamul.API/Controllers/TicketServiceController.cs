@@ -303,7 +303,9 @@ namespace Takamul.API.Controllers
                         APPLICATION_ID = oTakamulTicket.ApplicationID,
                         TICKET_NAME = oTakamulTicket.TicketName,
                         TICKET_DESCRIPTION = oTakamulTicket.TicketDescription,
-                        DEFAULT_IMAGE = sDefaultImagePath
+                        DEFAULT_IMAGE = sDefaultImagePath,
+                        TICKET_CREATED_PLATFORM = (int)Infrastructure.Core.enmTicketPlatForm.Mobile,
+                        CREATED_BY = nUserID
                     };
 
                     Response oResponse = this.oITicketServices.oInsertTicket(oTicketViewModel, nUserID);

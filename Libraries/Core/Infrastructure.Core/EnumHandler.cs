@@ -101,6 +101,27 @@ namespace Infrastructure.Core
     }
     #endregion
 
+    #region Enum :: TicketPlatForm
+    /// <summary>
+    /// Ticket Creating Platforms
+    /// </summary>
+    public enum enmTicketPlatForm
+    {
+        /// <summary>
+        /// Undefined 
+        /// </summary>
+        Undefined = -99,
+        /// <summary>
+        /// Mobile 
+        /// </summary>
+        Mobile = 1,
+        /// <summary>
+        /// Web
+        /// </summary>
+        Web = 2
+    }
+    #endregion
+
     public class EnumHandler
     {
 

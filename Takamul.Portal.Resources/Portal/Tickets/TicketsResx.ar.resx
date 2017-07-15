@@ -222,4 +222,13 @@
   <data name="ViewTicketInfo" xml:space="preserve">
     <value>عرض معلومات التذاكر</value>
   </data>
+  <data name="TicketOwnerUserFullName" xml:space="preserve">
+    <value>تذكرة المالك</value>
+  </data>
+  <data name="TicketCreatedPlatform" xml:space="preserve">
+    <value>إنشاء منصة</value>
+  </data>
+  <data name="TicketParticipantNos" xml:space="preserve">
+    <value>إجمالي المشاركين</value>
+  </data>
 </root>

@@ -212,19 +212,21 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.NVarChar, oTicketViewModel.TICKET_NAME, 300, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketDesciption", SqlDbType.NVarChar, oTicketViewModel.TICKET_DESCRIPTION, 5000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DefaultImagePath", SqlDbType.VarChar, oTicketViewModel.DEFAULT_IMAGE, 500, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCreatedPlatForm", SqlDbType.Int, oTicketViewModel.TICKET_CREATED_PLATFORM, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CreatedBy", SqlDbType.Int, oTicketViewModel.CREATED_BY, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar,50, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertTicket", arrParameters.ToArray());
-                oResponse.nOperationResult = Convert.ToInt32(arrParameters[7].Value.ToString());
+                oResponse.nOperationResult = Convert.ToInt32(arrParameters[9].Value.ToString());
                 if (oResponse.nOperationResult == 1)
                 {
                     //Inserted Ticket ID
-                    oResponse.ResponseID = arrParameters[6].Value.ToString();
+                    oResponse.ResponseID = arrParameters[8].Value.ToString();
 
                     //User Device ID
-                    oResponse.ResponseCode = arrParameters[5].Value.ToString();
+                    oResponse.ResponseCode = arrParameters[7].Value.ToString();
 
                     oResponse.OperationResult = enumOperationResult.Success;
                 }
@@ -408,6 +410,29 @@ namespace Takamul.Services
 
             return oResponse;
             #endregion
+        }
+        #endregion
+
+        #region Method :: List<UserInfoViewModel> :: IlGetAllTicketUsers
+        /// <summary>
+        /// Get ticket users
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nUserTypeIDs"></param>
+        /// <returns></returns>
+        public List<UserInfoViewModel> IlGetTicketUsers(int nTicketID, string nUserTypeIDs)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeIds", SqlDbType.VarChar, nUserTypeIDs, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstTicketUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetTicketUsers", arrParameters.ToArray());
+            return lstTicketUsers;
+            #endregion
+
         }
         #endregion
 
