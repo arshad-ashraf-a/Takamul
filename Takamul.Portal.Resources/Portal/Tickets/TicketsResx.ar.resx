@@ -231,4 +231,25 @@
   <data name="TicketParticipantNos" xml:space="preserve">
     <value>إجمالي المشاركين</value>
   </data>
+  <data name="AllTicketParticipants" xml:space="preserve">
+    <value>جميع المشاركين</value>
+  </data>
+  <data name="TicketParticipantName" xml:space="preserve">
+    <value>اسم المشارك</value>
+  </data>
+  <data name="ChooseOneParticipant" xml:space="preserve">
+    <value>الرجاء اختيار أحد المشاركين.</value>
+  </data>
+  <data name="DeleteParticipant" xml:space="preserve">
+    <value>حذف المشارك</value>
+  </data>
+  <data name="DeleteTicketOwnerUser" xml:space="preserve">
+    <value>لا يمكنك حذف مالك التذاكر.</value>
+  </data>
+  <data name="ReachedLimitParticipantUser" xml:space="preserve">
+    <value>الوصول إلى أقصى عدد مسموح به من المستخدمين على هذه التذكرة.</value>
+  </data>
+  <data name="UserAlreadyExists" xml:space="preserve">
+    <value>المستخدم موجود من قبل.</value>
+  </data>
 </root>

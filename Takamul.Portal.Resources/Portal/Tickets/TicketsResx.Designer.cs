@@ -88,6 +88,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Participants.
+        /// </summary>
+        public static string AllTicketParticipants {
+            get {
+                return ResourceManager.GetString("AllTicketParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Tickets.
         /// </summary>
         public static string AllTickets {
@@ -106,11 +115,38 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose one participant..
+        /// </summary>
+        public static string ChooseOneParticipant {
+            get {
+                return ResourceManager.GetString("ChooseOneParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created Date.
         /// </summary>
         public static string CreatedDate {
             get {
                 return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Participant.
+        /// </summary>
+        public static string DeleteParticipant {
+            get {
+                return ResourceManager.GetString("DeleteParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot delete ticket owner..
+        /// </summary>
+        public static string DeleteTicketOwnerUser {
+            get {
+                return ResourceManager.GetString("DeleteTicketOwnerUser", resourceCulture);
             }
         }
         
@@ -183,6 +219,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string PleaseSelectFile {
             get {
                 return ResourceManager.GetString("PleaseSelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reached maximum number of allowed users on this ticket..
+        /// </summary>
+        public static string ReachedLimitParticipantUser {
+            get {
+                return ResourceManager.GetString("ReachedLimitParticipantUser", resourceCulture);
             }
         }
         
@@ -331,6 +376,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Participant Name.
+        /// </summary>
+        public static string TicketParticipantName {
+            get {
+                return ResourceManager.GetString("TicketParticipantName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Participants .
         /// </summary>
         public static string TicketParticipantNos {
@@ -390,6 +444,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string UploadFile {
             get {
                 return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user already exists..
+        /// </summary>
+        public static string UserAlreadyExists {
+            get {
+                return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
             }
         }
         

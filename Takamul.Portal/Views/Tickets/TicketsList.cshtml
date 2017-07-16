@@ -319,7 +319,6 @@
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var htmlString = '';
-                            debugger;
                             if (Number(rowObject.TICKET_CREATED_PLATFORM) == enmTicketCreatedPlatform.Mobile) {
                                 htmlString += "<span class='label label-flat border-primary text-primary-600'>Mobile</span>";
                             }
@@ -713,7 +712,6 @@
                 return this.optional(element) || value != param;
             }, "Please choose a value!");
 
-            debugger;
             var validator = $('#' + sFormID).validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
@@ -823,6 +821,15 @@
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
+
+                            //dialog select2 textbox focus issue
+                            if ($.ui && $.ui.dialog && $.ui.dialog.prototype._allowInteraction) {
+                                var ui_dialog_interaction = $.ui.dialog.prototype._allowInteraction;
+                                $.ui.dialog.prototype._allowInteraction = function (e) {
+                                    if ($(e.target).closest('.select2-dropdown').length) return true;
+                                    return ui_dialog_interaction.apply(this, arguments);
+                                };
+                            }
                         },
                         error: function (response) {
                             $("#dvPopUpWindowContainer").html("");

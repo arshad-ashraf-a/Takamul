@@ -68,11 +68,15 @@
         }
 
         function fnGetTicketChats() {
-
             var dataToSend = JSON.stringify({
                 nTicketID: Number(@Model.ID)
             });
             $.ajax({
+                xhr: function () {
+                    HideLoader();
+                    var xhr = new window.XMLHttpRequest();
+                    return xhr;
+                },
                 url: '@Url.Action("JGetTicketChats", "Tickets")',
                 type: 'POST',
                 contentType: 'application/json',
@@ -278,7 +282,7 @@
             ko.applyBindings(ViewModel);
             fnGetTicketChats();
 
-            setInterval(function () { fnGetTicketChats(); }, 20000);
+            setInterval(function () { HideLoader(); fnGetTicketChats(); }, 10000);
 
         });
 

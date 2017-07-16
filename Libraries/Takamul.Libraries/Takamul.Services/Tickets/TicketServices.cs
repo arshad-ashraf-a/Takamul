@@ -190,6 +190,29 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<TicketParticipantViewModel> :: IlGetTicketParticipants
+        /// <summary>
+        /// Get ticket participants
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        public List<TicketParticipantViewModel> IlGetTicketParticipants(int nTicketID, int nPageNumber, int nRowspPage)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<TicketParticipantViewModel> lstTicketParticipants = this.ExecuteStoredProcedureList<TicketParticipantViewModel>("GetTicketParticipants", arrParameters.ToArray());
+            return lstTicketParticipants;
+            #endregion
+
+        }
+        #endregion
+
         #region Method :: Response :: oInsertTicket
         /// <summary>
         /// Insert Ticket
@@ -413,26 +436,77 @@ namespace Takamul.Services
         }
         #endregion
 
-        #region Method :: List<UserInfoViewModel> :: IlGetAllTicketUsers
+        #region Method :: Response :: oInsertTicketParticipant
         /// <summary>
-        /// Get ticket users
+        /// Insert Ticket Participant
         /// </summary>
         /// <param name="nTicketID"></param>
-        /// <param name="nUserTypeIDs"></param>
+        /// <param name="nParticipantUserID"></param>
+        /// <param name="nCreatedBy"></param>
         /// <returns></returns>
-        public List<UserInfoViewModel> IlGetTicketUsers(int nTicketID, string nUserTypeIDs)
+        public Response oInsertTicketParticipant(int nTicketID,int nParticipantUserID, int nCreatedBy)
         {
-            #region ":DBParamters:"
-            List<DbParameter> arrParameters = new List<DbParameter>();
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeIds", SqlDbType.VarChar, nUserTypeIDs, ParameterDirection.Input));
-            #endregion
+            #region ": Insert Sp Result:"
 
-            #region ":Get Sp Result:"
-            List<UserInfoViewModel> lstTicketUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetTicketUsers", arrParameters.ToArray());
-            return lstTicketUsers;
-            #endregion
+            Response oResponse = new Response();
 
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ParticipantID", SqlDbType.Int, nParticipantUserID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CreatedBy", SqlDbType.Int, nCreatedBy, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("InsertTicketParticipant", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
+
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
+
+        #region Method :: Response :: oDeleteTicketParticipant
+        /// <summary>
+        /// Delete a ticket participant
+        /// </summary>
+        /// <param name="nTicketParticipantID"></param>
+        /// <returns></returns>
+        public Response oDeleteTicketParticipant(int nTicketParticipantID,int nTicketID)
+        {
+            #region ": Delete Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketParticipantId", SqlDbType.Int, nTicketParticipantID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("DeleteTicketParticipant", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
         }
         #endregion
 

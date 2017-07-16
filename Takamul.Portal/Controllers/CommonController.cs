@@ -124,6 +124,20 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region Method :: JsonResult :: JGetApplicationUsers
+        /// <summary>
+        /// Get application users
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JGetApplicationUsers()
+        {
+            var lstApplicationUsers = this.oIUserServices.lGetApplicationUsers(this.CurrentApplicationID, string.Concat(Convert.ToInt32(enumUserType.Member),",", Convert.ToInt32(enumUserType.Staff),",", Convert.ToInt32(enumUserType.MobileUser)));
+            return Json(lstApplicationUsers, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #endregion
     }
 }

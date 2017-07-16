@@ -42,12 +42,18 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">Ticket Participant</label>
                                 <div class="col-lg-8">
-                                    <select id="ddlTicketParticipants" name="ddlTicketParticipants" onchange="fnTicketStatusDDLOnChange()"
+                                    <select id="ddlTicketParticipants" name="ddlTicketParticipants"
                                             class="select2 col-xs-12 col-sm-9"
                                             style="padding:0;">
                                         <option value="">&nbsp;</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-xs" onclick="fnAddTicketParticpants(); return false;">Add</button>
                             </div>
                         </div>
                     </div>
@@ -57,33 +63,218 @@
             </div>
             <div class="clearfix"></div>
             <hr class="sp-1" />
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-xs" onclick="IncidentManagement.PageFunctions.UpdateTRMStatus(); return false;">Add</button>
-                <button type="submit" class="btn bg-slate-300 btn-xs" onclick="IncidentManagement.PageFunctions.CancelUpdateTRMStatus(); return false;">Cancel</button>
+            <div class="row">
+                <div class="fakeTicketParticipantWidth col-md-12"></div>
+                <div id="dvTicketParticipants">
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    $(".styled").uniform({
-        radioClass: 'choice'
-    });
 
-    function fnFillTicketUsers() {
-        //TODO:: option add 'ALL'
-        debugger;
-        FillDropDownRoot('@Url.Action("JGetTicketUsers", "Tickets")', 'POST', false, 'ddlTicketParticipants', 'ID', 'Name', 'Select Participant', ' ', [],
+    function fnFillParticipants() {
+        FillDropDownRoot('@Url.Action("JGetApplicationUsers", "Common")', 'POST', false, 'ddlTicketParticipants', 'ID', 'FULL_NAME', 'SelectUser', ' ', [],
             function () {
                 //Success Function
-                $("#ddlTicketUser").select2({ width: '100%' });
+                $("#ddlTicketParticipants").select2({ width: '100%' });
             },
             function () {
                 //Error
             })
     }
 
+    var sTPGridViewSelector = "gridTicketParticipant-table";
+    var sTPGridViewPagerSelector = "gridTicketParticipant-pager";
+    function fnBindAllTicketParticipants() {
+        ShowLoader();
+        $("#dvTicketParticipants").hide();
+        $("#dvTicketParticipants").empty();
+        var table = document.createElement('table');
+        table.id = sTPGridViewSelector;
+        var pager = document.createElement('div');
+        pager.id = sTPGridViewPagerSelector;
+
+        $('#dvTicketParticipants').append(table);
+        $('#dvTicketParticipants').append(pager);
+
+        var ConstantsNames =
+            {
+                TicketParticipantID: 'ID',
+                TicketID: 'TICKET_ID',
+                UserID: 'USER_ID',
+                FullName: 'FULL_NAME',
+                CreatedDate: 'CREATED_DATE',
+
+            };
+        var sCaption = '@TicketsResx.AllTicketParticipants';
+        var oArrColumnNames = [
+            '',//Hidden Columns Represent ID Int Value
+            '@TicketsResx.TicketParticipantName',
+            '@TicketsResx.CreatedDate',
+            '@Buttons.Options' // Options
+        ];
+        var params = {
+            'nTicketID': Number(@Model.ID)
+        };
+        var sBindDataUrl = '@Url.Action("JBindAllTicketParticipants", "Tickets")' + '?' + jQuery.param(params);
+
+        var sAddUrl = "#";
+        var sEditUrl = "#";
+        var sDeleteUrl = "#";
+        var oArrGridContextMenu = [
+                                    { MenuTitle: "@Buttons.Options" },
+                                    { Caption: "@Buttons.Delete", EventName: "fnDeleteParticipant();", RowId: true }
+        ];
+        var oArrColsModel = [
+                {
+                    name: ConstantsNames.TicketParticipantID, editable: false,
+                    key: true, hidden: true
+                },
+                {
+                    name: ConstantsNames.FullName,
+                    width: 100, editable: false,
+                    align: EnumColumnsAlignment.Center
+                },
+                {
+                    name: ConstantsNames.CreatedDate,
+                    width: 80, editable: false,
+                    align: EnumColumnsAlignment.Center,
+                    formatter: 'date', formatoptions: { srcformat: "ISO8601Long", newformat: 'd/m/Y h:i A' }
+                }
+        ];
+
+        RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id, true, false, true);
+        $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+            $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+            $("#" + pager.id).hide(); //hide pager
+
+            $(window).bind('resize', function () {
+                $("#" + table.id).setGridWidth(Math.round($(".fakeTicketParticipantWidth").width(), true));
+            }).trigger('resize');
+
+
+            $("#" + table.id).setGridWidth(Math.round($(".fakeTicketParticipantWidth").width(), true)).trigger('resize');
+
+            $("#dvTicketParticipants").show();
+            HideLoader();
+        });
+    }
+
+    function fnTriggerTicketParticipantGrid() {
+        var params = {
+            'nTicketID': Number(@Model.ID)
+        };
+        var sBindDataUrl = '@Url.Action("JBindAllTicketParticipants", "Tickets")' + '?' + jQuery.param(params);
+
+        $("#" + sTPGridViewSelector).jqGrid('setGridParam', { url: sBindDataUrl });
+        $("#" + sTPGridViewSelector).trigger("reloadGrid");
+    }
+
+    function fnAddTicketParticpants() {
+        if ($("#ddlTicketParticipants").val() == "" || $("#ddlTicketParticipants").val() == "-99") {
+            ShowStatusBarNotification("@TicketsResx.ChooseOneParticipant", NotificationType.Warning)
+            return false;
+        }
+
+        var dataToSend = JSON.stringify({
+            nTicketID: Number(@Model.ID),
+            nUserID: Number($("#ddlTicketParticipants").val())
+        });
+
+        $.ajax({
+            url: '@Url.Action("JInserTicketParticipant", "Tickets")',
+            type: 'POST',
+            contentType: 'application/json',
+            data: dataToSend,
+            async: true,
+            success: function (result) {
+                if (result.nResult == 1) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    fnTriggerTicketParticipantGrid();
+                }
+                else if (result.nResult == -2 || result.nResult == -3) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Warning);
+                }
+                else {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+            },
+            error: function (result) {
+                ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+            }
+        });
+
+    };
+
+    function fnDeleteParticipant() {
+
+        $("#dvSystemPopUpWindow").dialog({
+            title: '@TicketsResx.DeleteParticipant',
+            autoOpen: true,
+            width: '30%',
+            resizable: false,
+            modal: true,
+            open: function () {
+                var htmlToShow = "<label>@CommonResx.DeleteConfirmationMessage</label>"
+                $("#dvSystemPopUpWindowContainer").html(htmlToShow);
+
+            },
+            buttons: [
+                 {
+                     text: "@Buttons.Delete",
+                     "class": 'btn btn-sm bg-slate',
+                     click: function () {
+                         var gdTicketParticipantList = $('#' + sTPGridViewSelector);
+                         var vTicketParticipantID = gdTicketParticipantList.jqGrid('getGridParam', 'selrow');
+
+                         var dataToSend = JSON.stringify({
+                             ID: vTicketParticipantID,
+                             nTicketID: Number(@Model.ID)
+                         });
+
+                         $.ajax({
+                             url: '@Url.Action("JDeleteTicketParticipant", "Tickets")',
+                             type: 'POST',
+                             contentType: 'application/json',
+                             data: dataToSend,
+                             async: true,
+                             success: function (result) {
+                                 if (result.nResult == 1) {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                                     fnTriggerTicketParticipantGrid();
+                                 }
+                                 else if (result.nResult == -2) {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Warning);
+                                 }
+                                 else {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                 }
+                                 $("#dvSystemPopUpWindow").dialog("close");
+                             },
+                             error: function (result) {
+                                 ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                                 $("#dvSystemPopUpWindow").dialog("close");
+                             }
+                         });
+                     }
+                 },
+                 {
+                     text: '@Buttons.Cancel',
+                     "class": 'btn btn-sm btn-default',
+                     click: function () {
+                         $("#dvSystemPopUpWindow").dialog("close");
+                     }
+                 }
+            ]
+        });
+
+
+    }
+
     //Entry Point
     $(document).ready(function () {
-
+        fnBindAllTicketParticipants();
+        fnFillParticipants();
     });
 </script>

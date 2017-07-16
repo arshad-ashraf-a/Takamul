@@ -112,6 +112,7 @@
     <Compile Include="ViewModel\UserInfoViewModel.cs" />
     <Compile Include="ViewModel\MemberInfoViewModel.cs" />
     <Compile Include="ViewModel\NewsViewModel.cs" />
+    <Compile Include="ViewModel\TicketParticipantViewModel.cs" />
     <Compile Include="ViewModel\VillageInfoViewModel.cs" />
     <Compile Include="ViewModel\WilayatInfoViewModel.cs" />
   </ItemGroup>

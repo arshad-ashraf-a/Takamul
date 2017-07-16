@@ -74,6 +74,15 @@ namespace Takamul.Services
         List<TicketChatViewModel> IlGetMoreTicketChats(int nTicketID, int nLastTicketChatID);
         #endregion
 
+        #region Method :: List<TicketParticipantViewModel> :: IlGetTicketParticipants
+        /// <summary>
+        /// Get ticket participants
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <returns></returns>
+        List<TicketParticipantViewModel> IlGetTicketParticipants(int nTicketID, int nPageNumber, int nRowspPage);
+        #endregion
+
         #region Method :: Response :: oInsertTicket
         /// <summary>
         /// Insert Ticket
@@ -121,14 +130,24 @@ namespace Takamul.Services
         Response oDeleteTicket(int nTicketID, int nDoneBy);
         #endregion
 
-        #region Method :: List<UserInfoViewModel> :: IlGetAllTicketUsers
+        #region Method :: Response :: oInsertTicketParticipant
         /// <summary>
-        /// Get ticket users
+        /// Insert Ticket Participant
         /// </summary>
         /// <param name="nTicketID"></param>
-        /// <param name="nUserTypeIDs"></param>
+        /// <param name="nParticipantUserID"></param>
+        /// <param name="nCreatedBy"></param>
         /// <returns></returns>
-        List<UserInfoViewModel> IlGetTicketUsers(int nTicketID, string nUserTypeIDs);
+        Response oInsertTicketParticipant(int nTicketID, int nParticipantUserID, int nCreatedBy);
+        #endregion
+
+        #region Method :: Response :: oDeleteTicketParticipant
+        /// <summary>
+        /// Delete a ticket participant
+        /// </summary>
+        /// <param name="nTicketParticipantID"></param>
+        /// <returns></returns>
+        Response oDeleteTicketParticipant(int nTicketParticipantID, int nTicketID);
         #endregion
     }
 }

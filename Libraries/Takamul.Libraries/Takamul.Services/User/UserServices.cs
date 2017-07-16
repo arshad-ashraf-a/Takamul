@@ -68,6 +68,29 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: List<UserInfoViewModel> :: lGetApplicationUsers
+        /// <summary>
+        /// Get application users
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="nUserTypeIDs"></param>
+        /// <returns></returns>
+        public List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, string nUserTypeIDs)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserTypeIds", SqlDbType.VarChar, nUserTypeIDs, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<UserInfoViewModel> lstTicketUsers = this.ExecuteStoredProcedureList<UserInfoViewModel>("GetApplicationUsersByUserTypes", arrParameters.ToArray());
+            return lstTicketUsers;
+            #endregion
+
+        }
+        #endregion
+
         #region Method :: List<UserInfoViewModel> :: lGetAllMembers
         /// <summary>
         ///  Get list of member users
@@ -361,6 +384,7 @@ namespace Takamul.Services
             #endregion
         }
         #endregion
+
 
         #endregion
     }

@@ -231,4 +231,25 @@
   <data name="TicketParticipantNos" xml:space="preserve">
     <value>Total Participants </value>
   </data>
+  <data name="AllTicketParticipants" xml:space="preserve">
+    <value>All Participants</value>
+  </data>
+  <data name="TicketParticipantName" xml:space="preserve">
+    <value>Participant Name</value>
+  </data>
+  <data name="ChooseOneParticipant" xml:space="preserve">
+    <value>Please choose one participant.</value>
+  </data>
+  <data name="DeleteParticipant" xml:space="preserve">
+    <value>Delete Participant</value>
+  </data>
+  <data name="DeleteTicketOwnerUser" xml:space="preserve">
+    <value>You cannot delete ticket owner.</value>
+  </data>
+  <data name="ReachedLimitParticipantUser" xml:space="preserve">
+    <value>Reached maximum number of allowed users on this ticket.</value>
+  </data>
+  <data name="UserAlreadyExists" xml:space="preserve">
+    <value>The user already exists.</value>
+  </data>
 </root>

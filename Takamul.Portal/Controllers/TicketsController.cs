@@ -432,18 +432,96 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region Method :: JsonResult :: JGetTicketUsers
+        #region JsonResult :: Bind Grid All Ticket Participants
+       /// <summary>
+       /// Bind all ticket participants
+       /// </summary>
+       /// <param name="nTicketID"></param>
+       /// <param name="nPage"></param>
+       /// <param name="nRows"></param>
+       /// <param name="sColumnName"></param>
+       /// <param name="sColumnOrder"></param>
+       /// <returns></returns>
+        public JsonResult JBindAllTicketParticipants(int nTicketID,int nPage, int nRows, string sColumnName, string sColumnOrder)
+        {
+            var lstEvents = this.oITicketServices.IlGetTicketParticipants(nTicketID, nPage, nRows);
+            return Json(lstEvents, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Insert Ticket Participant
         /// <summary>
-        /// Get ticket users
+        /// Insert Ticket Participant
         /// </summary>
-        /// <param name="nTicketID"></param>
+        /// <param name="oTicketViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetTicketUsers(int nTicketID)
+        public JsonResult JInserTicketParticipant(int nTicketID,int nUserID)
         {
-            
-            var lstTicketChats = this.oITicketServices.IlGetTicketUsers(nTicketID,string.Concat(enumUserType.Member.ToString(), enumUserType.Staff.ToString(), enumUserType.MobileUser.ToString()));
-            return Json(lstTicketChats, JsonRequestBehavior.AllowGet);
+            Response oResponseResult = null;
+           
+            oResponseResult = this.oITicketServices.oInsertTicketParticipant(nTicketID,nUserID, Convert.ToInt32(CurrentUser.nUserID));
+
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageAddSuccess;
+                    break;
+                case enumOperationResult.AlreadyExistRecordFaild:
+                    this.OperationResultMessages = TicketsResx.UserAlreadyExists;
+                    break;
+                case enumOperationResult.RelatedRecordFaild:
+                    this.OperationResultMessages = TicketsResx.ReachedLimitParticipantUser;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAddFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Delete Ticket Participant
+        /// <summary>
+        ///  Delete Ticket Participant
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JDeleteTicketParticipant(string ID, int nTicketID)
+        {
+            Response oResponseResult = null;
+
+            oResponseResult = this.oITicketServices.oDeleteTicketParticipant(Convert.ToInt32(ID), nTicketID);
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageDeleteSuccess;
+                    break;
+                case enumOperationResult.RelatedRecordFaild:
+                    this.OperationResultMessages = TicketsResx.DeleteTicketOwnerUser;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageDeleteFailed;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
         }
         #endregion
 

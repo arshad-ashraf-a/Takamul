@@ -25,6 +25,16 @@ namespace Takamul.Services
 
         #endregion
 
+        #region Method :: List<UserInfoViewModel> :: lGetApplicationUsers
+        /// <summary>
+        /// Get application users
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="nUserTypeIDs"></param>
+        /// <returns></returns>
+        List<UserInfoViewModel> lGetApplicationUsers(int nApplicationID, string nUserTypeIDs);
+        #endregion
+
         #region Method :: UserInfoViewModel :: oGetUserDetails
         /// <summary>
         ///  Get user details
@@ -103,6 +113,8 @@ namespace Takamul.Services
         /// <returns></returns>
         List<UserInfoViewModel> IlGetAllMembers(int nSearchByMemberID, string sSearchByMemberName, int nPageNumber, int nRowspPage);
         #endregion
+
+
 
     }
 }
