@@ -201,4 +201,10 @@
   <data name="SupportTickets" xml:space="preserve">
     <value>Support tickets</value>
   </data>
+  <data name="AppID" xml:space="preserve">
+    <value>App ID</value>
+  </data>
+  <data name="ApplicationSummary" xml:space="preserve">
+    <value>Application Summary</value>
+  </data>
 </root>

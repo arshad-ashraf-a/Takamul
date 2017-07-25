@@ -2,6 +2,7 @@
 using Infrastructure.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -113,7 +114,7 @@ namespace LDC.eServices.Portal.Controllers
         public virtual ActionResult DownloadFile(string sFileFullPath)
         {
             byte[] oFileToDownload = null;
-            FileAccessService oFileAccessService = new FileAccessService();
+            FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
 
             try
             {

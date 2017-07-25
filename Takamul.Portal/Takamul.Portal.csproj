@@ -260,6 +260,7 @@
     <Content Include="bin\Takamul.Portal.dll" />
     <Content Include="bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
+    <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
     <Content Include="DBScript\Takamul_script_19-06-2017.sql" />
     <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_17-07-2017.sql" />

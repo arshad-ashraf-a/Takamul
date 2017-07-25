@@ -70,11 +70,29 @@ namespace Takamul.Portal.Resources.Portal.ApplicationDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App ID.
+        /// </summary>
+        public static string AppID {
+            get {
+                return ResourceManager.GetString("AppID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Name.
         /// </summary>
         public static string ApplicationName {
             get {
                 return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Summary.
+        /// </summary>
+        public static string ApplicationSummary {
+            get {
+                return ResourceManager.GetString("ApplicationSummary", resourceCulture);
             }
         }
         

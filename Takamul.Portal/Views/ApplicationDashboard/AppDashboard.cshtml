@@ -4,29 +4,91 @@
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>@AppDashboardResx.ApplicationName</th>
-                <th>@AppDashboardResx.ExipryDate</th>
-                <th>@AppDashboardResx.MemberName</th>
-                <th>@AppDashboardResx.CreatedDate</th>
-                <th>@AppDashboardResx.Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="success">
-                <td>@Model.APPLICATION_NAME</td>
-                <td>@Model.APPLICATION_EXPIRY_DATE.ToShortDateString()</td>
-                <td>@Model.MemberName</td>
-                <td>@Model.CREATED_DATE.ToShortDateString()</td>
-                <td>@Model.IS_ACTIVE</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel border-left-lg border-left-primary no-padding-bottom">
+            <div class="panel-body">
+                <ul class="nav nav-tabs nav-justified no-margin no-border-radius bg-indigo-400 border-top border-top-indigo-300">
+                    <li class="active">
+                        <a href="#today" class="text-size-small text-uppercase text-semibold" data-toggle="tab">
+                            @AppDashboardResx.ApplicationSummary
+                        </a>
+                    </li>
+                </ul>
+                <div class="col-md-6 no-padding">
+
+                    <div class="profile-user-info profile-user-info-striped" style="width:100%">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">@AppDashboardResx.AppID  </div>
+
+                            <div class="profile-info-value">
+                                @Model.ID
+                            </div>
+                        </div>
+
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> @AppDashboardResx.CreatedDate</div>
+
+                            <div class="profile-info-value">
+                                <b>@Model.CREATED_DATE.ToShortDateString()</b>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name width-250"> @AppDashboardResx.MemberName </div>
+
+                            <div class="profile-info-value">
+                                <div class="text-semibold"><a href="#">@Model.MemberName</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 no-padding">
+
+                    <div class="profile-user-info profile-user-info-striped" style="width:100%">
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name width-250"> @AppDashboardResx.ApplicationName </div>
+
+                            <div class="profile-info-value">
+                                <div class="text-semibold"><a href="#">@Model.APPLICATION_NAME</a></div>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> @AppDashboardResx.ExipryDate </div>
+
+                            <div class="profile-info-value">
+                                <b>@Model.APPLICATION_EXPIRY_DATE.ToShortDateString()</b>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">@AppDashboardResx.Status  </div>
+
+                            <div class="profile-info-value">
+                                @if (Model.IS_ACTIVE)
+                                {
+                                <i class="icon-checkmark-circle position-left text-success"></i>
+                                }
+                                else
+                                {
+                                <i class="icon-cancel-circle2 text-warning position-left"></i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
 </div>
-<hr></hr>
+
+<hr class="no-margin-top"></hr>
 <div class="row">
     <div class="col-sm-6 col-md-4">
         <div class="panel panel-body bg-blue-400 has-bg-image">
@@ -82,7 +144,7 @@
     <div class="table-responsive">
         <table class="table table-xlg text-nowrap">
             <tbody>
-                <tr>
+                <tr class="">
                     <td class="col-md-4">
                         <div class="media-left media-middle">
                             <div id="tickets-status">
@@ -155,14 +217,14 @@
                         </a>
                     </td>
                     <td class="text-center">
-                        <ul class="icons-list">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.Reply</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        @*<ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.Reply</a></li>
+                                    </ul>
+                                </li>
+                            </ul>*@
                     </td>
                 </tr>
                 <!-- /ko -->
@@ -173,7 +235,7 @@
                         @AppDashboardResx.NoActiveTicketFound
                     </td>
                 </tr>
-                <!-- /ko -->​
+                <!-- /ko -->
 
                 <tr class="active border-double">
                     <td colspan="4">@AppDashboardResx.Closedtickets</td>
@@ -204,25 +266,25 @@
                         </a>
                     </td>
                     <td class="text-center">
-                        <ul class="icons-list">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        @*<ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
+                                    </ul>
+                                </li>
+                            </ul>*@
                     </td>
                 </tr>
                 <!-- /ko -->
-                <!-- /ko -->​
+                <!-- /ko -->
                 <!-- ko ifnot: vmaClosedTickets().length > 0-->
                 <tr>
                     <td colspan="4" class="text-warning">
                         @AppDashboardResx.NoClosedTicketsFound
                     </td>
                 </tr>
-                <!-- /ko -->​
+                <!-- /ko -->
 
 
                 <tr class="active border-double">
@@ -253,14 +315,14 @@
                         </a>
                     </td>
                     <td class="text-center">
-                        <ul class="icons-list">
-                            <li class="dropup">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        @*<ul class="icons-list">
+                                <li class="dropup">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a data-bind="attr: { 'href': '@Url.Action("TicketDetails", "Tickets")?nTicketID=' + nTicketID }"><i class="icon-undo"></i> @AppDashboardResx.ViewChats</a></li>
+                                    </ul>
+                                </li>
+                            </ul>*@
                     </td>
                 </tr>
                 <!-- /ko -->
@@ -268,10 +330,10 @@
                 <!-- ko ifnot: vmaRejectedTickets().length > 0-->
                 <tr>
                     <td colspan="4" class="text-warning">
-                       @AppDashboardResx.NoRejectedTicketsFound
+                        @AppDashboardResx.NoRejectedTicketsFound
                     </td>
                 </tr>
-                <!-- /ko -->​
+                <!-- /ko -->
             </tbody>
 
         </table>
@@ -316,7 +378,7 @@
                             nTicketID: arrItem.ID,
                             sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
-                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
+                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : (arrItem.LastTicketChatMessage.length < 120 ? arrItem.LastTicketChatMessage : arrItem.LastTicketChatMessage.substring(0, Math.min(arrItem.LastTicketChatMessage.length, 120)) + "..."),
                             sTicketCode: arrItem.TICKET_CODE,
                             sTicketName: '[<span class="text-info">' + arrItem.TICKET_CODE + '</span>] ' + arrItem.TICKET_NAME,
                             sTicketStatusName: arrItem.TICKET_STATUS_NAME,
@@ -341,7 +403,7 @@
                             nTicketID: arrItem.ID,
                             sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
-                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
+                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : (arrItem.LastTicketChatMessage.length < 120 ? arrItem.LastTicketChatMessage : arrItem.LastTicketChatMessage.substring(0, Math.min(arrItem.LastTicketChatMessage.length, 120)) + "..."),
                             sTicketCode: arrItem.TICKET_CODE,
                             sTicketName: '[<span class="text-info">' + arrItem.TICKET_CODE + '</span>] ' + arrItem.TICKET_NAME,
                             sTicketStatusName: arrItem.TICKET_STATUS_NAME,
@@ -367,7 +429,7 @@
                             nTicketID: arrItem.ID,
                             sParticipantFirstChar: ParticipantFirstName.charAt(0),
                             sMobileParticipantName: arrItem.MobileParticipantName,
-                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : arrItem.LastTicketChatMessage,
+                            sLastTicketChatMessage: arrItem.LastTicketChatMessage == null ? " -- " : (arrItem.LastTicketChatMessage.length < 120 ? arrItem.LastTicketChatMessage : arrItem.LastTicketChatMessage.substring(0, Math.min(arrItem.LastTicketChatMessage.length, 120)) + "..."),
                             sTicketCode: arrItem.TICKET_CODE,
                             sTicketName: '[<span class="text-info">' + arrItem.TICKET_CODE + '</span>] ' + arrItem.TICKET_NAME,
                             sTicketStatusName: arrItem.TICKET_STATUS_NAME,
