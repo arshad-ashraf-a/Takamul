@@ -501,13 +501,14 @@
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String,System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String,System.Int32,System.Int32)">
             <summary>
             Resend user OTP Number by phone number
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
             </summary>
             <param name="sPhoneNumber"></param>
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
+            <param name="nUserId"></param>
             <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
         <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.String,System.Int32,System.Int32,System.String)">

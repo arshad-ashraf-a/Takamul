@@ -17,6 +17,7 @@ using System.Data.Common;
 using System.Data;
 using Infrastructure.Core;
 using System;
+using Infrastructure.Utilities;
 
 namespace Takamul.Services
 {
@@ -108,6 +109,23 @@ namespace Takamul.Services
                 {
                     //Inserted UserID
                     oResponse.ResponseID = arrParameters[12].Value.ToString();
+                    
+                    //Send OTP via SMS and update in DB
+                    SMSNotification notify = new SMSNotification();
+                    SMSClass smsCls = new SMSClass();
+                    smsCls.Language = 0;
+                    smsCls.Message= "Your One-Time-Password (OTP) is " + oUserInfoViewModel.OTP_NUMBER + ". Enter this password to complete your registration with Takamul app.";
+                    smsCls.Recipient = oUserInfoViewModel.PHONE_NUMBER;
+                    smsCls.RecipientType = 1;
+
+                   if( notify.SendOTPviaSMS(smsCls))
+                    {
+                        arrParameters = new List<DbParameter>();
+                        arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, oResponse.ResponseID, ParameterDirection.Input));                        
+                        arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+                        this.ExecuteStoredProcedureCommand("UpdateOTPStatus", arrParameters.ToArray());
+                    }
+
                 }
             }
             catch (Exception Ex)
@@ -167,15 +185,16 @@ namespace Takamul.Services
         /// <param name="nUserID"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber)
+        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber,int nUserId)
         {
             #region ": Sp Result:"
 
             Response oResponse = new Response();
-
+            
             try
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
+                
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
@@ -183,6 +202,26 @@ namespace Takamul.Services
 
                 this.ExecuteStoredProcedureCommand("ResendOPTNumber", arrParameters.ToArray());
                 oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
+
+                #region SMS Push notification
+                //Send OTP via SMS and update in DB
+                SMSNotification notify = new SMSNotification();
+                SMSClass smsCls = new SMSClass();
+                smsCls.Language = 0;
+                smsCls.Message = "Your One-Time-Password (OTP) is " + nOTPNumber + ". Enter this password to complete your registration with Takamul app.";
+                smsCls.Recipient = sPhoneNumber;
+                smsCls.RecipientType = 1;
+
+                if (notify.SendOTPviaSMS(smsCls))
+                {
+                    arrParameters = new List<DbParameter>();
+                    arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserId, ParameterDirection.Input));
+                    arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+                    this.ExecuteStoredProcedureCommand("UpdateOTPStatus", arrParameters.ToArray());
+                }
+
+                #endregion
+
             }
             catch (Exception Ex)
             {

@@ -128,14 +128,15 @@ namespace Takamul.API.Controllers
         /// </summary>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
+        /// <param name="nUserId"></param>
         /// <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID)
+        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID,int nUserId)
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
             string sResultMessage = string.Empty;
-            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber);
+            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber, nUserId);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
