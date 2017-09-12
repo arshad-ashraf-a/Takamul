@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="59155c10-901c-4533-b617-f16ccd129ea9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="54793ce6-2dac-4160-9576-9814a5853ed3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="http://ismartsms.net/iBulkSMS/webservice/IBulkSMS.asmx?WSDL" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="IBulkSMS.wsdl" MetadataType="Wsdl" ID="7269ccf5-4143-49c7-a71d-6f67f9f784f9" SourceId="1" SourceUrl="https://ismartsms.net/iBulkSMS/webservice/IBulkSMS.asmx?WSDL" />
+    <MetadataFile FileName="IBulkSMS.wsdl" MetadataType="Wsdl" ID="64e2f322-747e-4784-893e-ccfc35edd771" SourceId="1" SourceUrl="https://ismartsms.net/iBulkSMS/webservice/IBulkSMS.asmx?WSDL" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

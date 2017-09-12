@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Takamul.Models.ViewModel
 {
-   public class SMSClass
+   public class SMSViewModel
     {
         public int Language { get; set; }
         public string Message { get; set; }

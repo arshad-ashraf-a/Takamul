@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Takamul.API.Helpers;
 using Takamul.Models;
 using Takamul.Models.ApiViewModel;
 using Takamul.Models.ViewModel;
@@ -88,7 +89,25 @@ namespace Takamul.API.Controllers
 
                         oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
                         oApiResponse.ResponseCode = nOTPNumber.ToString();
-                        //TODO::integrate with sms service and update status to database
+
+                        //Send OTP via SMS and update in DB
+                        SMSNotification oSMSNotification = new SMSNotification();
+                        SMSViewModel oSMSViewModel = new SMSViewModel();
+                        oSMSViewModel.Language = 0;
+                        oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + oUserInfoViewModel.OTP_NUMBER + ". Enter this password to complete your registration with Takamul app.";
+                        oSMSViewModel.Recipient = oUserInfoViewModel.PHONE_NUMBER;
+                        oSMSViewModel.RecipientType = 1;
+
+                        if (oSMSNotification.bSendOTPSMS(oSMSViewModel))
+                        {
+                            Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID);
+                        }
+                        else
+                        {
+                            //TODO::Log this transaction
+
+                        }
+
                     }
                     else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
                     {
@@ -131,7 +150,7 @@ namespace Takamul.API.Controllers
         /// <param name="nUserId"></param>
         /// <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID,int nUserId)
+        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID, int nUserId)
         {
             ApiResponse oApiResponse = new ApiResponse();
             int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
@@ -146,6 +165,24 @@ namespace Takamul.API.Controllers
 
                 //TODO::integrate with sms service and update status to database
                 oApiResponse.ResponseCode = nOTPNumber.ToString();
+
+                //Send OTP via SMS and update in DB
+                SMSNotification oSMSNotification = new SMSNotification();
+                SMSViewModel oSMSViewModel = new SMSViewModel();
+                oSMSViewModel.Language = 0;
+                oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + nOTPNumber + ". Enter this password to complete your registration with Takamul app.";
+                oSMSViewModel.Recipient = sPhoneNumber;
+                oSMSViewModel.RecipientType = 1;
+
+                if (oSMSNotification.bSendOTPSMS(oSMSViewModel))
+                {
+                    Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(nUserId);
+                }
+                else
+                {
+                    //TODO::Log this transaction
+
+                }
             }
             else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
             {
@@ -182,7 +219,7 @@ namespace Takamul.API.Controllers
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID,string sDeviceID)
+        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID, string sDeviceID)
         {
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
@@ -217,7 +254,7 @@ namespace Takamul.API.Controllers
             else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
             {
                 oApiResponse.OperationResult = -3;
-                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator": "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق.";
+                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق.";
                 oApiResponse.OperationResultMessage = sResultMessage;
             }
             else

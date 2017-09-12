@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Infrastructure.Utilities.SMSService {
+namespace Takamul.API.SMSService {
     using System.Runtime.Serialization;
     using System;
     
@@ -26,10 +26,10 @@ namespace Infrastructure.Utilities.SMSService {
         
         // CODEGEN: Generating message contract since element name UserID from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PushMessage", ReplyAction="*")]
-        Infrastructure.Utilities.SMSService.PushMessageResponse PushMessage(Infrastructure.Utilities.SMSService.PushMessageRequest request);
+        Takamul.API.SMSService.PushMessageResponse PushMessage(Takamul.API.SMSService.PushMessageRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PushMessage", ReplyAction="*")]
-        System.Threading.Tasks.Task<Infrastructure.Utilities.SMSService.PushMessageResponse> PushMessageAsync(Infrastructure.Utilities.SMSService.PushMessageRequest request);
+        System.Threading.Tasks.Task<Takamul.API.SMSService.PushMessageResponse> PushMessageAsync(Takamul.API.SMSService.PushMessageRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -39,12 +39,12 @@ namespace Infrastructure.Utilities.SMSService {
     public partial class PushMessageRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="PushMessage", Namespace="http://tempuri.org/", Order=0)]
-        public Infrastructure.Utilities.SMSService.PushMessageRequestBody Body;
+        public Takamul.API.SMSService.PushMessageRequestBody Body;
         
         public PushMessageRequest() {
         }
         
-        public PushMessageRequest(Infrastructure.Utilities.SMSService.PushMessageRequestBody Body) {
+        public PushMessageRequest(Takamul.API.SMSService.PushMessageRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -71,7 +71,7 @@ namespace Infrastructure.Utilities.SMSService {
         public System.DateTime ScheddateTime;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
-        public Infrastructure.Utilities.SMSService.ArrayOfString Recipients;
+        public Takamul.API.SMSService.ArrayOfString Recipients;
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public int RecipientType;
@@ -79,7 +79,7 @@ namespace Infrastructure.Utilities.SMSService {
         public PushMessageRequestBody() {
         }
         
-        public PushMessageRequestBody(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Infrastructure.Utilities.SMSService.ArrayOfString Recipients, int RecipientType) {
+        public PushMessageRequestBody(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Takamul.API.SMSService.ArrayOfString Recipients, int RecipientType) {
             this.UserID = UserID;
             this.Password = Password;
             this.Message = Message;
@@ -97,12 +97,12 @@ namespace Infrastructure.Utilities.SMSService {
     public partial class PushMessageResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="PushMessageResponse", Namespace="http://tempuri.org/", Order=0)]
-        public Infrastructure.Utilities.SMSService.PushMessageResponseBody Body;
+        public Takamul.API.SMSService.PushMessageResponseBody Body;
         
         public PushMessageResponse() {
         }
         
-        public PushMessageResponse(Infrastructure.Utilities.SMSService.PushMessageResponseBody Body) {
+        public PushMessageResponse(Takamul.API.SMSService.PushMessageResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -125,12 +125,12 @@ namespace Infrastructure.Utilities.SMSService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IBulkSMSSoapChannel : Infrastructure.Utilities.SMSService.IBulkSMSSoap, System.ServiceModel.IClientChannel {
+    public interface IBulkSMSSoapChannel : Takamul.API.SMSService.IBulkSMSSoap, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class BulkSMSSoapClient : System.ServiceModel.ClientBase<Infrastructure.Utilities.SMSService.IBulkSMSSoap>, Infrastructure.Utilities.SMSService.IBulkSMSSoap {
+    public partial class BulkSMSSoapClient : System.ServiceModel.ClientBase<Takamul.API.SMSService.IBulkSMSSoap>, Takamul.API.SMSService.IBulkSMSSoap {
         
         public BulkSMSSoapClient() {
         }
@@ -152,13 +152,13 @@ namespace Infrastructure.Utilities.SMSService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Infrastructure.Utilities.SMSService.PushMessageResponse Infrastructure.Utilities.SMSService.IBulkSMSSoap.PushMessage(Infrastructure.Utilities.SMSService.PushMessageRequest request) {
+        Takamul.API.SMSService.PushMessageResponse Takamul.API.SMSService.IBulkSMSSoap.PushMessage(Takamul.API.SMSService.PushMessageRequest request) {
             return base.Channel.PushMessage(request);
         }
         
-        public int PushMessage(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Infrastructure.Utilities.SMSService.ArrayOfString Recipients, int RecipientType) {
-            Infrastructure.Utilities.SMSService.PushMessageRequest inValue = new Infrastructure.Utilities.SMSService.PushMessageRequest();
-            inValue.Body = new Infrastructure.Utilities.SMSService.PushMessageRequestBody();
+        public int PushMessage(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Takamul.API.SMSService.ArrayOfString Recipients, int RecipientType) {
+            Takamul.API.SMSService.PushMessageRequest inValue = new Takamul.API.SMSService.PushMessageRequest();
+            inValue.Body = new Takamul.API.SMSService.PushMessageRequestBody();
             inValue.Body.UserID = UserID;
             inValue.Body.Password = Password;
             inValue.Body.Message = Message;
@@ -166,18 +166,18 @@ namespace Infrastructure.Utilities.SMSService {
             inValue.Body.ScheddateTime = ScheddateTime;
             inValue.Body.Recipients = Recipients;
             inValue.Body.RecipientType = RecipientType;
-            Infrastructure.Utilities.SMSService.PushMessageResponse retVal = ((Infrastructure.Utilities.SMSService.IBulkSMSSoap)(this)).PushMessage(inValue);
+            Takamul.API.SMSService.PushMessageResponse retVal = ((Takamul.API.SMSService.IBulkSMSSoap)(this)).PushMessage(inValue);
             return retVal.Body.PushMessageResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Infrastructure.Utilities.SMSService.PushMessageResponse> Infrastructure.Utilities.SMSService.IBulkSMSSoap.PushMessageAsync(Infrastructure.Utilities.SMSService.PushMessageRequest request) {
+        System.Threading.Tasks.Task<Takamul.API.SMSService.PushMessageResponse> Takamul.API.SMSService.IBulkSMSSoap.PushMessageAsync(Takamul.API.SMSService.PushMessageRequest request) {
             return base.Channel.PushMessageAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Infrastructure.Utilities.SMSService.PushMessageResponse> PushMessageAsync(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Infrastructure.Utilities.SMSService.ArrayOfString Recipients, int RecipientType) {
-            Infrastructure.Utilities.SMSService.PushMessageRequest inValue = new Infrastructure.Utilities.SMSService.PushMessageRequest();
-            inValue.Body = new Infrastructure.Utilities.SMSService.PushMessageRequestBody();
+        public System.Threading.Tasks.Task<Takamul.API.SMSService.PushMessageResponse> PushMessageAsync(string UserID, string Password, string Message, int Language, System.DateTime ScheddateTime, Takamul.API.SMSService.ArrayOfString Recipients, int RecipientType) {
+            Takamul.API.SMSService.PushMessageRequest inValue = new Takamul.API.SMSService.PushMessageRequest();
+            inValue.Body = new Takamul.API.SMSService.PushMessageRequestBody();
             inValue.Body.UserID = UserID;
             inValue.Body.Password = Password;
             inValue.Body.Message = Message;
@@ -185,7 +185,7 @@ namespace Infrastructure.Utilities.SMSService {
             inValue.Body.ScheddateTime = ScheddateTime;
             inValue.Body.Recipients = Recipients;
             inValue.Body.RecipientType = RecipientType;
-            return ((Infrastructure.Utilities.SMSService.IBulkSMSSoap)(this)).PushMessageAsync(inValue);
+            return ((Takamul.API.SMSService.IBulkSMSSoap)(this)).PushMessageAsync(inValue);
         }
     }
 }

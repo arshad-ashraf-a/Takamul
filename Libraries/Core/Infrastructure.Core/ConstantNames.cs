@@ -242,5 +242,31 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region SMSServiceUserName
+        /// <summary>
+        /// SMSServiceUserName
+        /// </summary>
+        public static string SMSServiceUserName
+        {
+            get
+            {
+                return "SMSServiceUserName";
+            }
+        }
+        #endregion
+
+        #region SMSServicPassword
+        /// <summary>
+        /// SMSServicPassword
+        /// </summary>
+        public static string SMSServicPassword
+        {
+            get
+            {
+                return "SMSServicPassword";
+            }
+        }
+        #endregion
+
     }
 }
