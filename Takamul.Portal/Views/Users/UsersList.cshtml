@@ -93,7 +93,9 @@
                     IsActive: 'IS_ACTIVE',
                     IsOTPVerified: 'IS_OTP_VALIDATED',
                     OTPNumber: 'OTP_NUMBER',
-                    CreatedDate: 'CREATED_DATE'
+                    CreatedDate: 'CREATED_DATE',
+                    IsSmsSent: 'SMS_SENT_STATUS',
+                    SMSSentTransactionDate: 'SMS_SENT_TRANSACTION_DATE',
                 };
             var sCaption = '@UsersResx.AllUsers';
             var oArrColumnNames = [
@@ -103,9 +105,9 @@
                 '@UsersResx.UserType',
                 '@UsersResx.PhoneNumber',
                 '@UsersResx.Email',
-                '@UsersResx.IsBlocked',
-                '@UsersResx.IsActive',
-                '@UsersResx.OTPVerified',
+                '@UsersResx.Status',
+                @*'@UsersResx.IsActive',
+                '@UsersResx.OTPVerified',*@
                 '@UsersResx.OTPNumber',
                 '@UsersResx.CreatedDate',
                 '@Buttons.Options' // Options
@@ -163,61 +165,148 @@
                     },
                     {
                         name: ConstantsNames.IsBlocked,
-                        width: 50, editable: false,
+                        width: 100, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
-                            var bIsActive = rowObject.IS_BLOCKED;
-                            var htmlString = '';
-                            if (bIsActive) {
-                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            var bIsBlocked = rowObject.IS_BLOCKED;
+                            var htmlIsBlocked = '';
+                            if (bIsBlocked) {
+                                htmlIsBlocked += "<i class='icon-checkmark-circle text-success position-left'></i>";
                             }
                             else {
-                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                htmlIsBlocked += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
                             }
-                            return htmlString;
-                        }
-                    },
-                    {
-                        name: ConstantsNames.IsActive,
-                        width: 50, editable: false,
-                        align: EnumColumnsAlignment.Center,
-                        formatter: function (cellvalue, options, rowObject) {
+
                             var bIsActive = rowObject.IS_ACTIVE;
-                            var htmlString = '';
+                            var htmlIsActive = '';
                             if (bIsActive) {
-                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                                htmlIsActive += "<i class='icon-checkmark-circle text-success position-left'></i>";
                             }
                             else {
-                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                htmlIsActive += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
                             }
+
+
+                            var htmlString = '';
+                             var htmlIsOTPVerified = '';
+                            if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
+                                var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
+                                if (bIsOTPVerified != null) {
+                                    if (bIsOTPVerified) {
+                                        htmlIsOTPVerified = "<i class='icon-checkmark-circle text-success position-left'></i>";
+                                    }
+                                    else {
+                                        htmlIsOTPVerified = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                    }
+                                }
+                            }
+                            htmlString += "   <div class='col-md-12 no-padding'>";
+
+                            htmlString += "  <div class='profile-user-info profile-user-info-striped' style='width:100%'>";
+                            htmlString += "   <div class='profile-info-row'>";
+                            htmlString += "       <div class='profile-info-name'>Is Active  </div>";
+                            htmlString += "       <div class='profile-info-value'>";
+                            htmlString += htmlIsActive;
+                            htmlString += "       </div>";
+                            htmlString += "    </div>";
+
+
+                            htmlString += "    <div class='profile-info-row'>";
+                            htmlString += "       <div class='profile-info-name'> Is Blocked</div>";
+                            htmlString += "       <div class='profile-info-value'>";
+                            htmlString += htmlIsBlocked;
+                            htmlString += "       </div>";
+                            htmlString += "  </div>";
+                            if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
+                                htmlString += " <div class='profile-info-row'>";
+                                htmlString += "    <div class='profile-info-name'> Is OTP Verified </div>";
+                                htmlString += "  <div class='profile-info-value'>";
+                                htmlString += htmlIsOTPVerified;
+                                htmlString += "   </div>";
+                                htmlString += " </div>";
+                            }
+                            htmlString += " </div>";
+                            htmlString += " </div>";
+
+
                             return htmlString;
                         }
                     },
+                    //{
+                    //    name: ConstantsNames.IsActive,
+                    //    width: 50, editable: false,
+                    //    align: EnumColumnsAlignment.Center,
+                    //    formatter: function (cellvalue, options, rowObject) {
+
+                    //        return htmlString;
+                    //    }
+                    //},
+                    // {
+                    //     name: ConstantsNames.IsOTPVerified,
+                    //     width: 50, editable: false,
+                    //     align: EnumColumnsAlignment.Center,
+                    //     formatter: function (cellvalue, options, rowObject) {
+                    //         var htmlString = '';
+
+                    //         return htmlString;
+                    //     }
+                    // },
                      {
-                         name: ConstantsNames.IsOTPVerified,
-                         width: 50, editable: false,
+                         name: ConstantsNames.OTPNumber,
+                         width: 200, editable: false,
                          align: EnumColumnsAlignment.Center,
                          formatter: function (cellvalue, options, rowObject) {
                              var htmlString = '';
+                             var htmlSmsSentStatus = '';
                              if (rowObject.USER_TYPE_ID == enmUserType.MobileUser) {
-                                 var bIsOTPVerified = rowObject.IS_OTP_VALIDATED;
-                                 if (bIsOTPVerified != null) {
-
-                                     if (bIsOTPVerified) {
-                                         htmlString = "<i class='icon-checkmark-circle text-success position-left'></i>";
-                                     }
-                                     else {
-                                         htmlString = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                 var bIsSMSSent = rowObject.SMS_SENT_STATUS;
+                                 htmlSmsSentStatus = "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                                 if (bIsSMSSent != null) {
+                                     if (bIsSMSSent) {
+                                         htmlSmsSentStatus = "<i class='icon-checkmark-circle text-success position-left'></i>";
                                      }
                                  }
+
+                                 htmlString += "   <div class='col-md-12 no-padding'>";
+                                 htmlString += "  <div class='profile-user-info profile-user-info-striped' style='width:100%'>";
+
+                                 htmlString += "    <div class='profile-info-row'>";
+                                 htmlString += "       <div class='profile-info-name'> OTP Number</div>";
+                                 htmlString += "       <div class='profile-info-value'>";
+                                 htmlString += rowObject.OTP_NUMBER;
+                                 htmlString += "       </div>";
+                                 htmlString += "  </div>";
+
+                               
+                                 htmlString += "   <div class='profile-info-row'>";
+                                 htmlString += "       <div class='profile-info-name'>SMS Sent Status  </div>";
+                                 htmlString += "       <div class='profile-info-value'>";
+                                 htmlString += htmlSmsSentStatus;
+                                 htmlString += "       </div>";
+                                 htmlString += "    </div>";
+
+                                 if (rowObject.SMS_SENT_TRANSACTION_DATE != null) {
+                                     htmlString += " <div class='profile-info-row'>";
+                                     htmlString += "    <div class='profile-info-name'> SMS Transaction Date </div>";
+                                     htmlString += "  <div class='profile-info-value'>";
+                                     htmlString += moment(rowObject.SMS_SENT_TRANSACTION_DATE).format('DD/MM/YYYY h:mm A');
+                                     htmlString += "   </div>";
+                                     htmlString += " </div>";
+                                 }
+                                 htmlString += " </div>";
+                                 htmlString += " </div>";
+
+                                 //htmlString += "<div class='media-body'>";
+                                 //htmlString += "<a href='#' class='display-inline-block text-default text-semibold letter-icon-title'>" + rowObject.OTP_NUMBER + "</a>";
+                                 //htmlString += "<div class='text-muted text-size-small'><span class='icon-size-small-12px icon-circles2'></span> SMS Sent Status - " + htmlSmsSentStatus + "</div>";
+                                 //if (rowObject.SMS_SENT_TRANSACTION_DATE != null) {
+                                 //    htmlString += "<div class='text-muted text-size-small'><span class='icon-size-small-12px icon-circles2'></span> SMS Transaction Date - " + moment(rowObject.SMS_SENT_TRANSACTION_DATE).format('DD/MM/YYYY hh:mm:ss') + "</div>";
+                                 //}
+                                 //htmlString += "</div>";
+
                              }
                              return htmlString;
                          }
-                     },
-                     {
-                         name: ConstantsNames.OTPNumber,
-                         width: 50, editable: false,
-                         align: EnumColumnsAlignment.Center
                      },
                     {
                         name: ConstantsNames.CreatedDate,

@@ -100,15 +100,16 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_VillageId", SqlDbType.Int, oUserInfoViewModel.VILLAGE_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, oUserInfoViewModel.OTP_NUMBER, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DeviceID", SqlDbType.VarChar, oUserInfoViewModel.DEVICE_ID, 50, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PreferedLanguageID", SqlDbType.Int, oUserInfoViewModel.PREFERED_LANGUAGE_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_UserID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertMobileUser", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[13].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[14].Value.ToString());
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
                     //Inserted UserID
-                    oResponse.ResponseID = arrParameters[12].Value.ToString();
+                    oResponse.ResponseID = arrParameters[13].Value.ToString();
                 }
             }
             catch (Exception Ex)
@@ -199,12 +200,13 @@ namespace Takamul.Services
         #endregion
 
         #region Method :: Response :: oUpdateOTPStatus
-       /// <summary>
-       /// Update the OTP Status
-       /// </summary>
-       /// <param name="nUserId"></param>
-       /// <returns></returns>
-        public Response oUpdateOTPStatus(int nUserId)
+        /// <summary>
+        /// Update the OTP Status
+        /// </summary>
+        /// <param name="nUserId"></param>
+        /// <param name="bSmsSentStatus"></param>
+        /// <returns></returns>
+        public Response oUpdateOTPStatus(int nUserId, bool bSmsSentStatus)
         {
             #region ": Sp Result:"
 
@@ -214,11 +216,12 @@ namespace Takamul.Services
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, oResponse.ResponseID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserId, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_SmsSentStatus", SqlDbType.Bit, bSmsSentStatus, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("UpdateOTPStatus", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[1].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
 
             }
             catch (Exception Ex)

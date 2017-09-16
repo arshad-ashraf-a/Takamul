@@ -250,4 +250,7 @@
   <data name="EnterPassword" xml:space="preserve">
     <value>أدخل كلمة المرور.</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>تصريح</value>
+  </data>
 </root>

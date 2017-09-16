@@ -74,12 +74,17 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.EventDate&nbsp;<span class="text-danger">*</span></label>
-                            <div class="col-lg-5">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                    @Html.EditorFor(model => model.FORMATTED_EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
-                                </div>
 
+                            <div class="col-lg-8">
+                                <div class="col-sm-4 no-padding">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                        @Html.EditorFor(model => model.FORMATTED_EVENT_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = Model.EVENT_DATE.ToString("dd/MM/yyyy"), placeholder = "event date" } })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" id="txtEventTime" data-format="HH:mm" data-template="HH : mm" name="datetime">
+                                </div>
                             </div>
                         </div>
 
@@ -181,7 +186,10 @@
 }
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB12deZM0ibuAHFBFQk-1vEbLuzbqao64M&libraries=places"></script>
 <script src="~/assets/js/plugins/googlemap/GoogleAPIScript.js"></script>
-
+@section SpecificPluginScripts
+{
+    <script type="text/javascript" src="~/assets/js/plugins/forms/combodate.js"></script>
+}
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
@@ -306,6 +314,9 @@
                 data.append(input.name, input.value);
             });
 
+            data.append("EVENT_TIME", $("#txtEventTime").combodate('getValue', 'HH:mm'));
+
+
             $.ajax({
                 url: '@Url.Action("JSaveEvent", "Events")',
                 type: "POST",
@@ -366,6 +377,13 @@
             fnEventValidateInitialization();
 
             google.maps.event.addDomListener(window, 'load', LoadGoogleMAP);
+
+            // Initialize
+            $('#txtEventTime').combodate({
+                firstItem: 'name', //show 'hour' and 'minute' string at first item of dropdown
+                minuteStep: 1,
+                value: new Date()
+            });
         });
     </script>
 }

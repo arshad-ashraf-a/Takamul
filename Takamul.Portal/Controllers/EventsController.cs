@@ -243,8 +243,7 @@ namespace LDC.eServices.Portal.Controllers
                     oEventViewModel.EVENT_IMG_FILE_PATH = Path.Combine(this.CurrentApplicationID.ToString(), "Events", sModifiedFileName).Replace('\\', '/');
                 }
             }
-
-            oEventViewModel.EVENT_DATE = DateTime.ParseExact(oEventViewModel.FORMATTED_EVENT_DATE.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            oEventViewModel.EVENT_DATE = DateTime.ParseExact(string.Format("{0} {1}", oEventViewModel.FORMATTED_EVENT_DATE, oEventViewModel.EVENT_TIME), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
             oEventViewModel.LANGUAGE_ID = Convert.ToInt32(this.CurrentApplicationLanguage);
@@ -335,7 +334,7 @@ namespace LDC.eServices.Portal.Controllers
                 }
             }
 
-            oEventViewModel.EVENT_DATE = DateTime.ParseExact(oEventViewModel.FORMATTED_EVENT_DATE.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            oEventViewModel.EVENT_DATE = DateTime.ParseExact(string.Format("{0} {1}", oEventViewModel.FORMATTED_EVENT_DATE, oEventViewModel.EVENT_TIME), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             oEventViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
             oEventViewModel.APPLICATION_ID = CurrentApplicationID;
 

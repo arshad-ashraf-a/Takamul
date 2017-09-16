@@ -30,6 +30,7 @@ namespace Takamul.Models.ViewModel
         public int? MODIFIED_BY { get; set; }
         public DateTime PUBLISHED_DATE { get; set; }
         public string FORMATTED_PUBLISHED_DATE { get; set; }
+        public string PUBLISHED_TIME { get; set; }
         public int CREATED_BY { get; set; }
         public Guid FileId { get; set; }
         public string FileName { get; set; }

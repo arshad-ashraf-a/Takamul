@@ -37,7 +37,7 @@ namespace Takamul.Models
         public string BASE64EVENTIMG { set; get; }
         public int LANGUAGE_ID { get; set; }
         public string FORMATTED_EVENT_DATE { get; set; }
-
+        public string EVENT_TIME { get; set; }
 
         #region :: Constructor ::
         public EventViewModel()

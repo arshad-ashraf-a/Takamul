@@ -77,7 +77,8 @@ namespace Takamul.API.Controllers
                         WILAYAT_ID = oTakamulUser.WilayatID,
                         VILLAGE_ID = oTakamulUser.VillageID,
                         OTP_NUMBER = nOTPNumber,
-                        DEVICE_ID = oTakamulUser.DeviceID
+                        DEVICE_ID = oTakamulUser.DeviceID,
+                        PREFERED_LANGUAGE_ID = nLanguageID
                     };
 
                     Response oResponse = this.oIAuthenticationService.oInsertMobileUser(oUserInfoViewModel);
@@ -98,15 +99,8 @@ namespace Takamul.API.Controllers
                         oSMSViewModel.Recipient = oUserInfoViewModel.PHONE_NUMBER;
                         oSMSViewModel.RecipientType = 1;
 
-                        if (oSMSNotification.bSendOTPSMS(oSMSViewModel))
-                        {
-                            Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID);
-                        }
-                        else
-                        {
-                            //TODO::Log this transaction
-
-                        }
+                        bool bSentSMS = oSMSNotification.bSendOTPSMS(oSMSViewModel);
+                        Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID, bSentSMS);
 
                     }
                     else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
@@ -174,15 +168,9 @@ namespace Takamul.API.Controllers
                 oSMSViewModel.Recipient = sPhoneNumber;
                 oSMSViewModel.RecipientType = 1;
 
-                if (oSMSNotification.bSendOTPSMS(oSMSViewModel))
-                {
-                    Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(nUserId);
-                }
-                else
-                {
-                    //TODO::Log this transaction
+                bool bSentSMS = oSMSNotification.bSendOTPSMS(oSMSViewModel);
+                Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID, bSentSMS);
 
-                }
             }
             else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
             {

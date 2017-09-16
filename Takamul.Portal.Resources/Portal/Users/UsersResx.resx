@@ -249,4 +249,7 @@
   <data name="EnterPassword" xml:space="preserve">
     <value>Enter password.</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

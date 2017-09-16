@@ -60,8 +60,9 @@ namespace Takamul.Services
         /// Update the OTP Status
         /// </summary>
         /// <param name="nUserId"></param>
+        /// <param name="bSmsSentStatus"></param>
         /// <returns></returns>
-        Response oUpdateOTPStatus(int nUserId);
+        Response oUpdateOTPStatus(int nUserId, bool bSmsSentStatus);
 
         #endregion
 

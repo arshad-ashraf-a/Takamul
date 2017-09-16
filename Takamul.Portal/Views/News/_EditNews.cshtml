@@ -71,10 +71,15 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@NewsResx.PublishedDate</label>
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                    @Html.EditorFor(model => model.FORMATTED_PUBLISHED_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.PUBLISHED_DATE).ToString("dd/MM/yyyy"), placeholder = @NewsResx.PublishedDate } })
+                            <div class="col-lg-8">
+                                <div class="col-lg-6 no-padding">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                        @Html.EditorFor(model => model.FORMATTED_PUBLISHED_DATE, new { htmlAttributes = new { @class = "form-control datepicker-menus", @Value = (Model.PUBLISHED_DATE).ToString("dd/MM/yyyy"), placeholder = @NewsResx.PublishedDate } })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" id="txtPublishedTime" data-format="HH:mm" data-template="HH : mm" name="datetime">
                                 </div>
                             </div>
                         </div>
@@ -133,7 +138,10 @@
         </div>
     </div>
 }
-
+@section SpecificPluginScripts
+{
+    <script type="text/javascript" src="~/assets/js/plugins/forms/combodate.js"></script>
+}
 
 @section InlineScriptsRelated
 {
@@ -274,7 +282,8 @@
                 data.append(input.name, input.value);
             });
 
-            debugger;
+            data.append("PUBLISHED_TIME", $("#txtEventTime").combodate('getValue', 'HH:mm'));
+
             $.ajax({
                 url: '@Url.Action("JEditNews", "News")',
                 type: "POST",
@@ -317,7 +326,16 @@
 
         //Entry Point
         $(document).ready(function () {
+
+
             fnNewsValidateInitialization();
+
+            // Initialize
+            $('#txtPublishedTime').combodate({
+                firstItem: 'name', //show 'hour' and 'minute' string at first item of dropdown
+                minuteStep: 1,
+                value: new Date(Date.parse('@Model.PUBLISHED_DATE'))
+            });
         });
     </script>
 }

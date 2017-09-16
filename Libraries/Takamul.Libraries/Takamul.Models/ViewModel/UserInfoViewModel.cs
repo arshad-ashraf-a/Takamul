@@ -55,10 +55,12 @@ namespace Takamul.Models.ViewModel
         public enumUserType UserType { get; set; }
         public string APPLICATION_NAME { get; set; }
         public string DEVICE_ID { get; set; }
+        public int? PREFERED_LANGUAGE_ID { get; set; }
         public string AREA_NAME { get; set; }
         public string WILLAYAT_NAME { get; set; }
         public string VILLAGE_NAME { get; set; }
-        
+        public Nullable<DateTime> SMS_SENT_TRANSACTION_DATE { get; set; }
+
 
         #region :: Constructor ::
         public UserInfoViewModel()

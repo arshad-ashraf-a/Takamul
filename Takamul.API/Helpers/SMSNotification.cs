@@ -13,25 +13,21 @@ namespace Takamul.API.Helpers
     {
         public bool bSendOTPSMS(SMSViewModel oSMSViewModel)
         {
-            bool flg = false;
             try
             {
-                SMSService.PushMessageRequestBody MsgBodyobj = new SMSService.PushMessageRequestBody();
-                MsgBodyobj.Language = oSMSViewModel.Language;
-                MsgBodyobj.Message = oSMSViewModel.Message;
                 ArrayOfString arrPhoneNos = new ArrayOfString();
-                arrPhoneNos[0] = oSMSViewModel.Recipient;
-                MsgBodyobj.Recipients = arrPhoneNos;
-                MsgBodyobj.RecipientType = oSMSViewModel.RecipientType;
-                MsgBodyobj.UserID = CommonHelper.sGetConfigKeyValue(ConstantNames.SMSServiceUserName);
-                MsgBodyobj.Password = CommonHelper.sGetConfigKeyValue(ConstantNames.SMSServicPassword);
-                SMSService.PushMessageRequest req = new PushMessageRequest(MsgBodyobj);
+                arrPhoneNos.Add("968" + oSMSViewModel.Recipient.ToString());
+                SMSService.BulkSMSSoapClient client = new BulkSMSSoapClient();
+                int nResult = client.PushMessage(CommonHelper.sGetConfigKeyValue(ConstantNames.SMSServiceUserName), CommonHelper.sGetConfigKeyValue(ConstantNames.SMSServicPassword),
+                    oSMSViewModel.Message, oSMSViewModel.Language, DateTime.Now, arrPhoneNos, 1);
+
+                return nResult == 1;
             }
             catch (Exception ex)
             {
-
+                return false;
             }
-            return flg;
+            
         }
     }
 }

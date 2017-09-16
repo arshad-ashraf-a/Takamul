@@ -221,6 +221,7 @@
     <Content Include="assets\js\jqGrid\jquery.contextmenu.r2.js" />
     <Content Include="assets\js\jqGrid\jquery.jqGrid.src.js" />
     <Content Include="assets\js\jqGrid\RenderGridView.js" />
+    <Content Include="assets\js\plugins\forms\combodate.js" />
     <Content Include="assets\js\plugins\forms\daterangepicker.js" />
     <Content Include="assets\js\plugins\forms\moment.min.js" />
     <Content Include="assets\js\plugins\forms\select2.min.js" />
