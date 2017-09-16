@@ -268,6 +268,7 @@
     <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_17-07-2017.sql" />
     <Content Include="DBScript\Takamul_script_22-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_16-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_AddNewProc_16-05-17.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
     <Content Include="DBScript\Area_Wilayat_Village_Data.sql" />
