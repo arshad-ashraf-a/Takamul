@@ -114,7 +114,7 @@ namespace LDC.eServices.Portal.Controllers
             string sModifiedFileName = CommonHelper.AppendTimeStamp(filebase.FileName);
             oNewsViewModel.APPLICATION_ID = this.CurrentApplicationID;
             oNewsViewModel.LANGUAGE_ID = Convert.ToInt32(this.CurrentApplicationLanguage);
-            oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(string.Format("{0} {1}", oNewsViewModel.FORMATTED_PUBLISHED_DATE, oNewsViewModel.PUBLISHED_TIME), "dd/MM/yyyy h:mm", CultureInfo.InvariantCulture);
+            oNewsViewModel.PUBLISHED_DATE = DateTime.ParseExact(string.Format("{0} {1}", oNewsViewModel.FORMATTED_PUBLISHED_DATE, oNewsViewModel.PUBLISHED_TIME), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             oNewsViewModel.NEWS_IMG_FILE_PATH = Path.Combine(CurrentApplicationID.ToString(), "News", sModifiedFileName).Replace('\\', '/');
             oNewsViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
 

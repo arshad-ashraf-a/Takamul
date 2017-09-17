@@ -25,6 +25,7 @@ namespace Takamul.API.Helpers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
                 return false;
             }
             

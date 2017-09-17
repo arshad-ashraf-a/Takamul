@@ -19,6 +19,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Takamul.Models.ApiViewModel;
@@ -61,31 +62,43 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage GetAllNews(int nApplicationID, int nLanguageID)
         {
             List<TakamulNews> lstTakamulNews = null;
-            var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID, nLanguageID);
-            if (lstNews.Count() > 0)
+            try
             {
-                lstTakamulNews = new List<TakamulNews>();
-                foreach (var news in lstNews)
+                int a = 0;
+                int b;
+                b = 1 / a;
+                var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID, nLanguageID);
+
+                if (lstNews.Count() > 0)
                 {
-
-                    string sRemoteFilePath = string.Empty;
-                    if (!string.IsNullOrEmpty(news.NEWS_IMG_FILE_PATH))
+                    lstTakamulNews = new List<TakamulNews>();
+                    foreach (var news in lstNews)
                     {
-                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), news.NEWS_IMG_FILE_PATH);
+
+                        string sRemoteFilePath = string.Empty;
+                        if (!string.IsNullOrEmpty(news.NEWS_IMG_FILE_PATH))
+                        {
+                            sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), news.NEWS_IMG_FILE_PATH);
+                        }
+
+                        TakamulNews oTakamulNews = new TakamulNews()
+                        {
+                            NewsID = news.ID,
+                            ApplicationID = news.APPLICATION_ID,
+                            NewsContent = news.NEWS_CONTENT,
+                            NewsTitle = news.NEWS_TITLE,
+                            PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
+                            RemoteFilePath = sRemoteFilePath
+
+                        };
+                        lstTakamulNews.Add(oTakamulNews);
                     }
-
-                    TakamulNews oTakamulNews = new TakamulNews()
-                    {
-                        NewsID = news.ID,
-                        ApplicationID = news.APPLICATION_ID,
-                        NewsContent = news.NEWS_CONTENT,
-                        NewsTitle = news.NEWS_TITLE,
-                        PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
-                        RemoteFilePath = sRemoteFilePath
-
-                    };
-                    lstTakamulNews.Add(oTakamulNews);
                 }
+            }
+            catch (Exception ex)
+            {
+             
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
             }
             return Request.CreateResponse(HttpStatusCode.OK, lstTakamulNews);
         }

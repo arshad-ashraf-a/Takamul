@@ -128,7 +128,8 @@
                         name: ConstantsNames.EventDate,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
-                        formatter: 'date', formatoptions: { srcformat: 'U', newformat: 'd/m/Y H:i A' }
+                        formatter: 'date',
+                        formatoptions: { srcformat: "ISO8601Long", newformat: "d/m/Y h:i A" }
                     },
                     {
                         name: ConstantsNames.EventLocationName,

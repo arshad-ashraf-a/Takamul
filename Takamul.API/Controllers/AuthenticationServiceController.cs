@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using Takamul.API.Helpers;
 using Takamul.Models;
@@ -118,12 +119,14 @@ namespace Takamul.API.Controllers
                     }
                     return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     oApiResponse.OperationResult = 0;
                     sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
                     oApiResponse.OperationResultMessage = sResultMessage;
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+
+                    Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
                 }
             }
             oApiResponse.OperationResult = 0;
@@ -147,50 +150,63 @@ namespace Takamul.API.Controllers
         public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID, int nUserId)
         {
             ApiResponse oApiResponse = new ApiResponse();
-            int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
             string sResultMessage = string.Empty;
-            Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber, nUserId);
-
-            if (oResponse.OperationResult == enumOperationResult.Success)
+            try
             {
-                oApiResponse.OperationResult = 1;
-                sResultMessage = nLanguageID == 2 ? "OTP has been successfully sent." : "تم إرسال مكتب المدعي العام بنجاح.";
-                oApiResponse.OperationResultMessage = sResultMessage;
+                int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
 
-                //TODO::integrate with sms service and update status to database
-                oApiResponse.ResponseCode = nOTPNumber.ToString();
+                Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber, nUserId);
 
-                //Send OTP via SMS and update in DB
-                SMSNotification oSMSNotification = new SMSNotification();
-                SMSViewModel oSMSViewModel = new SMSViewModel();
-                oSMSViewModel.Language = 0;
-                oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + nOTPNumber + ". Enter this password to complete your registration with Takamul app.";
-                oSMSViewModel.Recipient = sPhoneNumber;
-                oSMSViewModel.RecipientType = 1;
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+                    oApiResponse.OperationResult = 1;
+                    sResultMessage = nLanguageID == 2 ? "OTP has been successfully sent." : "تم إرسال مكتب المدعي العام بنجاح.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
 
-                bool bSentSMS = oSMSNotification.bSendOTPSMS(oSMSViewModel);
-                Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID, bSentSMS);
+                    //TODO::integrate with sms service and update status to database
+                    oApiResponse.ResponseCode = nOTPNumber.ToString();
 
+                    //Send OTP via SMS and update in DB
+                    SMSNotification oSMSNotification = new SMSNotification();
+                    SMSViewModel oSMSViewModel = new SMSViewModel();
+                    oSMSViewModel.Language = 0;
+                    oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + nOTPNumber + ". Enter this password to complete your registration with Takamul app.";
+                    oSMSViewModel.Recipient = sPhoneNumber;
+                    oSMSViewModel.RecipientType = 1;
+
+                    bool bSentSMS = oSMSNotification.bSendOTPSMS(oSMSViewModel);
+                    Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID, bSentSMS);
+
+                }
+                else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
+                {
+                    oApiResponse.OperationResult = -2;
+                    sResultMessage = nLanguageID == 2 ? "You have exceeded the maximum number of attempt.Please contact app administrator." : "لقد تجاوزت الحد الأقصى لعدد المحاولات. يرجى الاتصال بمشرف التطبيق.";
+                    oApiResponse.OperationResultMessage = sResultMessage;
+                }
+                else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
+                {
+                    oApiResponse.OperationResult = -3;
+                    sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق";
+                    oApiResponse.OperationResultMessage = sResultMessage;
+                }
+                else
+                {
+                    oApiResponse.OperationResult = 0;
+                    sResultMessage = nLanguageID == 2 ? "An error occured.Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                    oApiResponse.OperationResultMessage = sResultMessage;
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
             }
-            else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
-            {
-                oApiResponse.OperationResult = -2;
-                sResultMessage = nLanguageID == 2 ? "You have exceeded the maximum number of attempt.Please contact app administrator." : "لقد تجاوزت الحد الأقصى لعدد المحاولات. يرجى الاتصال بمشرف التطبيق.";
-                oApiResponse.OperationResultMessage = sResultMessage;
-            }
-            else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
-            {
-                oApiResponse.OperationResult = -3;
-                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق";
-                oApiResponse.OperationResultMessage = sResultMessage;
-            }
-            else
+            catch (Exception ex)
             {
                 oApiResponse.OperationResult = 0;
-                sResultMessage = nLanguageID == 2 ? "An error occured.Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
                 oApiResponse.OperationResultMessage = sResultMessage;
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
+
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
             }
-            return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
         }
         #endregion 
 
