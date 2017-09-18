@@ -37,7 +37,6 @@ namespace LDC.eServices.Portal.Controllers
         {
             this.TitleHead = CommonResx.AppDashBoard;
 
-
             ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);
             this.CurrentApplicationName = oApplicationViewModel.APPLICATION_NAME;
             return View(oApplicationViewModel);

@@ -64,6 +64,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\LocalLib\Data.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -260,8 +268,8 @@
     <Content Include="assets\js\plugins\visualization\echarts\chart\pie.js" />
     <Content Include="assets\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="assets\js\plugins\visualization\echarts\theme\limitless.js" />
-    <Content Include="bin\Takamul.Portal.dll" />
-    <Content Include="bin\Takamul.Portal.pdb" />
+    <Content Include="assets\bin\Takamul.Portal.dll" />
+    <Content Include="assets\bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
     <Content Include="DBScript\Takamul_script_19-06-2017.sql" />

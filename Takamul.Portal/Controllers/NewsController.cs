@@ -147,6 +147,8 @@ namespace LDC.eServices.Portal.Controllers
                         {
                             this.OperationResultMessages = ex.Message.ToString();
                             //TODO :: Log this
+                            Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
+
                         }
                         if (oNewsViewModel.IS_NOTIFY_USER && oNewsViewModel.IS_ACTIVE)
                         {
@@ -155,7 +157,7 @@ namespace LDC.eServices.Portal.Controllers
                             bool bIsSendNotification = CommonHelper.SendPushNotificationNews(sNewsTitle, sNewsDesc, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString());
                             if (!bIsSendNotification)
                             {
-                                //TODO :: Log this
+                                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(new Exception("Could not send push notification.")));
                             }
                         }
 
