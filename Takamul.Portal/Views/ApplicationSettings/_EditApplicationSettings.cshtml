@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">@ApplicationSettingsResx.Name&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.LabelFor(model => model.SETTINGS_NAME)
+                            @Html.DisplayFor(model => model.SETTINGS_NAME)
                         </div>
                     </div>
 
@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">@ApplicationSettingsResx.Value&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.SETTINGS_VALUE, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.TextAreaFor(model => model.SETTINGS_VALUE, new { @class = "form-control" })
                         </div>
                     </div>
 
