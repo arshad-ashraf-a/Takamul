@@ -54,6 +54,8 @@ namespace Takamul.Portal.App_Start
             builder.RegisterType<UserServices>().As<IUserServices>().InstancePerLifetimeScope();
             builder.RegisterType<LookupServices>().As<ILookupServices>().InstancePerLifetimeScope();
             builder.RegisterType<CommonServices>().As<ICommonServices>().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationInfoService>().As<IApplicationInfoService>().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationSettingsService>().As<IApplicationSettingsService>().InstancePerLifetimeScope();
 
             #endregion
 

@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Portal.News;
 @using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
+@using Infrastructure.Utilities
+@using Infrastructure.Core
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -75,6 +77,7 @@
                 {
                     ID: 'ID',
                     NewsName: 'NEWS_TITLE',
+                    NewsImageFilePath: 'NEWS_IMG_FILE_PATH',
                     PublishedDate: 'PUBLISHED_DATE',
                     NotifyUser: 'IS_NOTIFY_USER',
                     IsActive: 'IS_ACTIVE',
@@ -83,6 +86,7 @@
             var sCaption = '@NewsResx.AllNews';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
+                '@NewsResx.NewsImage',
                 '@NewsResx.NewsTitle',
                 '@NewsResx.PublishedDate',
                 '@NewsResx.NotifyUser',
@@ -114,6 +118,24 @@
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                      {
+                          width: 100, editable: false,
+                          align: EnumColumnsAlignment.Center,
+                          formatter: function (cellvalue, options, rowObject) {
+                              var sNewImageFilePath = rowObject.NEWS_IMG_FILE_PATH;
+                              var link = "";
+                              var htmlString = '--';
+                              if (sNewImageFilePath != "" && sNewImageFilePath != null) {
+                                  link = '@Url.Content(string.Format("{0}_#NewsImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
+                                  debugger;
+                                  link = link.replace("_#NewsImage#", sNewImageFilePath);
+                                  htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
+
+                              }
+                             
+                              return htmlString;
+                          }
+                      },
                     {
                         name: ConstantsNames.NewsName,
                         width: 150, editable: false,

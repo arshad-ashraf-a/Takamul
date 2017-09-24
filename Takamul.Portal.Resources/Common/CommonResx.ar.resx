@@ -561,4 +561,16 @@
   <data name="BackToList" xml:space="preserve">
     <value>الرجوع للقائمة</value>
   </data>
+  <data name="AppInfo" xml:space="preserve">
+    <value>معلومات التطبيق</value>
+  </data>
+  <data name="AppSettings" xml:space="preserve">
+    <value>إعدادات التطبيقات</value>
+  </data>
+  <data name="SAWAeServiceLogin" xml:space="preserve">
+    <value>ساوا الخدمات الإلكترونية تسجيل الدخول</value>
+  </data>
+  <data name="TakamulServices" xml:space="preserve">
+    <value>سوا الخدمات الإلكترونية</value>
+  </data>
 </root>

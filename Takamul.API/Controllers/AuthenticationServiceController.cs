@@ -8,6 +8,7 @@
 /* Description          : Manage authentication services                                         */
 /*************************************************************************************************/
 
+using Data.Core;
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
@@ -92,22 +93,32 @@ namespace Takamul.API.Controllers
                         oApiResponse.ResponseID = Convert.ToInt32(oResponse.ResponseID);
                         oApiResponse.ResponseCode = nOTPNumber.ToString();
 
+                        Languages enmUserLanuage = (Languages)Enum.Parse(typeof(Languages), nLanguageID.ToString());
+
                         //Send OTP via SMS and update in DB
                         SMSNotification oSMSNotification = new SMSNotification();
                         SMSViewModel oSMSViewModel = new SMSViewModel();
-                        oSMSViewModel.Language = 0;
-                        oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + oUserInfoViewModel.OTP_NUMBER + ". Enter this password to complete your registration with Takamul app.";
+                        oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;
+                        string sMessage = string.Empty;
+                        if (enmUserLanuage == Languages.English)
+                        {
+                            sMessage = string.Format("Your One-Time-Password (OTP) is {0} , Enter this password to complete your registration with app.", oUserInfoViewModel.OTP_NUMBER);
+                        }
+                        else
+                        {
+                            sMessage = string.Format("رمز التفعيل هو {0} أدخال كلمة السر لأنهاء التسجيل", oUserInfoViewModel.OTP_NUMBER);
+                        }
+                        oSMSViewModel.Message = sMessage;
                         oSMSViewModel.Recipient = oUserInfoViewModel.PHONE_NUMBER;
                         oSMSViewModel.RecipientType = 1;
 
                         bool bSentSMS = oSMSNotification.bSendOTPSMS(oSMSViewModel);
                         Response oResponseOTPStatus = this.oIAuthenticationService.oUpdateOTPStatus(oApiResponse.ResponseID, bSentSMS);
-
                     }
                     else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
                     {
                         oApiResponse.OperationResult = -3;
-                        sResultMessage = nLanguageID == 2 ? "The user already exists.Please contact app administrator." : "لمستخدم موجود من قبل. الرجاء الاتصال بمشرف التطبيق.";
+                        sResultMessage = nLanguageID == 2 ? "The user already exists.Please contact app administrator." : "المستخدم مسجل من قبل. الرجاء الاتصال بمشرف التطبيق.";
                         oApiResponse.OperationResultMessage = sResultMessage;
 
                     }
@@ -122,7 +133,7 @@ namespace Takamul.API.Controllers
                 catch (Exception ex)
                 {
                     oApiResponse.OperationResult = 0;
-                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                    sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ  يرجى المحاولة لاحقا مرة أخرى";
                     oApiResponse.OperationResultMessage = sResultMessage;
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
 
@@ -130,7 +141,7 @@ namespace Takamul.API.Controllers
                 }
             }
             oApiResponse.OperationResult = 0;
-            sResultMessage = nLanguageID == 2 ? "Validation failed." : "أخفقت عملية التحقق.";
+            sResultMessage = nLanguageID == 2 ? "Validation failed." : "خطاء في التحقق.";
             oApiResponse.OperationResultMessage = sResultMessage;
             return Request.CreateResponse(HttpStatusCode.BadRequest, oApiResponse);
         }
@@ -160,17 +171,28 @@ namespace Takamul.API.Controllers
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
                     oApiResponse.OperationResult = 1;
-                    sResultMessage = nLanguageID == 2 ? "OTP has been successfully sent." : "تم إرسال مكتب المدعي العام بنجاح.";
+                    sResultMessage = nLanguageID == 2 ? "OTP has been successfully sent." : "تم إرسال رمز التفعيل بنجاح .";
                     oApiResponse.OperationResultMessage = sResultMessage;
 
                     //TODO::integrate with sms service and update status to database
                     oApiResponse.ResponseCode = nOTPNumber.ToString();
 
+                    Languages enmUserLanuage = (Languages)Enum.Parse(typeof(Languages), nLanguageID.ToString());
+
                     //Send OTP via SMS and update in DB
                     SMSNotification oSMSNotification = new SMSNotification();
                     SMSViewModel oSMSViewModel = new SMSViewModel();
-                    oSMSViewModel.Language = 0;
-                    oSMSViewModel.Message = "Your One-Time-Password (OTP) is " + nOTPNumber + ". Enter this password to complete your registration with Takamul app.";
+                    oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;
+                    string sMessage = string.Empty;
+                    if (enmUserLanuage == Languages.English)
+                    {
+                        sMessage = string.Format("Your One-Time-Password (OTP) is {0} , Enter this password to complete your registration with app.", nOTPNumber);
+                    }
+                    else
+                    {
+                        sMessage = string.Format("رمز التفعيل هو {0} أدخال كلمة السر لأنهاء التسجيل", nOTPNumber);
+                    }
+                    oSMSViewModel.Message = sMessage;
                     oSMSViewModel.Recipient = sPhoneNumber;
                     oSMSViewModel.RecipientType = 1;
 
@@ -181,19 +203,19 @@ namespace Takamul.API.Controllers
                 else if (oResponse.OperationResult == enumOperationResult.RelatedRecordFaild)
                 {
                     oApiResponse.OperationResult = -2;
-                    sResultMessage = nLanguageID == 2 ? "You have exceeded the maximum number of attempt.Please contact app administrator." : "لقد تجاوزت الحد الأقصى لعدد المحاولات. يرجى الاتصال بمشرف التطبيق.";
+                    sResultMessage = nLanguageID == 2 ? "You have exceeded the maximum number of attempt.Please contact app administrator." : "لقد تجاوزت الحد الأقصى لعدد المحاولات. يرجى الاتصال بمشرف التطبيق .";
                     oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
                 {
                     oApiResponse.OperationResult = -3;
-                    sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق";
+                    sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير مسجل . يرجى الاتصال بمشرف التطبيق";
                     oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 else
                 {
                     oApiResponse.OperationResult = 0;
-                    sResultMessage = nLanguageID == 2 ? "An error occured.Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                    sResultMessage = nLanguageID == 2 ? "An error Occured.Please contact app administrator." : "حدث خطأ الرجاء الاتصال بمشرف التطبيق.";
                     oApiResponse.OperationResultMessage = sResultMessage;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, oApiResponse);
@@ -201,7 +223,7 @@ namespace Takamul.API.Controllers
             catch (Exception ex)
             {
                 oApiResponse.OperationResult = 0;
-                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى";
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ  يرجى المحاولة لاحقا مرة أخرى";
                 oApiResponse.OperationResultMessage = sResultMessage;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, oApiResponse);
 
@@ -251,20 +273,20 @@ namespace Takamul.API.Controllers
                 };
                 oTakamulUserResponse.TakamulUser = oTakamulUser;
                 oApiResponse.OperationResult = 1;
-                sResultMessage = nLanguageID == 2 ? "User verified successfully." : "تم التحقق من المستخدم بنجاح.";
+                sResultMessage = nLanguageID == 2 ? "User verified successfully." : "تم التحقق من المستخدم بنجاح";
                 oApiResponse.OperationResultMessage = sResultMessage;
 
             }
             else if (oResponse.OperationResult == enumOperationResult.AlreadyExistRecordFaild)
             {
                 oApiResponse.OperationResult = -3;
-                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير موجود. يرجى الاتصال بمشرف التطبيق.";
+                sResultMessage = nLanguageID == 2 ? "The user does not exist.Please contact app administrator" : "المستخدم غير مسجل . يرجى الاتصال بمشرف التطبيق";
                 oApiResponse.OperationResultMessage = sResultMessage;
             }
             else
             {
                 oApiResponse.OperationResult = 0;
-                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ اثناء العملية يرجى المحاولة لاحقا مرة اخرى.";
+                sResultMessage = nLanguageID == 2 ? "An error occurred during the operation. Please try again later." : "حدث خطأ  يرجى المحاولة لاحقا مرة أخرى";
                 oApiResponse.OperationResultMessage = sResultMessage;
             }
             oTakamulUserResponse.ApiResponse = oApiResponse;

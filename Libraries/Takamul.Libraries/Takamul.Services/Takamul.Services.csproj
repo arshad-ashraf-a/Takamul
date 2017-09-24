@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSettings\ApplicationSettingsService.cs" />
+    <Compile Include="ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Application\ApplicationService.cs" />
     <Compile Include="Application\IApplicationService.cs" />
     <Compile Include="Authentication\AuthenticationService.cs" />
@@ -77,6 +79,8 @@
     <Compile Include="Common\LookupServices\LookupServices.cs" />
     <Compile Include="Events\EventService.cs" />
     <Compile Include="Events\IEventService.cs" />
+    <Compile Include="ApplicationInfo\IApplicationInfoService.cs" />
+    <Compile Include="ApplicationInfo\ApplicationInfoService.cs" />
     <Compile Include="MemberInfo\IMemberInfoService.cs" />
     <Compile Include="MemberInfo\MemberInfoService.cs" />
     <Compile Include="News\INewsServices.cs" />

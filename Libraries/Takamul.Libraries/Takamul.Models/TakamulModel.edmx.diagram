@@ -10,6 +10,9 @@
         <EntityTypeShape EntityType="TakamulModel.MEMBER_INFO" Width="1.5" PointX="2.75" PointY="5.875" />
         <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_INFO" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_SETTINGS" Width="1.5" PointX="7.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

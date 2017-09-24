@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
 @using Takamul.Portal.Resources.Portal.Events;
+@using Infrastructure.Utilities
+@using Infrastructure.Core
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -80,12 +82,14 @@
                     EventLocationName: 'EVENT_LOCATION_NAME',
                     EventLatitude: 'EVENT_LATITUDE',
                     EventLongitude: 'EVENT_LONGITUDE',
+                    EventImageFilePath: 'EVENT_IMG_FILE_PATH',
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE'
                 };
             var sCaption = '@EventResx.AllEvents';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
+                '@EventResx.EventImage',
                 '@EventResx.EventName',
                 '@EventResx.EventDate',
                 '@EventResx.EventLocation',
@@ -119,6 +123,24 @@
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                     {
+                         width: 150, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             var sEventImageFilePath = rowObject.EVENT_IMG_FILE_PATH;
+                             var link = "";
+                             var htmlString = '--';
+
+                             if (sEventImageFilePath != "" && sEventImageFilePath != null) {
+                                 link = '@Url.Content(string.Format("{0}_#EventImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
+                                 debugger;
+                                 link = link.replace("_#EventImage#", sEventImageFilePath);
+                                 htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
+
+                             }
+                             return htmlString;
+                         }
+                     },
                     {
                         name: ConstantsNames.EventName,
                         width: 150, editable: false,

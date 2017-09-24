@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Portal.Applications;
 @using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
+@using Infrastructure.Utilities
+@using Infrastructure.Core
 @{
     Layout = "~/Views/Shared/_GridCommon.cshtml";
 }
@@ -85,6 +87,7 @@
                 };
             var sCaption = '@ApplicationResx.AllApplications';
             var oArrColumnNames = [
+                '@ApplicationResx.ApplicationLogo',
                 '@ApplicationResx.ApplicationName',
                 '@ApplicationResx.AppID',//Hidden Columns Represent ID Int Value
                 '',//Hidden Columns Represent APPLICATION_LOGO_PATH String Value
@@ -117,6 +120,24 @@
                                         { Caption: "@ApplicationResx.EditApplication", EventName: "fnPartialLoadEditApplication();", RowId: true },
             ];
             var oArrColsModel = [
+                {
+                    width: 100, editable: false,
+                    align: EnumColumnsAlignment.Center,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var sAppLogoFilePath = rowObject.APPLICATION_LOGO_PATH;
+                        var link = "";
+                        var htmlString = '--';
+                        if (sAppLogoFilePath != "" && sAppLogoFilePath != null) {
+                            link = '@Url.Content(string.Format("{0}_#AppLogoImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
+                            
+                            link = link.replace("_#AppLogoImage#", sAppLogoFilePath);
+                            htmlString = '<a onclick="fnGoToApplicationDetais(' + rowObject.ID + ')" href="#"><img height="50" width="50" src="' + link + '" alt="Image could not display" /></a>';
+
+                        }
+
+                        return htmlString;
+                    }
+                },
                 {
                     width: 150, editable: false,
                     align: EnumColumnsAlignment.Center,
@@ -204,7 +225,7 @@
         }
 
         function fnGoToApplicationDetais(nApplicationID) {
-            debugger;
+            
             var vApplicationID = -99;
             if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
                 vApplicationID = nApplicationID;
@@ -331,7 +352,7 @@
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
-            debugger;
+            
             $.ajax({
                 url: '@Url.Action("JSaveApplication", "Applications")',
                 type: "POST",
@@ -385,7 +406,7 @@
                 return this.optional(element) || value != param;
             }, "");
 
-            debugger;
+            
             var validator = $('#' + sFormID).validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
@@ -466,7 +487,7 @@
             var bIsActive = rowData.IS_ACTIVE;
             var sApplicationLogoPath = rowData.APPLICATION_LOGO_PATH;
             var sMemberUserID = rowData.MemberUserID;
-            debugger;
+            
             var dataToSend = JSON.stringify({
                 ID: vAppplicationId,
                 APPLICATION_NAME: sApplicationName,
@@ -475,7 +496,7 @@
                 APPLICATION_LOGO_PATH: sApplicationLogoPath,
                 MemberUserID: sMemberUserID,
             });
-            debugger;
+            
             $("#dvPopUpWindow").dialog({
                 title: '@ApplicationResx.EditApplication',
                 autoOpen: true,
@@ -558,13 +579,13 @@
             }
 
             var formData = $("#frmEditApplication").serializeArray();
-            debugger;
+            
             formData.push({ name: "MemberUserID", value: Number($("#ddlMemberUser").val()) });
             data.append("ApplicationLogoFile", files[0]);
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
-            debugger;
+            
             $.ajax({
                 url: '@Url.Action("JEditApplication", "Applications")',
                 type: "POST",

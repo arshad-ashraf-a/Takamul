@@ -118,13 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Activetickets" xml:space="preserve">
-    <value>تذاكر النشطة</value>
+    <value>مواضيع نشطة</value>
+  </data>
+  <data name="AppID" xml:space="preserve">
+    <value>معرف التطبيق</value>
   </data>
   <data name="ApplicationName" xml:space="preserve">
     <value>اسم التطبيق</value>
   </data>
+  <data name="ApplicationSummary" xml:space="preserve">
+    <value>ملخص التطبيق</value>
+  </data>
   <data name="Closedtickets" xml:space="preserve">
-    <value>تذاكر مغلقة</value>
+    <value>مواضيع مغلقة</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاريخ الإنشاء</value>
@@ -142,34 +148,34 @@
     <value>تاريخ الانتهاء</value>
   </data>
   <data name="GoToTickets" xml:space="preserve">
-    <value>الذهاب إلى تذاكر</value>
+    <value>الذهاب إلى المواضيع</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value>ساعات</value>
   </data>
   <data name="MemberName" xml:space="preserve">
-    <value>اسم عضو</value>
+    <value>اسم العضو</value>
   </data>
   <data name="Minutes" xml:space="preserve">
     <value>الدقائق</value>
   </data>
   <data name="MobileUsers" xml:space="preserve">
-    <value>مستخدمي الجوال</value>
+    <value>مستخدمي الهاتف</value>
   </data>
   <data name="Months" xml:space="preserve">
     <value>الشهور</value>
   </data>
   <data name="NoActiveTicketFound" xml:space="preserve">
-    <value>لم يتم العثور على تذاكر نشطة.</value>
+    <value>لم يتم العثور على مواضيع نشطة.</value>
   </data>
   <data name="NoClosedTicketsFound" xml:space="preserve">
-    <value>لم يتم العثور على تذاكر مغلقة.</value>
+    <value>لم يتم العثور على مواضيع مغلقة.</value>
   </data>
   <data name="NoRejectedTicketsFound" xml:space="preserve">
-    <value>لم يتم العثور على تذاكر مرفوضة.</value>
+    <value>لم يتم العثور على مواضيع مرفوضة.</value>
   </data>
   <data name="OpenTickets" xml:space="preserve">
-    <value>فتح التذاكر</value>
+    <value>فتح المواضيع</value>
   </data>
   <data name="Reply" xml:space="preserve">
     <value>الرد</value>
@@ -180,31 +186,25 @@
   <data name="Status" xml:space="preserve">
     <value>الحالة</value>
   </data>
+  <data name="SupportTickets" xml:space="preserve">
+    <value>مواضيع الدعم</value>
+  </data>
   <data name="totalclosedtickets" xml:space="preserve">
-    <value>مجموع تذاكر مغلقة</value>
+    <value>مجموع المواضيع المغلقة</value>
   </data>
   <data name="totalmessages" xml:space="preserve">
     <value>إجمالي الرسائل</value>
   </data>
   <data name="TotalTickets" xml:space="preserve">
-    <value>مجموع التذاكر</value>
+    <value>مجموع المواضيع </value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>المستعمل</value>
+    <value>المستخدم</value>
   </data>
   <data name="ViewChats" xml:space="preserve">
-    <value>عرض الدردشات</value>
+    <value>عرض المحادثات</value>
   </data>
   <data name="Years" xml:space="preserve">
     <value>سنوات</value>
-  </data>
-  <data name="SupportTickets" xml:space="preserve">
-    <value>تذاكر الدعم</value>
-  </data>
-  <data name="AppID" xml:space="preserve">
-    <value>معرف التطبيق</value>
-  </data>
-  <data name="ApplicationSummary" xml:space="preserve">
-    <value>ملخص التطبيق</value>
   </data>
 </root>

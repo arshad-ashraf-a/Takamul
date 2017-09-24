@@ -127,25 +127,25 @@
     <value>إضافة عضو جديد</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>عنوان</value>
+    <value>العنوان</value>
   </data>
   <data name="AllMembers" xml:space="preserve">
-    <value>أفراد</value>
+    <value>جميع الأعضاء</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>الوضعية</value>
+    <value>تطبيق</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>منطقة</value>
+    <value>المنطقة</value>
   </data>
   <data name="Blocked" xml:space="preserve">
-    <value>مسدود</value>
+    <value>محضور</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>تغيير كلمة السر</value>
   </data>
   <data name="CivilID" xml:space="preserve">
-    <value>رقم الهوية المدنية</value>
+    <value>الرقم المدني</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>تأكيد كلمة المرور</value>
@@ -163,7 +163,7 @@
     <value>نشط</value>
   </data>
   <data name="IsBlocked" xml:space="preserve">
-    <value>تم حظره</value>
+    <value>محضور</value>
   </data>
   <data name="MemberList" xml:space="preserve">
     <value>قائمة الأعضاء</value>
@@ -175,7 +175,7 @@
     <value>كلمة السر الجديدة</value>
   </data>
   <data name="OTPVerified" xml:space="preserve">
-    <value>مكتب المدعي العام التحقق</value>
+    <value>التحقق من رمز التفعيل</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>رقم الهاتف</value>
@@ -184,24 +184,24 @@
     <value>معلومات الملف الشخصي</value>
   </data>
   <data name="RestrictTicketSubmission" xml:space="preserve">
-    <value>تقييد إرسال التذاكر</value>
+    <value>تقييد إرسال المواضيع</value>
   </data>
   <data name="SearchMember" xml:space="preserve">
     <value>عضو البحث</value>
   </data>
   <data name="TicketSubmissionIntervalDays" xml:space="preserve">
-    <value>أيام الفاصل الزمني لتقديم التذاكر</value>
+    <value>عدد الأيام لأرسال المواضيع</value>
   </data>
   <data name="UserFullName" xml:space="preserve">
-    <value>اسم المستخدم بالكامل</value>
+    <value>أسم المستخدم بالكامل</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>اسم المستخدم</value>
+    <value>أسم المستخدم</value>
   </data>
   <data name="Village" xml:space="preserve">
-    <value>قرية</value>
+    <value>القرية</value>
   </data>
   <data name="Wilayat" xml:space="preserve">
-    <value>ولاية</value>
+    <value>الولاية</value>
   </data>
 </root>

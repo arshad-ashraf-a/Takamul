@@ -127,7 +127,7 @@
     <value>جميع الأخبار</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+    <value>حجم الملف المسموح به  10 ميجابايت فقط .</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاريخ الإنشاء</value>
@@ -139,22 +139,22 @@
     <value>تحرير الأخبار</value>
   </data>
   <data name="InvalidFileFormats" xml:space="preserve">
-    <value>الملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+    <value>الملف الذي تم تحميله غير صحيح . المسموح به الملفات بتنسيق الصور فقط.</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط</value>
   </data>
   <data name="IsNotifyUser" xml:space="preserve">
-    <value>هو إعلام المستخدم</value>
+    <value>اختار المستخدم</value>
   </data>
   <data name="News" xml:space="preserve">
     <value>أخبار</value>
   </data>
   <data name="NewsContent" xml:space="preserve">
-    <value>أخبار المحتوى</value>
+    <value>محتوى الأخبار</value>
   </data>
   <data name="NewsImage" xml:space="preserve">
-    <value>أخبار صورة</value>
+    <value>صورة الخبر</value>
   </data>
   <data name="NewsList" xml:space="preserve">
     <value>قائمة الأخبار</value>
@@ -172,9 +172,9 @@
     <value>تاريخ النشر</value>
   </data>
   <data name="SearchNews" xml:space="preserve">
-    <value>بحث أخبار</value>
+    <value>بحث الأخبار</value>
   </data>
   <data name="UploadedNewsImage" xml:space="preserve">
-    <value>تم تحميل صورة الأخبار</value>
+    <value>تحميل صورة الأخبار</value>
   </data>
 </root>

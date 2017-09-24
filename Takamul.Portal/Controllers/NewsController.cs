@@ -104,7 +104,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JSaveNews(NewsViewModel oNewsViewModel)
         {
-
+           
             Response oResponseResult = null;
 
             var oFile = System.Web.HttpContext.Current.Request.Files["NewsImage"];

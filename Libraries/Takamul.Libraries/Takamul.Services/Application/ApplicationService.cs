@@ -190,7 +190,7 @@ namespace Takamul.Services
         /// <returns></returns>
         public Response oUpdateApplication(ApplicationViewModel oApplicationViewModel)
         {
-            #region ": Insert Sp Result:"
+            #region ": Update Sp Result:"
 
             Response oResponse = new Response();
 

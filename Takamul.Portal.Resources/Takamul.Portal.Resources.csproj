@@ -79,6 +79,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Portal\ApplicationSettings\ApplicationSettingsResx.ar.Designer.cs">
+      <DependentUpon>ApplicationSettingsResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\ApplicationSettings\ApplicationSettingsResx.Designer.cs">
+      <DependentUpon>ApplicationSettingsResx.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Portal\Applications\ApplicationResx.ar.Designer.cs">
       <DependentUpon>ApplicationResx.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -96,6 +106,16 @@
     </Compile>
     <Compile Include="Portal\Events\EventResx.Designer.cs">
       <DependentUpon>EventResx.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\ApplicationInfo\ApplicationInfoResx.ar.Designer.cs">
+      <DependentUpon>ApplicationInfoResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\ApplicationInfo\ApplicationInfoResx.Designer.cs">
+      <DependentUpon>ApplicationInfoResx.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -186,6 +206,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppDashboardResx.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationSettings\ApplicationSettingsResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationSettingsResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationSettings\ApplicationSettingsResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationSettingsResx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Portal\Applications\ApplicationResx.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationResx.ar.Designer.cs</LastGenOutput>
@@ -201,6 +229,14 @@
     <EmbeddedResource Include="Portal\Events\EventResx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EventResx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationInfo\ApplicationInfoResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationInfoResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationInfo\ApplicationInfoResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationInfoResx.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Portal\MemberInfo\MemberInfoResx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

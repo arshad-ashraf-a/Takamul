@@ -1,4 +1,5 @@
 ﻿@model Takamul.Models.Login
+@using Takamul.Portal.Resources.Common;
 @{
     Layout = null;
     ViewBag.ReturnUrl = Request["ReturnUrl"];
@@ -10,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <title>Takamul Service</title>
+    <title>SAWA Service</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="~/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -26,19 +27,19 @@
     <script type="text/javascript" src="~/assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
-    <script type="text/javascript" src="~/assets/js/core/app.js"></script>
+    @*<script type="text/javascript" src="~/assets/js/core/app.js"></script>*@
     <!-- /theme JS files -->
 
 </head>
-<body class="login-container">
+<body class="login-container login-cover">
     <!-- Main navbar -->
-    <div class="navbar navbar-inverse">
+    @*<div class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
-               Takamul eService
+              @CommonResx.TakamulServices
             </a>
         </div>
-    </div>
+    </div>*@
     <!-- /main navbar -->
     <!-- Page container -->
     <div class="page-container">
@@ -48,16 +49,17 @@
             <div class="content-wrapper">
                 <!-- Content area -->
                 <div class="content">
+
                     <!-- Simple login form -->
                     @using (@Html.BeginForm("LogOn", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
                     {
-                        <div class="panel panel-body login-form">
+                        <div class="panel panel-body login-form" style="border-color: #00796A;">
                             <div class="text-center">
-                                <div class="icon-object border-slate-300 text-slate-300">
+                                <div class="icon-object border-white text-white">
                                         <i class="icon-reading"></i>
                                     </div>
                                 @*<img src="~/Images/login_logo.png" style="width:90px;height:75px;" />*@
-                                <h5 class="content-group">Takamul Service Login <small class="display-block">Management System</small></h5>
+                                <h5 class="content-group text-white">@CommonResx.SAWAeServiceLogin <small class="display-block text-default">SAWA App Management System</small></h5>
                             </div>
                             <hr />
                             <div class="form-group has-feedback has-feedback-left">

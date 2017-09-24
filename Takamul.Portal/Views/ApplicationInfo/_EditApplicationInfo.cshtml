@@ -1,0 +1,40 @@
+﻿@model Takamul.Models.ViewModel.ApplicationInfoViewModel
+@using Takamul.Portal.Resources.Portal.ApplicationInfo;
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmEditApplicationInfo", @class = "form-horizontal" }))
+{
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.APPLICATION_ID)
+
+            @* Application Info Title*@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">@ApplicationInfoResx.Title&nbsp;<span class="text-danger">*</span></label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = @ApplicationInfoResx.ApplicationInfoTitle } })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @*Application Info Description*@
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">@ApplicationInfoResx.Description&nbsp;<span class="text-danger">*</span></label>
+                        <div class="col-lg-8">
+                            @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control", placeholder = @ApplicationInfoResx.ApplicationInfoDescription } })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

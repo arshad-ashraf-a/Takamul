@@ -137,6 +137,7 @@ namespace Takamul.Services
                                NEWS_CONTENT = c.NEWS_CONTENT,
                                PUBLISHED_DATE = c.PUBLISHED_DATE,
                                IS_NOTIFY_USER = c.IS_NOTIFY_USER,
+                               NEWS_IMG_FILE_PATH = c.NEWS_IMG_FILE_PATH,
                                IS_ACTIVE = c.IS_ACTIVE,
                                CREATED_DATE = c.CREATED_DATE,
                            });
@@ -152,6 +153,7 @@ namespace Takamul.Services
                 NEWS_CONTENT = oNewsPagedResult.NEWS_CONTENT,
                 PUBLISHED_DATE = oNewsPagedResult.PUBLISHED_DATE,
                 IS_NOTIFY_USER = oNewsPagedResult.IS_NOTIFY_USER,
+                NEWS_IMG_FILE_PATH = oNewsPagedResult.NEWS_IMG_FILE_PATH,
                 IS_ACTIVE = oNewsPagedResult.IS_ACTIVE,
                 CREATED_DATE = oNewsPagedResult.CREATED_DATE,
 

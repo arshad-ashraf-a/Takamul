@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Portal.News;
 @using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
+@using Infrastructure.Utilities
+@using Infrastructure.Core
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -95,11 +97,12 @@
                                 <div class="panel-body p-5">
                                     <ul class="media-list">
                                         <li class="media">
-                                            <div class="media-left media-middle">
+                                            @*<div class="media-left media-middle">
                                                 <i class="icon-file-picture icon-2x text-muted"></i>
-                                            </div>
+                                            </div>*@
                                             <div class="media-body valign-middle">
-                                                <a href="#" onclick="fnDownloadFile(); return false;" class="media-heading text-semibold"> @System.IO.Path.GetFileName(Model.NEWS_IMG_FILE_PATH)</a>
+                                                <img height="100" width="100" src="@Url.Content(string.Format("{0}{1}",CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), @Model.NEWS_IMG_FILE_PATH))" alt="Image could not display" />
+                                                @*<a href="#" onclick="fnDownloadFile(); return false;" class="media-heading text-semibold"> @System.IO.Path.GetFileName(Model.NEWS_IMG_FILE_PATH)</a>*@
                                             </div>
                                             <div class="media-right media-middle">
                                                 <ul class="icons-list icons-list-extended text-nowrap">

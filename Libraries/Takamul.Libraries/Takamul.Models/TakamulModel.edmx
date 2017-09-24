@@ -5,6 +5,41 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TakamulModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLICATION_INFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="100" />
+          <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="APPLICATION_MASTER_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SETTINGS_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="APPLICATION_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="APPLICATION_MASTER_SETTING_ID" Type="int" />
+          <Property Name="SETTINGS_VALUE" Type="nvarchar" MaxLength="500" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+        </EntityType>
         <EntityType Name="APPLICATIONS">
           <Key>
             <PropertyRef Name="ID" />
@@ -34,12 +69,12 @@
           <Property Name="EVENT_LATITUDE" Type="varchar" MaxLength="50" />
           <Property Name="EVENT_LONGITUDE" Type="varchar" MaxLength="50" />
           <Property Name="IS_ACTIVE" Type="bit" />
-          <Property Name="EVENT_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
-          <Property Name="LANGUAGE_ID" Type="int" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="EVENT_IMG_FILE_PATH" Type="varchar" MaxLength="500" />
+          <Property Name="LANGUAGE_ID" Type="int" />
         </EntityType>
         <EntityType Name="MEMBER_INFO">
           <Key>
@@ -49,11 +84,11 @@
           <Property Name="APPLICATION_ID" Type="int" />
           <Property Name="MEMBER_INFO_TITLE" Type="nvarchar" MaxLength="50" />
           <Property Name="MEMBER_INFO_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
-          <Property Name="LANGUAGE_ID" Type="int" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="LANGUAGE_ID" Type="int" />
         </EntityType>
         <EntityType Name="NEWS">
           <Key>
@@ -67,11 +102,11 @@
           <Property Name="IS_NOTIFY_USER" Type="bit" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="PUBLISHED_DATE" Type="smalldatetime" />
-          <Property Name="LANGUAGE_ID" Type="int" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
           <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+          <Property Name="LANGUAGE_ID" Type="int" />
         </EntityType>
         <Association Name="FK_MEMBER_INFO_APPLICATIONS">
           <End Role="APPLICATIONS" Type="Self.APPLICATIONS" Multiplicity="0..1" />
@@ -86,10 +121,24 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TakamulModelStoreContainer">
+          <EntitySet Name="APPLICATION_INFO" EntityType="Self.APPLICATION_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="Self.APPLICATION_MASTER_SETTINGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APPLICATIONS" EntityType="Self.APPLICATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EVENTS" EntityType="Self.EVENTS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBER_INFO" EntityType="Self.MEMBER_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLICATION_SETTINGS" EntityType="Self.APPLICATION_SETTINGS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [APPLICATION_SETTINGS].[ID] AS [ID], 
+    [APPLICATION_SETTINGS].[APPLICATION_ID] AS [APPLICATION_ID], 
+    [APPLICATION_SETTINGS].[APPLICATION_MASTER_SETTING_ID] AS [APPLICATION_MASTER_SETTING_ID], 
+    [APPLICATION_SETTINGS].[SETTINGS_VALUE] AS [SETTINGS_VALUE], 
+    [APPLICATION_SETTINGS].[CREATED_BY] AS [CREATED_BY], 
+    [APPLICATION_SETTINGS].[CREATED_DATE] AS [CREATED_DATE], 
+    [APPLICATION_SETTINGS].[MODIFIED_BY] AS [MODIFIED_BY], 
+    [APPLICATION_SETTINGS].[MODIFIED_DATE] AS [MODIFIED_DATE]
+    FROM [dbo].[APPLICATION_SETTINGS] AS [APPLICATION_SETTINGS]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_MEMBER_INFO_APPLICATIONS" Association="Self.FK_MEMBER_INFO_APPLICATIONS">
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="MEMBER_INFO" EntitySet="MEMBER_INFO" />
@@ -108,6 +157,9 @@
             <End Role="APPLICATIONS" EntitySet="APPLICATIONS" />
             <End Role="MEMBER_INFO" EntitySet="MEMBER_INFO" />
           </AssociationSet>
+          <EntitySet Name="APPLICATION_INFO" EntityType="TakamulModel.APPLICATION_INFO" />
+          <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" />
+          <EntitySet Name="APPLICATION_SETTINGS" EntityType="TakamulModel.APPLICATION_SETTINGS" />
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
           <Key>
@@ -191,6 +243,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="APPLICATION_INFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="TITLE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="APPLICATION_MASTER_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SETTINGS_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="APPLICATION_SETTINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="APPLICATION_MASTER_SETTING_ID" Type="Int32" />
+          <Property Name="SETTINGS_VALUE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -264,6 +349,42 @@
                 <ScalarProperty Name="NEWS_CONTENT" ColumnName="NEWS_CONTENT" />
                 <ScalarProperty Name="NEWS_IMG_FILE_PATH" ColumnName="NEWS_IMG_FILE_PATH" />
                 <ScalarProperty Name="NEWS_TITLE" ColumnName="NEWS_TITLE" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_INFO">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_INFO">
+              <MappingFragment StoreEntitySet="APPLICATION_INFO">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_MASTER_SETTINGS">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_MASTER_SETTINGS">
+              <MappingFragment StoreEntitySet="APPLICATION_MASTER_SETTINGS">
+                <ScalarProperty Name="SETTINGS_NAME" ColumnName="SETTINGS_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_SETTINGS">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_SETTINGS">
+              <MappingFragment StoreEntitySet="APPLICATION_SETTINGS">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="SETTINGS_VALUE" ColumnName="SETTINGS_VALUE" />
+                <ScalarProperty Name="APPLICATION_MASTER_SETTING_ID" ColumnName="APPLICATION_MASTER_SETTING_ID" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

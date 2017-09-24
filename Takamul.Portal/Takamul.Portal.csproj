@@ -81,7 +81,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.6.102\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.7.300\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -165,6 +165,7 @@
     <Content Include="assets\css\jqGrid\jqgrid.style.css" />
     <Content Include="assets\css\jqGrid\ui.jqgrid.css" />
     <Content Include="assets\css\jquery-ui.min.css" />
+    <Content Include="assets\images\backgrounds\sawa_login.jpg" />
     <Content Include="assets\images\flags\gb.png" />
     <Content Include="assets\images\Loader.png" />
     <Content Include="assets\images\Logo.png" />
@@ -315,6 +316,8 @@
     <Compile Include="Controllers\AccessDeniedController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationDashboardController.cs" />
+    <Compile Include="Controllers\ApplicationSettingsController.cs" />
+    <Compile Include="Controllers\ApplicationInfoController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -388,6 +391,11 @@
     <Content Include="Views\Tickets\_ViewTicketInfo.cshtml" />
     <Content Include="Views\AccessDenied\Index.cshtml" />
     <Content Include="Views\Tickets\_AddTicketParticipants.cshtml" />
+    <Content Include="Views\ApplicationInfo\_AddApplicationInfo.cshtml" />
+    <Content Include="Views\ApplicationInfo\_EditApplicationInfo.cshtml" />
+    <Content Include="Views\ApplicationInfo\ApplicationInfoList.cshtml" />
+    <Content Include="Views\ApplicationSettings\_EditApplicationSettings.cshtml" />
+    <Content Include="Views\ApplicationSettings\ApplicationSettingsList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -418,7 +426,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets\images\backgrounds\" />
     <Folder Include="assets\images\brands\" />
     <Folder Include="assets\js\charts\" />
     <Folder Include="assets\js\pages\" />

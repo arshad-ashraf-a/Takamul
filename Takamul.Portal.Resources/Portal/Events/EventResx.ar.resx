@@ -118,67 +118,67 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddEvent" xml:space="preserve">
-    <value>إضافة حدث</value>
+    <value>إضافة مناسبة</value>
   </data>
   <data name="AddNewEvent" xml:space="preserve">
-    <value>إضافة حدث جديد</value>
+    <value>إضافة مناسبة جديد</value>
   </data>
   <data name="AllEvents" xml:space="preserve">
-    <value>كل الأحداث</value>
+    <value>كل المناسبات</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+    <value>حجم الملف المسموح به  10 ميجابايت.</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاريخ الإنشاء</value>
   </data>
   <data name="DeleteEvent" xml:space="preserve">
-    <value>حذف الحدث</value>
+    <value>حذف المناسبة</value>
   </data>
   <data name="EditEvent" xml:space="preserve">
-    <value>تعديل الحدث</value>
+    <value>تعديل المناسبة</value>
   </data>
   <data name="EditNewEvent" xml:space="preserve">
-    <value>تعديل حدث جديد</value>
+    <value>تعديل مناسبة جديدة</value>
   </data>
   <data name="EnterEventDescription" xml:space="preserve">
-    <value>إدخال وصف الحدث ...</value>
+    <value>إدخال وصف المناسبة ...</value>
   </data>
   <data name="EnterEventLocation" xml:space="preserve">
-    <value>إدخال موقع الحدث ...</value>
+    <value>إدخال موقع المناسبة ...</value>
   </data>
   <data name="EnterSearchLocation" xml:space="preserve">
-    <value>أدخل موقعا للبحث ...</value>
+    <value>أدخل اسم موقع للبحث ...</value>
   </data>
   <data name="EnterSearchPlace" xml:space="preserve">
-    <value>أدخل مكان البحث مثل مسقط جراند مول</value>
+    <value>أدخل موقع البحث مثل مسقط جراند مول</value>
   </data>
   <data name="EventDate" xml:space="preserve">
-    <value>تاريخ الحدث</value>
+    <value>تاريخ المناسبة</value>
   </data>
   <data name="EventDescription" xml:space="preserve">
-    <value>وصف الحدث</value>
+    <value>وصف المناسبة</value>
   </data>
   <data name="EventImage" xml:space="preserve">
-    <value>صورة الحدث</value>
+    <value>صورة المناسبة</value>
   </data>
   <data name="EventLocation" xml:space="preserve">
-    <value>موقع الحدث</value>
+    <value>موقع المناسبة</value>
   </data>
   <data name="EventMap" xml:space="preserve">
-    <value>خريطة الحدث</value>
+    <value>خريطة المناسبة</value>
   </data>
   <data name="EventName" xml:space="preserve">
-    <value>اسم الحدث</value>
+    <value>اسم المناسبة</value>
   </data>
   <data name="Events" xml:space="preserve">
-    <value>أحداث</value>
+    <value>مناسبات</value>
   </data>
   <data name="EventsList" xml:space="preserve">
-    <value>قائمة الأحداث</value>
+    <value>قائمة المناسبات</value>
   </data>
   <data name="InvalidFileFormat" xml:space="preserve">
-    <value>لملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+    <value>الملف الذي تم تحميله غير صحيح . المسموح به الملفات بتنسيق الصور فقط.</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط</value>
@@ -190,12 +190,12 @@
     <value>خط الطول</value>
   </data>
   <data name="MapInfo" xml:space="preserve">
-    <value>انقر نقرا مزدوجا على منطقة من الخريطة لتحديد موقع الحدث.</value>
+    <value>انقر نقرا مزدوجا على المنطقة في الخريطة لتحديد موقع المناسبة.</value>
   </data>
   <data name="SearchEvent" xml:space="preserve">
-    <value>حدث البحث</value>
+    <value>بحث عن مناسبة</value>
   </data>
   <data name="UploadedEventImage" xml:space="preserve">
-    <value>تم تحميل صورة الحدث</value>
+    <value>تحميل صورة المناسبة</value>
   </data>
 </root>

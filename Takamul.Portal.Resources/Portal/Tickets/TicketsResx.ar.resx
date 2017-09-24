@@ -118,37 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewTicket" xml:space="preserve">
-    <value>إضافة تذكرة جديدة</value>
+    <value>إضافة موضوع جديدة</value>
   </data>
   <data name="AddTicket" xml:space="preserve">
-    <value>إضافة تذكرة</value>
+    <value>إضافة موضوع</value>
   </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+    <value>حجم الملف المسموح به  10 ميجابايت فقط .</value>
+  </data>
+  <data name="AllTicketParticipants" xml:space="preserve">
+    <value>جميع المشاركين</value>
   </data>
   <data name="AllTickets" xml:space="preserve">
-    <value>جميع التذاكر</value>
+    <value>جميع المواضيع</value>
   </data>
   <data name="ChangeTicketStatus" xml:space="preserve">
-    <value>تغيير حالة التذكرة</value>
+    <value>تغيير حالة الموضوع</value>
+  </data>
+  <data name="ChooseOneParticipant" xml:space="preserve">
+    <value>الرجاء اختيار أحد المشاركين.</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاريخ الإنشاء</value>
   </data>
+  <data name="DeleteParticipant" xml:space="preserve">
+    <value>حذف المشارك</value>
+  </data>
+  <data name="DeleteTicketOwnerUser" xml:space="preserve">
+    <value>لا يمكنك حذف صاحب الموضوع</value>
+  </data>
   <data name="EnterRejectReason" xml:space="preserve">
-    <value>أدخل رفض السبب &amp;hellip;&amp;hellip;</value>
+    <value>أدخل سبب الرفض</value>
   </data>
   <data name="EnterYourMessage" xml:space="preserve">
     <value>أدخل رسالتك...</value>
   </data>
   <data name="GoBackToTickets" xml:space="preserve">
-    <value>العودة إلى التذاكر</value>
+    <value>العودة إلى المواضيع</value>
   </data>
   <data name="GoToChats" xml:space="preserve">
-    <value>انتقل إلى دردشات</value>
+    <value>انتقل إلى المحادثات</value>
   </data>
   <data name="InvalidFileFormat" xml:space="preserve">
-    <value>الملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+    <value>الملف الذي تم تحميله غير صحيح . المسموح به الملفات بتنسيق الصور فقط.</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط</value>
@@ -159,11 +171,14 @@
   <data name="PleaseSelectFile" xml:space="preserve">
     <value>الرجاء تحديد ملف لتحميله.</value>
   </data>
+  <data name="ReachedLimitParticipantUser" xml:space="preserve">
+    <value>الوصول للحد الاقصى المسموح به من المستخدمين لهذه الموضوع.</value>
+  </data>
   <data name="RejectReason" xml:space="preserve">
-    <value>رفض السبب</value>
+    <value>سبب الرفض </value>
   </data>
   <data name="SearchTickets" xml:space="preserve">
-    <value>بحث تذاكر</value>
+    <value>بحث المواضيع</value>
   </data>
   <data name="SelectStatus" xml:space="preserve">
     <value>- اختر الحالة -</value>
@@ -178,78 +193,63 @@
     <value>icon-circle-left2</value>
   </data>
   <data name="TicketChats" xml:space="preserve">
-    <value>دردشات التذاكر</value>
+    <value>محادثات الموضوع</value>
   </data>
   <data name="TicketCode" xml:space="preserve">
-    <value>رمز التذكرة</value>
-  </data>
-  <data name="TicketDescirption" xml:space="preserve">
-    <value>تذكرة ديسيربتيون</value>
-  </data>
-  <data name="TicketDescription" xml:space="preserve">
-    <value>وصف التذاكر</value>
-  </data>
-  <data name="TicketDetails" xml:space="preserve">
-    <value>تفاصيل التذاكر</value>
-  </data>
-  <data name="TicketImage" xml:space="preserve">
-    <value>صورة تذكرة</value>
-  </data>
-  <data name="TicketInfo" xml:space="preserve">
-    <value>معلومات التذاكر</value>
-  </data>
-  <data name="TicketName" xml:space="preserve">
-    <value>اسم التذكرة</value>
-  </data>
-  <data name="TicketParticipantUser" xml:space="preserve">
-    <value>تذكرة المشارك المشارك</value>
-  </data>
-  <data name="TicketsList" xml:space="preserve">
-    <value>قائمة تذاكر</value>
-  </data>
-  <data name="TicketStatus" xml:space="preserve">
-    <value>حالة التذكرة</value>
-  </data>
-  <data name="UpdateTicket" xml:space="preserve">
-    <value>تحديث تذكرة</value>
-  </data>
-  <data name="UploadedTicketImage" xml:space="preserve">
-    <value>تم تحميل صورة التذكرة</value>
-  </data>
-  <data name="UploadFile" xml:space="preserve">
-    <value>رفع ملف</value>
-  </data>
-  <data name="ViewTicketInfo" xml:space="preserve">
-    <value>عرض معلومات التذاكر</value>
-  </data>
-  <data name="TicketOwnerUserFullName" xml:space="preserve">
-    <value>تذكرة المالك</value>
+    <value>رمز الموضوع</value>
   </data>
   <data name="TicketCreatedPlatform" xml:space="preserve">
     <value>إنشاء منصة</value>
   </data>
-  <data name="TicketParticipantNos" xml:space="preserve">
-    <value>إجمالي المشاركين</value>
+  <data name="TicketDescirption" xml:space="preserve">
+    <value>وصف الموضوع</value>
   </data>
-  <data name="AllTicketParticipants" xml:space="preserve">
-    <value>جميع المشاركين</value>
+  <data name="TicketDescription" xml:space="preserve">
+    <value>وصف الموضوع</value>
+  </data>
+  <data name="TicketDetails" xml:space="preserve">
+    <value>تفاصيل الموضوع</value>
+  </data>
+  <data name="TicketImage" xml:space="preserve">
+    <value>صورة الموضوع</value>
+  </data>
+  <data name="TicketInfo" xml:space="preserve">
+    <value>معلومات الموضوع</value>
+  </data>
+  <data name="TicketName" xml:space="preserve">
+    <value>اسم الموضوع</value>
+  </data>
+  <data name="TicketOwnerUserFullName" xml:space="preserve">
+    <value>صاحب الموضوع </value>
   </data>
   <data name="TicketParticipantName" xml:space="preserve">
     <value>اسم المشارك</value>
   </data>
-  <data name="ChooseOneParticipant" xml:space="preserve">
-    <value>الرجاء اختيار أحد المشاركين.</value>
+  <data name="TicketParticipantNos" xml:space="preserve">
+    <value>إجمالي المشاركين</value>
   </data>
-  <data name="DeleteParticipant" xml:space="preserve">
-    <value>حذف المشارك</value>
+  <data name="TicketParticipantUser" xml:space="preserve">
+    <value>مستخدم المشارك في الموضوع</value>
   </data>
-  <data name="DeleteTicketOwnerUser" xml:space="preserve">
-    <value>لا يمكنك حذف مالك التذاكر.</value>
+  <data name="TicketsList" xml:space="preserve">
+    <value>قائمة المواضيع</value>
   </data>
-  <data name="ReachedLimitParticipantUser" xml:space="preserve">
-    <value>الوصول إلى أقصى عدد مسموح به من المستخدمين على هذه التذكرة.</value>
+  <data name="TicketStatus" xml:space="preserve">
+    <value>حالة الموضوع</value>
+  </data>
+  <data name="UpdateTicket" xml:space="preserve">
+    <value>تحديث الموضوع</value>
+  </data>
+  <data name="UploadedTicketImage" xml:space="preserve">
+    <value>تحميل صورة الموضوع</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>رفع ملف</value>
   </data>
   <data name="UserAlreadyExists" xml:space="preserve">
     <value>المستخدم موجود من قبل.</value>
+  </data>
+  <data name="ViewTicketInfo" xml:space="preserve">
+    <value>عرض معلومات الموضوع</value>
   </data>
 </root>

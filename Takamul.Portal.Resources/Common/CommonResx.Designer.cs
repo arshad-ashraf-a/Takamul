@@ -214,6 +214,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App Info.
+        /// </summary>
+        public static string AppInfo {
+            get {
+                return ResourceManager.GetString("AppInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App Member Info.
         /// </summary>
         public static string AppMemberInfo {
@@ -246,6 +255,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string Approved {
             get {
                 return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to App Settings.
+        /// </summary>
+        public static string AppSettings {
+            get {
+                return ResourceManager.GetString("AppSettings", resourceCulture);
             }
         }
         
@@ -1141,6 +1159,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SAWA eService Login.
+        /// </summary>
+        public static string SAWAeServiceLogin {
+            get {
+                return ResourceManager.GetString("SAWAeServiceLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
@@ -1294,7 +1321,7 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Takamul Services.
+        ///   Looks up a localized string similar to SAWA eServices.
         /// </summary>
         public static string TakamulServices {
             get {

@@ -109,6 +109,7 @@ namespace Takamul.Services
                                  EVENT_LOCATION_NAME = c.EVENT_LOCATION_NAME,
                                  EVENT_LATITUDE = c.EVENT_LATITUDE,
                                  EVENT_LONGITUDE = c.EVENT_LONGITUDE,
+                                 EVENT_IMG_FILE_PATH = c.EVENT_IMG_FILE_PATH,
                                  IS_ACTIVE = c.IS_ACTIVE,
                                  CREATED_DATE = c.CREATED_DATE,
 
@@ -127,6 +128,7 @@ namespace Takamul.Services
                 EVENT_LOCATION_NAME = oEventPagedResult.EVENT_LOCATION_NAME,
                 EVENT_LATITUDE = oEventPagedResult.EVENT_LATITUDE,
                 EVENT_LONGITUDE = oEventPagedResult.EVENT_LONGITUDE,
+                EVENT_IMG_FILE_PATH = oEventPagedResult.EVENT_IMG_FILE_PATH,
                 IS_ACTIVE = oEventPagedResult.IS_ACTIVE,
                 CREATED_DATE = oEventPagedResult.CREATED_DATE,
 

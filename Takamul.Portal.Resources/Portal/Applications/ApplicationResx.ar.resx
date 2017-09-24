@@ -123,14 +123,17 @@
   <data name="AddNewApplication" xml:space="preserve">
     <value>إضافة تطبيق جديد</value>
   </data>
+  <data name="AllApplications" xml:space="preserve">
+    <value>جميع التطبيقات</value>
+  </data>
   <data name="AllowedFileSize" xml:space="preserve">
-    <value>حجم الملف المسموح به فقط يصل إلى 10 ميغابايت.</value>
+    <value>حجم الملف المسموح به 10 ميجابايت</value>
   </data>
   <data name="AppID" xml:space="preserve">
     <value>معرف التطبيق</value>
   </data>
   <data name="ApplicationExpiryDate" xml:space="preserve">
-    <value>تاريخ انتهاء صلاحية الطلب</value>
+    <value>تاريخ انتهاء صلاحية التطبيق</value>
   </data>
   <data name="ApplicationLogo" xml:space="preserve">
     <value>شعار التطبيق</value>
@@ -145,7 +148,7 @@
     <value>قائمة التطبيقات</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>اسم التطبيق</value>
+    <value>أسم التطبيق</value>
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاريخ الإنشاء</value>
@@ -157,7 +160,7 @@
     <value>تحرير التطبيق</value>
   </data>
   <data name="InvalidFileFormat" xml:space="preserve">
-    <value>الملف الذي تم تحميله ليس تنسيقا صالحا. فقط ينغ، جبغ، جبيغ مسموح به.</value>
+    <value>الملف الذي تم تحميله غير صحيح . المسموح به الملفات بتنسيق الصور فقط.</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط</value>
@@ -178,9 +181,6 @@
     <value>- اختر المستخدم -</value>
   </data>
   <data name="UploadedLogo" xml:space="preserve">
-    <value>تم تحميل الشعار</value>
-  </data>
-  <data name="AllApplications" xml:space="preserve">
-    <value>جميع التطبيقات</value>
+    <value>تحميل الشعار</value>
   </data>
 </root>

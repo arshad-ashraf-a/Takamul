@@ -1,6 +1,8 @@
 ﻿@using Takamul.Portal.Resources.Portal.Tickets;
 @using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
+@using Infrastructure.Utilities
+@using Infrastructure.Core
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
@@ -174,6 +176,7 @@
                 '',//Hidden Columns Represent TICKET_STATUS_NAME Int Value
                 '',//Hidden Columns Represent TICKET_DESCRIPTION Int Value
                 '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
+                '@TicketsResx.TicketImage',
                 '@TicketsResx.TicketCode',
                 '@TicketsResx.TicketName',
                 '@TicketsResx.TicketOwnerUserFullName',
@@ -241,6 +244,23 @@
                           name: ConstantsNames.DefaultImage, editable: false,
                           key: false, hidden: true
                       },
+                      {
+                          width: 100, editable: false,
+                          align: EnumColumnsAlignment.Center,
+                          formatter: function (cellvalue, options, rowObject) {
+                              debugger;
+                              var sTicketImageFilePath = rowObject.DEFAULT_IMAGE;
+                              var link = "";
+                              var htmlString = '--';
+                              if (sTicketImageFilePath != "" && sTicketImageFilePath != null) {
+                                  link = '@Url.Content(string.Format("{0}_#TicketImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
+                                  debugger;
+                                  link = link.replace("_#TicketImage#", sTicketImageFilePath);
+                                  htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
+                              }
+                              return htmlString;
+                          }
+                      },
                      {
                          width: 50, editable: false,
                          align: EnumColumnsAlignment.Center,
@@ -289,7 +309,7 @@
                         }
                     },
                      {
-                         width: 60, editable: false,
+                         width: 70, editable: false,
                          align: EnumColumnsAlignment.Center,
                          formatter: function (cellvalue, options, rowObject) {
                              var nTicketParticipantNos = Number(rowObject.TicketParticipantNos);
@@ -300,7 +320,7 @@
                          }
                      },
                     {
-                        width: 50, editable: false,
+                        width: 40, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var bIsActive = rowObject.IS_ACTIVE;

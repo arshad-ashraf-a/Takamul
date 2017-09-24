@@ -562,7 +562,7 @@
     <value>My Application</value>
   </data>
   <data name="TakamulServices" xml:space="preserve">
-    <value>Takamul Services</value>
+    <value>SAWA eServices</value>
   </data>
   <data name="AccessDenied" xml:space="preserve">
     <value>Access Denied</value>
@@ -572,5 +572,14 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="AppInfo" xml:space="preserve">
+    <value>App Info</value>
+  </data>
+  <data name="AppSettings" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="SAWAeServiceLogin" xml:space="preserve">
+    <value>SAWA eService Login</value>
   </data>
 </root>

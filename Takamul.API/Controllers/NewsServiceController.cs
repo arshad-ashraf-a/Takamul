@@ -64,9 +64,6 @@ namespace Takamul.API.Controllers
             List<TakamulNews> lstTakamulNews = null;
             try
             {
-                int a = 0;
-                int b;
-                b = 1 / a;
                 var lstNews = this.oINewsServices.IlGetAllActiveNews(nApplicationID, nLanguageID);
 
                 if (lstNews.Count() > 0)
@@ -97,7 +94,6 @@ namespace Takamul.API.Controllers
             }
             catch (Exception ex)
             {
-             
                 Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
             }
             return Request.CreateResponse(HttpStatusCode.OK, lstTakamulNews);
