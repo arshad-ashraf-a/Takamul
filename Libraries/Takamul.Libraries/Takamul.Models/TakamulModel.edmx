@@ -69,6 +69,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="EVENT_LATITUDE" Type="varchar" MaxLength="50" />
           <Property Name="EVENT_LONGITUDE" Type="varchar" MaxLength="50" />
           <Property Name="IS_ACTIVE" Type="bit" />
+          <Property Name="IS_NOTIFY_USER" Type="bit" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
@@ -150,7 +151,6 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
       <Schema Namespace="TakamulModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TakamulConnection" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="APPLICATIONS" EntityType="TakamulModel.APPLICATIONS" />
-          <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
           <EntitySet Name="MEMBER_INFO" EntityType="TakamulModel.MEMBER_INFO" />
           <EntitySet Name="NEWS" EntityType="TakamulModel.NEWS" />
           <AssociationSet Name="FK_MEMBER_INFO_APPLICATIONS" Association="TakamulModel.FK_MEMBER_INFO_APPLICATIONS">
@@ -160,6 +160,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <EntitySet Name="APPLICATION_INFO" EntityType="TakamulModel.APPLICATION_INFO" />
           <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" />
           <EntitySet Name="APPLICATION_SETTINGS" EntityType="TakamulModel.APPLICATION_SETTINGS" />
+          <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
           <Key>
@@ -178,26 +179,6 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MEMBER_INFO" Relationship="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" FromRole="APPLICATIONS" ToRole="MEMBER_INFO" />
           </EntityType>
-        <EntityType Name="EVENTS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="EVENT_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="EVENT_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="EVENT_DATE" Type="DateTime" Precision="0" />
-          <Property Name="EVENT_LOCATION_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EVENT_LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_LONGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IS_ACTIVE" Type="Boolean" />
-          <Property Name="EVENT_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="LANGUAGE_ID" Type="Int32" />
-          <Property Name="CREATED_BY" Type="Int32" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="MODIFIED_BY" Type="Int32" />
-          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="MEMBER_INFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -276,6 +257,27 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="MODIFIED_BY" Type="Int32" />
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="EVENTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="EVENT_NAME" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EVENT_LOCATION_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EVENT_LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EVENT_LONGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_ACTIVE" Type="Boolean" />
+          <Property Name="IS_NOTIFY_USER" Type="Boolean" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EVENT_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="LANGUAGE_ID" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -295,27 +297,6 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
                 <ScalarProperty Name="DEFAULT_THEME_COLOR" ColumnName="DEFAULT_THEME_COLOR" />
                 <ScalarProperty Name="APPLICATION_LOGO_PATH" ColumnName="APPLICATION_LOGO_PATH" />
                 <ScalarProperty Name="APPLICATION_NAME" ColumnName="APPLICATION_NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EVENTS">
-            <EntityTypeMapping TypeName="TakamulModel.EVENTS">
-              <MappingFragment StoreEntitySet="EVENTS">
-                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
-                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
-                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
-                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
-                <ScalarProperty Name="LANGUAGE_ID" ColumnName="LANGUAGE_ID" />
-                <ScalarProperty Name="EVENT_IMG_FILE_PATH" ColumnName="EVENT_IMG_FILE_PATH" />
-                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
-                <ScalarProperty Name="EVENT_LONGITUDE" ColumnName="EVENT_LONGITUDE" />
-                <ScalarProperty Name="EVENT_LATITUDE" ColumnName="EVENT_LATITUDE" />
-                <ScalarProperty Name="EVENT_LOCATION_NAME" ColumnName="EVENT_LOCATION_NAME" />
-                <ScalarProperty Name="EVENT_DATE" ColumnName="EVENT_DATE" />
-                <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
-                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
-                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -385,6 +366,28 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
                 <ScalarProperty Name="SETTINGS_VALUE" ColumnName="SETTINGS_VALUE" />
                 <ScalarProperty Name="APPLICATION_MASTER_SETTING_ID" ColumnName="APPLICATION_MASTER_SETTING_ID" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVENTS">
+            <EntityTypeMapping TypeName="TakamulModel.EVENTS">
+              <MappingFragment StoreEntitySet="EVENTS">
+                <ScalarProperty Name="LANGUAGE_ID" ColumnName="LANGUAGE_ID" />
+                <ScalarProperty Name="EVENT_IMG_FILE_PATH" ColumnName="EVENT_IMG_FILE_PATH" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="IS_NOTIFY_USER" ColumnName="IS_NOTIFY_USER" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="EVENT_LONGITUDE" ColumnName="EVENT_LONGITUDE" />
+                <ScalarProperty Name="EVENT_LATITUDE" ColumnName="EVENT_LATITUDE" />
+                <ScalarProperty Name="EVENT_LOCATION_NAME" ColumnName="EVENT_LOCATION_NAME" />
+                <ScalarProperty Name="EVENT_DATE" ColumnName="EVENT_DATE" />
+                <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
+                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

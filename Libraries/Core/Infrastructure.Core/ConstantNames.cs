@@ -268,5 +268,31 @@ namespace Infrastructure.Core
         }
         #endregion
 
+        #region EnglishLanguageCode
+        /// <summary>
+        /// EnglishLanguageCode
+        /// </summary>
+        public static string EnglishLanguageCode
+        {
+            get
+            {
+                return "en";
+            }
+        }
+        #endregion
+
+        #region ArabicLanguageCode
+        /// <summary>
+        /// ArabicLanguageCode
+        /// </summary>
+        public static string ArabicLanguageCode
+        {
+            get
+            {
+                return "ar";
+            }
+        }
+        #endregion
+
     }
 }

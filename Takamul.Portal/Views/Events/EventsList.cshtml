@@ -84,6 +84,7 @@
                     EventLongitude: 'EVENT_LONGITUDE',
                     EventImageFilePath: 'EVENT_IMG_FILE_PATH',
                     IsActive: 'IS_ACTIVE',
+                    IsNotifyUser: 'IS_NOTIFY_USER',
                     CreatedDate: 'CREATED_DATE'
                 };
             var sCaption = '@EventResx.AllEvents';
@@ -96,6 +97,7 @@
                 '@EventResx.Latitude',
                 '@EventResx.Longitude',
                 '@EventResx.IsActive',
+                '@EventResx.IsNotifyUser',
                 '@EventResx.CreatedDate',
                 '@Buttons.Options' // Options
             ];
@@ -174,6 +176,22 @@
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var bIsActive = rowObject.IS_ACTIVE;
+                            var htmlString = '';
+                            if (bIsActive) {
+                                htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                            }
+                            else {
+                                htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                            }
+                            return htmlString;
+                        }
+                    },
+                    {
+                        name: ConstantsNames.IsNotifyUser,
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            var bIsActive = rowObject.IS_NOTIFY_USER;
                             var htmlString = '';
                             if (bIsActive) {
                                 htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";

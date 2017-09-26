@@ -166,10 +166,9 @@ namespace Takamul.Services
         /// <summary>
         ///  Resend user otp number
         /// </summary>
-        /// <param name="nUserID"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber, int nUserId)
+        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber)
         {
             #region ": Sp Result:"
 

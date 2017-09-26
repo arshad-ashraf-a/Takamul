@@ -254,7 +254,7 @@ namespace LDC.eServices.Portal.Controllers
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
-                   
+
                     if (oFile != null)
                     {
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
@@ -276,18 +276,18 @@ namespace LDC.eServices.Portal.Controllers
                         {
                             Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                         }
-                        if (oEventViewModel.IS_ACTIVE)
+                        if (oEventViewModel.IS_NOTIFY_USER && oEventViewModel.IS_ACTIVE)
                         {
                             string sEventName = oEventViewModel.EVENT_NAME;
                             string sEventDesc = oEventViewModel.EVENT_DESCRIPTION.Substring(0, Math.Min(oEventViewModel.EVENT_DESCRIPTION.Length, 150)) + "...";
 
-                            bool bIsSendNotify = CommonHelper.SendPushNotificationEvents(sEventName, sEventDesc, oResponseResult.ResponseCode, Convert.ToInt32(this.CurrentApplicationLanguage).ToString());
-                            if (!bIsSendNotify)
+                            //bool bIsSendNotify = CommonHelper.SendPushNotificationTest(sEventName, sEventDesc, this.CurrentApplicationLanguage, oResponseResult.ResponseCode);
+                            if (1 == 1)
                             {
                                 Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(new Exception("Could not send push notification.")));
                             }
                         }
-                       
+
 
 
                     }

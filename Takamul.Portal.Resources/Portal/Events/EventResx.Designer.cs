@@ -259,6 +259,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Notify User.
+        /// </summary>
+        public static string IsNotifyUser {
+            get {
+                return ResourceManager.GetString("IsNotifyUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latitude.
         /// </summary>
         public static string Latitude {

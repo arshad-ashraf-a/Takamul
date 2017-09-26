@@ -111,6 +111,7 @@ namespace Takamul.Services
                                  EVENT_LONGITUDE = c.EVENT_LONGITUDE,
                                  EVENT_IMG_FILE_PATH = c.EVENT_IMG_FILE_PATH,
                                  IS_ACTIVE = c.IS_ACTIVE,
+                                 IS_NOTIFY_USER = c.IS_NOTIFY_USER,
                                  CREATED_DATE = c.CREATED_DATE,
 
                              });
@@ -130,6 +131,7 @@ namespace Takamul.Services
                 EVENT_LONGITUDE = oEventPagedResult.EVENT_LONGITUDE,
                 EVENT_IMG_FILE_PATH = oEventPagedResult.EVENT_IMG_FILE_PATH,
                 IS_ACTIVE = oEventPagedResult.IS_ACTIVE,
+                IS_NOTIFY_USER = oEventPagedResult.IS_NOTIFY_USER,
                 CREATED_DATE = oEventPagedResult.CREATED_DATE,
 
             }), oTempEventPagedResult.PageIndex, oTempEventPagedResult.PageSize, oTempEventPagedResult.TotalCount);
@@ -195,6 +197,7 @@ namespace Takamul.Services
                         EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE,
                         EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE,
                         IS_ACTIVE = oEventViewModel.IS_ACTIVE,
+                        IS_NOTIFY_USER = oEventViewModel.IS_NOTIFY_USER,
                         LANGUAGE_ID = oEventViewModel.LANGUAGE_ID,
                         CREATED_BY = oEventViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
@@ -267,6 +270,7 @@ namespace Takamul.Services
                 oEvent.EVENT_LATITUDE = oEventViewModel.EVENT_LATITUDE;
                 oEvent.EVENT_LONGITUDE = oEventViewModel.EVENT_LONGITUDE;
                 oEvent.IS_ACTIVE = oEventViewModel.IS_ACTIVE;
+                oEvent.IS_NOTIFY_USER = oEventViewModel.IS_NOTIFY_USER;
                 if (!oEventViewModel.EVENT_IMG_FILE_PATH.Equals(string.Empty))
                 {
                     oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;

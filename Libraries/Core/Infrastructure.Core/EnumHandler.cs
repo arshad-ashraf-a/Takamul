@@ -122,6 +122,33 @@ namespace Infrastructure.Core
     }
     #endregion
 
+    #region Enum :: NotificationType
+    /// <summary>
+    /// Push notification types
+    /// </summary>
+    public enum enmNotificationType
+    {
+        /// <summary>
+        /// Undefined 
+        /// </summary>
+        Undefined = -99,
+        /// <summary>
+        /// News 
+        /// </summary>
+        News = 1,
+        /// <summary>
+        /// Events
+        /// </summary>
+        Events = 2,
+
+        /// <summary>
+        /// Events
+        /// </summary>
+        Tickets = 3,
+
+    }
+    #endregion
+
     public class EnumHandler
     {
 

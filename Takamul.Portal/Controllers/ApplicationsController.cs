@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
+using Takamul.Portal.Helpers;
 using Takamul.Portal.Resources.Common;
 using Takamul.Portal.Resources.Portal.Applications;
 using Takamul.Services;
@@ -41,6 +42,8 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: ApplicationsList
         public ActionResult ApplicationsList()
         {
+            PushNotification.SendPushNotificationTest(enmNotificationType.News,
+                "test", "test Content", Languages.Arabic, "3139");
             if (BaseController.CurrentUser.UserType == enumUserType.Admin)
             {
                 this.PageTitle = ApplicationResx.ApplicationsList;

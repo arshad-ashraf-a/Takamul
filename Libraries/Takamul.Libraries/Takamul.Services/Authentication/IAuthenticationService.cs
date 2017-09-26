@@ -52,7 +52,7 @@ namespace Takamul.Services
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber, int nUserId);
+        Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber);
         #endregion
 
         #region Method :: Response :: oUpdateOTPStatus

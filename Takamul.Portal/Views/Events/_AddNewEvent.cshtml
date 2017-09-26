@@ -159,6 +159,18 @@
                     </div>
                 </div>
 
+                @* Is Notify *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@EventResx.IsNotifyUser</label>
+                            <div class="col-lg-5">
+                                @Html.CheckBox("IS_NOTIFY_USER", Model.IS_NOTIFY_USER, new { @class = "styled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 @* Event Image *@
                 <div class="form-group">
                     <div class="col-md-12">

@@ -183,6 +183,9 @@
   <data name="IsActive" xml:space="preserve">
     <value>نشط</value>
   </data>
+  <data name="IsNotifyUser" xml:space="preserve">
+    <value>اختار المستخدم</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>خط العرض</value>
   </data>

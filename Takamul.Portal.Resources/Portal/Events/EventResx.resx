@@ -183,6 +183,9 @@
   <data name="IsActive" xml:space="preserve">
     <value>Is Active</value>
   </data>
+  <data name="IsNotifyUser" xml:space="preserve">
+    <value>Is Notify User</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>Latitude</value>
   </data>

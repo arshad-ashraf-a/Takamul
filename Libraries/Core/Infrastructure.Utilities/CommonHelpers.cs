@@ -30,7 +30,6 @@ namespace Infrastructure.Utilities
                 );
         }
         #endregion
-        
 
         #region sGetIPAddress
         public static string sGetIPAddress()
@@ -417,6 +416,104 @@ namespace Infrastructure.Utilities
 
         #region Push Notification
 
+        public static bool SendPushNotificationTest(enmNotificationType NotificationType, string sHeadings, string sContent, Languages enmLanguage, string sRecordID = "", string sDeviceID = "")
+        {
+            string sLanguageCode = string.Empty;
+            bool flg = false;
+            if (enmLanguage == Languages.Arabic)
+            {
+                sLanguageCode = ConstantNames.ArabicLanguageCode;
+            }
+            else
+            {
+                sLanguageCode = ConstantNames.EnglishLanguageCode;
+            }
+
+            var oWebRequest = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
+            oWebRequest.KeepAlive = true;
+            oWebRequest.Method = "POST";
+            oWebRequest.ContentType = "application/json; charset=utf-8";
+
+            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+            oWebRequest.Headers.Add("authorization", sAutherizationKey);
+
+            var oSerializer = new JavaScriptSerializer();
+
+            try
+            {
+                if (sDeviceID != "")
+                {
+                    //dynamic JObject = new JObject();
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = sHeadings },
+                        contents = new { en = sContent },
+                        data = new { NewsID = sRecordID },
+                        include_player_ids = new string[] { sDeviceID }
+                    };
+                    var param = oSerializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = oWebRequest.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = oWebRequest.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+                else
+                {
+                    var obj = new
+                    {
+                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
+                        headings = new { en = sHeadings },
+                        contents = new { en = sContent },
+                        data = new { NewsID = sRecordID, LanguageID = sLanguageCode },
+                        included_segments = new string[] { "All" }
+                    };
+                    var param = oSerializer.Serialize(obj);
+                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
+                    string responseContent = null;
+
+                    using (var writer = oWebRequest.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = oWebRequest.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                            flg = true;
+                        }
+                    }
+                    System.Diagnostics.Debug.WriteLine(responseContent);
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+
+            }
+
+            return flg;
+        }
+
         public static bool SendPushNotification(string _headings, string _content, string _id = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
@@ -426,7 +523,6 @@ namespace Infrastructure.Utilities
             request.ContentType = "application/json; charset=utf-8";
 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
-           // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
             request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
@@ -505,7 +601,7 @@ namespace Infrastructure.Utilities
             return flg;
         }
 
-        public static bool SendPushNotificationNews(string _headings, string _content, string _id = "",string _lang = "", string _deviceID = "")
+        public static bool SendPushNotificationNews(string _headings, string _content, string _id = "", string _lang = "", string _deviceID = "")
         {
             var request = WebRequest.Create(CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalServiceURL)) as HttpWebRequest;
             bool flg = false;
@@ -514,7 +610,6 @@ namespace Infrastructure.Utilities
             request.ContentType = "application/json; charset=utf-8";
 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
-            // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
             request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
@@ -558,7 +653,7 @@ namespace Infrastructure.Utilities
                         app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
                         headings = new { en = _headings },
                         contents = new { en = _content },
-                        data = new { NewsID = _id,LanguageID = _lang },
+                        data = new { NewsID = _id, LanguageID = _lang },
                         included_segments = new string[] { "All" }
                     };
                     var param = serializer.Serialize(obj);
@@ -601,7 +696,6 @@ namespace Infrastructure.Utilities
             request.ContentType = "application/json; charset=utf-8";
 
             string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
-            // string sAutherizationKey = string.Format("Basic Mjg5ODAwZjktY2FiNy00NmY2LWI1YzEtYjllOTNlYzJlMGUx"); 
             request.Headers.Add("authorization", sAutherizationKey);
 
             var serializer = new JavaScriptSerializer();
@@ -680,7 +774,7 @@ namespace Infrastructure.Utilities
 
             return flg;
         }
-        public static bool SendRealtimeChat(string _headings, string _content, TicketChatViewModel oTicketChatViewModel,string ChatID, string _deviceID ="")
+        public static bool SendRealtimeChat(string _headings, string _content, TicketChatViewModel oTicketChatViewModel, string ChatID, string _deviceID = "")
         {
             bool flg = false;
 

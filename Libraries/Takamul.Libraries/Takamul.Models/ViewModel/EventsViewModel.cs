@@ -19,7 +19,7 @@ namespace Takamul.Models
     {
         public int ID { get; set; }
         public int APPLICATION_ID { get; set; }
-        public string EVENT_NAME { get; set; }  
+        public string EVENT_NAME { get; set; }
         public string EVENT_DESCRIPTION { get; set; }
         public DateTime EVENT_DATE { get; set; }
         public string EVENT_LOCATION_NAME { get; set; }
@@ -30,6 +30,7 @@ namespace Takamul.Models
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<DateTime> MODIFIED_DATE { get; set; }
         public bool IS_ACTIVE { get; set; }
+        public bool IS_NOTIFY_USER { get; set; }
         public int TotalCount { get; set; }
         public string EVENT_IMG_FILE_PATH { get; set; }
         public float Latitude { get; set; }
@@ -55,6 +56,7 @@ namespace Takamul.Models
             this.MODIFIED_BY = -99;
             this.MODIFIED_DATE = DateTime.MinValue;
             this.IS_ACTIVE = false;
+            this.IS_NOTIFY_USER = false;
             this.TotalCount = 0;
             this.EVENT_IMG_FILE_PATH = string.Empty;
             this.LANGUAGE_ID = -99;
