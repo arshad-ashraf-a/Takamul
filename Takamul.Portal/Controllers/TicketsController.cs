@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
+using Takamul.Portal.Helpers;
 using Takamul.Portal.Resources.Common;
 using Takamul.Portal.Resources.Portal.Tickets;
 using Takamul.Services;
@@ -21,6 +22,7 @@ namespace LDC.eServices.Portal.Controllers
         #region ::  State ::
         #region Private Members
         private ITicketServices oITicketServices;
+        private ICommonServices oICommonServices;
         #endregion
         #endregion
 
@@ -29,9 +31,10 @@ namespace LDC.eServices.Portal.Controllers
         /// TicketsController Constructor 
         /// </summary>
         /// <param name="oITicketServicesInitializer"></param>
-        public TicketsController(ITicketServices oITicketServicesInitializer)
+        public TicketsController(ITicketServices oITicketServicesInitializer, ICommonServices oICommonServicesInitializer)
         {
             this.oITicketServices = oITicketServicesInitializer;
+            this.oICommonServices = oICommonServicesInitializer;
         }
         #endregion
 
@@ -161,13 +164,41 @@ namespace LDC.eServices.Portal.Controllers
 
             Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel); 
 
-            CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, oResponse.ResponseCode);
+
+            //CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, oResponse.ResponseCode);
             this.OperationResult = oResponse.OperationResult;
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
                     string sUserDeviceID = oResponse.ResponseCode;
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
+
+                    #region Send Push Notification
+                    PushNotification oPushNotification = new PushNotification();
+                    oPushNotification.NotificationType = enmNotificationType.Tickets;
+                    oPushNotification.sHeadings = "New Chat Reply";
+                    if (oTicketChatViewModel.TICKET_CHAT_TYPE_ID != 1)
+                    {
+                        oPushNotification.sContent = "File uploaded";
+                    }
+                    else
+                    {
+                        oPushNotification.sContent = oTicketChatViewModel.REPLY_MESSAGE.Length > 25 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
+                    }
+                    oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
+                    oPushNotification.sDeviceID = oResponse.ResponseCode;
+                    oPushNotification.oTicketChatViewModel = oTicketChatViewModel;
+                    oPushNotification.SendPushNotification();
+                    NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                    oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                    oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
+                    oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                    oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                    oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                    oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+                    #endregion
+
+
                     break;
                 case enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageAddFailed;

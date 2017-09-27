@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using Takamul.Models.ViewModel;
 
 namespace Takamul.Portal.Helpers
 {
@@ -27,6 +28,7 @@ namespace Takamul.Portal.Helpers
         public string sRequestJSON { get; set; }
         public bool bIsSentNotification { get; set; }
         public string sResponseResult { get; set; }
+        public TicketChatViewModel oTicketChatViewModel { get; set; }
         #endregion
 
         #region :: Constructor :: PushNotification ::
@@ -41,7 +43,7 @@ namespace Takamul.Portal.Helpers
             this.sRequestJSON = string.Empty;
             this.bIsSentNotification = false;
             this.sResponseResult = string.Empty;
-        } 
+        }
         #endregion
 
         public void SendPushNotification()
@@ -86,7 +88,7 @@ namespace Takamul.Portal.Helpers
                 if (enmLanguage == Languages.Arabic)
                 {
                     JObjectData.contents = new JObject(
-                        new JProperty("en", sHeadings),
+                        new JProperty("en", sContent),
                         new JProperty(sLanguageCode, sContent)
                         );
                 }
@@ -111,16 +113,28 @@ namespace Takamul.Portal.Helpers
                                           );
                         break;
                     case enmNotificationType.Tickets:
+                        JObjectData.content_available = true;
                         JObjectData.data = new JObject(
-                                               new JProperty("TicketID", sRecordID),
-                                               new JProperty("LanguageID", (int)enmLanguage)
+                                               new JProperty("TicketID", oTicketChatViewModel.TICKET_ID),
+                                               new JProperty("TicketChatID", oTicketChatViewModel.ID),
+                                               new JProperty("ReplyMsg", oTicketChatViewModel.REPLY_MESSAGE),
+                                               new JProperty("ReplyDate", oTicketChatViewModel.REPLIED_DATE),
+                                               new JProperty("RemoteFilePath", oTicketChatViewModel.REPLY_FILE_PATH),
+                                               new JProperty("TicketChatType", oTicketChatViewModel.TICKET_CHAT_TYPE_ID),
+                                               new JProperty("UserId", 1),
+                                               new JProperty("Username", "Admin123"),
+                                               new JProperty("Typename", oTicketChatViewModel.CHAT_TYPE)
                                        );
                         break;
                 }
 
                 if (sDeviceID != "")
                 {
-                    JObjectData.include_player_ids = sDeviceID.Split(',').ToArray();
+                    string[] arrry = sDeviceID.Split(',');
+                    
+
+                    JObjectData.include_player_ids = JArray.FromObject(arrry);
+
                 }
                 else
                 {
@@ -129,7 +143,7 @@ namespace Takamul.Portal.Helpers
 
                 sRequestJSON = JObjectData.ToString(Newtonsoft.Json.Formatting.None);
                 byte[] arrBytes = Encoding.UTF8.GetBytes(JObjectData.ToString(Newtonsoft.Json.Formatting.None));
-                
+
                 using (var writer = oWebRequest.GetRequestStream())
                 {
                     writer.Write(arrBytes, 0, arrBytes.Length);

@@ -1,4 +1,5 @@
-﻿using ImageMagick;
+﻿using Data.Core;
+using ImageMagick;
 using Infrastructure.Core;
 using Infrastructure.Utilities;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Takamul.Models;
 using Takamul.Models.ViewModel;
+using Takamul.Portal.Helpers;
 using Takamul.Portal.Resources.Common;
 using Takamul.Portal.Resources.Portal.Events;
 using Takamul.Services;
@@ -23,6 +25,7 @@ namespace LDC.eServices.Portal.Controllers
         #region ::  State ::
         #region Private Members
         private IEventService oIEventService;
+        private ICommonServices oICommonServices;
         #endregion
         #endregion
 
@@ -31,9 +34,11 @@ namespace LDC.eServices.Portal.Controllers
         /// EventsController Constructor 
         /// </summary>
         /// <param name="oIEventServiceInitializer"></param>
-        public EventsController(IEventService oIEventServiceInitializer)
+        public EventsController(IEventService oIEventServiceInitializer, ICommonServices oICommonServicesInitializer)
         {
             this.oIEventService = oIEventServiceInitializer;
+            this.oICommonServices = oICommonServicesInitializer;
+
         }
         #endregion
 
@@ -281,11 +286,22 @@ namespace LDC.eServices.Portal.Controllers
                             string sEventName = oEventViewModel.EVENT_NAME;
                             string sEventDesc = oEventViewModel.EVENT_DESCRIPTION.Substring(0, Math.Min(oEventViewModel.EVENT_DESCRIPTION.Length, 150)) + "...";
 
-                            //bool bIsSendNotify = CommonHelper.SendPushNotificationTest(sEventName, sEventDesc, this.CurrentApplicationLanguage, oResponseResult.ResponseCode);
-                            if (1 == 1)
-                            {
-                                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(new Exception("Could not send push notification.")));
-                            }
+                            #region Send Push Notification
+                            PushNotification oPushNotification = new PushNotification();
+                            oPushNotification.NotificationType = enmNotificationType.News;
+                            oPushNotification.sHeadings = sEventName;
+                            oPushNotification.sContent = sEventDesc;
+                            oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
+                            oPushNotification.sRecordID = oResponseResult.ResponseCode;
+                            oPushNotification.SendPushNotification();
+                            NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                            oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                            oNotificationLogViewModel.NOTIFICATION_TYPE = "events";
+                            oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                            oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                            oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                            oICommonServices.oInsertNotificationLog(oNotificationLogViewModel); 
+                            #endregion
                         }
 
 
