@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="ViewModel\AboutAppViewModel.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
+    <Compile Include="ViewModel\NotificationLogViewModel.cs" />
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Compile Include="ViewModel\AreaInfoViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />

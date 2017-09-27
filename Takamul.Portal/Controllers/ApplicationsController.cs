@@ -42,8 +42,7 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: ApplicationsList
         public ActionResult ApplicationsList()
         {
-            PushNotification.SendPushNotificationTest(enmNotificationType.News,
-                "test", "test Content", Languages.Arabic, "3139");
+           
             if (BaseController.CurrentUser.UserType == enumUserType.Admin)
             {
                 this.PageTitle = ApplicationResx.ApplicationsList;

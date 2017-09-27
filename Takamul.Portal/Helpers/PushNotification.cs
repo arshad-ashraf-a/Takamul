@@ -11,15 +11,42 @@ using System.Web;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 namespace Takamul.Portal.Helpers
 {
-    public static class PushNotification
+    public class PushNotification
     {
-        public static bool SendPushNotificationTest(enmNotificationType NotificationType, string sHeadings, string sContent, Languages enmLanguage, string sRecordID = "", string sDeviceID = "")
+        #region :: Properties ::
+        public enmNotificationType NotificationType { get; set; }
+        public string sHeadings { get; set; }
+        public string sContent { get; set; }
+        public Languages enmLanguage { get; set; }
+        public string sRecordID { get; set; }
+        public string sDeviceID { get; set; }
+        public string sRequestJSON { get; set; }
+        public bool bIsSentNotification { get; set; }
+        public string sResponseResult { get; set; }
+        #endregion
+
+        #region :: Constructor :: PushNotification ::
+        public PushNotification()
+        {
+            this.NotificationType = enmNotificationType.Undefined;
+            this.sHeadings = string.Empty;
+            this.sContent = string.Empty;
+            this.enmLanguage = Languages.English;
+            this.sRecordID = string.Empty;
+            this.sDeviceID = string.Empty;
+            this.sRequestJSON = string.Empty;
+            this.bIsSentNotification = false;
+            this.sResponseResult = string.Empty;
+        } 
+        #endregion
+
+        public void SendPushNotification()
         {
             string sLanguageCode = string.Empty;
-            bool flg = false;
             if (enmLanguage == Languages.Arabic)
             {
                 sLanguageCode = ConstantNames.ArabicLanguageCode;
@@ -41,93 +68,86 @@ namespace Takamul.Portal.Helpers
 
             try
             {
-                if (sDeviceID != "")
+                dynamic JObjectData = new JObject();
+                JObjectData.app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID);
+                if (enmLanguage == Languages.Arabic)
                 {
-
-                    var obj = new
-                    {
-                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
-                        headings = new { en = sHeadings },
-                        contents = new { en = sContent },
-                        data = new { NewsID = sRecordID },
-                        include_player_ids = new string[] { sDeviceID }
-                    };
-                    var param = oSerializer.Serialize(obj);
-                    byte[] byteArray = Encoding.UTF8.GetBytes(param);
-                    string responseContent = null;
-
-                    using (var writer = oWebRequest.GetRequestStream())
-                    {
-                        writer.Write(byteArray, 0, byteArray.Length);
-                    }
-
-                    using (var response = oWebRequest.GetResponse() as HttpWebResponse)
-                    {
-                        using (var reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            responseContent = reader.ReadToEnd();
-                            flg = true;
-                        }
-                    }
-                    System.Diagnostics.Debug.WriteLine(responseContent);
-
+                    JObjectData.headings = new JObject(
+                        new JProperty("en", sHeadings),
+                        new JProperty(sLanguageCode, sHeadings)
+                        );
                 }
                 else
                 {
-                    dynamic JObjectData = new JObject();
-                    JObjectData.app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID);
-                    JObjectData.headings = new JObject(new JProperty(sLanguageCode, sHeadings));
-                    JObjectData.contents = new JObject(new JProperty(sLanguageCode, sContent));
-                    JObjectData.data = new JObject(
-                        new JProperty(NotificationType == enmNotificationType.News ? "NewsID" : "EventID", sRecordID),
-                        new JProperty("LanguageID", sLanguageCode)
+                    JObjectData.headings = new JObject(
+                      new JProperty(sLanguageCode, sHeadings)
+                      );
+                }
+                if (enmLanguage == Languages.Arabic)
+                {
+                    JObjectData.contents = new JObject(
+                        new JProperty("en", sHeadings),
+                        new JProperty(sLanguageCode, sContent)
                         );
-                    JObjectData.included_segments = new JArray("All");
-
-
-
-                    var obj = new
-                    {
-                        app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID),
-                        headings = new { en = sHeadings },
-                        contents = new { en = sContent },
-                        data = new { NewsID = sRecordID, LanguageID = sLanguageCode },
-                        included_segments = new string[] { "All" }
-                    };
-                    var param1 = oSerializer.Serialize(obj);
-                    var param = oSerializer.Serialize(JObjectData.ToString(Newtonsoft.Json.Formatting.None));
-                    byte[] byteArray = Encoding.UTF8.GetBytes(param1);
-
-                    byte[] bytes = Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(JObjectData));
-                    
-                    string responseContent = null;
-
-                    using (var writer = oWebRequest.GetRequestStream())
-                    {
-                        writer.Write(bytes, 0, bytes.Length);
-                    }
-
-                    using (var response = oWebRequest.GetResponse() as HttpWebResponse)
-                    {
-                        using (var reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            responseContent = reader.ReadToEnd();
-                            flg = true;
-                        }
-                    }
-                    System.Diagnostics.Debug.WriteLine(responseContent);
-
+                }
+                else
+                {
+                    JObjectData.contents = new JObject(
+                      new JProperty(sLanguageCode, sContent)
+                      );
+                }
+                switch (NotificationType)
+                {
+                    case enmNotificationType.News:
+                        JObjectData.data = new JObject(
+                                                   new JProperty("NewsID", sRecordID),
+                                                   new JProperty("LanguageID", (int)enmLanguage)
+                                           );
+                        break;
+                    case enmNotificationType.Events:
+                        JObjectData.data = new JObject(
+                                                  new JProperty("EventID", sRecordID),
+                                                  new JProperty("LanguageID", (int)enmLanguage)
+                                          );
+                        break;
+                    case enmNotificationType.Tickets:
+                        JObjectData.data = new JObject(
+                                               new JProperty("TicketID", sRecordID),
+                                               new JProperty("LanguageID", (int)enmLanguage)
+                                       );
+                        break;
                 }
 
+                if (sDeviceID != "")
+                {
+                    JObjectData.include_player_ids = sDeviceID.Split(',').ToArray();
+                }
+                else
+                {
+                    JObjectData.included_segments = new JArray("All");
+                }
+
+                sRequestJSON = JObjectData.ToString(Newtonsoft.Json.Formatting.None);
+                byte[] arrBytes = Encoding.UTF8.GetBytes(JObjectData.ToString(Newtonsoft.Json.Formatting.None));
+                
+                using (var writer = oWebRequest.GetRequestStream())
+                {
+                    writer.Write(arrBytes, 0, arrBytes.Length);
+                }
+
+                using (var response = oWebRequest.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        this.bIsSentNotification = true;
+                        this.sResponseResult = reader.ReadToEnd();
+                    }
+                }
             }
             catch (WebException ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
-
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
             }
-
-            return flg;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Core;
+﻿using Data.Core;
+using Infrastructure.Core;
 using Infrastructure.Utilities;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Takamul.Models.ViewModel;
+using Takamul.Portal.Helpers;
 using Takamul.Portal.Resources.Common;
 using Takamul.Services;
 
@@ -16,6 +18,7 @@ namespace LDC.eServices.Portal.Controllers
         #region ::  State ::
         #region Private Members
         private IApplicationService oIApplicationService;
+        private ICommonServices oICommonServices;
         #endregion
         #endregion
 
@@ -24,9 +27,10 @@ namespace LDC.eServices.Portal.Controllers
         /// ApplicationDashboardController Constructor 
         /// </summary>
         /// <param name="oIApplicationServiceInitializer"></param>
-        public ApplicationDashboardController(IApplicationService oIApplicationServiceInitializer)
+        public ApplicationDashboardController(IApplicationService oIApplicationServiceInitializer, ICommonServices oICommonServicesInitializer)
         {
             this.oIApplicationService = oIApplicationServiceInitializer;
+            this.oICommonServices = oICommonServicesInitializer;
         }
         #endregion
 
@@ -35,6 +39,21 @@ namespace LDC.eServices.Portal.Controllers
         #region View :: AppDashboard
         public ActionResult AppDashboard()
         {
+            PushNotification oPushNotification = new PushNotification();
+            oPushNotification.NotificationType = enmNotificationType.News;
+            oPushNotification.sHeadings = "اختبار";
+            oPushNotification.sContent = "اختبار المحتوى";
+            oPushNotification.enmLanguage = Languages.Arabic;
+            oPushNotification.sRecordID = "3139";
+            oPushNotification.SendPushNotification();
+            NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+            oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+            oNotificationLogViewModel.NOTIFICATION_TYPE = "news";
+            oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+            oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+            oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+            oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+
             this.TitleHead = CommonResx.AppDashBoard;
 
             ApplicationViewModel oApplicationViewModel = this.oIApplicationService.oGetApplicationStatistics(this.CurrentApplicationID);

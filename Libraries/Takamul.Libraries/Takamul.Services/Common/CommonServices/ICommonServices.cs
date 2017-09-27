@@ -56,5 +56,14 @@ namespace Takamul.Services
         List<VillageInfoViewModel> oGetAllVillages(string sAreaCode, string sWilayatCode, int nLanguageID);
         #endregion
 
+        #region Method :: Response :: oInsertNotificationLog
+        /// <summary>
+        ///  Insert Notification Log
+        /// </summary>
+        /// <param name="oNotificationLogViewModel"></param>
+        /// <returns></returns>
+        Response oInsertNotificationLog(NotificationLogViewModel oNotificationLogViewModel);
+        #endregion
+
     }
 }

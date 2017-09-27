@@ -139,6 +139,43 @@ namespace Takamul.Services
         }
         #endregion
 
+        #region Method :: Response :: oInsertNotificationLog
+        /// <summary>
+        ///  Insert Notification Log
+        /// </summary>
+        /// <param name="oNotificationLogViewModel"></param>
+        /// <returns></returns>
+        public Response oInsertNotificationLog(NotificationLogViewModel oNotificationLogViewModel)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationID", SqlDbType.Int, oNotificationLogViewModel.APPLICATION_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_NotificationType", SqlDbType.VarChar, oNotificationLogViewModel.NOTIFICATION_TYPE, 50, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RequestJSON", SqlDbType.VarChar, oNotificationLogViewModel.REQUEST_JSON, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ResponseMessage", SqlDbType.VarChar, oNotificationLogViewModel.RESPONSE_MESSAGE, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsSentNotification", SqlDbType.Bit, oNotificationLogViewModel.IS_SENT_NOTIFICATION, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("InsertNotificationLog", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[5].Value.ToString());
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
+        }
+        #endregion
 
         #endregion
     }
