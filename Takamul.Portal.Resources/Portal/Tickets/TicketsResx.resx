@@ -252,4 +252,7 @@
   <data name="UserAlreadyExists" xml:space="preserve">
     <value>The user already exists.</value>
   </data>
+  <data name="HasUploadedFile" xml:space="preserve">
+    <value>has uploaded a file.</value>
+  </data>
 </root>

@@ -252,4 +252,7 @@
   <data name="ViewTicketInfo" xml:space="preserve">
     <value>عرض معلومات الموضوع</value>
   </data>
+  <data name="HasUploadedFile" xml:space="preserve">
+    <value>تحميل ملف.</value>
+  </data>
 </root>

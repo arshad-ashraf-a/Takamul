@@ -14,7 +14,7 @@
     <RootNamespace>Takamul.Portal</RootNamespace>
     <AssemblyName>Takamul.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -273,6 +273,7 @@
     <Content Include="assets\bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
+    <Content Include="DBScript\Takamul_script_10-01-2017.sql" />
     <Content Include="DBScript\Takamul_script_25-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_18-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_19-06-2017.sql" />

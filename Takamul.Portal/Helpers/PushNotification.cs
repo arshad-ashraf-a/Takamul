@@ -102,19 +102,29 @@ namespace Takamul.Portal.Helpers
                 {
                     case enmNotificationType.News:
                         JObjectData.data = new JObject(
+                                                   new JProperty("News", "News"),
                                                    new JProperty("NewsID", sRecordID),
                                                    new JProperty("LanguageID", (int)enmLanguage)
                                            );
                         break;
                     case enmNotificationType.Events:
                         JObjectData.data = new JObject(
+                                                  new JProperty("Events", "Events"),
                                                   new JProperty("EventID", sRecordID),
                                                   new JProperty("LanguageID", (int)enmLanguage)
                                           );
                         break;
                     case enmNotificationType.Tickets:
+                        JObjectData.data = new JObject(
+                                                  new JProperty("Tickets", "Tickets"),
+                                                  new JProperty("TicketID", sRecordID),
+                                                  new JProperty("LanguageID", (int)enmLanguage)
+                                          );
+                        break;
+                    case enmNotificationType.TicketChats:
                         JObjectData.content_available = true;
                         JObjectData.data = new JObject(
+                                               new JProperty("TicketChats", "TicketChats"),
                                                new JProperty("TicketID", oTicketChatViewModel.TICKET_ID),
                                                new JProperty("TicketChatID", oTicketChatViewModel.ID),
                                                new JProperty("ReplyMsg", oTicketChatViewModel.REPLY_MESSAGE),
@@ -131,10 +141,7 @@ namespace Takamul.Portal.Helpers
                 if (sDeviceID != "")
                 {
                     string[] arrry = sDeviceID.Split(',');
-                    
-
                     JObjectData.include_player_ids = JArray.FromObject(arrry);
-
                 }
                 else
                 {

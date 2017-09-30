@@ -38,6 +38,8 @@ namespace Takamul.Models.ViewModel
         public int TotalTicketChatCount { get; set; }
         public string MemberName { get; set; }
         public int? MemberUserID { get; set; }
+        public string PlayStoreURL { get; set; }
+        public string AppleStoreURL { get; set; }
 
         #region :: Constructor ::
         public ApplicationViewModel()
@@ -54,6 +56,8 @@ namespace Takamul.Models.ViewModel
             this.CREATED_BY = -99;
             this.FORMATTED_EXPIRY_DATE = string.Empty;
             this.MODIFIED_BY = -99;
+            this.PlayStoreURL = string.Empty;
+            this.AppleStoreURL = string.Empty;
         } 
         #endregion
     }

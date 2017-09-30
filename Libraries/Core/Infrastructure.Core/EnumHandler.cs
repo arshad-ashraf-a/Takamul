@@ -142,9 +142,13 @@ namespace Infrastructure.Core
         Events = 2,
 
         /// <summary>
-        /// Events
+        /// Tickets
         /// </summary>
         Tickets = 3,
+        /// <summary>
+        /// TicketChats
+        /// </summary>
+        TicketChats = 4
 
     }
     #endregion

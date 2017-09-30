@@ -157,7 +157,7 @@ namespace Takamul.Services
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationID", SqlDbType.Int, oNotificationLogViewModel.APPLICATION_ID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_NotificationType", SqlDbType.VarChar, oNotificationLogViewModel.NOTIFICATION_TYPE, 50, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RequestJSON", SqlDbType.VarChar, oNotificationLogViewModel.REQUEST_JSON, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RequestJSON", SqlDbType.NVarChar, oNotificationLogViewModel.REQUEST_JSON, 4000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ResponseMessage", SqlDbType.VarChar, oNotificationLogViewModel.RESPONSE_MESSAGE, 5000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsSentNotification", SqlDbType.Bit, oNotificationLogViewModel.IS_SENT_NOTIFICATION, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));

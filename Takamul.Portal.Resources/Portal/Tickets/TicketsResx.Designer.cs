@@ -187,6 +187,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to has uploaded a file..
+        /// </summary>
+        public static string HasUploadedFile {
+            get {
+                return ResourceManager.GetString("HasUploadedFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uploaded file is not a valid format.Only PNG,JPG,JPEG is allowed..
         /// </summary>
         public static string InvalidFileFormat {

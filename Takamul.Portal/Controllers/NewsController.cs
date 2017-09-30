@@ -28,6 +28,7 @@ namespace LDC.eServices.Portal.Controllers
         #region Private Members
         private INewsServices oINewsService;
         private ICommonServices oICommonServices;
+        private IUserServices oIUserServices;
         #endregion
         #endregion
 
@@ -36,10 +37,13 @@ namespace LDC.eServices.Portal.Controllers
         /// NewsesController Constructor 
         /// </summary>
         /// <param name="oINewsServiceInitializer"></param>
-        public NewsController(INewsServices oINewsServiceInitializer,ICommonServices oICommonServicesInitializer)
+        public NewsController(INewsServices oINewsServiceInitializer,
+                            ICommonServices oICommonServicesInitializer,
+                            IUserServices oIUserServicesInitializer)
         {
             this.oINewsService = oINewsServiceInitializer;
             this.oICommonServices = oICommonServicesInitializer;
+            this.oIUserServices = oIUserServicesInitializer;
 
         }
         #endregion
@@ -161,20 +165,33 @@ namespace LDC.eServices.Portal.Controllers
                             string sNewsDesc = oNewsViewModel.NEWS_CONTENT.Substring(0, Math.Min(oNewsViewModel.NEWS_CONTENT.Length, 150)) + "...";
 
                             #region Send Push Notification
-                            PushNotification oPushNotification = new PushNotification();
-                            oPushNotification.NotificationType = enmNotificationType.News;
-                            oPushNotification.sHeadings = sNewsTitle;
-                            oPushNotification.sContent = sNewsDesc;
-                            oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
-                            oPushNotification.sRecordID = oResponseResult.ResponseCode;
-                            oPushNotification.SendPushNotification();
-                            NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
-                            oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
-                            oNotificationLogViewModel.NOTIFICATION_TYPE = "news";
-                            oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
-                            oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
-                            oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
-                            oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+
+                            var lstApplicationUsers = this.oIUserServices.lGetApplicationUsers(this.CurrentApplicationID, Convert.ToInt32(enumUserType.MobileUser).ToString());
+                            if (lstApplicationUsers.Count > 0)
+                            {
+                                string sDeviceIDS = string.Join(",", lstApplicationUsers.Where(o => Convert.ToInt32(o.PREFERED_LANGUAGE_ID) == (int)this.CurrentApplicationLanguage)
+                                                                                        .Where(o => o.DEVICE_ID != null)
+                                                                                        .Where(o => o.DEVICE_ID != string.Empty)
+                                                                                        .Where(o => o.IS_ACTIVE == true)
+                                                                                        .Where(o => o.IS_BLOCKED == false)
+                                                                                        .Select(o => o.DEVICE_ID.ToString()));
+
+                                PushNotification oPushNotification = new PushNotification();
+                                oPushNotification.NotificationType = enmNotificationType.News;
+                                oPushNotification.sHeadings = sNewsTitle;
+                                oPushNotification.sContent = sNewsDesc;
+                                oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
+                                oPushNotification.sRecordID = oResponseResult.ResponseCode;
+                                oPushNotification.sDeviceID = sDeviceIDS;
+                                oPushNotification.SendPushNotification();
+                                NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                                oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                                oNotificationLogViewModel.NOTIFICATION_TYPE = "news";
+                                oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                                oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                                oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                                oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+                            }
                             #endregion
 
                         }

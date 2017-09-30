@@ -81,7 +81,8 @@ namespace Takamul.API.Controllers
                         EVENTDATE = string.Format("{0} {1}", oEvent.EVENT_DATE.ToShortDateString(), oEvent.EVENT_DATE.ToShortTimeString()),
                         Latitude = oEvent.EVENT_LATITUDE,
                         Longitude = oEvent.EVENT_LONGITUDE,
-                        RemoteFilePath = sRemoteFilePath
+                        RemoteFilePath = sRemoteFilePath,
+                        EventLocation = oEvent.EVENT_LOCATION_NAME
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }
@@ -120,7 +121,8 @@ namespace Takamul.API.Controllers
                     EVENTDATE = string.Format("{0} {1}", oEventsViewModel.EVENT_DATE.ToShortDateString(), oEventsViewModel.EVENT_DATE.ToShortTimeString()),
                     Latitude = oEventsViewModel.EVENT_LATITUDE,
                     Longitude = oEventsViewModel.EVENT_LONGITUDE,
-                    RemoteFilePath = sRemoteFilePath
+                    RemoteFilePath = sRemoteFilePath,
+                    EventLocation = oEventsViewModel.EVENT_LOCATION_NAME
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulEvents);
@@ -143,24 +145,25 @@ namespace Takamul.API.Controllers
             if (lstEvents.Count() > 0)
             {
                 lstTakamulEvents = new List<TakamulEvents>();
-                foreach (var Events in lstEvents)
+                foreach (var oEvent in lstEvents)
                 {
                     string sRemoteFilePath = string.Empty;
-                    if (!string.IsNullOrEmpty(Events.EVENT_IMG_FILE_PATH))
+                    if (!string.IsNullOrEmpty(oEvent.EVENT_IMG_FILE_PATH))
                     {
-                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), Events.EVENT_IMG_FILE_PATH);
+                        sRemoteFilePath = Path.Combine(CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath), oEvent.EVENT_IMG_FILE_PATH);
                     }
 
                     TakamulEvents oTakamulEvents = new TakamulEvents()
                     {
-                        EventID = Events.ID,
-                        APPLICATIONID = Events.APPLICATION_ID,
-                        EVENTDESCRIPTION = Events.EVENT_DESCRIPTION,
-                        EVENTNAME = Events.EVENT_NAME,
-                        EVENTDATE = string.Format("{0} {1}", Events.EVENT_DATE.ToShortDateString(), Events.EVENT_DATE.ToShortTimeString()),
-                        Latitude = Events.EVENT_LATITUDE,
-                        Longitude = Events.EVENT_LONGITUDE,
-                        RemoteFilePath = sRemoteFilePath
+                        EventID = oEvent.ID,
+                        APPLICATIONID = oEvent.APPLICATION_ID,
+                        EVENTDESCRIPTION = oEvent.EVENT_DESCRIPTION,
+                        EVENTNAME = oEvent.EVENT_NAME,
+                        EVENTDATE = string.Format("{0} {1}", oEvent.EVENT_DATE.ToShortDateString(), oEvent.EVENT_DATE.ToShortTimeString()),
+                        Latitude = oEvent.EVENT_LATITUDE,
+                        Longitude = oEvent.EVENT_LONGITUDE,
+                        RemoteFilePath = sRemoteFilePath,
+                        EventLocation = oEvent.EVENT_LOCATION_NAME
                     };
                     lstTakamulEvents.Add(oTakamulEvents);
                 }

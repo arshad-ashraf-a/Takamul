@@ -25,6 +25,8 @@ namespace Takamul.Models.ApiViewModel
         public string RemoteFilePath { get; set; }
         public bool IsActive { get; set; }
         public bool IsApplicationExpired { get; set; }
+        public string PlayStoreURL { get; set; }
+        public string AppleStoreURL { get; set; }
 
         #region :: Constructor ::
         public TakamulApplication()
@@ -37,7 +39,10 @@ namespace Takamul.Models.ApiViewModel
             this.IsActive = false;
             this.IsApplicationExpired = false;
             this.RemoteFilePath = string.Empty;
-        } 
+            this.PlayStoreURL = string.Empty;
+            this.AppleStoreURL = string.Empty;
+
+        }
         #endregion
     }
 }

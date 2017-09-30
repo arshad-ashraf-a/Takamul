@@ -159,52 +159,25 @@ namespace LDC.eServices.Portal.Controllers
                 REPLY_MESSAGE = sChatMessage,
                 TICKET_CHAT_TYPE_ID = 1,
                 TICKET_PARTICIPANT_ID = CurrentUser.nUserID
-                
+
             };
 
-            Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel); 
+            Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
+            string sContent = oTicketChatViewModel.REPLY_MESSAGE.Length > 25 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
 
+            SendTicketChatPushNotification(nTicketID, sContent, false, oTicketChatViewModel);
 
-            //CommonHelper.SendRealtimeChat("New Chat Reply", "", oTicketChatViewModel, oResponse.ResponseID, oResponse.ResponseCode);
             this.OperationResult = oResponse.OperationResult;
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
                     string sUserDeviceID = oResponse.ResponseCode;
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
-
-                    #region Send Push Notification
-                    PushNotification oPushNotification = new PushNotification();
-                    oPushNotification.NotificationType = enmNotificationType.Tickets;
-                    oPushNotification.sHeadings = "New Chat Reply";
-                    if (oTicketChatViewModel.TICKET_CHAT_TYPE_ID != 1)
-                    {
-                        oPushNotification.sContent = "File uploaded";
-                    }
-                    else
-                    {
-                        oPushNotification.sContent = oTicketChatViewModel.REPLY_MESSAGE.Length > 25 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
-                    }
-                    oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
-                    oPushNotification.sDeviceID = oResponse.ResponseCode;
-                    oPushNotification.oTicketChatViewModel = oTicketChatViewModel;
-                    oPushNotification.SendPushNotification();
-                    NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
-                    oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
-                    oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
-                    oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
-                    oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
-                    oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
-                    oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
-                    #endregion
-
-
                     break;
                 case enumOperationResult.Faild:
                     this.OperationResultMessages = CommonResx.MessageAddFailed;
                     break;
             }
-
 
             return Json(
                    new
@@ -276,6 +249,7 @@ namespace LDC.eServices.Portal.Controllers
                     Response oResponse = this.oITicketServices.oInsertTicketChat(oTicketChatViewModel);
                     if (oResponse.OperationResult == enumOperationResult.Success)
                     {
+                        SendTicketChatPushNotification(nTicketID, string.Empty, true, oTicketChatViewModel);
                         string sUserDeviceID = oResponse.ResponseCode;
 
                         if (!string.IsNullOrEmpty(sFullFilePath))
@@ -328,7 +302,8 @@ namespace LDC.eServices.Portal.Controllers
                 string sFileFullPath = Path.Combine(this.CurrentApplicationID.ToString(), nTicketID.ToString(), sFileName);
                 oFileToDownload = oFileAccessService.ReadFile(sFileFullPath);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
             }
             return File(oFileToDownload, "application/force-download", sFileName);
@@ -356,20 +331,20 @@ namespace LDC.eServices.Portal.Controllers
         #endregion
 
         #region Method :: JsonResult :: Edit Ticket
-       /// <summary>
-       /// Edit Ticket
-       /// </summary>
-       /// <param name="nTicketID"></param>
-       /// <param name="bIsActive"></param>
-       /// <param name="nTicketStatusID"></param>
-       /// <param name="sRejectReason"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Edit Ticket
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="bIsActive"></param>
+        /// <param name="nTicketStatusID"></param>
+        /// <param name="sRejectReason"></param>
+        /// <returns></returns>
         [HttpPost]
-        public JsonResult JEditTicket(int nTicketID,bool bIsActive, int nTicketStatusID,string sRejectReason)
+        public JsonResult JEditTicket(int nTicketID, bool bIsActive, int nTicketStatusID, string sRejectReason)
         {
             Response oResponseResult = null;
 
-            oResponseResult = this.oITicketServices.oUpdateTicket(nTicketID,nTicketStatusID,bIsActive,sRejectReason,CurrentUser.nUserID);
+            oResponseResult = this.oITicketServices.oUpdateTicket(nTicketID, nTicketStatusID, bIsActive, sRejectReason, CurrentUser.nUserID);
             this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)
@@ -422,16 +397,12 @@ namespace LDC.eServices.Portal.Controllers
 
             oResponseResult = this.oITicketServices.oInsertTicket(oTicketViewModel, oTicketViewModel.MobileParticipantId);
 
-            if (CommonHelper.SendPushNotification("New Ticket", oTicketViewModel.TICKET_NAME, oTicketViewModel.TICKET_DESCRIPTION, oResponseResult.ResponseCode)) ;
-            {
-
-            }
             this.OperationResult = oResponseResult.OperationResult;
 
             switch (this.OperationResult)
             {
                 case enumOperationResult.Success:
-                    string sUserDeviceID = oResponseResult.ResponseCode;
+                   
                     if (oFile != null)
                     {
                         FileAccessService oFileAccessService = new FileAccessService(CommonHelper.sGetConfigKeyValue(ConstantNames.FileAccessURL));
@@ -447,6 +418,34 @@ namespace LDC.eServices.Portal.Controllers
                         }
                         oFileAccessService.WirteFileByte(sFullFilePath, fileData);
                     }
+                    
+                    #region :: Send Push Notification ::
+                    List<TicketMobileUserParticipantViewModel> lstTicketMobileUserParticipantViewModel = this.oITicketServices.IlGetTicketMobileUserParticipants(Convert.ToInt32(oResponseResult.ResponseID), -99);
+                    if (lstTicketMobileUserParticipantViewModel.Count > 0)
+                    {
+                        foreach (var oTicketMobileUserParticipantViewModel in lstTicketMobileUserParticipantViewModel)
+                        {
+                            if (!oTicketMobileUserParticipantViewModel.DEVICE_ID.Equals(string.Empty))
+                            {
+                                PushNotification oPushNotification = new PushNotification();
+                                oPushNotification.NotificationType = enmNotificationType.Tickets;
+                                oPushNotification.sHeadings = oTicketMobileUserParticipantViewModel.TICKET_NAME;
+                                oPushNotification.sContent = string.Format("{0} {1}", CurrentUser.sUserFullNameEnglish, oTicketMobileUserParticipantViewModel.PreferedLanguage == Data.Core.Languages.English ? " has been created a ticket" : " تم إنشاء تذكرة");
+                                oPushNotification.enmLanguage = oTicketMobileUserParticipantViewModel.PreferedLanguage;
+                                oPushNotification.sDeviceID = oTicketMobileUserParticipantViewModel.DEVICE_ID;
+                                oPushNotification.SendPushNotification();
+                                NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                                oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                                oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
+                                oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                                oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                                oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                                oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+                            }
+                        }
+                    } 
+                    #endregion
+
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;
                 case enumOperationResult.Faild:
@@ -464,16 +463,16 @@ namespace LDC.eServices.Portal.Controllers
         #endregion
 
         #region JsonResult :: Bind Grid All Ticket Participants
-       /// <summary>
-       /// Bind all ticket participants
-       /// </summary>
-       /// <param name="nTicketID"></param>
-       /// <param name="nPage"></param>
-       /// <param name="nRows"></param>
-       /// <param name="sColumnName"></param>
-       /// <param name="sColumnOrder"></param>
-       /// <returns></returns>
-        public JsonResult JBindAllTicketParticipants(int nTicketID,int nPage, int nRows, string sColumnName, string sColumnOrder)
+        /// <summary>
+        /// Bind all ticket participants
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nPage"></param>
+        /// <param name="nRows"></param>
+        /// <param name="sColumnName"></param>
+        /// <param name="sColumnOrder"></param>
+        /// <returns></returns>
+        public JsonResult JBindAllTicketParticipants(int nTicketID, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
             var lstEvents = this.oITicketServices.IlGetTicketParticipants(nTicketID, nPage, nRows);
             return Json(lstEvents, JsonRequestBehavior.AllowGet);
@@ -487,11 +486,11 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="oTicketViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JInserTicketParticipant(int nTicketID,int nUserID)
+        public JsonResult JInserTicketParticipant(int nTicketID, int nUserID)
         {
             Response oResponseResult = null;
-           
-            oResponseResult = this.oITicketServices.oInsertTicketParticipant(nTicketID,nUserID, Convert.ToInt32(CurrentUser.nUserID));
+
+            oResponseResult = this.oITicketServices.oInsertTicketParticipant(nTicketID, nUserID, Convert.ToInt32(CurrentUser.nUserID));
 
             this.OperationResult = oResponseResult.OperationResult;
 
@@ -554,6 +553,60 @@ namespace LDC.eServices.Portal.Controllers
                 },
                 JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Method :: void :: SendTicketChatPushNotification
+        public void SendTicketChatPushNotification(int nTicketID, string sContent, bool bIsFileTypeChat, TicketChatViewModel oTicketChatViewModel)
+        {
+            List<TicketMobileUserParticipantViewModel> lstTicketMobileUserParticipantViewModel = this.oITicketServices.IlGetTicketMobileUserParticipants(nTicketID, -99);
+            if (lstTicketMobileUserParticipantViewModel.Count > 0)
+            {
+                foreach (var oTicketMobileUserParticipantViewModel in lstTicketMobileUserParticipantViewModel)
+                {
+                    if (!oTicketMobileUserParticipantViewModel.DEVICE_ID.Equals(string.Empty))
+                    {
+                        PushNotification oPushNotification = new PushNotification();
+                        oPushNotification.NotificationType = enmNotificationType.TicketChats;
+                        oPushNotification.sHeadings = oTicketMobileUserParticipantViewModel.TICKET_NAME;
+                        if (bIsFileTypeChat)
+                        {
+                            oPushNotification.sContent = string.Format("{0} {1}", CurrentUser.sUserFullNameEnglish, oTicketMobileUserParticipantViewModel.PreferedLanguage == Data.Core.Languages.English ? " has uploaded a file" : "تحميل ملف.");
+                        }
+                        else
+                        {
+                            oPushNotification.sContent = string.Format("{0} : {1}", CurrentUser.sUserFullNameEnglish, sContent);
+                        }
+
+
+                        oPushNotification.enmLanguage = oTicketMobileUserParticipantViewModel.PreferedLanguage;
+                        oPushNotification.sDeviceID = oTicketMobileUserParticipantViewModel.DEVICE_ID;
+                        oPushNotification.oTicketChatViewModel = oTicketChatViewModel;
+                        oPushNotification.SendPushNotification();
+                        NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                        oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                        oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
+                        oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                        oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                        oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                        oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+                    }
+                }
+            }
+
+
+
+
+            //if (oTicketChatViewModel.TICKET_CHAT_TYPE_ID != 1)
+            //{
+            //    oPushNotification.sContent = "File uploaded";
+            //}
+            //else
+            //{
+            //    oPushNotification.sContent = oTicketChatViewModel.REPLY_MESSAGE.Length > 25 ? oTicketChatViewModel.REPLY_MESSAGE.Substring(0, 100) + "..." : oTicketChatViewModel.REPLY_MESSAGE;
+            //}
+
+
+        } 
         #endregion
 
         #endregion

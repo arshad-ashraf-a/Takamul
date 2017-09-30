@@ -175,7 +175,7 @@ namespace Takamul.Services
         /// <param name="nTicketID"></param>
         /// <param name="nLastTicketChatID"></param>
         /// <returns></returns>
-        public List<TicketChatViewModel> IlGetMoreTicketChats(int nTicketID,int nLastTicketChatID)
+        public List<TicketChatViewModel> IlGetMoreTicketChats(int nTicketID, int nLastTicketChatID)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
@@ -237,7 +237,7 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DefaultImagePath", SqlDbType.VarChar, oTicketViewModel.DEFAULT_IMAGE, 500, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCreatedPlatForm", SqlDbType.Int, oTicketViewModel.TICKET_CREATED_PLATFORM, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CreatedBy", SqlDbType.Int, oTicketViewModel.CREATED_BY, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar,50, ParameterDirection.Output));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar, 50, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_TicketID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
@@ -296,11 +296,11 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_DeviceID", SqlDbType.VarChar, ParameterDirection.Output, 4000));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_ChatID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
-                
+
 
                 this.ExecuteStoredProcedureCommand("InsertTicketChat", arrParameters.ToArray());
                 oResponse.nOperationResult = Convert.ToInt32(arrParameters[7].Value.ToString());
-                
+
 
                 if (oResponse.nOperationResult == 1)
                 {
@@ -444,7 +444,7 @@ namespace Takamul.Services
         /// <param name="nParticipantUserID"></param>
         /// <param name="nCreatedBy"></param>
         /// <returns></returns>
-        public Response oInsertTicketParticipant(int nTicketID,int nParticipantUserID, int nCreatedBy)
+        public Response oInsertTicketParticipant(int nTicketID, int nParticipantUserID, int nCreatedBy)
         {
             #region ": Insert Sp Result:"
 
@@ -481,7 +481,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="nTicketParticipantID"></param>
         /// <returns></returns>
-        public Response oDeleteTicketParticipant(int nTicketParticipantID,int nTicketID)
+        public Response oDeleteTicketParticipant(int nTicketParticipantID, int nTicketID)
         {
             #region ": Delete Sp Result:"
 
@@ -507,6 +507,29 @@ namespace Takamul.Services
 
             return oResponse;
             #endregion
+        }
+        #endregion
+
+        #region Method :: List<TicketParticipantViewModel> :: IlGetTicketParticipants
+        /// <summary>
+        /// Get ticket mobile user participants
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nExcludedMobileUser"></param>
+        /// <returns></returns>
+        public List<TicketMobileUserParticipantViewModel> IlGetTicketMobileUserParticipants(int nTicketID, int nExcludedMobileUser = -99)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ExcludedUserId", SqlDbType.Int, nExcludedMobileUser, ParameterDirection.Input));
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<TicketMobileUserParticipantViewModel> lstTicketParticipants = this.ExecuteStoredProcedureList<TicketMobileUserParticipantViewModel>("GetTicketMObileUserParticipants", arrParameters.ToArray());
+            return lstTicketParticipants;
+            #endregion
+
         }
         #endregion
 

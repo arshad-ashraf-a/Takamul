@@ -149,5 +149,16 @@ namespace Takamul.Services
         /// <returns></returns>
         Response oDeleteTicketParticipant(int nTicketParticipantID, int nTicketID);
         #endregion
+
+        #region Method :: List<TicketParticipantViewModel> :: IlGetTicketParticipants
+        /// <summary>
+        /// Get ticket mobile user participants
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nExcludedMobileUser"></param>
+        /// <returns></returns>
+        List<TicketMobileUserParticipantViewModel> IlGetTicketMobileUserParticipants(int nTicketID, int nExcludedMobileUser = -99);
+        
+        #endregion
     }
 }
