@@ -304,9 +304,10 @@ namespace LDC.eServices.Portal.Controllers
 
 
                                 PushNotification oPushNotification = new PushNotification();
-                                oPushNotification.NotificationType = enmNotificationType.News;
+                                oPushNotification.NotificationType = enmNotificationType.Events;
                                 oPushNotification.sHeadings = sEventName;
                                 oPushNotification.sContent = sEventDesc;
+                                oPushNotification.sDeviceID = sDeviceIDS;
                                 oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
                                 oPushNotification.sRecordID = oResponseResult.ResponseCode;
                                 oPushNotification.SendPushNotification();

@@ -165,7 +165,8 @@
     <Content Include="assets\css\jqGrid\jqgrid.style.css" />
     <Content Include="assets\css\jqGrid\ui.jqgrid.css" />
     <Content Include="assets\css\jquery-ui.min.css" />
-    <Content Include="assets\images\backgrounds\sawa_login.jpg" />
+    <Content Include="assets\images\backgrounds\sawa_login - Copy.jpg" />
+    <Content Include="assets\images\backgrounds\sawa_login.png" />
     <Content Include="assets\images\flags\gb.png" />
     <Content Include="assets\images\Loader.png" />
     <Content Include="assets\images\Logo.png" />
@@ -274,6 +275,7 @@
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
     <Content Include="DBScript\Takamul_script_10-01-2017.sql" />
+    <Content Include="DBScript\Takamul_script_04-10-2017.sql" />
     <Content Include="DBScript\Takamul_script_25-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_18-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_19-06-2017.sql" />

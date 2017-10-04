@@ -18508,7 +18508,7 @@ thead .htCollapseButton {
 }
 
 .login-cover {
-    background: url(../images/backgrounds/sawa_login.jpg) no-repeat center center fixed;
+    background: url(../images/backgrounds/sawa_login.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -18526,7 +18526,7 @@ thead .htCollapseButton {
 
         .login-container .page-container .login-form, .login-container .page-container .login-form .thumb, .login-container .page-container .registration-form {
             margin: 0 auto 20px;
-            background: #00887A;
+            background: #015461;
         }
 
 @media (max-width:480px) {
