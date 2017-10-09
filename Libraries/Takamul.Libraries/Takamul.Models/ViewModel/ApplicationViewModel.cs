@@ -40,6 +40,8 @@ namespace Takamul.Models.ViewModel
         public int? MemberUserID { get; set; }
         public string PlayStoreURL { get; set; }
         public string AppleStoreURL { get; set; }
+        public string ONE_SIGNAL_APP_ID { get; set; }
+        public string ONE_SIGNAL_AUTH_KEY { get; set; }
 
         #region :: Constructor ::
         public ApplicationViewModel()
@@ -58,6 +60,8 @@ namespace Takamul.Models.ViewModel
             this.MODIFIED_BY = -99;
             this.PlayStoreURL = string.Empty;
             this.AppleStoreURL = string.Empty;
+            this.ONE_SIGNAL_APP_ID = string.Empty;
+            this.ONE_SIGNAL_AUTH_KEY = string.Empty;
         } 
         #endregion
     }

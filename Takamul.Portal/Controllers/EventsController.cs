@@ -35,7 +35,7 @@ namespace LDC.eServices.Portal.Controllers
         /// EventsController Constructor 
         /// </summary>
         /// <param name="oIEventServiceInitializer"></param>
-        public EventsController(IEventService oIEventServiceInitializer, 
+        public EventsController(IEventService oIEventServiceInitializer,
                                 ICommonServices oICommonServicesInitializer,
                                 IUserServices oIUserServicesInitializer)
         {
@@ -285,45 +285,53 @@ namespace LDC.eServices.Portal.Controllers
                         {
                             Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                         }
-                        if (oEventViewModel.IS_NOTIFY_USER && oEventViewModel.IS_ACTIVE)
+                    }
+
+                    if (oEventViewModel.IS_NOTIFY_USER && oEventViewModel.IS_ACTIVE)
+                    {
+                        string sEventName = oEventViewModel.EVENT_NAME;
+                        string sEventDesc = oEventViewModel.EVENT_DESCRIPTION.Substring(0, Math.Min(oEventViewModel.EVENT_DESCRIPTION.Length, 150)) + "...";
+
+                        #region Send Push Notification
+
+                        var lstApplicationUsers = this.oIUserServices.lGetApplicationUsers(this.CurrentApplicationID, Convert.ToInt32(enumUserType.MobileUser).ToString());
+                        if (lstApplicationUsers.Count > 0)
                         {
-                            string sEventName = oEventViewModel.EVENT_NAME;
-                            string sEventDesc = oEventViewModel.EVENT_DESCRIPTION.Substring(0, Math.Min(oEventViewModel.EVENT_DESCRIPTION.Length, 150)) + "...";
+                            string sDeviceIDS = string.Join(",", lstApplicationUsers.Where(o => Convert.ToInt32(o.PREFERED_LANGUAGE_ID) == (int)this.CurrentApplicationLanguage)
+                                                                                    .Where(o => o.DEVICE_ID != null)
+                                                                                    .Where(o => o.DEVICE_ID != string.Empty)
+                                                                                    .Where(o => o.IS_ACTIVE == true)
+                                                                                    .Where(o => o.IS_BLOCKED == false)
+                                                                                    .Select(o => o.DEVICE_ID.ToString()));
 
-                            #region Send Push Notification
-
-                            var lstApplicationUsers = this.oIUserServices.lGetApplicationUsers(this.CurrentApplicationID, Convert.ToInt32(enumUserType.MobileUser).ToString());
-                            if (lstApplicationUsers.Count > 0)
-                            {
-                                string sDeviceIDS = string.Join(",", lstApplicationUsers.Where(o => Convert.ToInt32(o.PREFERED_LANGUAGE_ID) == (int)this.CurrentApplicationLanguage)
+                            string sMobileNumbers = string.Join(",", lstApplicationUsers.Where(o => Convert.ToInt32(o.PREFERED_LANGUAGE_ID) == (int)this.CurrentApplicationLanguage)
                                                                                         .Where(o => o.DEVICE_ID != null)
                                                                                         .Where(o => o.DEVICE_ID != string.Empty)
                                                                                         .Where(o => o.IS_ACTIVE == true)
                                                                                         .Where(o => o.IS_BLOCKED == false)
-                                                                                        .Select(o => o.DEVICE_ID.ToString()));
+                                                                                        .Select(o => o.PHONE_NUMBER.ToString()));
 
 
-                                PushNotification oPushNotification = new PushNotification();
-                                oPushNotification.NotificationType = enmNotificationType.Events;
-                                oPushNotification.sHeadings = sEventName;
-                                oPushNotification.sContent = sEventDesc;
-                                oPushNotification.sDeviceID = sDeviceIDS;
-                                oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
-                                oPushNotification.sRecordID = oResponseResult.ResponseCode;
-                                oPushNotification.SendPushNotification();
-                                NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
-                                oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
-                                oNotificationLogViewModel.NOTIFICATION_TYPE = "events";
-                                oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
-                                oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
-                                oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
-                                oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
-                                #endregion
-                            }
+                            PushNotification oPushNotification = new PushNotification();
+                            oPushNotification.NotificationType = enmNotificationType.Events;
+                            oPushNotification.sHeadings = sEventName;
+                            oPushNotification.sContent = sEventDesc;
+                            oPushNotification.sDeviceID = sDeviceIDS;
+                            oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
+                            oPushNotification.sRecordID = oResponseResult.ResponseCode;
+                            oPushNotification.sOneSignalAppID = this.CurrentApplicationOneSignalID;
+                            oPushNotification.sOneSignalAuthKey = this.CurrentApplicationOneSignalAuthKey;
+                            oPushNotification.SendPushNotification();
+                            NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
+                            oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
+                            oNotificationLogViewModel.NOTIFICATION_TYPE = "events";
+                            oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
+                            oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                            oNotificationLogViewModel.MOBILE_NUMBERS = sMobileNumbers;
+                            oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
+                            oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
+                            #endregion
                         }
-
-
-
                     }
                     this.OperationResultMessages = CommonResx.MessageAddSuccess;
                     break;

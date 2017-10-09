@@ -186,5 +186,37 @@ namespace Infrastructure.Core
 
         public enumUserType UserType { get; set; }
         #endregion
+
+        #region CurrentApplicationOneSignalID
+        private string sCurrentApplicationOneSignalID;
+
+        public string CurrentApplicationOneSignalID
+        {
+            get
+            {
+                return this.sCurrentApplicationOneSignalID;
+            }
+            set
+            {
+                this.sCurrentApplicationOneSignalID = value;
+            }
+        }
+        #endregion
+
+        #region CurrentApplicationOneSignalAuthKey
+        private string sCurrentApplicationOneSignalAuthKey;
+
+        public string CurrentApplicationOneSignalAuthKey
+        {
+            get
+            {
+                return this.sCurrentApplicationOneSignalAuthKey;
+            }
+            set
+            {
+                this.sCurrentApplicationOneSignalAuthKey = value;
+            }
+        }
+        #endregion
     }
 }

@@ -29,6 +29,9 @@ namespace Takamul.Portal.Helpers
         public bool bIsSentNotification { get; set; }
         public string sResponseResult { get; set; }
         public TicketChatViewModel oTicketChatViewModel { get; set; }
+        public string sOneSignalAppID { get; set; }
+        public string sOneSignalAuthKey { get; set; }
+
         #endregion
 
         #region :: Constructor :: PushNotification ::
@@ -63,7 +66,7 @@ namespace Takamul.Portal.Helpers
             oWebRequest.Method = "POST";
             oWebRequest.ContentType = "application/json; charset=utf-8";
 
-            string sAutherizationKey = string.Format("Basic {0}", CommonHelper.sGetConfigKeyValue(ConstantNames.OneSignalAuthKey));
+            string sAutherizationKey = string.Format("Basic {0}", sOneSignalAuthKey);
             oWebRequest.Headers.Add("authorization", sAutherizationKey);
 
             var oSerializer = new JavaScriptSerializer();
@@ -71,7 +74,7 @@ namespace Takamul.Portal.Helpers
             try
             {
                 dynamic JObjectData = new JObject();
-                JObjectData.app_id = CommonHelper.sGetConfigKeyValue(ConstantNames.MobileAppID);
+                JObjectData.app_id = sOneSignalAppID;
                 if (enmLanguage == Languages.Arabic)
                 {
                     JObjectData.headings = new JObject(

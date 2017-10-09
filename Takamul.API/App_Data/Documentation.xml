@@ -501,38 +501,42 @@
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-3:The user already exists.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.String,System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ResendOTPNumber(System.Int32,System.String,System.Int32)">
             <summary>
             Resend user OTP Number by phone number
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
             </summary>
+            <param name="nApplicationID"></param>
             <param name="sPhoneNumber"></param>
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.String,System.Int32,System.Int32,System.String)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.ValidateOTPNumber(System.Int32,System.String,System.Int32,System.Int32,System.String)">
             <summary>
             Validate user OTP Number by phone number
             <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</para>
             <para>-->[TakamulUserResponse]</para>
             </summary>
+            <param name="nApplicationID"></param>
             <param name="sPhoneNumber"></param>
             <param name="nOTPNumber"></param>
             <param name="sDeviceID"></param>
             <param name="nLanguageID">[1:Arabic],[2:English]</param>
             <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetails(System.Int32)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetails(System.Int32,System.Int32)">
             <summary>
             Get user detailed infomations by user id 
             </summary>
+            <param name="nApplicationID"></param>
             <param name="nUserID"></param>
             <returns></returns>
         </member>
-        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetailsByPhoneNumber(System.String)">
+        <member name="M:Takamul.API.Controllers.AuthenticationServiceController.GetUserDetailsByPhoneNumber(System.Int32,System.String)">
             <summary>
             Get user detailed infomations by phone number
             </summary>
+            <param name="nApplicationID"></param>
             <param name="sPhoneNumber"></param>
             <returns></returns>
         </member>

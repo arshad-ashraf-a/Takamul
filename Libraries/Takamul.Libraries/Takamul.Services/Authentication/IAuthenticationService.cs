@@ -20,10 +20,11 @@ namespace Takamul.Services
         /// <summary>
         ///  Get user details
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="nUserID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
-        UserInfoViewModel oGetUserDetails(int nUserID, string sPhoneNumber);
+        UserInfoViewModel oGetUserDetails(int nApplicationID, int nUserID, string sPhoneNumber);
         #endregion
 
         #region Method :: Response :: oInsertMobileUser
@@ -49,10 +50,11 @@ namespace Takamul.Services
         /// <summary>
         ///  Resend user otp number
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber);
+        Response oResendOTPNumber(int nApplicationID, string sPhoneNumber, int nOTPNumber);
         #endregion
 
         #region Method :: Response :: oUpdateOTPStatus

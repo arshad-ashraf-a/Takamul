@@ -47,15 +47,17 @@ namespace Takamul.Services
         /// <summary>
         ///  Get user details
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="nUserID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
-        public UserInfoViewModel oGetUserDetails(int nUserID, string sPhoneNumber)
+        public UserInfoViewModel oGetUserDetails(int nApplicationID, int nUserID, string sPhoneNumber)
         {
             UserInfoViewModel oUserInfoViewModel = null;
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nUserID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
             #endregion
 
@@ -166,9 +168,11 @@ namespace Takamul.Services
         /// <summary>
         ///  Resend user otp number
         /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <returns></returns>
-        public Response oResendOTPNumber(string sPhoneNumber, int nOTPNumber)
+        public Response oResendOTPNumber(int nApplicationID, string sPhoneNumber, int nOTPNumber)
         {
             #region ": Sp Result:"
 
@@ -178,7 +182,7 @@ namespace Takamul.Services
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
-
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));

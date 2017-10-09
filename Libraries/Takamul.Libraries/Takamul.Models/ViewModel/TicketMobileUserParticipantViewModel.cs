@@ -16,6 +16,7 @@ namespace Takamul.Models.ViewModel
         public string FULL_NAME { get; set; }
         public string TICKET_NAME { get; set; }
         public string DEVICE_ID { get; set; }
+        public string PHONE_NUMBER { get; set; }
 
         public Languages PreferedLanguage
         {
@@ -34,6 +35,7 @@ namespace Takamul.Models.ViewModel
             this.DEVICE_ID = string.Empty;
             this.FULL_NAME = string.Empty;
             this.TICKET_NAME = string.Empty;
+            this.PHONE_NUMBER = string.Empty;
             
         }
     }

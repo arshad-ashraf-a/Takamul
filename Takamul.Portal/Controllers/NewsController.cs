@@ -176,6 +176,13 @@ namespace LDC.eServices.Portal.Controllers
                                                                                         .Where(o => o.IS_BLOCKED == false)
                                                                                         .Select(o => o.DEVICE_ID.ToString()));
 
+                                string sMobileNumbers = string.Join(",", lstApplicationUsers.Where(o => Convert.ToInt32(o.PREFERED_LANGUAGE_ID) == (int)this.CurrentApplicationLanguage)
+                                                        .Where(o => o.DEVICE_ID != null)
+                                                        .Where(o => o.DEVICE_ID != string.Empty)
+                                                        .Where(o => o.IS_ACTIVE == true)
+                                                        .Where(o => o.IS_BLOCKED == false)
+                                                        .Select(o => o.PHONE_NUMBER.ToString()));
+
                                 PushNotification oPushNotification = new PushNotification();
                                 oPushNotification.NotificationType = enmNotificationType.News;
                                 oPushNotification.sHeadings = sNewsTitle;
@@ -183,12 +190,15 @@ namespace LDC.eServices.Portal.Controllers
                                 oPushNotification.enmLanguage = this.CurrentApplicationLanguage;
                                 oPushNotification.sRecordID = oResponseResult.ResponseCode;
                                 oPushNotification.sDeviceID = sDeviceIDS;
+                                oPushNotification.sOneSignalAppID = this.CurrentApplicationOneSignalID;
+                                oPushNotification.sOneSignalAuthKey = this.CurrentApplicationOneSignalAuthKey;
                                 oPushNotification.SendPushNotification();
                                 NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
                                 oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
                                 oNotificationLogViewModel.NOTIFICATION_TYPE = "news";
                                 oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
                                 oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                                oNotificationLogViewModel.MOBILE_NUMBERS = sMobileNumbers;
                                 oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
                                 oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
                             }

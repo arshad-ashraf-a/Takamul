@@ -133,6 +133,9 @@ namespace Takamul.Services
                             oUser.sUserFullNameEnglish = oReader.FieldExists("FULL_NAME") ? oReader["FULL_NAME"].ToString() : string.Empty;
                             oUser.sUserTypeIDs = oReader.FieldExists("USER_TYPE_ID") ? oReader["USER_TYPE_ID"].ToString() : string.Empty;
                             oUser.CurrentApplicationID = oReader.FieldExists("APPLICATION_ID") ? Convert.ToInt32(oReader["APPLICATION_ID"].ToString()) : -99;
+                            oUser.CurrentApplicationOneSignalID = oReader.FieldExists("ONE_SIGNAL_APP_ID") ? oReader["ONE_SIGNAL_APP_ID"].ToString() : string.Empty;
+                            oUser.CurrentApplicationOneSignalAuthKey = oReader.FieldExists("ONE_SIGNAL_AUTH_KEY") ? oReader["ONE_SIGNAL_AUTH_KEY"].ToString() : string.Empty;
+
                             enumUserType oEnmUserType = (enumUserType)Enum.Parse(typeof(enumUserType), oUser.sUserTypeIDs.ToString(), true);
                             oUser.UserType = oEnmUserType;
                         }

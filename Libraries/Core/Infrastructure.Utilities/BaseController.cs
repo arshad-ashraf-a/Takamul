@@ -276,6 +276,44 @@ namespace Infrastructure.Utilities
         }
         #endregion
 
+        #region Property :: CurrentApplicationOneSignalID
+        public string CurrentApplicationOneSignalID
+        {
+            get
+            {
+                string sCurrentApplicationOneSignalID = string.Empty;
+                if (base.Session["CurrentApplicationOneSignalID"] != null)
+                {
+                    sCurrentApplicationOneSignalID = base.Session["CurrentApplicationOneSignalID"].ToString();
+                }
+                return sCurrentApplicationOneSignalID;
+            }
+            set
+            {
+                base.Session["CurrentApplicationOneSignalID"] = value;
+            }
+        }
+        #endregion
+
+        #region Property :: CurrentApplicationOneSignalAuthKey
+        public string CurrentApplicationOneSignalAuthKey
+        {
+            get
+            {
+                string sCurrentApplicationOneSignalAuthKey = string.Empty;
+                if (base.Session["CurrentApplicationOneSignalAuthKey"] != null)
+                {
+                    sCurrentApplicationOneSignalAuthKey = base.Session["CurrentApplicationOneSignalAuthKey"].ToString();
+                }
+                return sCurrentApplicationOneSignalAuthKey;
+            }
+            set
+            {
+                base.Session["CurrentApplicationOneSignalAuthKey"] = value;
+            }
+        }
+        #endregion
+
         #endregion
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

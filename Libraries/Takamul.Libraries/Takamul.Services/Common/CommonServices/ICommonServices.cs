@@ -65,5 +65,15 @@ namespace Takamul.Services
         Response oInsertNotificationLog(NotificationLogViewModel oNotificationLogViewModel);
         #endregion
 
+        #region Method :: List<MemberInfoViewModel> :: oGetPushNotificationLogs
+        /// <summary>
+        /// Get push notification logs
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns>List of Logs</returns>
+        List<NotificationLogViewModel> oGetPushNotificationLogs(int nApplicationID, int nPageNumber, int nRowspPage);
+        #endregion
+
+
     }
 }

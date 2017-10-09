@@ -65,7 +65,7 @@ namespace Takamul.API.Controllers
             {
                 try
                 {
-                    int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+                    int nOTPNumber = CommonHelper.nGenerateRandomInteger(1000, 9999);
 
                     UserInfoViewModel oUserInfoViewModel = new UserInfoViewModel()
                     {
@@ -153,19 +153,20 @@ namespace Takamul.API.Controllers
         /// Resend user OTP Number by phone number
         /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</para>
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-2:You have exceeded the maximum number of attempt.Please contact app administrator.],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ResendOTPNumber(string sPhoneNumber, int nLanguageID)
+        public HttpResponseMessage ResendOTPNumber(int nApplicationID, string sPhoneNumber, int nLanguageID)
         {
             ApiResponse oApiResponse = new ApiResponse();
             string sResultMessage = string.Empty;
             try
             {
-                int nOTPNumber = CommonHelper.nGenerateRandomInteger(9999, 99999);
+                int nOTPNumber = CommonHelper.nGenerateRandomInteger(1000, 9999);
 
-                Response oResponse = this.oIAuthenticationService.oResendOTPNumber(sPhoneNumber, nOTPNumber);
+                Response oResponse = this.oIAuthenticationService.oResendOTPNumber(nApplicationID, sPhoneNumber, nOTPNumber);
 
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
@@ -238,13 +239,14 @@ namespace Takamul.API.Controllers
         /// <para>-->[ApiResponse]-->[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</para>
         /// <para>-->[TakamulUserResponse]</para>
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <param name="sDeviceID"></param>
         /// <param name="nLanguageID">[1:Arabic],[2:English]</param>
         /// <returns>[1:Success],[0:Failure],[-3:The user does not exist.Please contact app administrator]</returns>
         [HttpGet]
-        public HttpResponseMessage ValidateOTPNumber(string sPhoneNumber, int nOTPNumber, int nLanguageID, string sDeviceID)
+        public HttpResponseMessage ValidateOTPNumber(int nApplicationID, string sPhoneNumber, int nOTPNumber, int nLanguageID, string sDeviceID)
         {
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
@@ -253,7 +255,7 @@ namespace Takamul.API.Controllers
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {
-                UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(-99, sPhoneNumber);
+                UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nApplicationID, -99, sPhoneNumber);
                 TakamulUser oTakamulUser = new TakamulUser()
                 {
                     UserID = oUserInfoViewModel.ID,
@@ -298,13 +300,14 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get user detailed infomations by user id 
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="nUserID"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetUserDetails(int nUserID)
+        public HttpResponseMessage GetUserDetails(int nApplicationID, int nUserID)
         {
             TakamulUser oTakamulUser = null;
-            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nUserID, string.Empty);
+            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nApplicationID, nUserID, string.Empty);
 
             if (oUserInfoViewModel != null)
             {
@@ -335,13 +338,14 @@ namespace Takamul.API.Controllers
         /// <summary>
         /// Get user detailed infomations by phone number
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetUserDetailsByPhoneNumber(string sPhoneNumber)
+        public HttpResponseMessage GetUserDetailsByPhoneNumber(int nApplicationID, string sPhoneNumber)
         {
             TakamulUser oTakamulUser = null;
-            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(-99, sPhoneNumber);
+            UserInfoViewModel oUserInfoViewModel = this.oIAuthenticationService.oGetUserDetails(nApplicationID, -99, sPhoneNumber);
 
             if (oUserInfoViewModel != null)
             {

@@ -22,7 +22,10 @@ namespace Takamul.Models.ViewModel
         public string NOTIFICATION_TYPE { get; set; }
         public string REQUEST_JSON { get; set; }
         public string RESPONSE_MESSAGE { get; set; }
+        public string MOBILE_NUMBERS { get; set; }
         public bool IS_SENT_NOTIFICATION { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public int TotalCount { get; set; }
 
         #region :: Constructor ::
         public NotificationLogViewModel()
@@ -32,7 +35,9 @@ namespace Takamul.Models.ViewModel
             this.NOTIFICATION_TYPE = string.Empty;
             this.REQUEST_JSON = string.Empty;
             this.RESPONSE_MESSAGE = string.Empty;
+            this.MOBILE_NUMBERS = string.Empty;
             this.IS_SENT_NOTIFICATION = false;
+            this.TotalCount = 0;
         } 
         #endregion
     }

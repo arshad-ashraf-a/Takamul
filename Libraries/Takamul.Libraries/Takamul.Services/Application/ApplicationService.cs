@@ -199,7 +199,7 @@ namespace Takamul.Services
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, oApplicationViewModel.ID, ParameterDirection.Input));
-                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationName", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_NAME, 200, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationName", SqlDbType.NVarChar, oApplicationViewModel.APPLICATION_NAME, 200, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MemberUserID", SqlDbType.Int, oApplicationViewModel.MemberUserID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationLogoPath", SqlDbType.VarChar, oApplicationViewModel.APPLICATION_LOGO_PATH, 300, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationExpiryDate", SqlDbType.SmallDateTime, oApplicationViewModel.APPLICATION_EXPIRY_DATE, ParameterDirection.Input));

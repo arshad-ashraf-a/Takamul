@@ -582,4 +582,7 @@
   <data name="SAWAeServiceLogin" xml:space="preserve">
     <value>SAWA eService Login</value>
   </data>
+  <data name="NotificationLogs" xml:space="preserve">
+    <value>Notification Logs</value>
+  </data>
 </root>

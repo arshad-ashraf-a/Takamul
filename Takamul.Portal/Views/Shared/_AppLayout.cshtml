@@ -134,6 +134,7 @@
 
                                     <li class="active"><a href="@Url.Action("ApplicationsList", "Applications")" id="layout1"><i class="icon-list-unordered"></i> @CommonResx.AllApplications</a></li>
                                     <li><a href="@Url.Action("MembersList", "Member")" id="layout1"><i class="icon-users"></i> @CommonResx.AllMembers</a></li>
+                                    <li class="@Url.sMakeMenuActive("PushNotificationLogsList", "Notification", "")"><a href="@Url.Action("PushNotificationLogsList", "Notification")" id="layout1"><i class="icon-comment-discussion"></i>  @CommonResx.NotificationLogs</a></li>
                                 }
                                 else
                                 {
@@ -306,19 +307,24 @@
     @RenderSection("InlineScriptsRelated", false)
     <script type="text/javascript">
         function fnGoToApplicationDetais(nApplicationID) {
+            debugger;   
             var vApplicationID = -99;
+            var gdApplicationist = $('#' + sGridViewSelector);
             if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
                 vApplicationID = nApplicationID;
             }
             else {
-                var gdApplicationist = $('#' + sGridViewSelector);
                 vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
             }
+
+            var rowData = gdApplicationist.getRowData(vApplicationID);
+            vOneSignalAppID = rowData.ONE_SIGNAL_APP_ID;
+            vOneSignalAuthKey = rowData.ONE_SIGNAL_AUTH_KEY;
 
             $.ajax({
                 url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
                 type: 'POST',
-                data: { nApplicationID: vApplicationID },
+                data: { nApplicationID: vApplicationID, sOneSignalAppID: vOneSignalAppID, sOneSignalAuthKey: vOneSignalAuthKey },
                 async: true,
                 success: function (result, response) {
                     if (result.nResult == 1) {

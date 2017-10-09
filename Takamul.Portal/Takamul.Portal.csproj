@@ -274,15 +274,8 @@
     <Content Include="assets\bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
-    <Content Include="DBScript\Takamul_script_10-01-2017.sql" />
-    <Content Include="DBScript\Takamul_script_04-10-2017.sql" />
-    <Content Include="DBScript\Takamul_script_25-09-2017.sql" />
-    <Content Include="DBScript\Takamul_script_18-09-2017.sql" />
-    <Content Include="DBScript\Takamul_script_19-06-2017.sql" />
-    <Content Include="DBScript\Takamul_script_21-05-2017.sql" />
+    <Content Include="DBScript\Takamul_script_09-10-2017.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_17-07-2017.sql" />
-    <Content Include="DBScript\Takamul_script_22-05-2017.sql" />
-    <Content Include="DBScript\Takamul_script_16-09-2017.sql" />
     <Content Include="DBScript\Takamul_script_AddNewProc_16-05-17.sql" />
     <Content Include="DBScript\NotificationLogScript.sql" />
     <Content Include="DBScript\trgAfterInsertTicket.sql" />
@@ -324,6 +317,7 @@
     <Compile Include="Controllers\ApplicationSettingsController.cs" />
     <Compile Include="Controllers\ApplicationInfoController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -402,6 +396,7 @@
     <Content Include="Views\ApplicationInfo\ApplicationInfoList.cshtml" />
     <Content Include="Views\ApplicationSettings\_EditApplicationSettings.cshtml" />
     <Content Include="Views\ApplicationSettings\ApplicationSettingsList.cshtml" />
+    <Content Include="Views\Notification\PushNotificationLogsList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

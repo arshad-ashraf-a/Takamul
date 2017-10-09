@@ -23,7 +23,7 @@ namespace Takamul.Models.ApiViewModel
         public int ApplicationID { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        [Required]
+        //[Required]
         public string Email { get; set; }
         [Required]
         public string FullName { get; set; }

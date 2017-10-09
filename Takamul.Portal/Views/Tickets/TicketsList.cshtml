@@ -391,7 +391,7 @@
         function fnFillTicketStatus() {
             //TODO:: option add 'ALL'
 
-            FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
+            FillDropDownRoot('@Url.Action("JGetAllApplications", "Applications")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
                 function () {
                     //Success Function
                     $("#ddlTicketStatus").select2({ width: '100%' });

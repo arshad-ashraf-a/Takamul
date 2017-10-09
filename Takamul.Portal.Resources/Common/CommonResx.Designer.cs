@@ -979,6 +979,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification Logs.
+        /// </summary>
+        public static string NotificationLogs {
+            get {
+                return ResourceManager.GetString("NotificationLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error has been occured through payment proccess please try again later.
         /// </summary>
         public static string PaymentError {

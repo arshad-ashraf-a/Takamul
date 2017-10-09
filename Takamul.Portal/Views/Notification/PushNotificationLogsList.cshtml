@@ -1,0 +1,192 @@
+﻿@using Takamul.Portal.Resources.Portal.Member;
+@using Takamul.Portal.Resources.Controls.Buttons;
+@using Takamul.Portal.Resources.Common;
+
+@{
+    ViewBag.Title = "NotificationLogs";
+    Layout = "~/Views/Shared/_GridCommon.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"></div>
+            <form id="frmNotificationLogs" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title"> &nbsp;</h6>
+                        <div class="heading-elements">
+                            <div class="col-md-12">
+                                <div class="pull-right content-group-sm">
+                                    <div class="col-md-12">
+                                        <div class="input-group content-group">
+                                            <div class="has-feedback has-feedback-left">
+                                                <select id="ddlApplications" class="form-control col-md-12"></select>
+                                            </div>
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" onclick="fnBindAllNotificationLogs(); return false;" class="btn btn-primary btn-xs">@Buttons.Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="fakeWidth col-md-12"></div>
+                            <div id="dvNotificationLogs">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section InlineScriptsRelated
+{
+    <script type="text/javascript">
+        var sGridViewSelector = "grid-table";
+        var sGridViewPagerSelector = "grid-pager";
+
+        function fnFillApplications() {
+            //TODO:: option add 'ALL'
+
+            FillDropDownRoot('@Url.Action("JGetAllApplications", "Applications")', 'POST', false, 'ddlApplications', 'ID', 'APPLICATION_NAME', '- All -', ' ', [],
+                function () {
+                    //Success Function
+                    $("#ddlApplications").select2({ width: '100%' });
+                },
+                function () {
+                    //Error
+                })
+        }
+
+        function fnBindAllNotificationLogs() {
+            ShowLoader();
+            $("#dvNotificationLogs").hide();
+            $("#dvNotificationLogs").empty();
+            var table = document.createElement('table');
+            table.id = sGridViewSelector;
+            var pager = document.createElement('div');
+            pager.id = sGridViewPagerSelector;
+
+            $('#dvNotificationLogs').append(table);
+            $('#dvNotificationLogs').append(pager);
+
+            var ConstantsNames =
+                {
+                    ID: 'ID',
+                    ApplicationID: 'APPLICATION_ID',
+                    NotificationType: 'NOTIFICATION_TYPE',
+                    RequestJSON: 'REQUEST_JSON',
+                    ResponseMessage: 'RESPONSE_MESSAGE',
+                    IsSentNotification: 'IS_SENT_NOTIFICATION',
+                    CreatedDate: 'CREATED_DATE',
+                    PhoneNumbers: 'MOBILE_NUMBERS'
+                };
+            var sCaption = 'Notification Logs';
+            var oArrColumnNames = [
+                '',//Hidden Columns Represent ID Int Value
+                'Notification Type',
+                'Request JSON',
+                'Response Message',
+                'IS Sent',
+                'Mobile Number(s)',
+                'Created Date'
+            ];
+
+            var vApplicationID = $("#ddlApplications").val();
+
+            var params = {
+                'nApplicationID': Number(vApplicationID)
+
+            };
+            var sBindDataUrl = '@Url.Action("JGetPushNotificationLogs", "Notification")' + '?' + jQuery.param(params);
+
+            var sAddUrl = "#";
+            var sEditUrl = "#";
+            var sDeleteUrl = "#";
+            var oArrGridContextMenu = [
+                                        { MenuTitle: "@Buttons.Options" }
+            ];
+            var oArrColsModel = [
+                    {
+                        name: ConstantsNames.ID, editable: false,
+                        key: true, hidden: true
+                    },
+                    {
+                        name: ConstantsNames.NotificationType,
+                        width: 70, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.RequestJSON,
+                        width: 200, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                    {
+                        name: ConstantsNames.ResponseMessage,
+                        width: 100, editable: false,
+                        align: EnumColumnsAlignment.Center
+                    },
+                     {
+                         name: ConstantsNames.IsSentNotification,
+                         width: 50, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             var bIsNotify = rowObject.IS_SENT_NOTIFICATION;
+                             var htmlString = '';
+                             if (bIsNotify) {
+                                 htmlString += "<i class='icon-checkmark-circle text-success position-left'></i>";
+                             }
+                             else {
+                                 htmlString += "<i class='icon-cancel-circle2 text-warning position-left'></i>";
+                             }
+                             return htmlString;
+                         }
+                     },
+                      {
+                          name: ConstantsNames.PhoneNumbers,
+                          width: 100, editable: false,
+                          align: EnumColumnsAlignment.Center
+                      },
+                           {
+                               name: ConstantsNames.CreatedDate,
+                               width: 70, editable: false,
+                               align: EnumColumnsAlignment.Center,
+                               formatter: 'date', formatoptions: { srcformat: "ISO8601Long", newformat: 'd/m/Y h:i A' }
+                           }
+            ];
+
+            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, null, false, false, false, table.id, pager.id, false, false, true);
+            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
+
+                $(window).bind('resize', function () {
+                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
+                }).trigger('resize');
+
+
+                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
+
+                $("#dvNotificationLogs").show();
+                HideLoader();
+            });
+        }
+
+
+        //Entry Point
+        $(document).ready(function () {
+            fnFillApplications();
+            fnBindAllNotificationLogs();
+        });
+    </script>
+}

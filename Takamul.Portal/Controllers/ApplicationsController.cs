@@ -101,6 +101,18 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region JsonResult :: Get All Applications
+        /// <summary>
+        /// Get all applications
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult JGetAllApplications()
+        {
+            var lstApplications = this.oIApplicationService.IlGetAllApplications(-99, string.Empty, 1, 10000);
+            return Json(lstApplications, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region JsonResult :: JSetCurrentApplicationID
         /// <summary>
         /// Set Current Application ID In Current User Object
@@ -108,13 +120,16 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JSetCurrentApplicationID(int nApplicationID)
+        public JsonResult JSetCurrentApplicationID(int nApplicationID,string sOneSignalAppID,string sOneSignalAuthKey)
         {
             this.OperationResult = enumOperationResult.Faild;
             this.OperationResultMessages = CommonResx.GeneralError;
             if (CurrentUser != null)
             {
                 this.CurrentApplicationID = nApplicationID;
+                this.CurrentApplicationOneSignalID = sOneSignalAppID;
+                this.CurrentApplicationOneSignalAuthKey = sOneSignalAuthKey;
+
                 this.OperationResult = enumOperationResult.Success;
                 this.OperationResultMessages = CommonResx.MessageAddSuccess;
             }

@@ -83,7 +83,9 @@
                     IsActive: 'IS_ACTIVE',
                     CreatedDate: 'CREATED_DATE',
                     MemberName: 'MemberName',
-                    MemberUserID: 'MemberUserID'
+                    MemberUserID: 'MemberUserID',
+                    OneSignalAppID: 'ONE_SIGNAL_APP_ID',
+                    OneSignalAuthKey: 'ONE_SIGNAL_AUTH_KEY'
                 };
             var sCaption = '@ApplicationResx.AllApplications';
             var oArrColumnNames = [
@@ -94,6 +96,8 @@
                 '',//Hidden Columns Represent MemberUserID String Value
                 '',//Hidden Columns Represent APPLICATION_NAME String Value
                 '',//Hidden Columns Represent IS_ACTIVE String Value
+                '',//Hidden Columns Represent ONE_SIGNAL_APP_ID String Value
+                '',//Hidden Columns Represent ONE_SIGNAL_AUTH_KEY String Value
                 '@ApplicationResx.Member',
                 '@ApplicationResx.ApplicationExpiryDate',
                 '@ApplicationResx.IsActive',
@@ -129,7 +133,7 @@
                         var htmlString = '--';
                         if (sAppLogoFilePath != "" && sAppLogoFilePath != null) {
                             link = '@Url.Content(string.Format("{0}_#AppLogoImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
-                            
+
                             link = link.replace("_#AppLogoImage#", sAppLogoFilePath);
                             htmlString = '<a onclick="fnGoToApplicationDetais(' + rowObject.ID + ')" href="#"><img height="50" width="50" src="' + link + '" alt="Image could not display" /></a>';
 
@@ -164,9 +168,15 @@
                          key: false, hidden: true
                      },
                      {
-                         name: ConstantsNames.IsActive,
-                         editable: false,
-                         align: EnumColumnsAlignment.Center,
+                         name: ConstantsNames.IsActive, editable: false,
+                         hidden: true, key: false
+                     },
+                     {
+                         name: ConstantsNames.OneSignalAppID, editable: false,
+                         hidden: true, key: false
+                     },
+                     {
+                         name: ConstantsNames.OneSignalAuthKey, editable: false,
                          hidden: true, key: false
                      },
                      {
@@ -225,20 +235,28 @@
         }
 
         function fnGoToApplicationDetais(nApplicationID) {
-            
+            console.log(nApplicationID);
+            debugger;
             var vApplicationID = -99;
+            var vOneSignalAppID = "";
+            var vOneSignalAuthKey = "";
+            var gdApplicationist = $('#' + sGridViewSelector);
+
             if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
                 vApplicationID = nApplicationID;
             }
             else {
-                var gdApplicationist = $('#' + sGridViewSelector);
                 vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
             }
+
+            var rowData = gdApplicationist.getRowData(vApplicationID);
+            vOneSignalAppID = rowData.ONE_SIGNAL_APP_ID;
+            vOneSignalAuthKey = rowData.ONE_SIGNAL_AUTH_KEY;
 
             $.ajax({
                 url: '@Url.Action("JSetCurrentApplicationID", "Applications")',
                 type: 'POST',
-                data: { nApplicationID: vApplicationID },
+                data: { nApplicationID: vApplicationID, sOneSignalAppID: vOneSignalAppID, sOneSignalAuthKey: vOneSignalAuthKey },
                 async: true,
                 success: function (result, response) {
                     if (result.nResult == 1) {
@@ -352,7 +370,7 @@
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
-            
+
             $.ajax({
                 url: '@Url.Action("JSaveApplication", "Applications")',
                 type: "POST",
@@ -406,7 +424,7 @@
                 return this.optional(element) || value != param;
             }, "");
 
-            
+
             var validator = $('#' + sFormID).validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
@@ -487,7 +505,7 @@
             var bIsActive = rowData.IS_ACTIVE;
             var sApplicationLogoPath = rowData.APPLICATION_LOGO_PATH;
             var sMemberUserID = rowData.MemberUserID;
-            
+
             var dataToSend = JSON.stringify({
                 ID: vAppplicationId,
                 APPLICATION_NAME: sApplicationName,
@@ -496,7 +514,7 @@
                 APPLICATION_LOGO_PATH: sApplicationLogoPath,
                 MemberUserID: sMemberUserID,
             });
-            
+
             $("#dvPopUpWindow").dialog({
                 title: '@ApplicationResx.EditApplication',
                 autoOpen: true,
@@ -579,13 +597,13 @@
             }
 
             var formData = $("#frmEditApplication").serializeArray();
-            
+
             formData.push({ name: "MemberUserID", value: Number($("#ddlMemberUser").val()) });
             data.append("ApplicationLogoFile", files[0]);
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
-            
+
             $.ajax({
                 url: '@Url.Action("JEditApplication", "Applications")',
                 type: "POST",

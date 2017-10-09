@@ -159,6 +159,7 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_NotificationType", SqlDbType.VarChar, oNotificationLogViewModel.NOTIFICATION_TYPE, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RequestJSON", SqlDbType.NVarChar, oNotificationLogViewModel.REQUEST_JSON, 4000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ResponseMessage", SqlDbType.VarChar, oNotificationLogViewModel.RESPONSE_MESSAGE, 5000, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_MobileNumbers", SqlDbType.VarChar, oNotificationLogViewModel.MOBILE_NUMBERS, 5000, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_IsSentNotification", SqlDbType.Bit, oNotificationLogViewModel.IS_SENT_NOTIFICATION, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
@@ -176,6 +177,30 @@ namespace Takamul.Services
             #endregion
         }
         #endregion
+
+        #region Method :: List<MemberInfoViewModel> :: oGetPushNotificationLogs
+        /// <summary>
+        /// Get push notification logs
+        /// </summary>
+        /// <param name="nApplicationID"></param>
+        /// <returns>List of Logs</returns>
+        public List<NotificationLogViewModel> oGetPushNotificationLogs(int nApplicationID,int nPageNumber,int nRowspPage)
+        {
+            #region ":DBParamters:"
+            List<DbParameter> arrParameters = new List<DbParameter>();
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
+
+            #endregion
+
+            #region ":Get Sp Result:"
+            List<NotificationLogViewModel> lstNotificationLogViewModel = this.ExecuteStoredProcedureList<NotificationLogViewModel>("GetPushNotificationLogs", arrParameters.ToArray());
+            return lstNotificationLogViewModel;
+            #endregion
+        }
+        #endregion
+
 
         #endregion
     }

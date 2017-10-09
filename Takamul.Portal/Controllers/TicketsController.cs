@@ -433,12 +433,15 @@ namespace LDC.eServices.Portal.Controllers
                                 oPushNotification.sContent = string.Format("{0} {1}", CurrentUser.sUserFullNameEnglish, oTicketMobileUserParticipantViewModel.PreferedLanguage == Data.Core.Languages.English ? " has been created a ticket" : " تم إنشاء تذكرة");
                                 oPushNotification.enmLanguage = oTicketMobileUserParticipantViewModel.PreferedLanguage;
                                 oPushNotification.sDeviceID = oTicketMobileUserParticipantViewModel.DEVICE_ID;
+                                oPushNotification.sOneSignalAppID = this.CurrentApplicationOneSignalID;
+                                oPushNotification.sOneSignalAuthKey = this.CurrentApplicationOneSignalAuthKey;
                                 oPushNotification.SendPushNotification();
                                 NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
                                 oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
                                 oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
                                 oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
                                 oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                                oNotificationLogViewModel.MOBILE_NUMBERS = oTicketMobileUserParticipantViewModel.PHONE_NUMBER;
                                 oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
                                 oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
                             }
@@ -559,6 +562,7 @@ namespace LDC.eServices.Portal.Controllers
         public void SendTicketChatPushNotification(int nTicketID, string sContent, bool bIsFileTypeChat, TicketChatViewModel oTicketChatViewModel)
         {
             List<TicketMobileUserParticipantViewModel> lstTicketMobileUserParticipantViewModel = this.oITicketServices.IlGetTicketMobileUserParticipants(nTicketID, -99);
+
             if (lstTicketMobileUserParticipantViewModel.Count > 0)
             {
                 foreach (var oTicketMobileUserParticipantViewModel in lstTicketMobileUserParticipantViewModel)
@@ -581,12 +585,15 @@ namespace LDC.eServices.Portal.Controllers
                         oPushNotification.enmLanguage = oTicketMobileUserParticipantViewModel.PreferedLanguage;
                         oPushNotification.sDeviceID = oTicketMobileUserParticipantViewModel.DEVICE_ID;
                         oPushNotification.oTicketChatViewModel = oTicketChatViewModel;
+                        oPushNotification.sOneSignalAppID = this.CurrentApplicationOneSignalID;
+                        oPushNotification.sOneSignalAuthKey = this.CurrentApplicationOneSignalAuthKey;
                         oPushNotification.SendPushNotification();
                         NotificationLogViewModel oNotificationLogViewModel = new NotificationLogViewModel();
                         oNotificationLogViewModel.APPLICATION_ID = this.CurrentApplicationID;
                         oNotificationLogViewModel.NOTIFICATION_TYPE = "tickets";
                         oNotificationLogViewModel.REQUEST_JSON = oPushNotification.sRequestJSON;
                         oNotificationLogViewModel.RESPONSE_MESSAGE = oPushNotification.sResponseResult;
+                        oNotificationLogViewModel.MOBILE_NUMBERS = oTicketMobileUserParticipantViewModel.PHONE_NUMBER;
                         oNotificationLogViewModel.IS_SENT_NOTIFICATION = oPushNotification.bIsSentNotification;
                         oICommonServices.oInsertNotificationLog(oNotificationLogViewModel);
                     }

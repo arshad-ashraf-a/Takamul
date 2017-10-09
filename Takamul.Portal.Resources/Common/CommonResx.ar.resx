@@ -573,4 +573,7 @@
   <data name="TakamulServices" xml:space="preserve">
     <value>سوا الخدمات الإلكترونية</value>
   </data>
+  <data name="NotificationLogs" xml:space="preserve">
+    <value>سجلات الإشعارات</value>
+  </data>
 </root>
