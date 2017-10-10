@@ -251,7 +251,7 @@ namespace Takamul.API.Controllers
             TakamulUserResponse oTakamulUserResponse = new TakamulUserResponse();
             ApiResponse oApiResponse = new ApiResponse();
             string sResultMessage = string.Empty;
-            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(sPhoneNumber, nOTPNumber, sDeviceID);
+            Response oResponse = this.oIAuthenticationService.oValidateOTPNumber(nApplicationID, sPhoneNumber, nOTPNumber, sDeviceID);
 
             if (oResponse.OperationResult == enumOperationResult.Success)
             {

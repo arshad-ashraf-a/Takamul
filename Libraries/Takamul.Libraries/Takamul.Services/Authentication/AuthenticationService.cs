@@ -130,11 +130,12 @@ namespace Takamul.Services
         /// <summary>
         ///  Validate user otp number
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
         /// <param name="sDeviceID"></param>
         /// <returns></returns>
-        public Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber, string sDeviceID)
+        public Response oValidateOTPNumber(int nApplicationID,string sPhoneNumber, int nOTPNumber, string sDeviceID)
         {
             #region ": Sp Result:"
 
@@ -144,13 +145,14 @@ namespace Takamul.Services
             {
                 List<DbParameter> arrParameters = new List<DbParameter>();
 
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DeviceID", SqlDbType.VarChar, sDeviceID, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("ValidateOPTNumber", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[4].Value.ToString());
             }
             catch (Exception Ex)
             {
@@ -188,7 +190,7 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("ResendOPTNumber", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[2].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
             }
             catch (Exception Ex)
             {

@@ -40,10 +40,12 @@ namespace Takamul.Services
         /// <summary>
         ///  Validate user otp number
         /// </summary>
+        /// <param name="nApplicationID"></param>
         /// <param name="sPhoneNumber"></param>
         /// <param name="nOTPNumber"></param>
+        /// <param name="sDeviceID"></param>
         /// <returns></returns>
-        Response oValidateOTPNumber(string sPhoneNumber, int nOTPNumber, string sDeviceID);
+        Response oValidateOTPNumber(int nApplicationID,string sPhoneNumber, int nOTPNumber, string sDeviceID);
         #endregion
 
         #region Method :: Response :: oResendOTPNumber
