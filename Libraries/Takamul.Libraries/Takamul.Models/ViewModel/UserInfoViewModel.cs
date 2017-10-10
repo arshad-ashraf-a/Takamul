@@ -60,6 +60,7 @@ namespace Takamul.Models.ViewModel
         public string WILLAYAT_NAME { get; set; }
         public string VILLAGE_NAME { get; set; }
         public Nullable<DateTime> SMS_SENT_TRANSACTION_DATE { get; set; }
+        public int TotalCount { get; set; }
 
 
         #region :: Constructor ::
@@ -105,6 +106,7 @@ namespace Takamul.Models.ViewModel
             this.AREA_NAME = string.Empty;
             this.WILLAYAT_NAME = string.Empty;
             this.VILLAGE_NAME = string.Empty;
+            this.TotalCount = 0;
         }
         #endregion
     }
