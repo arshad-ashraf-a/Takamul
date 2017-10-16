@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TakamulModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLICATION_CATEGORIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CATEGORY_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="APPLICATION_ID" Type="int" />
+          <Property Name="LANGUAGE_ID" Type="int" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="smalldatetime" />
+          <Property Name="MODIFIED_BY" Type="int" />
+          <Property Name="MODIFIED_DATE" Type="smalldatetime" />
+        </EntityType>
         <EntityType Name="APPLICATION_INFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -50,6 +63,8 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="DEFAULT_THEME_COLOR" Type="varchar" MaxLength="50" />
           <Property Name="APPLICATION_EXPIRY_DATE" Type="smalldatetime" />
           <Property Name="APPLICATION_TOKEN" Type="varchar" MaxLength="50" />
+          <Property Name="ONE_SIGNAL_APP_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ONE_SIGNAL_AUTH_KEY" Type="varchar" MaxLength="500" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
@@ -122,6 +137,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TakamulModelStoreContainer">
+          <EntitySet Name="APPLICATION_CATEGORIES" EntityType="Self.APPLICATION_CATEGORIES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APPLICATION_INFO" EntityType="Self.APPLICATION_INFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="Self.APPLICATION_MASTER_SETTINGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APPLICATIONS" EntityType="Self.APPLICATIONS" Schema="dbo" store:Type="Tables" />
@@ -161,6 +177,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" />
           <EntitySet Name="APPLICATION_SETTINGS" EntityType="TakamulModel.APPLICATION_SETTINGS" />
           <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
+          <EntitySet Name="APPLICATION_CATEGORIES" EntityType="TakamulModel.APPLICATION_CATEGORIES" />
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
           <Key>
@@ -178,6 +195,8 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="MODIFIED_BY" Type="Int32" />
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MEMBER_INFO" Relationship="TakamulModel.FK_MEMBER_INFO_APPLICATIONS" FromRole="APPLICATIONS" ToRole="MEMBER_INFO" />
+          <Property Name="ONE_SIGNAL_APP_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ONE_SIGNAL_AUTH_KEY" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           </EntityType>
         <EntityType Name="MEMBER_INFO">
           <Key>
@@ -278,6 +297,19 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="EVENT_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="LANGUAGE_ID" Type="Int32" />
         </EntityType>
+        <EntityType Name="APPLICATION_CATEGORIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATEGORY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="LANGUAGE_ID" Type="Int32" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -287,6 +319,8 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <EntitySetMapping Name="APPLICATIONS">
             <EntityTypeMapping TypeName="TakamulModel.APPLICATIONS">
               <MappingFragment StoreEntitySet="APPLICATIONS">
+                <ScalarProperty Name="ONE_SIGNAL_AUTH_KEY" ColumnName="ONE_SIGNAL_AUTH_KEY" />
+                <ScalarProperty Name="ONE_SIGNAL_APP_ID" ColumnName="ONE_SIGNAL_APP_ID" />
                 <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
                 <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
@@ -389,6 +423,20 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
                 <ScalarProperty Name="EVENT_DESCRIPTION" ColumnName="EVENT_DESCRIPTION" />
                 <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
                 <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_CATEGORIES">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_CATEGORIES">
+              <MappingFragment StoreEntitySet="APPLICATION_CATEGORIES">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LANGUAGE_ID" ColumnName="LANGUAGE_ID" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

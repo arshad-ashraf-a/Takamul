@@ -4,7 +4,7 @@
 function LoadGoogleMAP(sSelectedLat,sSelectedLong) {
     var markers = [];
     var map = new google.maps.Map(document.getElementById('divloadMap'), {
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: 'hybrid'
     });
 
     var defaultBounds = new google.maps.LatLngBounds(

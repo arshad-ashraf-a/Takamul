@@ -26,6 +26,7 @@
     font-size: 15px;
     font-weight: 300;
     text-overflow: ellipsis;
+    top:-9px !important;
 }
 
     #txtsearch:focus {

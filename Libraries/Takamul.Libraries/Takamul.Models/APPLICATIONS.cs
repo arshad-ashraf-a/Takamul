@@ -31,6 +31,8 @@ namespace Takamul.Models
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }
         public Nullable<System.DateTime> MODIFIED_DATE { get; set; }
+        public string ONE_SIGNAL_APP_ID { get; set; }
+        public string ONE_SIGNAL_AUTH_KEY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MEMBER_INFO> MEMBER_INFO { get; set; }

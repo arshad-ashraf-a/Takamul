@@ -32,5 +32,6 @@ namespace Takamul.Models
         public virtual DbSet<APPLICATION_MASTER_SETTINGS> APPLICATION_MASTER_SETTINGS { get; set; }
         public virtual DbSet<APPLICATION_SETTINGS> APPLICATION_SETTINGS { get; set; }
         public virtual DbSet<EVENTS> EVENTS { get; set; }
+        public virtual DbSet<APPLICATION_CATEGORIES> APPLICATION_CATEGORIES { get; set; }
     }
 }

@@ -125,7 +125,7 @@
             Open: 1,
             Closed: 2,
             Rejected: 3,
-            Deleted:4
+            Deleted: 4
         }
 
         //Ticket status
@@ -163,7 +163,10 @@
                     CreatedDate: 'CREATED_DATE',
                     TicketOwnerUserFullName: 'TicketOwnerUserFullName',
                     TicketCreatedPlatform: 'TICKET_CREATED_PLATFORM',
-                    TicketParticipantNos: 'TicketParticipantNos'
+                    TicketParticipantNos: 'TicketParticipantNos',
+                    MobileParticipantName: 'MobileParticipantName',
+                    LastTicketChatMessage: 'LastTicketChatMessage',
+                    LastTicketChatCreatedDate: 'LastTicketChatCreatedDate',
 
                 };
             var sCaption = '@TicketsResx.AllTickets';
@@ -180,6 +183,7 @@
                 '@TicketsResx.TicketCode',
                 '@TicketsResx.TicketName',
                 '@TicketsResx.TicketOwnerUserFullName',
+                '@TicketsResx.LastConversation',
                 '@TicketsResx.TicketStatus',
                 '@TicketsResx.TicketParticipantNos',
                 '@TicketsResx.IsActive',
@@ -245,7 +249,7 @@
                           key: false, hidden: true
                       },
                       {
-                          width: 100, editable: false,
+                          width: 60, editable: false,
                           align: EnumColumnsAlignment.Center,
                           formatter: function (cellvalue, options, rowObject) {
                               debugger;
@@ -270,16 +274,32 @@
                      },
                     {
                         name: ConstantsNames.TicketName,
-                        width: 100, editable: false,
-                        align: EnumColumnsAlignment.Center
+                        width: 150, editable: false,
+                        align: EnumColumnsAlignment.Center,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return "<div class='text-semibold'><a onclick='fnGoToTicketDetails(" + rowObject.ID + ")' href='#'>" + rowObject.TICKET_NAME + "</a></div>";
+                        }
                     },
                     {
                         name: ConstantsNames.TicketOwnerUserFullName,
                         width: 80, editable: false,
                         align: EnumColumnsAlignment.Center
+                        
                     },
+                     {
+                         name: ConstantsNames.LastTicketChatMessage,
+                         width: 100, editable: false,
+                         align: EnumColumnsAlignment.Center,
+                         formatter: function (cellvalue, options, rowObject) {
+                             if (rowObject.MobileParticipantName != null && rowObject.LastTicketChatMessage != null && rowObject.LastTicketChatCreatedDate != null) {
+                                 var sChatMessage = rowObject.LastTicketChatMessage.length < 50 ? rowObject.LastTicketChatMessage : rowObject.LastTicketChatMessage.substring(0, Math.min(rowObject.LastTicketChatMessage.length, 50)) + "...";
+                                 return "<div class='text-semibold'><a href='#'>" + rowObject.MobileParticipantName + "</a> : <span class='text-semibold'>" + sChatMessage + "</span> </br><span class='display-block text-muted'>" + moment(rowObject.LastTicketChatCreatedDate).format("DD/MM/YYYY hh:mm a") + "</span></div>";
+                             }
+                             return "";
+                         }
+                     },
                     {
-                        width: 70, editable: false,
+                        width: 50, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {
                             var htmlString = '';
@@ -296,8 +316,7 @@
                             else if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Rejected) {
                                 htmlString += "<span class='label bg-danger'>Rejected</span>";
                             }
-                            else
-                            {
+                            else {
                                 htmlString += "<span class='label bg-grey-400'>Deleted</span>";
                             }
                             if (Number(rowObject.TICKET_STATUS_ID) == enmTicketStatus.Rejected) {
@@ -309,7 +328,7 @@
                         }
                     },
                      {
-                         width: 70, editable: false,
+                         width: 50, editable: false,
                          align: EnumColumnsAlignment.Center,
                          formatter: function (cellvalue, options, rowObject) {
                              var nTicketParticipantNos = Number(rowObject.TicketParticipantNos);

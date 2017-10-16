@@ -119,6 +119,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Portal\ApplicationCategory\ApplicationCategoryResx.ar.Designer.cs">
+      <DependentUpon>ApplicationCategoryResx.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Portal\ApplicationCategory\ApplicationCategoryResx.Designer.cs">
+      <DependentUpon>ApplicationCategoryResx.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Portal\MemberInfo\MemberInfoResx.Designer.cs">
       <DependentUpon>MemberInfoResx.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -237,6 +247,14 @@
     <EmbeddedResource Include="Portal\ApplicationInfo\ApplicationInfoResx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationInfoResx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationCategory\ApplicationCategoryResx.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationCategoryResx.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portal\ApplicationCategory\ApplicationCategoryResx.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationCategoryResx.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Portal\MemberInfo\MemberInfoResx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

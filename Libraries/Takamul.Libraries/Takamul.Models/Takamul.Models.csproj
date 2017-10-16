@@ -75,6 +75,9 @@
     <Compile Include="APPLICATIONS.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="APPLICATION_CATEGORIES.cs">
+      <DependentUpon>TakamulModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="APPLICATION_INFO.cs">
       <DependentUpon>TakamulModel.tt</DependentUpon>
     </Compile>
@@ -114,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TakamulModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ApplicationCategoryViewModel.cs" />
     <Compile Include="ViewModel\TicketMobileUserParticipantViewModel.cs" />
     <Compile Include="ViewModel\AboutAppViewModel.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />

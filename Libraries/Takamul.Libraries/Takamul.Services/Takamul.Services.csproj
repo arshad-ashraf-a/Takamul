@@ -81,6 +81,8 @@
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="ApplicationInfo\IApplicationInfoService.cs" />
     <Compile Include="ApplicationInfo\ApplicationInfoService.cs" />
+    <Compile Include="ApplicationCategories\IApplicationCategoryServices.cs" />
+    <Compile Include="ApplicationCategories\ApplicationCategoryServices.cs" />
     <Compile Include="MemberInfo\IMemberInfoService.cs" />
     <Compile Include="MemberInfo\MemberInfoService.cs" />
     <Compile Include="News\INewsServices.cs" />

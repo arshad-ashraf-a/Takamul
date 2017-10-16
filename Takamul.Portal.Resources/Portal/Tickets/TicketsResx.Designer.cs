@@ -214,6 +214,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Conversation.
+        /// </summary>
+        public static string LastConversation {
+            get {
+                return ResourceManager.GetString("LastConversation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Participant User.
         /// </summary>
         public static string ParticipantUser {
