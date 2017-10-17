@@ -7,46 +7,22 @@
     <div class="row">
         <div class="col-md-12">
             <div class="clearfix"></div>
-            <form id="frmDeclaration" class="form-horizontal" action="#" novalidate="novalidate" enctype="multipart/form-data">
-                <div class="panel panel-white">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">@ApplicationCategoryResx.ApplicationCategory</h6>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">@ApplicationCategoryResx.CategoryName&nbsp;<span class="text-danger">*</span></label>
-                                    <div class="col-lg-8">
-                                       <input type="text" id="txtApplicationCategory" class="form-control" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveApplicationCategory()">@Buttons.Save</button>
-                            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
-                        </div>
-                        <div class="row">
-                            <div class="fakeWidth col-md-12"></div>
-                            <div id="dvMemberInfo">
-                            </div>
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h6 class="panel-title">@ApplicationCategoryResx.ApplicationCategory</h6>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="fakeWidth col-md-12"></div>
+                        <div id="dvApplicationCategory">
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
 
         </div>
     </div>
 </div>
-
-@section SpecificPluginScripts
-{
-
-}
-
 
 @section InlineScriptsRelated
 {
@@ -54,42 +30,40 @@
         var sGridViewSelector = "grid-table";
         var sGridViewPagerSelector = "grid-pager";
 
-        function fnBindAllMemberInfos() {
-            $("#dvMemberInfo").hide();
-            $("#dvMemberInfo").empty();
+        function fnBindAllApplicationCategorys() {
+            $("#dvApplicationCategory").hide();
+            $("#dvApplicationCategory").empty();
 
             var table = document.createElement('table');
             table.id = sGridViewSelector;
             var pager = document.createElement('div');
             pager.id = sGridViewPagerSelector;
 
-            $('#dvMemberInfo').append(table);
-            $('#dvMemberInfo').append(pager);
+            $('#dvApplicationCategory').append(table);
+            $('#dvApplicationCategory').append(pager);
 
 
             var ConstantsNames =
                 {
                     ID: 'ID',
-                    MemberInfoTitle: 'MEMBER_INFO_TITLE',
-                    MemberInfoDescription: 'MEMBER_INFO_DESCRIPTION'
+                    ApplicationCategoryName: 'CATEGORY_NAME'
                 };
-            var sCaption = '@MemberInfoResx.MemberInfo';
+            var sCaption = '@ApplicationCategoryResx.ApplicationCategory';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
-                '@MemberInfoResx.MemberInfoTitle',
-                '@MemberInfoResx.MemberInfoDescription',
+                '@ApplicationCategoryResx.CategoryName',
                 '' // Options
             ];
 
-            var sBindDataUrl = '@Url.Action("JGetAllMemberInfo", "MemberInfo")';
+            var sBindDataUrl = '@Url.Action("JGetAllApplicationCategory", "ApplicationCategory")';
 
             var sAddUrl = "#";
             var sEditUrl = "#";
             var sDeleteUrl = "#";
             var oArrGridContextMenu = [
                                         { MenuTitle: "@Buttons.Options" },
-                                        { Caption: "@Buttons.Edit", EventName: "fnLoadPartialEditMemberInfo();", RowId: true },
-                                        { Caption: "@Buttons.Delete", EventName: "fnDeleteMemberInfo();", RowId: true },
+                                        { Caption: "@Buttons.Edit", EventName: "fnLoadPartialEditApplicationCategory();", RowId: true },
+                                        { Caption: "@Buttons.Delete", EventName: "fnDeleteApplicationCategory();", RowId: true },
             ];
 
             var oArrColsModel = [
@@ -98,15 +72,10 @@
                         key: true, hidden: true
                     },
                     {
-                        name: ConstantsNames.MemberInfoTitle,
+                        name: ConstantsNames.ApplicationCategoryName,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center
-                    },
-                     {
-                         name: ConstantsNames.MemberInfoDescription,
-                         width: 150, editable: false,
-                         align: EnumColumnsAlignment.Center
-                     }
+                    }
             ];
 
             RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id);
@@ -120,15 +89,15 @@
 
                 $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
 
-                $("#dvMemberInfo").show();
+                $("#dvApplicationCategory").show();
 
                 HideLoader();
             });
         }
 
-        function fnLoadPartialAddMemberInfo() {
+        function fnLoadPartialAddApplicationCategory() {
             $("#dvPopUpWindow").dialog({
-                title: '@MemberInfoResx.AddMemberInfo',
+                title: '@ApplicationCategoryResx.AddCategory',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
@@ -136,16 +105,14 @@
                 open: function () {
                     $("#dvPopUpWindowContainer").html("");
                     $.ajax({
-                        url: '@Url.Action("PartialAddMemberInfo", "MemberInfo")',
+                        url: '@Url.Action("PartialAddApplicationCategory", "ApplicationCategory")',
                         type: 'POST',
                         contentType: 'application/json',
                         data: {},
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
-                            fnMemberInfoValidateInitialization("frmAddMemberInfo");
-
-
+                            fnApplicationCategoryValidateInitialization("frmAddApplicationCategory");
                         },
                         error: function (response) {
                             $("#dvPopUpWindowContainer").html("");
@@ -157,7 +124,7 @@
                          text: "@Buttons.Save",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
-                             fnSaveMemberInfo();
+                             fnSaveApplicationCategory();
                          }
                      },
                      {
@@ -171,23 +138,19 @@
             });
         }
 
-        function fnMemberInfoValidateInitialization(sFormID) {
+        function fnApplicationCategoryValidateInitialization(sFormID) {
             var validator = $('#' + sFormID).validate({
                 errorElement: 'div',
                 errorClass: 'validation-error-label',
                 focusInvalid: true,
                 ignore: "",
                 rules: {
-                    MEMBER_INFO_TITLE: {
-                        required: true
-                    },
-                    MEMBER_INFO_DESCRIPTION: {
+                    CATEGORY_NAME: {
                         required: true
                     }
                 },
                 messages: {
-                    MEMBER_INFO_TITLE: "@CommonResx.ThisFieldIsRequired",
-                    MEMBER_INFO_DESCRIPTION: "@CommonResx.ThisFieldIsRequired"
+                    CATEGORY_NAME: "@CommonResx.ThisFieldIsRequired"
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -239,14 +202,14 @@
             });
         }
 
-        function fnSaveMemberInfo() {
-            if (!$("#frmAddMemberInfo").valid()) {
+        function fnSaveApplicationCategory() {
+            if (!$("#frmAddApplicationCategory").valid()) {
                 return false;
             }
-            var formData = $("#frmAddMemberInfo").serialize();
+            var formData = $("#frmAddApplicationCategory").serialize();
 
             $.ajax({
-                url: '@Url.Action("JSaveMemberInfo", "MemberInfo")',
+                url: '@Url.Action("JSaveApplicationCategory", "ApplicationCategory")',
                 type: "POST",
                 data: formData,
                 dataType: "json",
@@ -254,7 +217,7 @@
                     if (result.nResult == 1) {
                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                         $("#dvPopUpWindow").dialog("close");
-                        fnBindAllMemberInfos();
+                        fnBindAllApplicationCategorys();
                     }
                     else if (result.nResult == -2) {
                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Warning);
@@ -272,23 +235,23 @@
             })
         }
 
-        function fnLoadPartialEditMemberInfo() {
+        function fnLoadPartialEditApplicationCategory() {
 
-            var gdMemberInfo = $('#' + sGridViewSelector);
-            var vMemberInfoID = gdMemberInfo.jqGrid('getGridParam', 'selrow');
-            var rowData = gdMemberInfo.getRowData(vMemberInfoID);
+            var gdApplicationCategory = $('#' + sGridViewSelector);
+            var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
+            var rowData = gdApplicationCategory.getRowData(vApplicationCategoryID);
 
-            var sMemberInfoTitle = rowData.MEMBER_INFO_TITLE;
-            var sMemberInfoDesc = rowData.MEMBER_INFO_DESCRIPTION;
+            var sApplicationCategoryTitle = rowData.MEMBER_INFO_TITLE;
+            var sApplicationCategoryDesc = rowData.MEMBER_INFO_DESCRIPTION;
 
             var dataToSend = JSON.stringify({
-                ID: vMemberInfoID,
-                MEMBER_INFO_TITLE: sMemberInfoTitle,
-                MEMBER_INFO_DESCRIPTION: sMemberInfoDesc
+                ID: vApplicationCategoryID,
+                MEMBER_INFO_TITLE: sApplicationCategoryTitle,
+                MEMBER_INFO_DESCRIPTION: sApplicationCategoryDesc
             });
 
             $("#dvPopUpWindow").dialog({
-                title: '@MemberInfoResx.EditMemberInfo',
+                title: '@ApplicationCategoryResx.EditCategory',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
@@ -296,14 +259,14 @@
                 open: function () {
                     $("#dvPopUpWindowContainer").html("");
                     $.ajax({
-                        url: '@Url.Action("PartialEditMemberInfo", "MemberInfo")',
+                        url: '@Url.Action("PartialEditApplicationCategory", "ApplicationCategory")',
                         type: 'POST',
                         contentType: 'application/json',
                         data: dataToSend,
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
-                            fnMemberInfoValidateInitialization("frmEditMemberInfo");
+                            fnApplicationCategoryValidateInitialization("frmEditApplicationCategory");
 
                         },
                         error: function (response) {
@@ -316,7 +279,7 @@
                          text: "@Buttons.Update",
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
-                             fnEditMemberInfo();
+                             fnEditApplicationCategory();
                          }
                      },
                      {
@@ -331,14 +294,14 @@
         }
 
 
-        function fnEditMemberInfo() {
-            if (!$("#frmEditMemberInfo").valid()) {
+        function fnEditApplicationCategory() {
+            if (!$("#frmEditApplicationCategory").valid()) {
                 return false;
             }
-            var formData = $("#frmEditMemberInfo").serialize();
+            var formData = $("#frmEditApplicationCategory").serialize();
 
             $.ajax({
-                url: '@Url.Action("JEditMemberInfo", "MemberInfo")',
+                url: '@Url.Action("JEditApplicationCategory", "ApplicationCategory")',
                 type: "POST",
                 data: formData,
                 dataType: "json",
@@ -346,7 +309,7 @@
                     if (result.nResult == 1) {
                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                         $("#dvPopUpWindow").dialog("close");
-                        fnBindAllMemberInfos();
+                        fnBindAllApplicationCategorys();
                     }
                     else {
                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
@@ -360,12 +323,12 @@
             })
         }
 
-        function fnDeleteMemberInfo() {
-            var gdMemberInfo = $('#' + sGridViewSelector);
-            var vMemberInfoID = gdMemberInfo.jqGrid('getGridParam', 'selrow');
+        function fnDeleteApplicationCategory() {
+            var gdApplicationCategory = $('#' + sGridViewSelector);
+            var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
 
             $("#dvPopUpWindow").dialog({
-                title: '@MemberInfoResx.DeleteMemberInfo',
+                title: '@ApplicationCategoryResx.DeleteCategory',
                 autoOpen: true,
                 width: '30%',
                 resizable: false,
@@ -381,15 +344,15 @@
                          "class": 'btn btn-sm bg-slate',
                          click: function () {
                              $.ajax({
-                                 url: '@Url.Action("JDeleteMemberInfo", "MemberInfo")',
+                                 url: '@Url.Action("JDeleteApplicationCategory", "ApplicationCategory")',
                                  type: 'POST',
-                                 data: { ID: vMemberInfoID },
+                                 data: { ID: vApplicationCategoryID },
                                  async: true,
                                  success: function (result, response) {
                                      if (result.nResult == 1) {
                                          ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
                                          $("#dvPopUpWindow").dialog("close");
-                                         fnBindAllMemberInfos();
+                                         fnBindAllApplicationCategorys();
                                      }
                                      else {
                                          ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
@@ -414,7 +377,7 @@
 
         //Entry Point
         $(document).ready(function () {
-            fnBindAllMemberInfos();
+            fnBindAllApplicationCategorys();
         });
     </script>
 }

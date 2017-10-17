@@ -399,9 +399,9 @@
     <Content Include="Views\ApplicationSettings\_EditApplicationSettings.cshtml" />
     <Content Include="Views\ApplicationSettings\ApplicationSettingsList.cshtml" />
     <Content Include="Views\Notification\PushNotificationLogsList.cshtml" />
-    <Content Include="Views\ApplicationCategory\_AddApplicationCatgory.cshtml" />
-    <Content Include="Views\ApplicationCategory\_EditApplicationCatgory.cshtml" />
-    <Content Include="Views\ApplicationCategory\_ApplicationCatgoryList.cshtml" />
+    <Content Include="Views\ApplicationCategory\_AddApplicationCategory.cshtml" />
+    <Content Include="Views\ApplicationCategory\_EditApplicationCategory.cshtml" />
+    <Content Include="Views\ApplicationCategory\ApplicationCategoryList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

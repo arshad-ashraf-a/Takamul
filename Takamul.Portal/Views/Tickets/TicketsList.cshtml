@@ -100,6 +100,7 @@
             <div class="heading-elements">
                 <div class="col-md-12">
                     <div class="content-group-sm">
+                        <a title="@TicketsResx.AddNewTicket" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> App Categories</a>
                         <a title="@TicketsResx.AddNewTicket" href="#" onclick="fnLoadPartialAddTicket();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @TicketsResx.AddNewTicket</a>
 
                     </div>
@@ -252,13 +253,13 @@
                           width: 60, editable: false,
                           align: EnumColumnsAlignment.Center,
                           formatter: function (cellvalue, options, rowObject) {
-                              debugger;
+                              
                               var sTicketImageFilePath = rowObject.DEFAULT_IMAGE;
                               var link = "";
                               var htmlString = '--';
                               if (sTicketImageFilePath != "" && sTicketImageFilePath != null) {
                                   link = '@Url.Content(string.Format("{0}_#TicketImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
-                                  debugger;
+                                  
                                   link = link.replace("_#TicketImage#", sTicketImageFilePath);
                                   htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
                               }
@@ -284,7 +285,7 @@
                         name: ConstantsNames.TicketOwnerUserFullName,
                         width: 80, editable: false,
                         align: EnumColumnsAlignment.Center
-                        
+
                     },
                      {
                          name: ConstantsNames.LastTicketChatMessage,
@@ -646,8 +647,6 @@
                             $("#dvPopUpWindowContainer").html("");
                         }
                     });
-
-
                 },
                 buttons: [
                      {
@@ -878,6 +877,31 @@
             });
         }
 
+        function fnLoadPartialAppCategories() {
+            $("#dvPopUpWindow").dialog({
+                title: 'TicketsResx.AddCategory',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("ApplicationCategoryList", "ApplicationCategory")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                }
+            });
+        }
 
         //Entry Point
         $(document).ready(function () {

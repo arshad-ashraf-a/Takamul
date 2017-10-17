@@ -32,40 +32,40 @@ namespace LDC.eServices.Portal.Controllers
 
         #region :: Behaviors ::
 
-        #region View :: ApplicationCatgoryList
+        #region View :: ApplicationCategoryList
         /// <summary>
         /// List of application categories
         /// </summary>
         /// <returns></returns>
-        public ActionResult ApplicationCatgoryList()
+        public ActionResult ApplicationCategoryList()
         {
             return View();
         }
         #endregion
 
-        #region View :: PartialAddApplicationCatgory
+        #region View :: PartialAddApplicationCategory
         /// <summary>
         /// Add application category
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult PartialAddApplicationCatgory()
+        public PartialViewResult PartialAddApplicationCategory()
         {
             ApplicationCategoryViewModel oApplicationCategoryViewModel = new ApplicationCategoryViewModel();
             oApplicationCategoryViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("_AddApplicationCatgory", oApplicationCategoryViewModel);
+            return PartialView("_AddApplicationCategory", oApplicationCategoryViewModel);
         }
         #endregion
 
-        #region View :: PartialEditApplicationCatgory
+        #region View :: PartialEditApplicationCategory
         /// <summary>
         ///  Edit application category
         /// </summary>
         /// <param name="oApplicationCategoryViewModel"></param>
         /// <returns></returns>
-        public PartialViewResult PartialEditApplicationCatgory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
+        public PartialViewResult PartialEditApplicationCategory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
         {
             oApplicationCategoryViewModel.APPLICATION_ID = CurrentApplicationID;
-            return PartialView("_EditApplicationCatgory", oApplicationCategoryViewModel);
+            return PartialView("_EditApplicationCategory", oApplicationCategoryViewModel);
         }
         #endregion
 
@@ -73,7 +73,7 @@ namespace LDC.eServices.Portal.Controllers
 
         #region :: Methods ::
 
-        #region Method :: JsonResult :: JGetAllApplicationCatgory
+        #region Method :: JsonResult :: JGetAllApplicationCategory
         /// <summary>
         /// Get all application category
         /// </summary>
@@ -83,7 +83,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JGetAllApplicationCatgory(int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JGetAllApplicationCategory(int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
             var list = oIApplicationCategoryServices.IlGetAllApplicationCategories(this.CurrentApplicationID, nPage, nRows, sColumnName, sColumnOrder, Convert.ToInt32(this.CurrentApplicationLanguage));
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -98,7 +98,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken()]
-        public JsonResult JSaveApplicationCatgory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
+        public JsonResult JSaveApplicationCategory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
         {
             Response oResponseResult = null;
 
@@ -130,15 +130,15 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region Method :: JsonResult :: Edit ApplicationCatgory
+        #region Method :: JsonResult :: Edit ApplicationCategory
         /// <summary>
-        /// Edit ApplicationCatgory
+        /// Edit ApplicationCategory
         /// </summary>
         /// <param name="oApplicationCategoryViewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken()]
-        public JsonResult JEditApplicationCatgory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
+        public JsonResult JEditApplicationCategory(ApplicationCategoryViewModel oApplicationCategoryViewModel)
         {
             Response oResponseResult = null;
 
@@ -166,14 +166,14 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
-        #region Method :: JsonResult :: Delete ApplicationCatgory
+        #region Method :: JsonResult :: Delete ApplicationCategory
         /// <summary>
-        ///  Delete ApplicationCatgory
+        ///  Delete ApplicationCategory
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JDelteApplicationCatgory(string ID)
+        public JsonResult JDelteApplicationCategory(string ID)
         {
             Response oResponseResult = null;
 
@@ -201,7 +201,13 @@ namespace LDC.eServices.Portal.Controllers
 
         #endregion
 
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Exception exception = filterContext.Exception;
+            //Logging the Exception
+            filterContext.ExceptionHandled = true;
 
+        }
 
     }
 }
