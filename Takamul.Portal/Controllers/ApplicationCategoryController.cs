@@ -37,9 +37,10 @@ namespace LDC.eServices.Portal.Controllers
         /// List of application categories
         /// </summary>
         /// <returns></returns>
-        public ActionResult ApplicationCategoryList()
+        public PartialViewResult ApplicationCategoryList(bool bLanguageEnable)
         {
-            return View();
+            this.LanguageEnable = bLanguageEnable;
+            return PartialView();
         }
         #endregion
 
@@ -69,6 +70,17 @@ namespace LDC.eServices.Portal.Controllers
         }
         #endregion
 
+        #region View :: PartialAssignApplicationCategory
+        /// <summary>
+        /// Assign application category
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult PartialAssignApplicationCategory()
+        {
+            return PartialView("_AssignApplicationCategory", this.LanguageEnable);
+        }
+        #endregion
+
         #endregion
 
         #region :: Methods ::
@@ -85,7 +97,21 @@ namespace LDC.eServices.Portal.Controllers
         [HttpPost]
         public JsonResult JGetAllApplicationCategory(int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var list = oIApplicationCategoryServices.IlGetAllApplicationCategories(this.CurrentApplicationID, nPage, nRows, sColumnName, sColumnOrder, Convert.ToInt32(this.CurrentApplicationLanguage));
+            int nLanguageID = this.LanguageEnable ? Convert.ToInt32(this.CurrentApplicationLanguage) : -99;
+            var list = oIApplicationCategoryServices.IlGetAllApplicationCategories(this.CurrentApplicationID, nPage, nRows, sColumnName, sColumnOrder, nLanguageID);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Method :: JsonResult :: JGetApplicationCategories
+        /// <summary>
+        /// Get all application category
+        /// </summary>
+        [HttpPost]
+        public JsonResult JGetApplicationCategories(bool bLanguageEnable)
+        {
+            int nLanguageID = this.LanguageEnable ? Convert.ToInt32(this.CurrentApplicationLanguage) : -99;
+            var list = oIApplicationCategoryServices.IlGetAllApplicationCategories(this.CurrentApplicationID, 1, 500, string.Empty, string.Empty, nLanguageID);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -173,7 +199,7 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult JDelteApplicationCategory(string ID)
+        public JsonResult JDeleteApplicationCategory(string ID)
         {
             Response oResponseResult = null;
 

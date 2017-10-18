@@ -72,7 +72,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
-        public List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nParticipantID, int nTicketStatusID, string sTicketCode, string sTicketName, int nPageNumber, int nRowspPage)
+        public List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nParticipantID, int nTicketStatusID, int nTicketCategoryID, string sTicketName, int nPageNumber, int nRowspPage)
         {
             #region ":DBParamters:"
             List<DbParameter> arrParameters = new List<DbParameter>();
@@ -80,7 +80,7 @@ namespace Takamul.Services
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, -99, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_UserId", SqlDbType.Int, nParticipantID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketStatusId", SqlDbType.Int, nTicketStatusID, ParameterDirection.Input));
-            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCode", SqlDbType.VarChar, sTicketCode, 10, ParameterDirection.Input));
+            arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketCategoryId", SqlDbType.Int, nTicketCategoryID, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketName", SqlDbType.VarChar, sTicketName, 300, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PageNumber", SqlDbType.Int, nPageNumber, ParameterDirection.Input));
             arrParameters.Add(CustomDbParameter.BuildParameter("Pin_RowspPage", SqlDbType.Int, nRowspPage, ParameterDirection.Input));
@@ -530,6 +530,45 @@ namespace Takamul.Services
             return lstTicketParticipants;
             #endregion
 
+        }
+        #endregion
+
+        #region Method :: Response :: oAssignTicketCategory
+        /// <summary>
+        /// Assign Ticket Category
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nCategoryID"></param>
+        /// <param name="nModifiedBy"></param>
+        /// <returns></returns>
+        public Response oAssignTicketCategory(int nTicketID, int nCategoryID, int nModifiedBy)
+        {
+            #region ": Insert Sp Result:"
+
+            Response oResponse = new Response();
+
+            try
+            {
+                List<DbParameter> arrParameters = new List<DbParameter>();
+
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_TicketId", SqlDbType.Int, nTicketID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_CategoryID", SqlDbType.Int, nCategoryID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ModifiedBy", SqlDbType.Int, nModifiedBy, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
+
+                this.ExecuteStoredProcedureCommand("AssignTicketCategory", arrParameters.ToArray());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
+
+            }
+            catch (Exception Ex)
+            {
+                oResponse.OperationResult = enumOperationResult.Faild;
+                //TODO : Log Error Message
+                oResponse.OperationResultMessage = Ex.Message.ToString();
+            }
+
+            return oResponse;
+            #endregion
         }
         #endregion
 

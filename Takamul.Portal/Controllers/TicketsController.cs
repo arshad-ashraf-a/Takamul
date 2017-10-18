@@ -122,9 +122,9 @@ namespace LDC.eServices.Portal.Controllers
         /// <param name="sColumnName"></param>
         /// <param name="sColumnOrder"></param>
         /// <returns></returns>
-        public JsonResult JBindAllTickets(string sTicketCode, string sTicketName, int nTicketStatusId, int nParticipantID, int nPage, int nRows, string sColumnName, string sColumnOrder)
+        public JsonResult JBindAllTickets(int nTicketCategoryID, string sTicketName, int nTicketStatusId, int nParticipantID, int nPage, int nRows, string sColumnName, string sColumnOrder)
         {
-            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID, nParticipantID, nTicketStatusId, sTicketCode, sTicketName, nPage, nRows);
+            var lstEvents = this.oITicketServices.IlGetAllTickets(CurrentApplicationID, nParticipantID, nTicketStatusId, nTicketCategoryID, sTicketName, nPage, nRows);
             return Json(lstEvents, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -613,7 +613,42 @@ namespace LDC.eServices.Portal.Controllers
             //}
 
 
-        } 
+        }
+        #endregion
+
+        #region Method :: JsonResult :: Assign Ticket Category
+        /// <summary>
+        /// Assign Ticket Category
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nCategoryID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult JAssignTicketCategory(int nTicketID, int nCategoryID)
+        {
+            Response oResponseResult = null;
+
+            oResponseResult = this.oITicketServices.oAssignTicketCategory(nTicketID, nCategoryID, Convert.ToInt32(CurrentUser.nUserID));
+
+            this.OperationResult = oResponseResult.OperationResult;
+
+            switch (this.OperationResult)
+            {
+                case enumOperationResult.Success:
+                    this.OperationResultMessages = CommonResx.MessageAssignSuccess;
+                    break;
+                case enumOperationResult.Faild:
+                    this.OperationResultMessages = CommonResx.MessageAssignFaild;
+                    break;
+            }
+            return Json(
+                new
+                {
+                    nResult = this.OperationResult,
+                    sResultMessages = this.OperationResultMessages
+                },
+                JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #endregion

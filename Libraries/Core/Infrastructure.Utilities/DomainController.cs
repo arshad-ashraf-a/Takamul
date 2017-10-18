@@ -3,11 +3,36 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using System;
 
 namespace Infrastructure.Utilities
 {
     public class DomainController : BaseController
     {
+
+        #region Property :: LanguageEnable
+        public bool LanguageEnable
+        {
+            get
+            {
+                bool bResult;
+                if (base.Session["bLanguageEnable"] != null && !string.IsNullOrEmpty(base.Session["bLanguageEnable"].ToString()))
+                {
+                    bResult = Convert.ToBoolean(base.Session["bLanguageEnable"].ToString());
+                }
+                else
+                {
+                    bResult = false;
+                }
+                return bResult;
+            }
+            set
+            {
+                base.Session["bLanguageEnable"] = value;
+            }
+        }
+        #endregion
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             int nCurrentAppID = -99;

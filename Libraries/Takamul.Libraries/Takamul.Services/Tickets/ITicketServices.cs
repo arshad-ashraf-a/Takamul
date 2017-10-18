@@ -33,7 +33,7 @@ namespace Takamul.Services
         /// </summary>
         /// <param name="nApplicationID"></param>
         /// <returns></returns>
-        List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nParticipantID, int nTicketStatusID, string sTicketCode, string sTicketName, int nPageNumber, int nRowspPage);
+        List<TicketViewModel> IlGetAllTickets(int nApplicationID, int nParticipantID, int nTicketStatusID, int nTicketCategoryID, string sTicketName, int nPageNumber, int nRowspPage);
 
         #endregion
 
@@ -158,7 +158,18 @@ namespace Takamul.Services
         /// <param name="nExcludedMobileUser"></param>
         /// <returns></returns>
         List<TicketMobileUserParticipantViewModel> IlGetTicketMobileUserParticipants(int nTicketID, int nExcludedMobileUser = -99);
-        
+
+        #endregion
+
+        #region Method :: Response :: oAssignTicketCategory
+        /// <summary>
+        /// Assign Ticket Category
+        /// </summary>
+        /// <param name="nTicketID"></param>
+        /// <param name="nCategoryID"></param>
+        /// <param name="nModifiedBy"></param>
+        /// <returns></returns>
+        Response oAssignTicketCategory(int nTicketID, int nCategoryID, int nModifiedBy);
         #endregion
     }
 }

@@ -274,6 +274,7 @@
     <Content Include="assets\bin\Takamul.Portal.pdb" />
     <Content Include="DBScript\Area_Wilayat_Village_Proc - Copy.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_25-07-2017.sql" />
+    <Content Include="DBScript\Takamul_script_18-10-2017.sql" />
     <Content Include="DBScript\Takamul_script_16-10-2017.sql" />
     <Content Include="DBScript\Takamul_script_09-10-2017.sql" />
     <Content Include="DBScript\ServerBackup\Takamul_script_17-07-2017.sql" />
@@ -402,6 +403,7 @@
     <Content Include="Views\ApplicationCategory\_AddApplicationCategory.cshtml" />
     <Content Include="Views\ApplicationCategory\_EditApplicationCategory.cshtml" />
     <Content Include="Views\ApplicationCategory\ApplicationCategoryList.cshtml" />
+    <Content Include="Views\ApplicationCategory\_AssignApplicationCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

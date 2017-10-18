@@ -258,4 +258,7 @@
   <data name="LastConversation" xml:space="preserve">
     <value>Last Conversation</value>
   </data>
+  <data name="Category" xml:space="preserve">
+    <value>الفئة</value>
+  </data>
 </root>

@@ -286,6 +286,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Category.
+        /// </summary>
+        public static string AssignCategory {
+            get {
+                return ResourceManager.GetString("AssignCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back To List.
         /// </summary>
         public static string BackToList {
@@ -372,6 +381,15 @@ namespace Takamul.Portal.Resources.Common {
         public static string CaptchaText {
             get {
                 return ResourceManager.GetString("CaptchaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string Categories {
+            get {
+                return ResourceManager.GetString("Categories", resourceCulture);
             }
         }
         
@@ -826,7 +844,7 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Assigning the Question.
+        ///   Looks up a localized string similar to Error Assigning the Record.
         /// </summary>
         public static string MessageAssignFaild {
             get {
@@ -835,7 +853,7 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Question has been Assigned Successfully.
+        ///   Looks up a localized string similar to The Record has been Assigned Successfully.
         /// </summary>
         public static string MessageAssignSuccess {
             get {

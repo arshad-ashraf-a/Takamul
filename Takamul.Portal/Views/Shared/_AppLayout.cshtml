@@ -138,8 +138,11 @@
                                 }
                                 else
                                 {
-                                    <li class="active"><a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>@CommonResx.MyApplication</span></a></li>
+                                    <li class="active">
+                                        <a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>@CommonResx.MyApplication</span></a>
+                                    </li>
                                 }
+
                                 <!-- Appearance -->
                                 @*<li class="navigation-header"><span>Reports</span> <i class="icon-menu" title="Appearance"></i></li>
                                     <li>
@@ -225,7 +228,7 @@
                                 <i class="icon-cogs"></i>
                                 <span>@CommonResx.AppSettings</span>
                             </a>
-                           
+
                             <a href="@Url.Action("ApplicationInfoList", "ApplicationInfo")" class="btn bg-blue-300 btn-float btn-float-md btn-rounded @Url.sMakeMenuActive("ApplicationInfoList", "ApplicationInfo", "")">
                                 <i class="icon-info22"></i>
                                 <span>@CommonResx.AppInfo</span>
@@ -262,7 +265,7 @@
         var GridViewId = "grid-table";
         var GridViewPagerId = "grid-pager";
 
-         var GridViewResources = {
+        var GridViewResources = {
             Direction: '@GridView.Direction',
             FloatingLeft: '@GridView.FloatingLeft',
             FloatingRight: '@GridView.FloatingRight',
@@ -306,8 +309,9 @@
     @RenderSection("SpecificPluginScripts", false)
     @RenderSection("InlineScriptsRelated", false)
     <script type="text/javascript">
+
         function fnGoToApplicationDetais(nApplicationID) {
-            debugger;   
+            debugger;
             var vApplicationID = -99;
             var gdApplicationist = $('#' + sGridViewSelector);
             if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
@@ -340,8 +344,6 @@
                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
                 }
             });
-
-
         }
 
         $(document).ajaxStart(function () {

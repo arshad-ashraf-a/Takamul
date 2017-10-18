@@ -28,23 +28,25 @@
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">@TicketsResx.TicketCode</label>
-                                            <div class="col-lg-5">
-                                                <input type="text" class="form-control col-xs-6" id="txtSearchByTicketCode" name="txtSearchByTicketCode"
-                                                       placeholder="@TicketsResx.TicketCode">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label class="col-lg-4 control-label">@TicketsResx.TicketName</label>
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-5">
                                                 <input type="text" class="form-control col-xs-6" id="txtSearchByTicketName" name="txtSearchByTicketName"
                                                        placeholder="@TicketsResx.TicketName">
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">@TicketsResx.Category</label>
+                                            <div class="col-lg-5">
+                                                <select class="form-control" id="ddlTicketCategory" name="ddlTicketCategory">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-md-12">
                                     <div class="col-md-6">
@@ -61,7 +63,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-lg-4 control-label">@TicketsResx.ParticipantUser</label>
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-5">
                                                 <select class="form-control" id="ddlParticipantUser" name="ddlParticipantUser">
                                                     <option></option>
                                                 </select>
@@ -100,7 +102,7 @@
             <div class="heading-elements">
                 <div class="col-md-12">
                     <div class="content-group-sm">
-                        <a title="@TicketsResx.AddNewTicket" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> App Categories</a>
+                        <a title="" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> App Categories</a>
                         <a title="@TicketsResx.AddNewTicket" href="#" onclick="fnLoadPartialAddTicket();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @TicketsResx.AddNewTicket</a>
 
                     </div>
@@ -168,6 +170,7 @@
                     MobileParticipantName: 'MobileParticipantName',
                     LastTicketChatMessage: 'LastTicketChatMessage',
                     LastTicketChatCreatedDate: 'LastTicketChatCreatedDate',
+                    CategoryName: 'CATEGORY_NAME',
 
                 };
             var sCaption = '@TicketsResx.AllTickets';
@@ -181,7 +184,7 @@
                 '',//Hidden Columns Represent TICKET_DESCRIPTION Int Value
                 '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
                 '@TicketsResx.TicketImage',
-                '@TicketsResx.TicketCode',
+                '@TicketsResx.Category',
                 '@TicketsResx.TicketName',
                 '@TicketsResx.TicketOwnerUserFullName',
                 '@TicketsResx.LastConversation',
@@ -193,12 +196,12 @@
                 '@Buttons.Options' // Options
             ];
 
-            var vTicketCode = $("#txtSearchByTicketCode").val();
             var vTicketName = $("#txtSearchByTicketName").val();
             var vTicketStatusId = Number($("#ddlTicketStatus").val());
             var vParticipantID = Number($("#ddlParticipantUser").val());
+            var vTicketCategoryID = Number($("#ddlTicketCategory").val());
             var params = {
-                'sTicketCode': vTicketCode,
+                'nTicketCategoryID': vTicketCategoryID == 0 ? -99 : vTicketCategoryID,
                 'sTicketName': vTicketName,
                 'nTicketStatusId': vTicketStatusId,
                 'nParticipantID': vParticipantID
@@ -214,7 +217,8 @@
                                         { Caption: "@TicketsResx.GoToChats", EventName: "fnGoToTicketDetails();", RowId: true },
                                         { Caption: "@TicketsResx.ChangeTicketStatus", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
                                         { Caption: "@TicketsResx.ViewTicketInfo", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
-                                        { Caption: "Add Participants", EventName: "fnLoadPartialAddTicketParticipants();", RowId: true }
+                                        { Caption: "Add Participants", EventName: "fnLoadPartialAddTicketParticipants();", RowId: true },
+                                        { Caption: "Assign Category", EventName: "fnLoadAssignCategory();", RowId: true }
             ];
             var oArrColsModel = [
                     {
@@ -253,13 +257,13 @@
                           width: 60, editable: false,
                           align: EnumColumnsAlignment.Center,
                           formatter: function (cellvalue, options, rowObject) {
-                              
+
                               var sTicketImageFilePath = rowObject.DEFAULT_IMAGE;
                               var link = "";
                               var htmlString = '--';
                               if (sTicketImageFilePath != "" && sTicketImageFilePath != null) {
                                   link = '@Url.Content(string.Format("{0}_#TicketImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
-                                  
+
                                   link = link.replace("_#TicketImage#", sTicketImageFilePath);
                                   htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
                               }
@@ -267,11 +271,9 @@
                           }
                       },
                      {
+                         name: ConstantsNames.CategoryName,
                          width: 50, editable: false,
-                         align: EnumColumnsAlignment.Center,
-                         formatter: function (cellvalue, options, rowObject) {
-                             return "<div class='text-semibold'><a onclick='fnGoToTicketDetails(" + rowObject.ID + ")' href='#'>" + rowObject.TICKET_CODE + "</a></div>";
-                         }
+                         align: EnumColumnsAlignment.Center
                      },
                     {
                         name: ConstantsNames.TicketName,
@@ -411,7 +413,7 @@
         function fnFillTicketStatus() {
             //TODO:: option add 'ALL'
 
-            FillDropDownRoot('@Url.Action("JGetAllApplications", "Applications")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
+            FillDropDownRoot('@Url.Action("JGetAllTicketStatus", "Common")', 'POST', false, 'ddlTicketStatus', 'ID', 'Name', '@TicketsResx.SelectStatus', ' ', [],
                 function () {
                     //Success Function
                     $("#ddlTicketStatus").select2({ width: '100%' });
@@ -433,11 +435,27 @@
                 })
         }
 
+        function fnFillApplicationCategory() {
+            var oParameters = {};
+            oParameters['bLanguageEnable'] = false;
+
+            FillDropDownRoot('@Url.Action("JGetApplicationCategories", "ApplicationCategory")', 'POST', false, 'ddlTicketCategory', 'ID', 'CATEGORY_NAME', 'Select Category', ' ', oParameters,
+              function () {
+                  //Success Function
+                  $("#ddlTicketCategory").select2({ width: '100%' });
+              },
+              function () {
+                  //Error
+              })
+
+        }
+
         function fnClearSearch() {
             $("#txtSearchByTicketCode").val("");
             $("#txtSearchByTicketName").val("");
             $('#ddlTicketStatus').val($('#ddlTicketStatus option:first-child').val()).trigger('change');
             $('#ddlParticipantUser').val($('#ddlParticipantUser option:first-child').val()).trigger('change');
+            $('#ddlTicketCategory').val($('#ddlTicketCategory option:first-child').val()).trigger('change');
         }
 
 
@@ -878,8 +896,13 @@
         }
 
         function fnLoadPartialAppCategories() {
+
+            var dataToSend = JSON.stringify({
+                bLanguageEnable: false
+            });
+
             $("#dvPopUpWindow").dialog({
-                title: 'TicketsResx.AddCategory',
+                title: '@CommonResx.Categories',
                 autoOpen: true,
                 width: '50%',
                 resizable: false,
@@ -890,7 +913,7 @@
                         url: '@Url.Action("ApplicationCategoryList", "ApplicationCategory")',
                         type: 'POST',
                         contentType: 'application/json',
-                        data: {},
+                        data: dataToSend,
                         async: true,
                         success: function (response) {
                             $("#dvPopUpWindowContainer").html(response);
@@ -903,11 +926,98 @@
             });
         }
 
+        function fnLoadAssignCategory() {
+
+            $("#dvPopUpWindow").dialog({
+                title: '@CommonResx.AssignCategory',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("PartialAssignApplicationCategory", "ApplicationCategory")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: {},
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        text: "@Buttons.Save",
+                        "class": 'btn btn-sm bg-slate',
+                        click: function () {
+                            fnAssignTicketCategory();
+                        }
+                    },
+                    {
+                        text: '@Buttons.Cancel',
+                        "class": 'btn btn-sm btn-default',
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+
+        function fnAssignTicketCategory() {
+            var gdTicketList = $('#' + sGridViewSelector);
+            var vTicketID = gdTicketList.jqGrid('getGridParam', 'selrow');
+            var nCategoryID = $('#ddlApplicationCategory').val();
+
+            //if (nCategoryID == -99) {
+            //    ShowStatusBarNotification("Please choose one category.", NotificationType.Warning);
+            //    return;
+            //}
+
+            var dataToSend = JSON.stringify({
+                nTicketID: vTicketID,
+                nCategoryID: nCategoryID
+            });
+
+            $.ajax({
+                url: '@Url.Action("JAssignTicketCategory", "Tickets")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: dataToSend,
+                async: true,
+                success: function (result, response) {
+                    if (result != null || result != '') {
+                        if (result.nResult == 1) {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                            $("#dvPopUpWindow").dialog("close");
+                            fnBindAllTickets();
+                        }
+                        else {
+                            ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        }
+                    }
+                    else {
+                        ShowStatusBarNotification("@CommonResx.AnErrorHasBeenOccured", NotificationType.Error);
+                    }
+                },
+                error: function (er) { $("#dvPopUpWindow").dialog("close"); }
+            });
+
+        }
+
+
+
         //Entry Point
         $(document).ready(function () {
             fnFillTicketStatus();
             fnFillApplicationUsers();
             fnBindAllTickets();
+            fnFillApplicationCategory();
         });
     </script>
 }

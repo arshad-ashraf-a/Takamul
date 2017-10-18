@@ -198,6 +198,7 @@ namespace Takamul.Services
                         CREATED_DATE = DateTime.Now
 
                     };
+                    
                     this.oTakamulConnection.NEWS.Add(oNews);
                     
                     if (this.intCommit() > 0)
@@ -268,6 +269,7 @@ namespace Takamul.Services
                 oNews.IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER;
                 oNews.MODIFIED_BY = oNewsViewModel.MODIFIED_BY;
                 oNews.MODIFIED_DATE = DateTime.Now;
+
                 this.NewsDBSet.Attach(oNews);
                 this.oTakamulConnection.Entry(oNews).State = EntityState.Modified;
 

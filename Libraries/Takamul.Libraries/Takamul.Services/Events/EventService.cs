@@ -206,6 +206,7 @@ namespace Takamul.Services
                     {
                         oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;
                     }
+
                     this.oTakamulConnection.EVENTS.Add(oEvent);
 
                     if (this.intCommit() > 0)

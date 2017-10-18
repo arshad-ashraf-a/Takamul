@@ -39,6 +39,7 @@ namespace Takamul.Models
         public int LANGUAGE_ID { get; set; }
         public string FORMATTED_EVENT_DATE { get; set; }
         public string EVENT_TIME { get; set; }
+        public int EVENT_CATEGORY_ID { get; set; }
 
         #region :: Constructor ::
         public EventViewModel()
@@ -51,7 +52,6 @@ namespace Takamul.Models
             this.EVENT_LOCATION_NAME = string.Empty;
             this.EVENT_LATITUDE = string.Empty;
             this.EVENT_LONGITUDE = string.Empty;
-            this.CREATED_BY = -99;
             this.CREATED_DATE = DateTime.MinValue;
             this.MODIFIED_BY = -99;
             this.MODIFIED_DATE = DateTime.MinValue;
@@ -61,6 +61,8 @@ namespace Takamul.Models
             this.EVENT_IMG_FILE_PATH = string.Empty;
             this.LANGUAGE_ID = -99;
             this.FORMATTED_EVENT_DATE = string.Empty;
+            this.CREATED_BY = -99;
+            this.EVENT_CATEGORY_ID = -99;
         }
         #endregion
     }

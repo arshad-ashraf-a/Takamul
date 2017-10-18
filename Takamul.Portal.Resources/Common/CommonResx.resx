@@ -319,10 +319,10 @@
     <value>The record(s) has been added successfully</value>
   </data>
   <data name="MessageAssignFaild" xml:space="preserve">
-    <value>Error Assigning the Question</value>
+    <value>Error Assigning the Record</value>
   </data>
   <data name="MessageAssignSuccess" xml:space="preserve">
-    <value>The Question has been Assigned Successfully</value>
+    <value>The Record has been Assigned Successfully</value>
   </data>
   <data name="MessageDeleteFailed" xml:space="preserve">
     <value>Delete failed</value>
@@ -584,5 +584,11 @@
   </data>
   <data name="NotificationLogs" xml:space="preserve">
     <value>Notification Logs</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="AssignCategory" xml:space="preserve">
+    <value>Assign Category</value>
   </data>
 </root>

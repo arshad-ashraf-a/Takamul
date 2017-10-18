@@ -2,21 +2,17 @@
 @using Takamul.Portal.Resources.Controls.Buttons;
 @using Takamul.Portal.Resources.Common;
 
-
 <div class="col-lg-12">
     <div class="row">
         <div class="col-md-12">
+            <div class="content-group-sm pull-right">
+                <a title="@ApplicationCategoryResx.AddCategory" href="#" onclick="fnLoadPartialAddApplicationCategory();" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @Buttons.Add</a>
+
+            </div>
             <div class="clearfix"></div>
-            <div class="panel panel-white">
-                <div class="panel-heading">
-                    <h6 class="panel-title">@ApplicationCategoryResx.ApplicationCategory</h6>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="fakeWidth col-md-12"></div>
-                        <div id="dvApplicationCategory">
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="fakeApplicationCategoryWidth col-md-12"></div>
+                <div id="dvApplicationCategory">
                 </div>
             </div>
 
@@ -24,360 +20,357 @@
     </div>
 </div>
 
-@section InlineScriptsRelated
-{
-    <script type="text/javascript">
-        var sGridViewSelector = "grid-table";
-        var sGridViewPagerSelector = "grid-pager";
+<script type="text/javascript">
+    var sGridViewApplicationCategory = "gridApplicationCategory-table";
+    var sGridViewApplicationCategoryPager = "gridApplicationCategory-pager";
 
-        function fnBindAllApplicationCategorys() {
-            $("#dvApplicationCategory").hide();
-            $("#dvApplicationCategory").empty();
+    function fnBindAllApplicationCategorys() {
+        $("#dvApplicationCategory").hide();
+        $("#dvApplicationCategory").empty();
 
-            var table = document.createElement('table');
-            table.id = sGridViewSelector;
-            var pager = document.createElement('div');
-            pager.id = sGridViewPagerSelector;
+        var tableApplicationCategory = document.createElement('table');
+        tableApplicationCategory.id = sGridViewApplicationCategory;
+        var pagerApplicationCategory = document.createElement('div');
+        pagerApplicationCategory.id = sGridViewApplicationCategoryPager;
 
-            $('#dvApplicationCategory').append(table);
-            $('#dvApplicationCategory').append(pager);
+        $('#dvApplicationCategory').append(tableApplicationCategory);
+        $('#dvApplicationCategory').append(pagerApplicationCategory);
 
 
-            var ConstantsNames =
+        var ConstantsNames =
+            {
+                ID: 'ID',
+                ApplicationCategoryName: 'CATEGORY_NAME'
+            };
+        var sCaption = '@ApplicationCategoryResx.ApplicationCategory';
+        var oArrColumnNames = [
+            '',//Hidden Columns Represent ID Int Value
+            '@ApplicationCategoryResx.CategoryName',
+            '' // Options
+        ];
+
+        var sBindDataUrl = '@Url.Action("JGetAllApplicationCategory", "ApplicationCategory")';
+
+        var sAddUrl = "#";
+        var sEditUrl = "#";
+        var sDeleteUrl = "#";
+        var oArrGridContextMenu = [
+                                    { MenuTitle: "@Buttons.Options" },
+                                    { Caption: "@Buttons.Edit", EventName: "fnLoadPartialEditApplicationCategory();", RowId: true },
+                                    { Caption: "@Buttons.Delete", EventName: "fnDeleteApplicationCategory();", RowId: true },
+        ];
+
+        var oArrColsModel = [
                 {
-                    ID: 'ID',
-                    ApplicationCategoryName: 'CATEGORY_NAME'
-                };
-            var sCaption = '@ApplicationCategoryResx.ApplicationCategory';
-            var oArrColumnNames = [
-                '',//Hidden Columns Represent ID Int Value
-                '@ApplicationCategoryResx.CategoryName',
-                '' // Options
-            ];
+                    name: ConstantsNames.ID, editable: false,
+                    key: true, hidden: true
+                },
+                {
+                    name: ConstantsNames.ApplicationCategoryName,
+                    width: 150, editable: false,
+                    align: EnumColumnsAlignment.Center
+                }
+        ];
 
-            var sBindDataUrl = '@Url.Action("JGetAllApplicationCategory", "ApplicationCategory")';
+        RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, tableApplicationCategory.id, pagerApplicationCategory.id);
+        $("#" + tableApplicationCategory.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
+            $("#" + tableApplicationCategory.id).jqGrid('hideCol', 'cb'); //hide checkbox
 
-            var sAddUrl = "#";
-            var sEditUrl = "#";
-            var sDeleteUrl = "#";
-            var oArrGridContextMenu = [
-                                        { MenuTitle: "@Buttons.Options" },
-                                        { Caption: "@Buttons.Edit", EventName: "fnLoadPartialEditApplicationCategory();", RowId: true },
-                                        { Caption: "@Buttons.Delete", EventName: "fnDeleteApplicationCategory();", RowId: true },
-            ];
+            $(window).bind('resize', function () {
+                $("#" + tableApplicationCategory.id).setGridWidth(Math.round($(".fakeApplicationCategoryWidth").width(), true));
+            }).trigger('resize');
 
-            var oArrColsModel = [
-                    {
-                        name: ConstantsNames.ID, editable: false,
-                        key: true, hidden: true
+
+            $("#" + tableApplicationCategory.id).setGridWidth(Math.round($(".fakeWidthfakeApplicationCategoryWidth").width(), true)).trigger('resize');
+
+            $("#dvApplicationCategory").show();
+
+            HideLoader();
+        });
+    }
+
+    function fnLoadPartialAddApplicationCategory() {
+        $("#dvSystemPopUpWindow").dialog({
+            title: '@ApplicationCategoryResx.AddCategory',
+            autoOpen: true,
+            width: '30%',
+            resizable: false,
+            modal: true,
+            open: function () {
+                $("#dvSystemPopUpWindowContainer").html("");
+                $.ajax({
+                    url: '@Url.Action("PartialAddApplicationCategory", "ApplicationCategory")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: {},
+                    async: true,
+                    success: function (response) {
+                        $("#dvSystemPopUpWindowContainer").html(response);
+                        fnApplicationCategoryValidateInitialization("frmAddApplicationCategory");
                     },
-                    {
-                        name: ConstantsNames.ApplicationCategoryName,
-                        width: 150, editable: false,
-                        align: EnumColumnsAlignment.Center
+                    error: function (response) {
+                        $("#dvSystemPopUpWindowContainer").html("");
                     }
-            ];
-
-            RenderGridView(sCaption, oArrColumnNames, sBindDataUrl, '', '', '', oArrColsModel, oArrGridContextMenu, false, false, false, table.id, pager.id);
-            $("#" + table.id).bind('jqGridLoadComplete.jqGrid', function (e, data) {
-                $("#" + table.id).jqGrid('hideCol', 'cb'); //hide checkbox
-
-                $(window).bind('resize', function () {
-                    $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true));
-                }).trigger('resize');
-
-
-                $("#" + table.id).setGridWidth(Math.round($(".fakeWidth").width(), true)).trigger('resize');
-
-                $("#dvApplicationCategory").show();
-
-                HideLoader();
-            });
-        }
-
-        function fnLoadPartialAddApplicationCategory() {
-            $("#dvPopUpWindow").dialog({
-                title: '@ApplicationCategoryResx.AddCategory',
-                autoOpen: true,
-                width: '30%',
-                resizable: false,
-                modal: true,
-                open: function () {
-                    $("#dvPopUpWindowContainer").html("");
-                    $.ajax({
-                        url: '@Url.Action("PartialAddApplicationCategory", "ApplicationCategory")',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: {},
-                        async: true,
-                        success: function (response) {
-                            $("#dvPopUpWindowContainer").html(response);
-                            fnApplicationCategoryValidateInitialization("frmAddApplicationCategory");
-                        },
-                        error: function (response) {
-                            $("#dvPopUpWindowContainer").html("");
-                        }
-                    });
-                },
-                buttons: [
-                     {
-                         text: "@Buttons.Save",
-                         "class": 'btn btn-sm bg-slate',
-                         click: function () {
-                             fnSaveApplicationCategory();
-                         }
-                     },
-                     {
-                         text: '@Buttons.Cancel',
-                         "class": 'btn btn-sm btn-default',
-                         click: function () {
-                             $(this).dialog("close");
-                         }
+                });
+            },
+            buttons: [
+                 {
+                     text: "@Buttons.Save",
+                     "class": 'btn btn-sm bg-slate',
+                     click: function () {
+                         fnSaveApplicationCategory();
                      }
-                ]
-            });
-        }
-
-        function fnApplicationCategoryValidateInitialization(sFormID) {
-            var validator = $('#' + sFormID).validate({
-                errorElement: 'div',
-                errorClass: 'validation-error-label',
-                focusInvalid: true,
-                ignore: "",
-                rules: {
-                    CATEGORY_NAME: {
-                        required: true
-                    }
-                },
-                messages: {
-                    CATEGORY_NAME: "@CommonResx.ThisFieldIsRequired"
-                },
-                highlight: function (e) {
-                    $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
-                },
-                success: function (e) {
-                    $(e).closest('.error-placement').removeClass('has-error');
-                    $(e).remove();
-                },
-                errorPlacement: function (error, element) {
-                    // Styled checkboxes, radios, bootstrap switch
-                    if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
-                        if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
-                            error.appendTo(element.parent().parent().parent().parent());
-                        }
-                        else {
-                            error.appendTo(element.parent().parent().parent().parent().parent());
-                        }
-                    }
-
-                        // Unstyled checkboxes, radios
-                    else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
-                        error.appendTo(element.parent().parent().parent());
-                    }
-
-                        // Input with icons and Select2
-                    else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
-                        error.appendTo(element.parent());
-                    }
-
-                        // Inline checkboxes, radios
-                    else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
-                        error.appendTo(element.parent().parent());
-                    }
-
-                        // Input group, styled file input
-                    else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
-                        error.appendTo(element.parent().parent());
-                    }
-
-                    else {
-                        error.insertAfter(element);
-                    }
-                },
-                submitHandler: function (form) {
-                },
-                invalidHandler: function (form) {
-
-                }
-            });
-        }
-
-        function fnSaveApplicationCategory() {
-            if (!$("#frmAddApplicationCategory").valid()) {
-                return false;
-            }
-            var formData = $("#frmAddApplicationCategory").serialize();
-
-            $.ajax({
-                url: '@Url.Action("JSaveApplicationCategory", "ApplicationCategory")',
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                    if (result.nResult == 1) {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-                        $("#dvPopUpWindow").dialog("close");
-                        fnBindAllApplicationCategorys();
-                    }
-                    else if (result.nResult == -2) {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Warning);
-                        $("#dvPopUpWindow").dialog("close");
-                    }
-                    else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                    }
-
-
-                },
-                error: function () {
-
-                }
-            })
-        }
-
-        function fnLoadPartialEditApplicationCategory() {
-
-            var gdApplicationCategory = $('#' + sGridViewSelector);
-            var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
-            var rowData = gdApplicationCategory.getRowData(vApplicationCategoryID);
-
-            var sApplicationCategoryTitle = rowData.MEMBER_INFO_TITLE;
-            var sApplicationCategoryDesc = rowData.MEMBER_INFO_DESCRIPTION;
-
-            var dataToSend = JSON.stringify({
-                ID: vApplicationCategoryID,
-                MEMBER_INFO_TITLE: sApplicationCategoryTitle,
-                MEMBER_INFO_DESCRIPTION: sApplicationCategoryDesc
-            });
-
-            $("#dvPopUpWindow").dialog({
-                title: '@ApplicationCategoryResx.EditCategory',
-                autoOpen: true,
-                width: '30%',
-                resizable: false,
-                modal: true,
-                open: function () {
-                    $("#dvPopUpWindowContainer").html("");
-                    $.ajax({
-                        url: '@Url.Action("PartialEditApplicationCategory", "ApplicationCategory")',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: dataToSend,
-                        async: true,
-                        success: function (response) {
-                            $("#dvPopUpWindowContainer").html(response);
-                            fnApplicationCategoryValidateInitialization("frmEditApplicationCategory");
-
-                        },
-                        error: function (response) {
-                            $("#dvPopUpWindowContainer").html("");
-                        }
-                    });
-                },
-                buttons: [
-                     {
-                         text: "@Buttons.Update",
-                         "class": 'btn btn-sm bg-slate',
-                         click: function () {
-                             fnEditApplicationCategory();
-                         }
-                     },
-                     {
-                         text: '@Buttons.Cancel',
-                         "class": 'btn btn-sm btn-default',
-                         click: function () {
-                             $(this).dialog("close");
-                         }
+                 },
+                 {
+                     text: '@Buttons.Cancel',
+                     "class": 'btn btn-sm btn-default',
+                     click: function () {
+                         $(this).dialog("close");
                      }
-                ]
-            });
-        }
+                 }
+            ]
+        });
+    }
 
-
-        function fnEditApplicationCategory() {
-            if (!$("#frmEditApplicationCategory").valid()) {
-                return false;
-            }
-            var formData = $("#frmEditApplicationCategory").serialize();
-
-            $.ajax({
-                url: '@Url.Action("JEditApplicationCategory", "ApplicationCategory")',
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                    if (result.nResult == 1) {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-                        $("#dvPopUpWindow").dialog("close");
-                        fnBindAllApplicationCategorys();
+    function fnApplicationCategoryValidateInitialization(sFormID) {
+        var validator = $('#' + sFormID).validate({
+            errorElement: 'div',
+            errorClass: 'validation-error-label',
+            focusInvalid: true,
+            ignore: "",
+            rules: {
+                CATEGORY_NAME: {
+                    required: true
+                }
+            },
+            messages: {
+                CATEGORY_NAME: "@CommonResx.ThisFieldIsRequired"
+            },
+            highlight: function (e) {
+                $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
+            },
+            success: function (e) {
+                $(e).closest('.error-placement').removeClass('has-error');
+                $(e).remove();
+            },
+            errorPlacement: function (error, element) {
+                // Styled checkboxes, radios, bootstrap switch
+                if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                    if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                        error.appendTo(element.parent().parent().parent().parent());
                     }
                     else {
-                        ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                        error.appendTo(element.parent().parent().parent().parent().parent());
                     }
-
-
-                },
-                error: function () {
-
                 }
-            })
+
+                    // Unstyled checkboxes, radios
+                else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                    error.appendTo(element.parent().parent().parent());
+                }
+
+                    // Input with icons and Select2
+                else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                    error.appendTo(element.parent());
+                }
+
+                    // Inline checkboxes, radios
+                else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo(element.parent().parent());
+                }
+
+                    // Input group, styled file input
+                else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                    error.appendTo(element.parent().parent());
+                }
+
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+
+            }
+        });
+    }
+
+    function fnSaveApplicationCategory() {
+        if (!$("#frmAddApplicationCategory").valid()) {
+            return false;
         }
+        var formData = $("#frmAddApplicationCategory").serialize();
 
-        function fnDeleteApplicationCategory() {
-            var gdApplicationCategory = $('#' + sGridViewSelector);
-            var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
+        $.ajax({
+            url: '@Url.Action("JSaveApplicationCategory", "ApplicationCategory")',
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                if (result.nResult == 1) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    $("#dvSystemPopUpWindow").dialog("close");
+                    $('#dvPopUpWindow').dialog({ 'height': 'auto'});
+                    fnBindAllApplicationCategorys();
+                }
+                else if (result.nResult == -2) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Warning);
+                    $("#dvSystemPopUpWindow").dialog("close");
+                }
+                else {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
 
-            $("#dvPopUpWindow").dialog({
-                title: '@ApplicationCategoryResx.DeleteCategory',
-                autoOpen: true,
-                width: '30%',
-                resizable: false,
-                modal: true,
-                open: function () {
-                    var htmlToShow = "<label>@CommonResx.DeleteConfirmationMessage</label>"
-                    $("#dvPopUpWindowContainer").html(htmlToShow);
 
-                },
-                buttons: [
-                     {
-                         text: "@Buttons.Delete",
-                         "class": 'btn btn-sm bg-slate',
-                         click: function () {
-                             $.ajax({
-                                 url: '@Url.Action("JDeleteApplicationCategory", "ApplicationCategory")',
-                                 type: 'POST',
-                                 data: { ID: vApplicationCategoryID },
-                                 async: true,
-                                 success: function (result, response) {
-                                     if (result.nResult == 1) {
-                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
-                                         $("#dvPopUpWindow").dialog("close");
-                                         fnBindAllApplicationCategorys();
-                                     }
-                                     else {
-                                         ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
-                                     }
-                                 },
-                                 error: function (result, response) {
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function fnLoadPartialEditApplicationCategory() {
+
+        var gdApplicationCategory = $('#' + sGridViewApplicationCategory);
+        var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
+        var rowData = gdApplicationCategory.getRowData(vApplicationCategoryID);
+
+        var sApplicationCategoryName = rowData.CATEGORY_NAME;
+
+        var dataToSend = JSON.stringify({
+            ID: vApplicationCategoryID,
+            CATEGORY_NAME: sApplicationCategoryName
+        });
+
+        $("#dvSystemPopUpWindow").dialog({
+            title: '@ApplicationCategoryResx.EditCategory',
+            autoOpen: true,
+            width: '30%',
+            resizable: false,
+            modal: true,
+            open: function () {
+                $("#dvSystemPopUpWindowContainer").html("");
+                $.ajax({
+                    url: '@Url.Action("PartialEditApplicationCategory", "ApplicationCategory")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: dataToSend,
+                    async: true,
+                    success: function (response) {
+                        $("#dvSystemPopUpWindowContainer").html(response);
+                        fnApplicationCategoryValidateInitialization("frmEditApplicationCategory");
+
+                    },
+                    error: function (response) {
+                        $("#dvSystemPopUpWindowContainer").html("");
+                    }
+                });
+            },
+            buttons: [
+                 {
+                     text: "@Buttons.Update",
+                     "class": 'btn btn-sm bg-slate',
+                     click: function () {
+                         fnEditApplicationCategory();
+                     }
+                 },
+                 {
+                     text: '@Buttons.Cancel',
+                     "class": 'btn btn-sm btn-default',
+                     click: function () {
+                         $(this).dialog("close");
+                     }
+                 }
+            ]
+        });
+    }
+
+
+    function fnEditApplicationCategory() {
+        if (!$("#frmEditApplicationCategory").valid()) {
+            return false;
+        }
+        var formData = $("#frmEditApplicationCategory").serialize();
+
+        $.ajax({
+            url: '@Url.Action("JEditApplicationCategory", "ApplicationCategory")',
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (result) {
+                if (result.nResult == 1) {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                    $("#dvSystemPopUpWindow").dialog("close");
+                    fnBindAllApplicationCategorys();
+                }
+                else {
+                    ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                }
+
+
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function fnDeleteApplicationCategory() {
+        var gdApplicationCategory = $('#' + sGridViewApplicationCategory);
+        var vApplicationCategoryID = gdApplicationCategory.jqGrid('getGridParam', 'selrow');
+
+        $("#dvSystemPopUpWindow").dialog({
+            title: '@ApplicationCategoryResx.DeleteCategory',
+            autoOpen: true,
+            width: '30%',
+            resizable: false,
+            modal: true,
+            open: function () {
+                var htmlToShow = "<label>@CommonResx.DeleteConfirmationMessage</label>"
+                $("#dvSystemPopUpWindowContainer").html(htmlToShow);
+
+            },
+            buttons: [
+                 {
+                     text: "@Buttons.Delete",
+                     "class": 'btn btn-sm bg-slate',
+                     click: function () {
+                         $.ajax({
+                             url: '@Url.Action("JDeleteApplicationCategory", "ApplicationCategory")',
+                             type: 'POST',
+                             data: { ID: vApplicationCategoryID },
+                             async: true,
+                             success: function (result, response) {
+                                 if (result.nResult == 1) {
+                                     ShowStatusBarNotification(result.sResultMessages, NotificationType.Success);
+                                     $("#dvSystemPopUpWindow").dialog("close");
+                                     $('#dvPopUpWindow').dialog({ 'height': 'auto' });
+                                     fnBindAllApplicationCategorys();
+                                 }
+                                 else {
                                      ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
                                  }
-                             });
-                         }
-                     },
-                     {
-                         text: '@Buttons.Cancel',
-                         "class": 'btn btn-sm btn-default',
-                         click: function () {
-                             $(this).dialog("close");
-                         }
+                             },
+                             error: function (result, response) {
+                                 ShowStatusBarNotification(result.sResultMessages, NotificationType.Error);
+                             }
+                         });
                      }
-                ]
-            });
-        }
-
-        //Entry Point
-        $(document).ready(function () {
-            fnBindAllApplicationCategorys();
+                 },
+                 {
+                     text: '@Buttons.Cancel',
+                     "class": 'btn btn-sm btn-default',
+                     click: function () {
+                         $(this).dialog("close");
+                     }
+                 }
+            ]
         });
-    </script>
-}
+    }
+
+    //Entry Point
+    $(document).ready(function () {
+        fnBindAllApplicationCategorys();
+    });
+</script>

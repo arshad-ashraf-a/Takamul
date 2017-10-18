@@ -43,6 +43,8 @@ namespace Takamul.Models.ViewModel
         public string TicketOwnerUserFullName { get; set; }
         public Nullable<int> TICKET_CREATED_PLATFORM { get; set; }
         public int TicketParticipantNos { get; set; }
+        public int TICKET_CATEGORY_ID { get; set; }
+        public string CATEGORY_NAME { get; set; }
 
         #region :: Constructor ::
         public TicketViewModel()
@@ -71,6 +73,8 @@ namespace Takamul.Models.ViewModel
             this.TicketOwnerUserFullName = string.Empty;
             this.TICKET_CREATED_PLATFORM = -99;
             this.TicketParticipantNos = 0;
+            this.TICKET_CATEGORY_ID = -99;
+            this.CATEGORY_NAME = string.Empty;
         } 
         #endregion
     }

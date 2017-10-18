@@ -96,9 +96,9 @@ namespace Takamul.Services
         public IPagedList<ApplicationCategoryViewModel> IlGetAllApplicationCategories(int nApplicationID, int nPageIndex, int nPageSize, string sColumnName, string sColumnOrder, int nLanguageID)
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
-            var lstMemberInfo = (from c in this.ApplicationCategoryDBSet
+            var lstAppCategories = (from c in this.ApplicationCategoryDBSet
                                  where c.APPLICATION_ID == (int)nApplicationID
-                                 where c.LANGUAGE_ID == nLanguageID
+                                 where nLanguageID == -99 || c.LANGUAGE_ID == nLanguageID
                                  orderby c.ID descending
                                  select new
                                  {
@@ -109,7 +109,7 @@ namespace Takamul.Services
             #endregion
 
             #region Execute The Query And Return Page Result
-            var oTempApplicationCategoryPagedResult = new PagedList<dynamic>(lstMemberInfo, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
+            var oTempApplicationCategoryPagedResult = new PagedList<dynamic>(lstAppCategories, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
             int nTotal = oTempApplicationCategoryPagedResult.TotalCount;
             PagedList<ApplicationCategoryViewModel> plstApplicaiton = new PagedList<ApplicationCategoryViewModel>(oTempApplicationCategoryPagedResult.Select(oApplicationCategoryPagedResult => new ApplicationCategoryViewModel
             {

@@ -319,10 +319,10 @@
     <value>تم الإضافة بنجاح</value>
   </data>
   <data name="MessageAssignFaild" xml:space="preserve">
-    <value>Error Assigning the Question</value>
+    <value>خطأ تعيين البيانات</value>
   </data>
   <data name="MessageAssignSuccess" xml:space="preserve">
-    <value>تم تعيين السؤال بنجاح</value>
+    <value>تم تعيين البيانات بنجاح</value>
   </data>
   <data name="MessageDeleteFailed" xml:space="preserve">
     <value>خطأ بالحذف</value>
@@ -575,5 +575,11 @@
   </data>
   <data name="NotificationLogs" xml:space="preserve">
     <value>سجلات الإشعارات</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="AssignCategory" xml:space="preserve">
+    <value>Assign Category</value>
   </data>
 </root>

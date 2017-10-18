@@ -1,0 +1,44 @@
+﻿@using Takamul.Portal.Resources.Portal.ApplicationCategory;
+
+<div class="panel panel-flat">
+    <div class="panel-body">
+        @Html.AntiForgeryToken()
+
+        @* Category Name *@
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">@ApplicationCategoryResx.CategoryName</label>
+                    <div class="col-lg-8">
+                        <select id="ddlApplicationCategory" name="ddlApplicationCategory"
+                                class="select2 col-xs-12 col-sm-9"
+                                style="padding:0;">
+                            <option value="">&nbsp;</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function fnFillApplicationCategory() {
+        var oParameters = {};
+        oParameters['bLanguageEnable'] = false;
+        FillDropDownRoot('@Url.Action("JGetApplicationCategories", "ApplicationCategory")', 'POST', false, 'ddlApplicationCategory', 'ID', 'CATEGORY_NAME', 'Select Category', '- No Data Found -', oParameters,
+            function () {
+                //Success Function
+                $("#ddlApplicationCategory").select2({ width: '100%' });
+            },
+            function () {
+                //Error
+            })
+    }
+
+    //Entry Point
+    $(document).ready(function () {
+        fnFillApplicationCategory();
+    });
+</script>

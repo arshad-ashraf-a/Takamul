@@ -16,6 +16,7 @@ namespace Takamul.Models
     {
         public int ID { get; set; }
         public Nullable<int> APPLICATION_ID { get; set; }
+        public Nullable<int> EVENT_CATEGORY_ID { get; set; }
         public string EVENT_NAME { get; set; }
         public string EVENT_DESCRIPTION { get; set; }
         public Nullable<System.DateTime> EVENT_DATE { get; set; }
