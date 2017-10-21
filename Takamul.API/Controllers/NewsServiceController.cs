@@ -85,7 +85,8 @@ namespace Takamul.API.Controllers
                             NewsContent = news.NEWS_CONTENT,
                             NewsTitle = news.NEWS_TITLE,
                             PublishedDate = string.Format("{0} {1}", news.PUBLISHED_DATE.ToShortDateString(), news.PUBLISHED_DATE.ToShortTimeString()),
-                            RemoteFilePath = sRemoteFilePath
+                            RemoteFilePath = sRemoteFilePath,
+                            YoutubeLink = news.YOUTUBE_LINK
 
                         };
                         lstTakamulNews.Add(oTakamulNews);
@@ -128,7 +129,8 @@ namespace Takamul.API.Controllers
                     NewsContent = oNewsViewModel.NEWS_CONTENT,
                     NewsTitle = oNewsViewModel.NEWS_TITLE,
                     PublishedDate = string.Format("{0} {1}", oNewsViewModel.PUBLISHED_DATE.ToShortDateString(), oNewsViewModel.PUBLISHED_DATE.ToShortTimeString()),
-                    RemoteFilePath = sRemoteFilePath
+                    RemoteFilePath = sRemoteFilePath,
+                    YoutubeLink = oNewsViewModel.YOUTUBE_LINK
                 };
             }
             return Request.CreateResponse(HttpStatusCode.OK, oTakamulNews);

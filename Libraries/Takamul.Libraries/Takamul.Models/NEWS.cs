@@ -23,6 +23,7 @@ namespace Takamul.Models
         public Nullable<bool> IS_NOTIFY_USER { get; set; }
         public Nullable<bool> IS_ACTIVE { get; set; }
         public Nullable<System.DateTime> PUBLISHED_DATE { get; set; }
+        public string YOUTUBE_LINK { get; set; }
         public Nullable<int> CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public Nullable<int> MODIFIED_BY { get; set; }

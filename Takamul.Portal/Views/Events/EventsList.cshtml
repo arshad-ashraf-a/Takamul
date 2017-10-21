@@ -18,7 +18,7 @@
                             <div class="col-md-12">
                                 <div class="pull-right content-group-sm">
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-4">
                                         <div class="input-group content-group">
                                             <div class="has-feedback has-feedback-left">
                                                 <input type="text" id="txtSearchEventByName" class="form-control input-xs" placeholder="@EventResx.SearchEvent">
@@ -32,8 +32,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <a title="@EventResx.AddNewEvent" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @EventResx.AddNewEvent</a>
+                                    <div class="col-md-8">
+                                        <a title="@EventResx.AddNewEvent" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs pull-right ml-5"><i class="icon-add position-left"></i> @EventResx.AddNewEvent</a>
+                                        <a title="" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs pull-right"><i class="icon-add position-left"></i> @CommonResx.AppCategories</a>
+
                                     </div>
                                 </div>
 
@@ -85,7 +87,8 @@
                     EventImageFilePath: 'EVENT_IMG_FILE_PATH',
                     IsActive: 'IS_ACTIVE',
                     IsNotifyUser: 'IS_NOTIFY_USER',
-                    CreatedDate: 'CREATED_DATE'
+                    CreatedDate: 'CREATED_DATE',
+                    EventCategoryName: "CATEGORY_NAME"
                 };
             var sCaption = '@EventResx.AllEvents';
             var oArrColumnNames = [
@@ -93,6 +96,7 @@
                 '@EventResx.EventImage',
                 '@EventResx.EventName',
                 '@EventResx.EventDate',
+                '@EventResx.EventCategory',
                 '@EventResx.EventLocation',
                 '@EventResx.Latitude',
                 '@EventResx.Longitude',
@@ -155,6 +159,11 @@
                         formatter: 'date',
                         formatoptions: { srcformat: "ISO8601Long", newformat: "d/m/Y h:i A" }
                     },
+                       {
+                           name: ConstantsNames.EventCategoryName,
+                           width: 150, editable: false,
+                           align: EnumColumnsAlignment.Center
+                       },
                     {
                         name: ConstantsNames.EventLocationName,
                         width: 150, editable: false,
@@ -285,6 +294,37 @@
                          }
                      }
                 ]
+            });
+        }
+
+        function fnLoadPartialAppCategories() {
+
+            var dataToSend = JSON.stringify({
+                bLanguageEnable: true
+            });
+
+            $("#dvPopUpWindow").dialog({
+                title: '@CommonResx.Categories',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("ApplicationCategoryList", "ApplicationCategory")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                }
             });
         }
 

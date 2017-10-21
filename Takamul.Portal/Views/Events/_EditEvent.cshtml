@@ -66,6 +66,23 @@
                     </div>
                 </div>
 
+                @* Event Category *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@EventResx.EventCategory</label>
+                            <div class="col-lg-8">
+                                <div class="col-md-4 no-padding">
+                                    <select class="form-control" id="ddlEventCategory" name="ddlEventCategory">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 @* Event Map*@
                 <div class="form-group">
                     <div class="col-md-12">
@@ -191,14 +208,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditEvent()">@Buttons.Update</button>
+                    <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
+                    <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
+                </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnEditEvent()">@Buttons.Update</button>
-            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
-            <a href="@Url.Action("EventsList", "Events")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
-        </div>
+       
     </div>
 }
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB12deZM0ibuAHFBFQk-1vEbLuzbqao64M&libraries=places"></script>
@@ -210,6 +229,22 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
+
+        function fnFillApplicationCategory() {
+            var oParameters = {};
+            oParameters['bLanguageEnable'] = true;
+
+            FillDropDownRoot('@Url.Action("JGetApplicationCategories", "ApplicationCategory")', 'POST', false, 'ddlEventCategory', 'ID', 'CATEGORY_NAME', 'Select Category', ' ', oParameters,
+              function () {
+                  //Success Function
+                  $("#ddlEventCategory").select2({ width: '100%' });
+                  $("#ddlEventCategory").select2('val', String(@Model.EVENT_CATEGORY_ID));
+              },
+              function () {
+                  //Error
+              })
+        }
+
         $(".styled").uniform({
             radioClass: 'choice'
         });
@@ -329,7 +364,13 @@
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
+           
             data.append("EVENT_TIME", $("#txtEventTime").combodate('getValue', 'HH:mm'));
+
+            var nCategoryID = $('#ddlEventCategory').val();
+            if (nCategoryID != -99) {
+                data.append("EVENT_CATEGORY_ID", nCategoryID);
+            }
 
             $.ajax({
                 url: '@Url.Action("JEditEvent", "Events")',
@@ -459,6 +500,7 @@
 
         //Entry Point
         $(document).ready(function () {
+            fnFillApplicationCategory();
             fnEventValidateInitialization();
 
             google.maps.event.addDomListener(window, 'load', LoadGoogleMAP('@Model.EVENT_LATITUDE', '@Model.EVENT_LONGITUDE'));

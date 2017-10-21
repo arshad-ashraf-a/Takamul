@@ -160,6 +160,15 @@ namespace Takamul.Portal.Resources.Portal.News {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to News Category.
+        /// </summary>
+        public static string NewsCategory {
+            get {
+                return ResourceManager.GetString("NewsCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News Content.
         /// </summary>
         public static string NewsContent {
@@ -246,6 +255,15 @@ namespace Takamul.Portal.Resources.Portal.News {
         public static string UploadedNewsImage {
             get {
                 return ResourceManager.GetString("UploadedNewsImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Youtube Link.
+        /// </summary>
+        public static string YoutubeLink {
+            get {
+                return ResourceManager.GetString("YoutubeLink", resourceCulture);
             }
         }
     }

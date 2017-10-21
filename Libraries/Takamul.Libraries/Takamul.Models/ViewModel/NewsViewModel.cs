@@ -36,7 +36,9 @@ namespace Takamul.Models.ViewModel
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public int LANGUAGE_ID { get; set; }
-        public int NEWS_CATEGORY_ID { get; set; }
+        public int? NEWS_CATEGORY_ID { get; set; }
+        public string CATEGORY_NAME { get; set; }
+        public string YOUTUBE_LINK { get; set; }
 
         public virtual ICollection<FileDetail> FileDetails { get; set; }
 
@@ -60,6 +62,8 @@ namespace Takamul.Models.ViewModel
             this.FORMATTED_PUBLISHED_DATE = string.Empty;
             this.LANGUAGE_ID = -99;
             this.NEWS_CATEGORY_ID = -99;
+            this.CATEGORY_NAME = string.Empty;
+            this.YOUTUBE_LINK = string.Empty;
         } 
         #endregion
     }

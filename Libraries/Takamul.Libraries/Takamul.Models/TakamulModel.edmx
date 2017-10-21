@@ -10,7 +10,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CATEGORY_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="CATEGORY_NAME" Type="nvarchar" MaxLength="100" />
           <Property Name="APPLICATION_ID" Type="int" />
           <Property Name="LANGUAGE_ID" Type="int" />
           <Property Name="CREATED_BY" Type="int" />
@@ -120,6 +120,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="IS_NOTIFY_USER" Type="bit" />
           <Property Name="IS_ACTIVE" Type="bit" />
           <Property Name="PUBLISHED_DATE" Type="smalldatetime" />
+          <Property Name="YOUTUBE_LINK" Type="nvarchar" MaxLength="1000" />
           <Property Name="CREATED_BY" Type="int" />
           <Property Name="CREATED_DATE" Type="smalldatetime" />
           <Property Name="MODIFIED_BY" Type="int" />
@@ -177,8 +178,8 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <EntitySet Name="APPLICATION_INFO" EntityType="TakamulModel.APPLICATION_INFO" />
           <EntitySet Name="APPLICATION_MASTER_SETTINGS" EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" />
           <EntitySet Name="APPLICATION_SETTINGS" EntityType="TakamulModel.APPLICATION_SETTINGS" />
-          <EntitySet Name="APPLICATION_CATEGORIES" EntityType="TakamulModel.APPLICATION_CATEGORIES" />
           <EntitySet Name="EVENTS" EntityType="TakamulModel.EVENTS" />
+          <EntitySet Name="APPLICATION_CATEGORIES" EntityType="TakamulModel.APPLICATION_CATEGORIES" />
           <EntitySet Name="NEWS" EntityType="TakamulModel.NEWS" />
           </EntityContainer>
         <EntityType Name="APPLICATIONS">
@@ -260,19 +261,6 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="MODIFIED_BY" Type="Int32" />
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
         </EntityType>
-        <EntityType Name="APPLICATION_CATEGORIES">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CATEGORY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="APPLICATION_ID" Type="Int32" />
-          <Property Name="LANGUAGE_ID" Type="Int32" />
-          <Property Name="CREATED_BY" Type="Int32" />
-          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
-          <Property Name="MODIFIED_BY" Type="Int32" />
-          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="EVENTS">
           <Key>
             <PropertyRef Name="ID" />
@@ -295,6 +283,19 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="EVENT_IMG_FILE_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="LANGUAGE_ID" Type="Int32" />
         </EntityType>
+        <EntityType Name="APPLICATION_CATEGORIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATEGORY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="APPLICATION_ID" Type="Int32" />
+          <Property Name="LANGUAGE_ID" Type="Int32" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIED_BY" Type="Int32" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
         <EntityType Name="NEWS">
           <Key>
             <PropertyRef Name="ID" />
@@ -308,6 +309,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
           <Property Name="IS_NOTIFY_USER" Type="Boolean" />
           <Property Name="IS_ACTIVE" Type="Boolean" />
           <Property Name="PUBLISHED_DATE" Type="DateTime" Precision="0" />
+          <Property Name="YOUTUBE_LINK" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="CREATED_BY" Type="Int32" />
           <Property Name="CREATED_DATE" Type="DateTime" Precision="0" />
           <Property Name="MODIFIED_BY" Type="Int32" />
@@ -390,20 +392,6 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="APPLICATION_CATEGORIES">
-            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_CATEGORIES">
-              <MappingFragment StoreEntitySet="APPLICATION_CATEGORIES">
-                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
-                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
-                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
-                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
-                <ScalarProperty Name="LANGUAGE_ID" ColumnName="LANGUAGE_ID" />
-                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
-                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EVENTS">
             <EntityTypeMapping TypeName="TakamulModel.EVENTS">
               <MappingFragment StoreEntitySet="EVENTS">
@@ -427,6 +415,20 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="APPLICATION_CATEGORIES">
+            <EntityTypeMapping TypeName="TakamulModel.APPLICATION_CATEGORIES">
+              <MappingFragment StoreEntitySet="APPLICATION_CATEGORIES">
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LANGUAGE_ID" ColumnName="LANGUAGE_ID" />
+                <ScalarProperty Name="APPLICATION_ID" ColumnName="APPLICATION_ID" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NEWS">
             <EntityTypeMapping TypeName="TakamulModel.NEWS">
               <MappingFragment StoreEntitySet="NEWS">
@@ -435,6 +437,7 @@ warning 6002: The table/view 'Takamul.dbo.APPLICATION_SETTINGS' does not have a 
                 <ScalarProperty Name="MODIFIED_BY" ColumnName="MODIFIED_BY" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="YOUTUBE_LINK" ColumnName="YOUTUBE_LINK" />
                 <ScalarProperty Name="PUBLISHED_DATE" ColumnName="PUBLISHED_DATE" />
                 <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
                 <ScalarProperty Name="IS_NOTIFY_USER" ColumnName="IS_NOTIFY_USER" />

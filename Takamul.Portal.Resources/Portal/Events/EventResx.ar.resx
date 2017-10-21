@@ -153,6 +153,9 @@
   <data name="EnterSearchPlace" xml:space="preserve">
     <value>أدخل موقع البحث مثل مسقط جراند مول</value>
   </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Event Category</value>
+  </data>
   <data name="EventDate" xml:space="preserve">
     <value>تاريخ المناسبة</value>
   </data>

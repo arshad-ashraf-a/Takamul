@@ -88,6 +88,32 @@
                     </div>
                 </div>
 
+                @* News Category *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@NewsResx.NewsCategory</label>
+                            <div class="col-lg-2">
+                                <select class="form-control" id="ddlNewsCategory" name="ddlNewsCategory">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Youtube Link *@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">@NewsResx.YoutubeLink&nbsp;</label>
+                            <div class="col-lg-8">
+                                @Html.EditorFor(model => model.YOUTUBE_LINK, new { htmlAttributes = new { @class = "form-control", placeholder = @NewsResx.YoutubeLink } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 @* News Image *@
                 <div class="form-group">
                     <div class="col-md-12">
@@ -117,6 +143,21 @@
 @section InlineScriptsRelated
 {
     <script type="text/javascript">
+
+        function fnFillApplicationCategory() {
+            var oParameters = {};
+            oParameters['bLanguageEnable'] = true;
+
+            FillDropDownRoot('@Url.Action("JGetApplicationCategories", "ApplicationCategory")', 'POST', false, 'ddlNewsCategory', 'ID', 'CATEGORY_NAME', 'Select Category', ' ', oParameters,
+              function () {
+                  //Success Function
+                  $("#ddlNewsCategory").select2({ width: '100%' });
+              },
+              function () {
+                  //Error
+              })
+        }
+
         // Month and year menu
         $(".datepicker-menus").datepicker({
             changeMonth: true,
@@ -255,7 +296,14 @@
                 data.append(input.name, input.value);
             });
             data.append("PUBLISHED_TIME", $("#txtPublishedTime").combodate('getValue', 'HH:mm'));
+            //data.delete("NEWS_CONTENT");
+            //data.append("NEWS_CONTENT", $("#NEWS_CONTENT").val().replace(/\r?\n/g, '</br>'));
 
+            var nCategoryID = $('#ddlNewsCategory').val();
+            if (nCategoryID != -99) {
+                data.append("NEWS_CATEGORY_ID", nCategoryID);
+            }
+            
             debugger;
             $.ajax({
                 url: '@Url.Action("JSaveNews", "News")',
@@ -288,10 +336,12 @@
             $(".filename").text("");
             $("#IS_ACTIVE").attr('checked', false);
             $("#IS_NOTIFY_USER").attr('checked', false);
+            $("#YOUTUBE_LINK").val("");
         }
 
         //Entry Point
         $(document).ready(function () {
+            fnFillApplicationCategory();
             fnNewsValidateInitialization();
 
             // Initialize

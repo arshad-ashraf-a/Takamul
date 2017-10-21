@@ -196,6 +196,15 @@ namespace Takamul.Portal.Resources.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App Categories.
+        /// </summary>
+        public static string AppCategories {
+            get {
+                return ResourceManager.GetString("AppCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App DashBoard.
         /// </summary>
         public static string AppDashBoard {

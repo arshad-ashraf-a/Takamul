@@ -153,6 +153,9 @@
   <data name="EnterSearchPlace" xml:space="preserve">
     <value>Enter Search Place e.g Muscat Grand Mall</value>
   </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Event Category</value>
+  </data>
   <data name="EventDate" xml:space="preserve">
     <value>Event Date</value>
   </data>
@@ -160,7 +163,7 @@
     <value>Event Description</value>
   </data>
   <data name="EventImage" xml:space="preserve">
-    <value>EventI mage</value>
+    <value>Event Image</value>
   </data>
   <data name="EventLocation" xml:space="preserve">
     <value>Event Location</value>

@@ -30,9 +30,11 @@ namespace Takamul.Services
         #region Members
         private readonly TakamulConnection oTakamulConnection;
         private IDbSet<NEWS> oNewsDBSet;// Represent DB Set Table For EVENTS
+        private IDbSet<APPLICATION_CATEGORIES> oApplicationCategoryDBSet;// Represent DB Set Table For APPLICATION_CATEGORIES
         #endregion
 
         #region Properties
+
         #region Property :: EventsDBSet
         /// <summary>
         ///  Get NEWS DBSet Object
@@ -49,6 +51,24 @@ namespace Takamul.Services
             }
         }
         #endregion
+
+        #region Property :: ApplicationCategoryDBSet
+        /// <summary>
+        ///  Get APPLICATION_CATEGORIES DBSet Object
+        /// </summary>
+        private IDbSet<APPLICATION_CATEGORIES> ApplicationCategoryDBSet
+        {
+            get
+            {
+                if (oApplicationCategoryDBSet == null)
+                {
+                    oApplicationCategoryDBSet = oTakamulConnection.Set<APPLICATION_CATEGORIES>();
+                }
+                return oApplicationCategoryDBSet;
+            }
+        }
+        #endregion    
+
         #endregion
 
         #region :: Constructor ::
@@ -126,6 +146,8 @@ namespace Takamul.Services
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
             var lstNews = (from c in this.NewsDBSet
+                           join p in this.ApplicationCategoryDBSet on c.NEWS_CATEGORY_ID equals p.ID into gj
+                           from x in gj.DefaultIfEmpty()
                            where sSearchByNewsName == null || c.NEWS_TITLE.Contains(sSearchByNewsName)
                            where c.APPLICATION_ID == (int)nApplicationID
                            where c.LANGUAGE_ID == nLanguageID
@@ -140,13 +162,14 @@ namespace Takamul.Services
                                NEWS_IMG_FILE_PATH = c.NEWS_IMG_FILE_PATH,
                                IS_ACTIVE = c.IS_ACTIVE,
                                CREATED_DATE = c.CREATED_DATE,
+                               CATEGORY_NAME = x.CATEGORY_NAME
                            });
             #endregion
 
             #region Execute The Query And Return Page Result
             var oTempNewsPagedResult = new PagedList<dynamic>(lstNews, nPageIndex - 1, nPageSize, sColumnName, sColumnOrder);
             int nTotal = oTempNewsPagedResult.TotalCount;
-            PagedList<NewsViewModel> plstApplicaiton = new PagedList<NewsViewModel>(oTempNewsPagedResult.Select(oNewsPagedResult => new NewsViewModel
+            PagedList<NewsViewModel> plstNews = new PagedList<NewsViewModel>(oTempNewsPagedResult.Select(oNewsPagedResult => new NewsViewModel
             {
                 ID = oNewsPagedResult.ID,
                 NEWS_TITLE = oNewsPagedResult.NEWS_TITLE,
@@ -156,15 +179,16 @@ namespace Takamul.Services
                 NEWS_IMG_FILE_PATH = oNewsPagedResult.NEWS_IMG_FILE_PATH,
                 IS_ACTIVE = oNewsPagedResult.IS_ACTIVE,
                 CREATED_DATE = oNewsPagedResult.CREATED_DATE,
+                CATEGORY_NAME = oNewsPagedResult.CATEGORY_NAME
 
             }), oTempNewsPagedResult.PageIndex, oTempNewsPagedResult.PageSize, oTempNewsPagedResult.TotalCount);
 
-            if (plstApplicaiton.Count > 0)
+            if (plstNews.Count > 0)
             {
-                plstApplicaiton[0].TotalCount = nTotal;
+                plstNews[0].TotalCount = nTotal;
             }
 
-            return plstApplicaiton;
+            return plstNews;
             #endregion
         }
         #endregion
@@ -194,11 +218,16 @@ namespace Takamul.Services
                         IS_ACTIVE = oNewsViewModel.IS_ACTIVE,
                         IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER,
                         LANGUAGE_ID = oNewsViewModel.LANGUAGE_ID,
+                        YOUTUBE_LINK = oNewsViewModel.YOUTUBE_LINK,
                         CREATED_BY = oNewsViewModel.CREATED_BY,
                         CREATED_DATE = DateTime.Now
-
                     };
-                    
+
+                    if (oNewsViewModel.NEWS_CATEGORY_ID != -99)
+                    {
+                        oNews.NEWS_CATEGORY_ID = oNewsViewModel.NEWS_CATEGORY_ID;
+                    }
+
                     this.oTakamulConnection.NEWS.Add(oNews);
                     
                     if (this.intCommit() > 0)
@@ -267,8 +296,18 @@ namespace Takamul.Services
                 }
                 oNews.IS_ACTIVE = oNewsViewModel.IS_ACTIVE;
                 oNews.IS_NOTIFY_USER = oNewsViewModel.IS_NOTIFY_USER;
+                oNews.YOUTUBE_LINK = oNewsViewModel.YOUTUBE_LINK;
                 oNews.MODIFIED_BY = oNewsViewModel.MODIFIED_BY;
                 oNews.MODIFIED_DATE = DateTime.Now;
+
+                if (oNewsViewModel.NEWS_CATEGORY_ID != -99)
+                {
+                    oNews.NEWS_CATEGORY_ID = oNewsViewModel.NEWS_CATEGORY_ID;
+                }
+                else
+                {
+                    oNews.NEWS_CATEGORY_ID = null;
+                }
 
                 this.NewsDBSet.Attach(oNews);
                 this.oTakamulConnection.Entry(oNews).State = EntityState.Modified;

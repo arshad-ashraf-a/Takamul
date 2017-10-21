@@ -24,6 +24,7 @@ namespace Takamul.Models.ApiViewModel
         public string Base64NewsImage { get; set; }
         public string PublishedDate { get; set; }
         public string RemoteFilePath { get; set; }
+        public string YoutubeLink { get; set; }
 
         #region :: Constructor ::
         public TakamulNews()
@@ -35,6 +36,7 @@ namespace Takamul.Models.ApiViewModel
             this.Base64NewsImage = string.Empty;
             this.PublishedDate = string.Empty;
             this.RemoteFilePath = string.Empty;
+            this.YoutubeLink = string.Empty;
         } 
         #endregion
     }

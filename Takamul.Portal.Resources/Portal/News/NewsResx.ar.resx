@@ -150,6 +150,9 @@
   <data name="News" xml:space="preserve">
     <value>أخبار</value>
   </data>
+  <data name="NewsCategory" xml:space="preserve">
+    <value>News Category</value>
+  </data>
   <data name="NewsContent" xml:space="preserve">
     <value>محتوى الأخبار</value>
   </data>
@@ -176,5 +179,8 @@
   </data>
   <data name="UploadedNewsImage" xml:space="preserve">
     <value>تحميل صورة الأخبار</value>
+  </data>
+  <data name="YoutubeLink" xml:space="preserve">
+    <value>Youtube Link</value>
   </data>
 </root>

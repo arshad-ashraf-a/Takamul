@@ -582,4 +582,7 @@
   <data name="AssignCategory" xml:space="preserve">
     <value>Assign Category</value>
   </data>
+  <data name="AppCategories" xml:space="preserve">
+    <value>App Categories</value>
+  </data>
 </root>

@@ -169,6 +169,15 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event Category.
+        /// </summary>
+        public static string EventCategory {
+            get {
+                return ResourceManager.GetString("EventCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Date.
         /// </summary>
         public static string EventDate {
@@ -187,7 +196,7 @@ namespace Takamul.Portal.Resources.Portal.Events {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EventI mage.
+        ///   Looks up a localized string similar to Event Image.
         /// </summary>
         public static string EventImage {
             get {

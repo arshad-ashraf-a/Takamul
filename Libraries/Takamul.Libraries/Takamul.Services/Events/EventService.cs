@@ -27,9 +27,11 @@ namespace Takamul.Services
         #region Members
         private readonly TakamulConnection oTakamulConnection;
         private IDbSet<EVENTS> oEventsDBSet;// Represent DB Set Table For EVENTS
+        private IDbSet<APPLICATION_CATEGORIES> oApplicationCategoryDBSet;// Represent DB Set Table For APPLICATION_CATEGORIES
         #endregion
 
         #region Properties
+
         #region Property :: EventsDBSet
         /// <summary>
         ///  Get EVENTS DBSet Object
@@ -46,6 +48,23 @@ namespace Takamul.Services
             }
         }
         #endregion
+
+        #region Property :: ApplicationCategoryDBSet
+        /// <summary>
+        ///  Get APPLICATION_CATEGORIES DBSet Object
+        /// </summary>
+        private IDbSet<APPLICATION_CATEGORIES> ApplicationCategoryDBSet
+        {
+            get
+            {
+                if (oApplicationCategoryDBSet == null)
+                {
+                    oApplicationCategoryDBSet = oTakamulConnection.Set<APPLICATION_CATEGORIES>();
+                }
+                return oApplicationCategoryDBSet;
+            }
+        }
+        #endregion    
         #endregion
 
         #region :: Constructor ::
@@ -96,6 +115,8 @@ namespace Takamul.Services
         {
             #region Build Left Join Query And Keep All Query Source As IQueryable To Avoid Any Immediate Execution DataBase
             var lstEvents = (from c in this.EventsDBSet
+                             join p in this.ApplicationCategoryDBSet on c.EVENT_CATEGORY_ID equals p.ID into gj
+                             from x in gj.DefaultIfEmpty()
                              where sSearchByEventName == null || c.EVENT_NAME.Contains(sSearchByEventName)
                              where c.APPLICATION_ID == (int)nApplicationID
                              where c.LANGUAGE_ID == nLanguageID
@@ -113,6 +134,7 @@ namespace Takamul.Services
                                  IS_ACTIVE = c.IS_ACTIVE,
                                  IS_NOTIFY_USER = c.IS_NOTIFY_USER,
                                  CREATED_DATE = c.CREATED_DATE,
+                                 CATEGORY_NAME = x.CATEGORY_NAME
 
                              });
             #endregion
@@ -133,6 +155,7 @@ namespace Takamul.Services
                 IS_ACTIVE = oEventPagedResult.IS_ACTIVE,
                 IS_NOTIFY_USER = oEventPagedResult.IS_NOTIFY_USER,
                 CREATED_DATE = oEventPagedResult.CREATED_DATE,
+                CATEGORY_NAME = oEventPagedResult.CATEGORY_NAME
 
             }), oTempEventPagedResult.PageIndex, oTempEventPagedResult.PageSize, oTempEventPagedResult.TotalCount);
 
@@ -207,6 +230,11 @@ namespace Takamul.Services
                         oEvent.EVENT_IMG_FILE_PATH = oEventViewModel.EVENT_IMG_FILE_PATH;
                     }
 
+                    if (oEventViewModel.EVENT_CATEGORY_ID != -99)
+                    {
+                        oEvent.EVENT_CATEGORY_ID = oEventViewModel.EVENT_CATEGORY_ID;
+                    }
+
                     this.oTakamulConnection.EVENTS.Add(oEvent);
 
                     if (this.intCommit() > 0)
@@ -278,6 +306,15 @@ namespace Takamul.Services
                 }
                 oEvent.MODIFIED_BY = oEventViewModel.CREATED_BY;
                 oEvent.MODIFIED_DATE = DateTime.Now;
+                if (oEventViewModel.EVENT_CATEGORY_ID != -99)
+                {
+                    oEvent.EVENT_CATEGORY_ID = oEventViewModel.EVENT_CATEGORY_ID;
+                }
+                else
+                {
+                    oEvent.EVENT_CATEGORY_ID = null;
+                }
+
                 this.EventsDBSet.Attach(oEvent);
                 this.oTakamulConnection.Entry(oEvent).State = EntityState.Modified;
 

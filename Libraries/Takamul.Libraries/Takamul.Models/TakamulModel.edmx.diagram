@@ -11,8 +11,8 @@
         <EntityTypeShape EntityType="TakamulModel.APPLICATION_INFO" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="TakamulModel.APPLICATION_MASTER_SETTINGS" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="TakamulModel.APPLICATION_SETTINGS" Width="1.5" PointX="7.375" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TakamulModel.APPLICATION_CATEGORIES" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="TakamulModel.EVENTS" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="TakamulModel.APPLICATION_CATEGORIES" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="TakamulModel.NEWS" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>

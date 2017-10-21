@@ -30,22 +30,22 @@ namespace Takamul.Services
         #endregion
 
         #region Properties
-        #region Property :: ApplicationCategoryDBSet
-        /// <summary>
-        ///  Get APPLICATION_CATEGORIES DBSet Object
-        /// </summary>
-        private IDbSet<APPLICATION_CATEGORIES> ApplicationCategoryDBSet
-        {
-            get
+            #region Property :: ApplicationCategoryDBSet
+            /// <summary>
+            ///  Get APPLICATION_CATEGORIES DBSet Object
+            /// </summary>
+            private IDbSet<APPLICATION_CATEGORIES> ApplicationCategoryDBSet
             {
-                if (oApplicationCategoryDBSet == null)
+                get
                 {
-                    oApplicationCategoryDBSet = oTakamulConnection.Set<APPLICATION_CATEGORIES>();
+                    if (oApplicationCategoryDBSet == null)
+                    {
+                        oApplicationCategoryDBSet = oTakamulConnection.Set<APPLICATION_CATEGORIES>();
+                    }
+                    return oApplicationCategoryDBSet;
                 }
-                return oApplicationCategoryDBSet;
             }
-        }
-        #endregion
+            #endregion
         #endregion
 
         #region :: Constructor ::

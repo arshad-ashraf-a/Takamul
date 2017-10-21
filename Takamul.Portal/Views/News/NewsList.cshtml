@@ -17,8 +17,7 @@
                         <div class="heading-elements">
                             <div class="col-md-12">
                                 <div class="pull-right content-group-sm">
-
-                                    <div class="col-md-8">
+                                    <div class="col-md-4">
                                         <div class="input-group content-group">
                                             <div class="has-feedback has-feedback-left">
                                                 <input type="text" id="txtSearchEventByName" class="form-control input-xs" placeholder="@NewsResx.SearchNews">
@@ -32,8 +31,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <a title="@NewsResx.AddNewNews" href="@Url.Action("PartialAddNews", "News")" class="btn btn-primary btn-xs"><i class="icon-add position-left"></i> @NewsResx.AddNewNews</a>
+                                    <div class="col-md-8">
+                                        <a title="@NewsResx.AddNewNews" href="@Url.Action("PartialAddNews", "News")" class="btn btn-primary btn-xs pull-right ml-5"><i class="icon-add position-left"></i> @NewsResx.AddNews</a>
+                                        <a title="" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs pull-right"><i class="icon-add position-left"></i> @CommonResx.AppCategories</a>
                                     </div>
                                 </div>
 
@@ -81,13 +81,18 @@
                     PublishedDate: 'PUBLISHED_DATE',
                     NotifyUser: 'IS_NOTIFY_USER',
                     IsActive: 'IS_ACTIVE',
-                    CreatedDate: 'CREATED_DATE'
+                    CreatedDate: 'CREATED_DATE',
+                    CreatedDate: 'CREATED_DATE',
+                    NewsCategoryName: "CATEGORY_NAME",
+                    NewsCategoryID: "NEWS_CATEGORY_ID",
                 };
             var sCaption = '@NewsResx.AllNews';
             var oArrColumnNames = [
                 '',//Hidden Columns Represent ID Int Value
+                '',//Hidden Columns Represent NEWS_CATEGORY_ID Int Value
                 '@NewsResx.NewsImage',
                 '@NewsResx.NewsTitle',
+                '@NewsResx.NewsCategory',
                 '@NewsResx.PublishedDate',
                 '@NewsResx.NotifyUser',
                 '@NewsResx.IsActive',
@@ -118,6 +123,10 @@
                         name: ConstantsNames.ID, editable: false,
                         key: true, hidden: true
                     },
+                     {
+                         name: ConstantsNames.NewsCategoryID, editable: false,
+                         key: false, hidden: true
+                     },
                       {
                           width: 100, editable: false,
                           align: EnumColumnsAlignment.Center,
@@ -127,12 +136,12 @@
                               var htmlString = '--';
                               if (sNewImageFilePath != "" && sNewImageFilePath != null) {
                                   link = '@Url.Content(string.Format("{0}_#NewsImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
-                                  debugger;
+
                                   link = link.replace("_#NewsImage#", sNewImageFilePath);
                                   htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
 
                               }
-                             
+
                               return htmlString;
                           }
                       },
@@ -141,6 +150,11 @@
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center
                     },
+                      {
+                          name: ConstantsNames.NewsCategoryName,
+                          width: 150, editable: false,
+                          align: EnumColumnsAlignment.Center
+                      },
                     {
                         name: ConstantsNames.PublishedDate,
                         width: 150, editable: false,
@@ -203,18 +217,18 @@
         }
 
         function fnEditNews() {
-            var gdEvent = $('#' + sGridViewSelector);
-            var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
+            var gdNews = $('#' + sGridViewSelector);
+            var vNewsID = gdNews.jqGrid('getGridParam', 'selrow');
 
             var link = '@Url.Action("PartialEditNews", "News", new { nNewsID = "replace" })';
-            link = link.replace("replace", vEventID);
+            link = link.replace("replace", vNewsID);
 
             window.location.href = link;
         }
 
         function fnDeleteNews() {
-            var gdEvent = $('#' + sGridViewSelector);
-            var vEventID = gdEvent.jqGrid('getGridParam', 'selrow');
+            var gdNews = $('#' + sGridViewSelector);
+            var vEventID = gdNews.jqGrid('getGridParam', 'selrow');
 
             $("#dvPopUpWindow").dialog({
                 title: '@NewsResx.DeleteNews',
@@ -260,6 +274,37 @@
                          }
                      }
                 ]
+            });
+        }
+
+        function fnLoadPartialAppCategories() {
+
+            var dataToSend = JSON.stringify({
+                bLanguageEnable: true
+            });
+
+            $("#dvPopUpWindow").dialog({
+                title: '@CommonResx.Categories',
+                autoOpen: true,
+                width: '50%',
+                resizable: false,
+                modal: true,
+                open: function () {
+                    $("#dvPopUpWindowContainer").html("");
+                    $.ajax({
+                        url: '@Url.Action("ApplicationCategoryList", "ApplicationCategory")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: dataToSend,
+                        async: true,
+                        success: function (response) {
+                            $("#dvPopUpWindowContainer").html(response);
+                        },
+                        error: function (response) {
+                            $("#dvPopUpWindowContainer").html("");
+                        }
+                    });
+                }
             });
         }
 

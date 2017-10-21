@@ -39,7 +39,8 @@ namespace Takamul.Models
         public int LANGUAGE_ID { get; set; }
         public string FORMATTED_EVENT_DATE { get; set; }
         public string EVENT_TIME { get; set; }
-        public int EVENT_CATEGORY_ID { get; set; }
+        public int? EVENT_CATEGORY_ID { get; set; }
+        public string CATEGORY_NAME { get; set; }
 
         #region :: Constructor ::
         public EventViewModel()
@@ -63,6 +64,7 @@ namespace Takamul.Models
             this.FORMATTED_EVENT_DATE = string.Empty;
             this.CREATED_BY = -99;
             this.EVENT_CATEGORY_ID = -99;
+            this.CATEGORY_NAME = string.Empty;
         }
         #endregion
     }

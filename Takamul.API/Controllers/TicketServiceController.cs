@@ -201,6 +201,7 @@ namespace Takamul.API.Controllers
                     TicketStatusID = oTicketViewModel.TICKET_STATUS_ID,
                     TicketStatusRemark = oTicketViewModel.TICKET_STATUS_REMARK,
                     TicketStatusName = oTicketViewModel.TICKET_STATUS_NAME,
+                    CreatedDate = string.Format("{0} {1}", oTicketViewModel.CREATED_DATE.ToShortDateString(), oTicketViewModel.CREATED_DATE.ToShortTimeString()),
                     RemoteFilePath = sRemoteFilePath
                 };
                 oTakamulTicketChatRepo.TakamulTicket = oTakamulTicket;

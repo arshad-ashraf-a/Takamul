@@ -237,6 +237,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JSaveEvent(EventViewModel oEventViewModel)
         {
+            oEventViewModel.EVENT_DESCRIPTION = oEventViewModel.EVENT_DESCRIPTION.Replace(Environment.NewLine, "</br>");
             Response oResponseResult = null;
             string sRealFileName = string.Empty;
             string sModifiedFileName = string.Empty;
@@ -359,6 +360,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JEditEvent(EventViewModel oEventViewModel)
         {
+            oEventViewModel.EVENT_DESCRIPTION = oEventViewModel.EVENT_DESCRIPTION.Replace(Environment.NewLine, "</br>");
             Response oResponseResult = null;
             string sRealFileName = string.Empty;
             string sModifiedFileName = string.Empty;

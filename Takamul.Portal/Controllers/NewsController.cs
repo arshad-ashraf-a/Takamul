@@ -113,7 +113,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JSaveNews(NewsViewModel oNewsViewModel)
         {
-           
+            oNewsViewModel.NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT.Replace(Environment.NewLine, "</br>");
             Response oResponseResult = null;
 
             var oFile = System.Web.HttpContext.Current.Request.Files["NewsImage"];
@@ -232,6 +232,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JEditNews(NewsViewModel oNewsViewModel)
         {
+            oNewsViewModel.NEWS_CONTENT = oNewsViewModel.NEWS_CONTENT.Replace(Environment.NewLine, "</br>");
             Response oResponseResult = null;
             string sRealFileName = string.Empty;
             string sModifiedFileName = string.Empty;
@@ -382,6 +383,7 @@ namespace LDC.eServices.Portal.Controllers
             return this.OperationResultMessages;
         }
         #endregion
+
         #endregion
     }
 }
