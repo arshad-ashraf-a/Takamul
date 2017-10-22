@@ -125,14 +125,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveNews()">@Buttons.Save</button>
+                    <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
+                    <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
+                </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fnSaveNews()">@Buttons.Save</button>
-            <button type="submit" class="btn bg-slate-300 btn-lg" onclick="fnClearControls(); return false;">@Buttons.Clear</button>
-            <a href="@Url.Action("NewsList", "News")" class="btn bg-brown-300 btn-lg" return false;"><i class="fa fa-mail-reply-all position-left"></i>@Buttons.Back</a>
-        </div>
+       
     </div>
 }
 @section SpecificPluginScripts

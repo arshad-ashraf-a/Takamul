@@ -98,15 +98,22 @@ namespace Takamul.API.Controllers
                         //Send OTP via SMS and update in DB
                         SMSNotification oSMSNotification = new SMSNotification();
                         SMSViewModel oSMSViewModel = new SMSViewModel();
-                        oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;
+                        //oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;                    
+                        oSMSViewModel.Language = 64;
                         string sMessage = string.Empty;
                         if (enmUserLanuage == Languages.English)
                         {
-                            sMessage = string.Format("Your One-Time-Password (OTP) is {0} , Enter this password to complete your registration with app.", oUserInfoViewModel.OTP_NUMBER);
+                            sMessage = string.Format("Thank you for registering with {0}, Your activation code is : {1}.", oResponse.ResponseCode, oUserInfoViewModel.OTP_NUMBER);
                         }
                         else
                         {
-                            sMessage = string.Format("رمز التفعيل هو {0} أدخال كلمة السر لأنهاء التسجيل", oUserInfoViewModel.OTP_NUMBER);
+                            string sMessagePart1 = "نشكرك على تسجيلك في تطبيق ";
+                            sMessagePart1 = sMessagePart1 + oResponse.ResponseCode + ", ";
+
+                            string sMessagePart2 = "رمز التفعيل الخاص بك هو : ";
+                            sMessagePart2 = sMessagePart2 + oUserInfoViewModel.OTP_NUMBER;
+
+                            sMessage = sMessagePart1 + sMessagePart2;
                         }
                         oSMSViewModel.Message = sMessage;
                         oSMSViewModel.Recipient = oUserInfoViewModel.PHONE_NUMBER;
@@ -182,15 +189,22 @@ namespace Takamul.API.Controllers
                     //Send OTP via SMS and update in DB
                     SMSNotification oSMSNotification = new SMSNotification();
                     SMSViewModel oSMSViewModel = new SMSViewModel();
-                    oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;
+                    //oSMSViewModel.Language = enmUserLanuage == Languages.English ? 0 : 64;
+                    oSMSViewModel.Language = 64;
                     string sMessage = string.Empty;
                     if (enmUserLanuage == Languages.English)
                     {
-                        sMessage = string.Format("Your One-Time-Password (OTP) is {0} , Enter this password to complete your registration with app.", nOTPNumber);
+                        sMessage = string.Format("Thank you for registering with {0}, Your activation code is : {1}.", oResponse.ResponseCode, nOTPNumber);
                     }
                     else
                     {
-                        sMessage = string.Format("رمز التفعيل هو {0} أدخال كلمة السر لأنهاء التسجيل", nOTPNumber);
+                        string sMessagePart1 = "نشكرك على تسجيلك في تطبيق ";
+                        sMessagePart1 = sMessagePart1 + oResponse.ResponseCode + ", ";
+
+                        string sMessagePart2 = "رمز التفعيل الخاص بك هو : ";
+                        sMessagePart2 = sMessagePart2 + nOTPNumber;
+
+                        sMessage = sMessagePart1 + sMessagePart2;
                     }
                     oSMSViewModel.Message = sMessage;
                     oSMSViewModel.Recipient = sPhoneNumber;

@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">@EventResx.EventDescription&nbsp;<span class="text-danger">*</span></label>
                             <div class="col-lg-5">
-                                <textarea class="form-control" rows="4" placeholder="@EventResx.EventDescription" cols="5" id="EVENT_DESCRIPTION" name="EVENT_DESCRIPTION">@Model.EVENT_DESCRIPTION</textarea>
+                                <textarea class="form-control" rows="4" placeholder="@EventResx.EventDescription" cols="5" id="EVENT_DESCRIPTION" name="EVENT_DESCRIPTION">@Model.EVENT_DESCRIPTION.Replace("</br>", Environment.NewLine)</textarea>
                             </div>
                         </div>
 

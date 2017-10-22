@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">@MemberInfoResx.Description&nbsp;<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            @Html.EditorFor(model => model.MEMBER_INFO_DESCRIPTION, new { htmlAttributes = new { @class = "form-control", placeholder = @MemberInfoResx.MemberInfoDescription } })
+                            <textarea class="form-control" rows="4" placeholder="@MemberInfoResx.MemberInfoDescription" cols="5" id="MEMBER_INFO_DESCRIPTION" name="MEMBER_INFO_DESCRIPTION">@Model.MEMBER_INFO_DESCRIPTION.Replace("</br>",Environment.NewLine)</textarea>
                         </div>
                     </div>
 

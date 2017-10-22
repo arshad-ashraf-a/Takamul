@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <a title="@EventResx.AddNewEvent" href="@Url.Action("AddNewEvent", "Events")" class="btn btn-primary btn-xs pull-right ml-5"><i class="icon-add position-left"></i> @EventResx.AddNewEvent</a>
-                                        <a title="" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs pull-right"><i class="icon-add position-left"></i> @CommonResx.AppCategories</a>
+                                        <a title="" href="#" onclick="fnLoadPartialAppCategories();" class="btn btn-primary btn-xs pull-right mt-5"><i class="icon-add position-left"></i> @CommonResx.AppCategories</a>
 
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
 
                              if (sEventImageFilePath != "" && sEventImageFilePath != null) {
                                  link = '@Url.Content(string.Format("{0}_#EventImage#", CommonHelper.sGetConfigKeyValue(ConstantNames.RemoteFileServerPath)))';
-                                 debugger;
+                                 
                                  link = link.replace("_#EventImage#", sEventImageFilePath);
                                  htmlString = '<img height="100" width="100" src="' + link + '" alt="Image could not display" />';
 

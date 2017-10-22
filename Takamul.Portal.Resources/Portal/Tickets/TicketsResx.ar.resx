@@ -256,9 +256,15 @@
     <value>تحميل ملف.</value>
   </data>
   <data name="LastConversation" xml:space="preserve">
-    <value>Last Conversation</value>
+    <value>آخر محادثة</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>الفئة</value>
+  </data>
+  <data name="AddParticipants" xml:space="preserve">
+    <value>أضف مشاركين</value>
+  </data>
+  <data name="AssignCategory" xml:space="preserve">
+    <value>تعيين الفئة</value>
   </data>
 </root>

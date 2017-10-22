@@ -70,6 +70,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Participants.
+        /// </summary>
+        public static string AddParticipants {
+            get {
+                return ResourceManager.GetString("AddParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Ticket.
         /// </summary>
         public static string AddTicket {
@@ -102,6 +111,15 @@ namespace Takamul.Portal.Resources.Portal.Tickets {
         public static string AllTickets {
             get {
                 return ResourceManager.GetString("AllTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssignCategory.
+        /// </summary>
+        public static string AssignCategory {
+            get {
+                return ResourceManager.GetString("AssignCategory", resourceCulture);
             }
         }
         

@@ -183,6 +183,7 @@
                 '',//Hidden Columns Represent TICKET_STATUS_NAME Int Value
                 '',//Hidden Columns Represent TICKET_DESCRIPTION Int Value
                 '',//Hidden Columns Represent DEFAULT_IMAGE Int Value
+                '',//Hidden Columns Represent TICKET_NAME Int Value
                 '@TicketsResx.TicketImage',
                 '@TicketsResx.Category',
                 '@TicketsResx.TicketName',
@@ -217,8 +218,8 @@
                                         { Caption: "@TicketsResx.GoToChats", EventName: "fnGoToTicketDetails();", RowId: true },
                                         { Caption: "@TicketsResx.ChangeTicketStatus", EventName: "fnLoadPartialUpdateTicket();", RowId: true },
                                         { Caption: "@TicketsResx.ViewTicketInfo", EventName: "fnLoadPartialViewTicketInfo();", RowId: true },
-                                        { Caption: "Add Participants", EventName: "fnLoadPartialAddTicketParticipants();", RowId: true },
-                                        { Caption: "Assign Category", EventName: "fnLoadAssignCategory();", RowId: true }
+                                        { Caption: "@TicketsResx.AddParticipants", EventName: "fnLoadPartialAddTicketParticipants();", RowId: true },
+                                        { Caption: "@TicketsResx.AssignCategory", EventName: "fnLoadAssignCategory();", RowId: true }
             ];
             var oArrColsModel = [
                     {
@@ -253,6 +254,10 @@
                           name: ConstantsNames.DefaultImage, editable: false,
                           key: false, hidden: true
                       },
+                       {
+                           name: ConstantsNames.TicketName, editable: false,
+                           key: false, hidden: true
+                       },
                       {
                           width: 60, editable: false,
                           align: EnumColumnsAlignment.Center,
@@ -276,7 +281,6 @@
                          align: EnumColumnsAlignment.Center
                      },
                     {
-                        name: ConstantsNames.TicketName,
                         width: 150, editable: false,
                         align: EnumColumnsAlignment.Center,
                         formatter: function (cellvalue, options, rowObject) {

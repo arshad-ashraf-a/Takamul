@@ -103,15 +103,18 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, oUserInfoViewModel.OTP_NUMBER, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_DeviceID", SqlDbType.VarChar, oUserInfoViewModel.DEVICE_ID, 50, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PreferedLanguageID", SqlDbType.Int, oUserInfoViewModel.PREFERED_LANGUAGE_ID, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_ApplicationName", SqlDbType.NVarChar, ParameterDirection.Output,200));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_UserID", SqlDbType.Int, ParameterDirection.Output));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("InsertMobileUser", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[14].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[15].Value.ToString());
                 if (oResponse.OperationResult == enumOperationResult.Success)
                 {
+                    //Application Name
+                    oResponse.ResponseCode = arrParameters[13].Value.ToString();
                     //Inserted UserID
-                    oResponse.ResponseID = arrParameters[13].Value.ToString();
+                    oResponse.ResponseID = arrParameters[14].Value.ToString();
                 }
             }
             catch (Exception Ex)
@@ -135,7 +138,7 @@ namespace Takamul.Services
         /// <param name="nOTPNumber"></param>
         /// <param name="sDeviceID"></param>
         /// <returns></returns>
-        public Response oValidateOTPNumber(int nApplicationID,string sPhoneNumber, int nOTPNumber, string sDeviceID)
+        public Response oValidateOTPNumber(int nApplicationID, string sPhoneNumber, int nOTPNumber, string sDeviceID)
         {
             #region ": Sp Result:"
 
@@ -187,10 +190,16 @@ namespace Takamul.Services
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_ApplicationId", SqlDbType.Int, nApplicationID, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_PhoneNumber", SqlDbType.VarChar, sPhoneNumber, ParameterDirection.Input));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pin_OTPNumber", SqlDbType.Int, nOTPNumber, ParameterDirection.Input));
+                arrParameters.Add(CustomDbParameter.BuildParameter("Pout_ApplicationName", SqlDbType.NVarChar, ParameterDirection.Output, 200));
                 arrParameters.Add(CustomDbParameter.BuildParameter("Pout_Error", SqlDbType.Int, ParameterDirection.Output));
 
                 this.ExecuteStoredProcedureCommand("ResendOPTNumber", arrParameters.ToArray());
-                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[3].Value.ToString());
+                oResponse.OperationResult = (enumOperationResult)Enum.Parse(typeof(enumOperationResult), arrParameters[4].Value.ToString());
+                if (oResponse.OperationResult == enumOperationResult.Success)
+                {
+                    //Application Name
+                    oResponse.ResponseCode = arrParameters[3].Value.ToString();
+                }
             }
             catch (Exception Ex)
             {

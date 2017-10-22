@@ -261,4 +261,10 @@
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="AddParticipants" xml:space="preserve">
+    <value>Add Participants</value>
+  </data>
+  <data name="AssignCategory" xml:space="preserve">
+    <value>AssignCategory</value>
+  </data>
 </root>

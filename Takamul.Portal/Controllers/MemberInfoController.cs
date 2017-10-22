@@ -105,6 +105,8 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JSaveMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
+            oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION.Replace(Environment.NewLine, "</br>");
+
             Response oResponseResult = null;
 
             oMemberInfoViewModel.CREATED_BY = Convert.ToInt32(CurrentUser.nUserID);
@@ -145,6 +147,7 @@ namespace LDC.eServices.Portal.Controllers
         [ValidateAntiForgeryToken()]
         public JsonResult JEditMemberInfo(MemberInfoViewModel oMemberInfoViewModel)
         {
+            oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION = oMemberInfoViewModel.MEMBER_INFO_DESCRIPTION.Replace(Environment.NewLine, "</br>");
             Response oResponseResult = null;
 
             oMemberInfoViewModel.MODIFIED_BY = Convert.ToInt32(CurrentUser.nUserID);
