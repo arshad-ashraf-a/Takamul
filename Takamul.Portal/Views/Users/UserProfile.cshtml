@@ -77,10 +77,13 @@
                                     </a>
                                 </li>
                             }
-                            <li class="navigation-divider"></li>
-                            <li class="text-center">
-                                <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> @UsersResx.ChangeStatus </button>
-                            </li>
+                            @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
+                            {
+                                <li class="navigation-divider"></li>
+                                <li class="text-center">
+                                    <button onclick="fnLoadChangeUserStatus();" class="btn bg-grey"><i class="icon-pencil7"></i> @UsersResx.ChangeStatus </button>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -88,7 +91,7 @@
                 <!-- /user details -->
                 @if (Model.UserType != Infrastructure.Core.enumUserType.MobileUser && (Model.ID == BaseController.CurrentUser.nUserID || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin))
                 {
-                    <!-- Account Settings -->
+                <!-- Account Settings -->
                     <div class="sidebar-category">
                         <div class="category-title">
                             <span>@UsersResx.AccountSettings</span>
@@ -118,7 +121,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- /Account Settings -->
+                <!-- /Account Settings -->
                 }
             </div>
         </div>
@@ -240,7 +243,7 @@
                         </div>
                     </div>
                     <!-- /profile info -->
-                    @if (Model.UserType == Infrastructure.Core.enumUserType.Member || Model.UserType == Infrastructure.Core.enumUserType.Admin)
+                    @if (BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Member || BaseController.CurrentUser.UserType == Infrastructure.Core.enumUserType.Admin)
                     {
                     <!-- Permissions settings -->
                         @*<div class="panel panel-flat">

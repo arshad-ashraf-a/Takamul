@@ -139,7 +139,7 @@
                                 else
                                 {
                                     <li class="active">
-                                        <a href="#" onclick="fnGoToApplicationDetais(@BaseController.CurrentUser.CurrentApplicationID)"><i class="icon-list-unordered"></i> <span>@CommonResx.MyApplication</span></a>
+                                        <a href="#" onclick="fnGoToMyApplication()"><i class="icon-list-unordered"></i> <span>@CommonResx.MyApplication</span></a>
                                     </li>
                                 }
 
@@ -310,20 +310,11 @@
     @RenderSection("InlineScriptsRelated", false)
     <script type="text/javascript">
 
-        function fnGoToApplicationDetais(nApplicationID) {
+        function fnGoToMyApplication() {
             debugger;
-            var vApplicationID = -99;
-            var gdApplicationist = $('#' + sGridViewSelector);
-            if (nApplicationID != null && nApplicationID != undefined && nApplicationID != -99) {
-                vApplicationID = nApplicationID;
-            }
-            else {
-                vApplicationID = gdApplicationist.jqGrid('getGridParam', 'selrow');
-            }
-
-            var rowData = gdApplicationist.getRowData(vApplicationID);
-            vOneSignalAppID = rowData.ONE_SIGNAL_APP_ID;
-            vOneSignalAuthKey = rowData.ONE_SIGNAL_AUTH_KEY;
+            var vApplicationID = Number(@BaseController.CurrentUser.CurrentApplicationID);
+            var vOneSignalAppID = '@BaseController.CurrentUser.CurrentApplicationOneSignalID';
+            var vOneSignalAuthKey = '@BaseController.CurrentUser.CurrentApplicationOneSignalAuthKey';
 
             $.ajax({
                 url: '@Url.Action("JSetCurrentApplicationID", "Applications")',

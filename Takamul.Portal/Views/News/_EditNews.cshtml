@@ -367,6 +367,7 @@
             $(".filename").text("");
             $("#IS_ACTIVE").attr('checked', false);
             $("#IS_NOTIFY_USER").attr('checked', false);
+            $.uniform.update();
             $("#YOUTUBE_LINK").val("");
         }
 
@@ -385,9 +386,10 @@
             // Initialize
             $('#txtPublishedTime').combodate({
                 firstItem: 'name', //show 'hour' and 'minute' string at first item of dropdown
-                minuteStep: 1,
-                value: new Date(Date.parse('@Model.PUBLISHED_DATE'))
+                minuteStep: 1
             });
+
+            $('#txtPublishedTime').combodate('setValue', moment('@Model.PUBLISHED_DATE', ["DD/MM/yyyy h:mm A"]).format("HH:mm"));
         });
     </script>
 }

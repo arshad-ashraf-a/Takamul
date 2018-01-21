@@ -47,9 +47,11 @@ namespace Infrastructure.Utilities
                 {
                     this.CurrentApplicationID = BaseController.CurrentUser.CurrentApplicationID;
                     nCurrentAppID = BaseController.CurrentUser.CurrentApplicationID;
+                    this.CurrentApplicationOneSignalID = BaseController.CurrentUser.CurrentApplicationOneSignalID;
+                    this.CurrentApplicationOneSignalAuthKey = BaseController.CurrentUser.CurrentApplicationOneSignalAuthKey;
                 }
             }
-            if (nCurrentAppID == -99)
+            if (nCurrentAppID == -99 || CurrentApplicationOneSignalID.Equals(string.Empty) || CurrentApplicationOneSignalAuthKey.Equals(string.Empty))
             {
                 filterContext.Result = RedirectToAction("Login", "Account", new { area = "" });
             }

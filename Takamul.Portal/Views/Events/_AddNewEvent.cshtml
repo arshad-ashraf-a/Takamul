@@ -397,6 +397,9 @@
             $("#EVENT_LOCATION_NAME").val("");
             $("#EVENT_LATITUDE").val("");
             $("#EVENT_LONGITUDE").val("");
+            $("#IS_ACTIVE").attr('checked', false);
+            $("#IS_NOTIFY_USER").attr('checked', false);
+            $.uniform.update();
         }
 
         function fnIsValidFileExtension(sExtension) {

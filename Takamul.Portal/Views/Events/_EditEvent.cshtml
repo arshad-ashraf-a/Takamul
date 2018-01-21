@@ -281,7 +281,7 @@
                     EVENT_DATE: "@CommonResx.ThisFieldIsRequired",
                     EVENT_LOCATION_NAME: "@CommonResx.ThisFieldIsRequired",
                     EVENT_LATITUDE: "@CommonResx.ThisFieldIsRequired",
-                    EVENT_LONGITUDE:  "@CommonResx.ThisFieldIsRequired",
+                    EVENT_LONGITUDE: "@CommonResx.ThisFieldIsRequired",
                 },
                 highlight: function (e) {
                     $(e).closest('.error-placement').removeClass('has-info').addClass('has-error');
@@ -364,7 +364,7 @@
             $.each(formData, function (key, input) {
                 data.append(input.name, input.value);
             });
-           
+
             data.append("EVENT_TIME", $("#txtEventTime").combodate('getValue', 'HH:mm'));
 
             var nCategoryID = $('#ddlEventCategory').val();
@@ -425,6 +425,9 @@
             $("#EVENT_LOCATION_NAME").val("");
             $("#EVENT_LATITUDE").val("");
             $("#EVENT_LONGITUDE").val("");
+            $("#IS_ACTIVE").attr('checked', false);
+            $("#IS_NOTIFY_USER").attr('checked', false);
+            $.uniform.update();
         }
 
         //Entry Point
@@ -508,9 +511,11 @@
             // Initialize
             $('#txtEventTime').combodate({
                 firstItem: 'name', //show 'hour' and 'minute' string at first item of dropdown
-                minuteStep: 1,
-                value: new Date(Date.parse('@Model.EVENT_DATE'))
+                minuteStep: 1
             });
+
+            $('#txtEventTime').combodate('setValue', moment('@Model.EVENT_DATE', ["DD/MM/yyyy h:mm A"]).format("HH:mm"));
+
         });
 
     </script>
