@@ -1,0 +1,92 @@
+﻿@model WebApplication1.Models.Student
+@{
+
+}
+
+<h2>Edit Student</h2>
+<form id="frmAddStudent">
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-group">
+        <label for="exampleInputEmail1">Student Name</label>
+        @Html.TextBoxFor(m => m.STUDENT_NAME, new { @class = "form-control" })
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Email</label>
+        @Html.TextBoxFor(m => m.EMAIL, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Gender</label>
+        @Html.TextBoxFor(m => m.GENDER, new { @class = "form-control" })
+    </div>
+    <a id="btnSaveStudent" class="btn btn-primary" onclick="fnSaveStudent()">Update</a>
+    <a href="@Url.Action("Index","Students")" class="btn btn-primary">Back To List</a>
+    <div class="clearfix"></div>
+    <div class="mt-5"></div>
+    <div class="alert hidden" role="alert" id="dvSystemAlert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <div id="dvSystemAlertMessage"></div>
+
+    </div>
+
+</form>
+@section SpecificPluginScripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+}
+@section InlineScriptsRelated{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#frmAddStudent').validate({ // initialize the plugin
+                errorClass: 'text-danger',
+                rules: {
+                    STUDENT_NAME: {
+                        required: true
+                    },
+                    EMAIL: { required: true },
+                    GENDER: { required: true }
+                },
+                messages: {
+                    STUDENT_NAME: {
+                        required: "This field is required!"
+                    },
+                    EMAIL: {
+                        required: "This field is required!"
+                    }, GENDER: {
+                        required: "This field is required!"
+                    }
+                },
+                submitHandler: function (form) {
+                }
+            })
+        });
+
+        function fnSaveStudent() {
+          
+
+            if (!$("#frmAddStudent").valid()) {
+                return false;
+            }
+
+            var formData = $("#frmAddStudent").serialize();
+            $.ajax({
+                url: '@Url.Action("JSaveStudent", "Students")',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (result) {
+                    if (result.nResult == 1) {
+                        $("#dvSystemAlertMessage").html(result.sResultMessage);
+                        $("#dvSystemAlert").removeClass('hidden').addClass("alert-success");
+                    }
+                    else {
+                        $("#dvSystemAlertMessage").html(result.sResultMessage);
+                        $("#dvSystemAlert").removeClass('hidden').addClass("alert-error");
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+    </script>
+}
